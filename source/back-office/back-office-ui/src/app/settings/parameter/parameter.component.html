@@ -1,0 +1,55 @@
+<clic-page [title]="'Parámetros de Aplicación'" (reloadEmitter)="this.ngOnInit()">
+  <div fxLayout="row wrap" class="h-padding-5">
+    <div [fxFlex]="this.flexSelect">
+      <mat-form-field>
+        <mat-select placeholder="Seleccionar Un Grupo de Parámetros" [formControl]="this.parameterControl">
+          <mat-option *ngFor="let parameter of this.parameterList" [value]="parameter">
+            {{parameter.grupo | deleteUnderline}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="this.parameterControl.hasError('required') && this.parameterControl.touched">Este campo es <strong>requerido</strong>.</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row wrap">
+    <div fxFlex="100" class="h-padding-5">
+      <mat-form-field>
+        <input matInput placeholder="Buscar..." maxlength="30" [disabled]="!this.parameterControl.valid" (keyup)="this.applyFilter($event.target.value)"/>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100">
+      <ngx-datatable #table class="material"
+                     [messages]="this.tableMessages()"
+                     [columnMode]="'force'"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     [rowHeight]="'auto'"
+                     [limit]='10'
+                     [rows]="this.parameterValueList"
+                     [scrollbarH]="this.scrollH">
+
+        <ngx-datatable-column name="Acciones" [minWidth]="200" [maxWidth]="240" [draggable]="false" [resizeable]="false">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-group="group">
+            <button mat-icon-button color="accent" matTooltip="Editar Parámetro" (click)="this.editParameter(row)"><mat-icon>edit</mat-icon></button>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Código" [resizeable]="false"  [draggable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.codigo | deleteUnderline}}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Valor" [resizeable]="false"  [draggable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div *ngIf="row.tipoDato !== 'LOB'">{{row.tipoDato === 'FECHA' ? (row.value | date: 'dd/MM/yyyy'): row.value}}</div>
+            <div *ngIf="row.tipoDato === 'LOB'">{{this.substringValue(row.value)}}</div>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Descripcion" prop="descripcion" [resizeable]="false"  [draggable]="false"></ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</clic-page>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

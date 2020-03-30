@@ -1,0 +1,18 @@
+.ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: normal !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+datatable-scroller {
+    width: 100% !important;
+}
+
+:host {
+    /deep/ .datatable-row-detail {
+        height: 100% !important;
+        background-color: red !important;
+    }
+}

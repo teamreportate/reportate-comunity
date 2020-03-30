@@ -1,0 +1,72 @@
+<div class="content-body">
+  <div class="header-component text-white">
+    <div class="header-text m-5"><strong>Historial de Ejecuciones</strong></div>
+  </div>
+  <div fxLayout="row wrap" class="elevacion"  *ngIf="!this.jobHistory && !this.isNotPresent">
+    <div fxFlex="100" fxLayoutAlign="center center" class="p-t-10">
+      <mat-spinner [diameter]="35"></mat-spinner>
+    </div>
+  </div>
+  <div fxLayout="row wrap" *ngIf="this.jobHistory && (this.jobHistory.length===0) && !this.isNotPresent">
+    <div fxFlex="100" fxLayoutAlign="center center" class="elevacion p-t-10 panel-no-content-history">
+      El Job aún no tiene historial de ejecuciones.
+    </div>
+  </div>
+  <div fxLayout="row wrap" *ngIf="this.isNotPresent">
+    <div fxFlex="100" fxLayoutAlign="center start" class="elevacion p-t-10 panel-no-content-history">
+      Ocurrió un problema al recuperar el historial de job
+    </div>
+  </div>
+  <div fxLayout="row wrap" *ngIf="this.jobHistory && (this.jobHistory.length>0)">
+    <div fxFlex="100">
+      <ngx-datatable #table class="material history-table-heigth"
+                     [columnMode]="'force'"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     [rowHeight]="50"
+                     [limit]="5"
+                     [rows]="this.jobHistory"
+                     [scrollbarH]="this.scrollH">
+
+        <ngx-datatable-column name="Acción" [maxWidth]="100" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <button *ngIf="this.enableAction(row.jobState)" mat-icon-button color="accent" (click)="this.viewErrors(row)"><mat-icon>info</mat-icon></button>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Grupo de job" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.groupName}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Nombre de job" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.jobName}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Fecha de inicio" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.fechaInicio | date: "dd/MM/yyyy H:mm"}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Fecha de fin" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.fechaFin | date: "dd/MM/yyyy H:mm"}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Estado de ejecución"[draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div [class]="this.classNameJobState(row.jobState)"><span class="text-white">{{row.jobState | deleteUnderline}}</span></div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</div>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

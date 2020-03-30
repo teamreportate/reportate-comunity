@@ -1,0 +1,75 @@
+<clic-page [title]="'Listado de Recursos'" (reloadEmitter)="this.ngOnInit()">
+  <div fxLayout="row wrap" class="h-padding-5">
+    <div [fxFlex]="100" fxLayoutAlign="center center" class="h-padding-5">
+      <mat-form-field>
+        <input matInput placeholder='Buscar...' maxlength="30" (keyup)="this.onResourceFilter($event.target.value)"/>
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row wrap" class="h-padding-5">
+    <div fxFlex="100">
+      <ngx-datatable
+          #table
+          class="material expandable"
+          [rows]="this.resourceList"
+          [groupRowsBy]="'recursoPadre'"
+          [columnMode]="'force'"
+          [scrollbarH]="this.scrollH"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [rowHeight]="'auto'"
+          [limit]="7"
+          [groupExpansionDefault]="false">
+        <ngx-datatable-group-header [rowHeight]="50" #myGroupHeader>
+          <ng-template let-group="group" let-row="row" let-expanded="expanded" ngx-datatable-group-header-template>
+            <div fxLayout="row wrap">
+              <div fxFlex="50">
+                <a href="javascript:;"
+                   class="a-toggle"
+                   fxLayoutAlign="start center"
+                   [class.datatable-icon-right]="!expanded"
+                   [class.datatable-icon-down]="expanded"
+                   [matTooltip]="group.value[0].descripcionPadre"
+                   (click)="toggleExpandGroup(group)">
+                  <mat-icon color="accent">{{group.value[0].iconoPadre}}</mat-icon>
+                  <b>{{ group.value[0].nombrePadre | deleteUnderline }}</b>
+                </a>
+              </div>
+              <div fxFlex="50" fxLayoutAlign="end center" fxLayoutGap="5px">
+                <div fxLayout="column wrap"  class="m-l-5 m-r-5">
+                  <div fxFlex="100" class="text-center font-10">Acciones</div>
+                  <div fxFlex="100">
+                    <button mat-icon-button matTooltip="Actualizar Recurso" (click)="this.onUpdateParent(group)">
+                      <mat-icon color="accent">edit</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-group-header>
+
+        <ngx-datatable-column name="Acciones" [minWidth]="150" [maxWidth]="200" frozenLeft="True" [resizeable]="false"  [draggable]="false">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-group="group">
+            <button mat-icon-button matTooltip="Actualizar Recurso" (click)="this.onUpdateResource(row)">
+              <mat-icon color="accent">edit</mat-icon>
+            </button>
+            
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Nombre" prop="nombre" frozenLeft="True" [resizeable]="false"  [draggable]="false"></ngx-datatable-column>
+        <ngx-datatable-column name="Descripcion" prop="descripcion" frozenLeft="True" [resizeable]="false"  [draggable]="false"></ngx-datatable-column>
+        <ngx-datatable-column name="URL" prop="url" frozenLeft="True" [resizeable]="false"  [draggable]="false"></ngx-datatable-column>
+        <ngx-datatable-column name="Ícono" prop="icon" frozenLeft="True" [resizeable]="false"  [draggable]="false">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-group="group">
+            <mat-icon color="accent">{{value}}</mat-icon>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Orden de Menú" prop="ordenMenu" frozenLeft="True" [resizeable]="false"  [draggable]="false"></ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</clic-page>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

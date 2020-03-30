@@ -1,0 +1,50 @@
+@import "../../../assets/styles/variable";
+
+.cutom-elevation .mat-expansion-panel:not([class*='mat-elevation-z']) {
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);
+}
+
+
+.invoice-number {
+  font-size: 30px;
+  font-weight: 600;
+  text-align: right;
+}
+
+.request-detail {
+  font-weight: 400;
+}
+
+
+.request-title {
+  text-align: left;
+  font-size: 15px;
+  font-weight: 400;
+  color: $warn-theme;
+  margin: 5px;
+}
+
+.bottom-divider {
+  border-bottom: 1px solid #c7d1d6;
+}
+
+.invoice-client-title {
+  text-align: left;
+  font-size: 20px;
+  font-weight: 500;
+  color: $primary-theme;
+}
+
+.card-header {
+  background-color: #f7f6f2; border-radius: $radius
+}
+
+.tareaxml {
+  border-radius: $radius;
+  font-size: 10px; font-weight: 600; background-color: #f7f6f2
+}
+
+
+.text-bold {
+  font-weight: bold;
+}

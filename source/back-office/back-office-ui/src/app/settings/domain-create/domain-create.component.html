@@ -1,0 +1,62 @@
+<clic-page [title]="'Registro de Nuevo Dominio de Aplicación'" (reloadEmitter)="this.ngOnInit()">
+  <div fxLayout="row wrap" fxLayoutAlign="center center" [formGroup]="this.form">
+    <div [fxFlex]="this.flex">
+      <mat-form-field>
+        <input matInput type="text" maxlength="100" placeholder="Código del Dominio" formControlName="codigo">
+        <mat-hint align="end">{{this.form.get('codigo').value? this.form.get('codigo').value.length:0}} / 100</mat-hint>
+        <mat-error *ngIf="this.form.get('codigo').hasError('required') && this.form.get('codigo').touched" class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
+      </mat-form-field>
+    </div>
+    <div [fxFlex]="this.flex">
+      <mat-form-field>
+        <textarea matInput rows="5" maxlength="255" placeholder="Descripción del Dominio" formControlName="descripcion"></textarea>
+        <mat-hint align="end">{{this.form.get('descripcion').value? this.form.get('descripcion').value.length:0}} / 255</mat-hint>
+        <mat-error *ngIf="this.form.get('descripcion').hasError('required') && this.form.get('descripcion').touched" class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
+      </mat-form-field>
+    </div>
+    <div [fxFlex]="this.flex">
+      <button mat-raised-button color="accent" matTooltip="Agregar Nuevo Valor del Dominio" (click)="this.newDomainValue()"><mat-icon>add_circle</mat-icon>Agregar Valor de Dominio</button>
+    </div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="center center" class="v-padding-10">
+    <div [fxFlex]="this.flex">
+      <div fxLayout="row wrap" *ngFor="let domainValue of this.domainValueList">
+        <div fxFlex="100" class="header-component text-white">
+          <div fxLayout="row wrap">
+            <div fxFlex="50"><strong>Valor del Dominio</strong></div>
+            <div fxFlex="50" fxLayoutAlign="end center">
+              <button mat-stroked-button color="warn" matTooltip="Eliminar" (click)="this.deleteDomainValue(domainValue)"><mat-icon>cancel</mat-icon></button>
+            </div>
+          </div>
+        </div>
+        <div fxFlex="100">
+          <div fxLayout="column wrap" [formGroup]="this.formValues.get(domainValue.groupControl)">
+            <div fxFlex="100">
+              <mat-form-field>
+                <input matInput type="text" maxlength="100" placeholder="Valor" formControlName="valor">
+                <mat-hint align="end">{{this.formValues.get(domainValue.groupControl).get('valor').value? this.formValues.get(domainValue.groupControl).get('valor').value.length:0}} / 100</mat-hint>
+                <mat-error *ngIf="this.formValues.get(domainValue.groupControl).get('valor').hasError('required') && this.formValues.get(domainValue.groupControl).get('valor').touched" class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100">
+              <mat-form-field>
+                <textarea matInput rows="3" maxlength="255" placeholder="Descripción" formControlName="descripcion">></textarea>
+                <mat-hint align="end">{{this.formValues.get(domainValue.groupControl).get('descripcion').value? this.formValues.get(domainValue.groupControl).get('descripcion').value.length:0}} / 255</mat-hint>
+                <mat-error *ngIf="this.formValues.get(domainValue.groupControl).get('descripcion').hasError('required') && this.formValues.get(domainValue.groupControl).get('descripcion').touched" class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="center center" class="v-padding-10">
+    <div [fxFlex]="this.flex" fxLayoutAlign="end center" fxLayoutGap="5px">
+      <button mat-raised-button color="warn" (click)="this.location.back()">Cancelar</button>
+      <button mat-raised-button [disabled]="this.domainValueList.length < 1" color="accent" matTooltip="Registrar Dominio" (click)="this.saveDomain()">Guardar</button>
+    </div>
+  </div>
+</clic-page>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

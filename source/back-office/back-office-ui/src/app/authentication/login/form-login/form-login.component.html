@@ -1,0 +1,41 @@
+<div class="form-login-content">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="loginFormSubmit()">
+        <div fxLayout="row wrap">
+          <div class="text-center" fxFlex="100">
+            <img alt="homepage" src="assets/images/background/login-back.png" width="100%">
+          </div>
+        </div>
+        <br>
+        <div fxLayout="row wrap">
+          <!-- col full-->
+          <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field>
+              <input matInput sinEspacios type="text" formControlName="username" placeholder="Usuario">
+              <mat-error *ngIf="loginForm.hasError('required', ['username'])">Ingrese un nombre de usuario.</mat-error>
+            </mat-form-field>
+          </div>
+          <!-- col full-->
+          <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field>
+              <input matInput type="password" autocomplete="false" formControlName="password" placeholder="Contraseña">
+              <mat-error *ngIf="loginForm.hasError('required', ['password'])">Ingrese una contraseña.</mat-error>
+            </mat-form-field>
+          </div>
+          <!-- col half-->
+          <div fxFlex="100" class="content-center" *ngIf="this.isLoad">
+            <mat-spinner [diameter]="25"></mat-spinner>
+          </div>
+          <div fxFlex="100" class="content-center request-error-message" *ngIf="this.error">
+            {{ this.error }}
+          </div>
+          <!-- col full-->
+          <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+            <button mat-raised-button color="accent" class="btn-block btn-lg m-t-20 m-b-20" type="submit" [disabled]="this.isLoad">Ingresar</button>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

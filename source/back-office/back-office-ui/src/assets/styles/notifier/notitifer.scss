@@ -1,0 +1,12 @@
+// Core
+@import "./styles/core.scss";
+
+// Themes
+@import "./themes/theme-material.scss";
+
+// Types
+@import "./types/type-default.scss";
+@import "./types/type-error.scss";
+@import "./types/type-info.scss";
+@import "./types/type-success.scss";
+@import "./types/type-warning.scss";

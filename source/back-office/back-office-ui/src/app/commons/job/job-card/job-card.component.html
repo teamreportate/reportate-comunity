@@ -1,0 +1,117 @@
+<div class="content-body elevacion" style="height: 392px">
+  <div class="header-component text-white">
+    <div class="header-text"><strong class="m-5">{{(this.job? this.job.jobName: 'Sin Información')}}</strong></div>
+  </div>
+  <div *ngIf="!this.job && !this.isNotPresent" fxLayout="row wrap" class="p-t-10">
+    <div fxFlex="100" fxLayoutAlign="center center">
+      <mat-spinner [diameter]="35"></mat-spinner>
+    </div>
+  </div>
+  <div *ngIf="!this.job && this.isNotPresent" fxLayout="row wrap" class="p-t-10">
+    <div fxFlex="100" fxLayoutAlign="center center">
+      Ocurrió un problema al recuperar el job
+    </div>
+  </div>
+  <div *ngIf="this.job">
+    <div fxLayout="row wrap" class="p-t-10" *ngIf="this.isActive">
+      <div fxFlex="100">
+        <div fxLayout="row wrap" class="job-buttons">
+          <div fxFlex="25" fxLayoutAlign="center center">
+            <button [disabled]="!(this.job.jobStatus==='SCHEDULED')" mat-icon-button color="warn" matTooltip="Pausar Job" (click)="this.onPauseJob()"><mat-icon class="font-40" fxLayoutAlign="start start">pause_circle_filled</mat-icon></button>
+          </div>
+          <div fxFlex="25" fxLayoutAlign="center center">
+            <button [disabled]="this.job.jobStatus==='SCHEDULED'" mat-icon-button color="accent" matTooltip="Reiniciar Job" (click)="this.onStartJob()"><mat-icon class="font-40" fxLayoutAlign="start start">play_circle_filled</mat-icon></button>
+          </div>
+          <div fxFlex="25" fxLayoutAlign="center center">
+            <button [disabled]="!(this.job.jobStatus==='SCHEDULED')" mat-icon-button color="accent" matTooltip="Ejecutar ahora" (click)="this.onStartNow()"><mat-icon class="font-40" fxLayoutAlign="start start">album</mat-icon></button>
+          </div>
+          <div fxFlex="25" fxLayoutAlign="center center">
+            <button [disabled]="!this.job.isEditable" mat-icon-button color="primary" matTooltip="Modificar expresion CRON" *ngIf="this.job" (click)="this.editCronJob()"><i class="fa fa-edit font-40"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row wrap" class="p-5 h-padding-5 p-t-10">
+      <div fxFlex="100" class="p-t-10">
+        <div fxLayout="row wrap">
+          <div fxFlex="50"><strong>Programación:</strong></div>
+          <div fxFlex="50">{{this.job.scheduleTime | date: "dd/MM/yyyy H:mm"}}</div>
+        </div>
+      </div>
+      <div fxFlex="100" class="p-t-10">
+        <mat-divider></mat-divider>
+      </div>
+      <div fxFlex="100" class="p-t-10">
+        <div fxLayout="row wrap">
+          <div fxFlex="50"><strong>Expresion CRON:</strong></div>
+          <div fxFlex="50">{{this.job.cronExpression}}</div>
+        </div>
+      </div>
+      <div fxFlex="100" class="p-t-10">
+        <mat-divider></mat-divider>
+      </div>
+      <div fxFlex="100" class="p-t-10">
+        <div fxLayout="row wrap">
+          <div fxFlex="100">
+            <div fxLayout="row wrap">
+              <div fxFlex="50"><strong>Grupo de Job:</strong></div>
+              <div fxFlex="50">{{this.job.groupName}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="100" class="p-t-10">
+        <mat-divider></mat-divider>
+      </div>
+      <div fxFlex="100" class="p-t-10">
+        <div fxLayout="row wrap">
+          <div fxFlex="100">
+            <div fxLayout="row wrap">
+              <div fxFlex="20"><strong>Nombre:</strong></div>
+              <div fxFlex="80">{{this.job.jobName}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="100" class="p-t-10">
+        <mat-divider></mat-divider>
+      </div>
+      <div fxFlex="100" class="p-t-10">
+        <div fxLayout="row wrap">
+          <div fxFlex="100">
+            <div fxLayout="row wrap">
+              <div fxFlex="50"><strong>Última ejecución:</strong></div>
+              <div fxFlex="50">{{this.job.lastFiredTime | date: "dd/MM/yyyy H:mm"}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="100" class="p-t-10">
+        <mat-divider></mat-divider>
+      </div>
+      <div fxFlex="100" class="p-t-10">
+        <div fxLayout="row wrap">
+          <div fxFlex="100">
+            <div fxLayout="row wrap">
+              <div fxFlex="50"><strong>Próxima ejecución:</strong></div>
+              <div fxFlex="50">{{this.job.nextFireTime | date: "dd/MM/yyyy H:mm"}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="100" class="p-t-10">
+        <mat-divider></mat-divider>
+      </div>
+      <div fxFlex="100" class="p-t-10">
+        <div fxLayout="row wrap">
+          <div fxFlex="100">
+            <div fxLayout="row wrap">
+              <div fxFlex="50"><strong>Estado de Job:</strong></div>
+              <div fxFlex="50"><strong>{{this.job.jobStatus}}</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

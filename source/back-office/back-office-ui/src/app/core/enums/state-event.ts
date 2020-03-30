@@ -1,0 +1,8 @@
+export enum StateEvent {
+    NUEVO = "NUEVO",
+    INICIO_ENVIADO_SIN = "INICIO_ENVIADO_SIN",
+    FIN_ENVIADO_SIN = "FIN_ENVIADO_SIN",
+    FINALIZADO = "FINALIZADO",
+}
+
+

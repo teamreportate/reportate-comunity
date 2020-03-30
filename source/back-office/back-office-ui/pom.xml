@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>bo.com.mc4.clic</groupId>
+		<artifactId>sfe_backoffice</artifactId>
+		<version>1.0</version>
+	</parent>
+	<artifactId>back-office-ui</artifactId>
+	<name>back-office-ui</name>
+  <description>Codigo fuente Angular 7 - Aplicacion Clic BackOffice</description>
+
+	<build>
+		<plugins>
+      <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>exec-maven-plugin</artifactId>
+      <version>1.3.2</version>
+      <executions>
+        <execution>
+          <id>Instalacion de dependencias</id>
+          <goals>
+            <goal>exec</goal>
+          </goals>
+          <phase>initialize</phase>
+          <configuration>
+            <executable>npm</executable>
+            <arguments>
+              <argument>run</argument>
+              <argument>install-dependences</argument>
+            </arguments>
+          </configuration>
+        </execution>
+
+        <execution>
+          <id>Compilacion produccion</id>
+          <goals>
+            <goal>exec</goal>
+          </goals>
+          <phase>initialize</phase>
+          <configuration>
+            <executable>npm</executable>
+            <arguments>
+              <argument>run</argument>
+              <argument>build-production</argument>
+            </arguments>
+          </configuration>
+        </execution>
+      </executions>
+      </plugin>
+		</plugins>
+	</build>
+
+</project>

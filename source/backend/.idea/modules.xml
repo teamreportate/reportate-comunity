@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/core-generic/core-generic.iml" filepath="$PROJECT_DIR$/core-generic/core-generic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model/model.iml" filepath="$PROJECT_DIR$/model/model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/reportate.iml" filepath="$PROJECT_DIR$/reportate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web-backoffice-api/web-backoffice-api.iml" filepath="$PROJECT_DIR$/web-backoffice-api/web-backoffice-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web-security/web-security.iml" filepath="$PROJECT_DIR$/web-security/web-security.iml" />
+    </modules>
+  </component>
+</project>

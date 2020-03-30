@@ -1,0 +1,56 @@
+<clic-page [title]="'Listado de Tokens del Usuario'" (reloadEmitter)="this.ngOnInit()">
+  <div fxLayout="row wrap">
+    <div [fxFlex]="100" class="h-padding-5">
+      <button mat-raised-button class="btn-full" color="accent" (click)="this.newToken()">Nuevo Token</button>
+    </div>
+  </div>
+  <div fxLayout="row wrap" class="p-5">
+    <div fxFlex="100">
+      <ngx-datatable #table1 class="material"
+                     [messages]="this.tableMessages()"
+                     [columnMode]="'force'"
+                     [headerHeight]="50"
+                     [rowHeight]="'auto'"
+                     [footerHeight]="50"
+                     [limit]="10"
+                     [rows]="this.tokenList"
+                     [scrollbarH]="false">
+
+        <ngx-datatable-column name="Acción" [maxWidth]="200" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <button mat-icon-button [disabled]="row.estado!=='ACTIVO'"  color="accent" matTooltip="Ver token" (click)="this.viewToken(row)"><mat-icon  fxLayoutAlign="start start">visibility</mat-icon></button>
+            <button mat-icon-button *ngIf="row.estado === 'ACTIVO'" (click)="this.changeState(row)"><mat-icon fxLayoutAlign="start start" color="{{row.estado === 'ACTIVO'?'warn':'accent'}}" matTooltip="{{row.estado === 'ACTIVO'?'Bloquear rol':'Activar rol'}}">{{row.estado === 'ACTIVO' ? 'close' : 'check'}}</mat-icon></button>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Token" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <span>{{this.tokenString(row.token)}}</span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [maxWidth]="250" name="Fecha de Inicio" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.fechaInicio | date: 'dd/MM/yyyy, H:mm'}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [maxWidth]="250" name="Fecha de Expiración" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.indefinido ? 'Indefinido' : row.fechaExpiracion | date: 'dd/MM/yyyy, H:mm'}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [maxWidth]="250" name="Estado" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div class="{{row.estado === 'ACTIVO'?'primary-state':'warn-state'}}"><span
+                    class="text-white">{{row.estado}}</span></div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</clic-page>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

@@ -1,0 +1,69 @@
+<clic-page [title]="'Asignación de Recursos'" (reloadEmitter)="this.ngOnInit()">
+  <div fxLayout="row wrap" class="h-padding-5">
+    <div fxFlex="100" class="p-t-20  h-padding-5" *ngIf="this.asignedResource">
+      <ngx-datatable
+              #table
+              class="material expandable"
+              [rows]="this.resourceList"
+              [groupRowsBy]="'recursoPadre'"
+              [columnMode]="'force'"
+              [scrollbarH]="this.scrollH"
+              [headerHeight]="50"
+              [footerHeight]="50"
+              [rowHeight]="'auto'"
+              [limit]="7"
+              [selected]="this.selectedResourceList"
+              (select)="this.onCheckResources($event, true)">
+
+        <ngx-datatable-group-header [rowHeight]="50" #myGroupHeader>
+          <ng-template let-group="group" let-row="row" let-expanded="expanded" ngx-datatable-group-header-template>
+            <div fxLayout="row wrap">
+              <div fxFlex="50">
+                <a href="javascript:;"
+                   class="a-toggle"
+                   fxLayoutAlign="start center"
+                   [class.datatable-icon-right]="!expanded"
+                   [class.datatable-icon-down]="expanded"
+                   [matTooltip]="group.value[0].descripcionPadre"
+                   (click)="toggleExpandGroup(group)">
+                  <mat-icon color="accent">{{group.value[0].iconoPadre}}</mat-icon>
+                  <b>{{ group.value[0].nombrePadre | deleteUnderline }}</b>
+                </a>
+              </div>
+              <div fxFlex="50" fxLayoutAlign="end center">
+                <mat-checkbox class="example-margin" [checked]="group.value[0].enUso" (change)="onCheckGroup($event, group.value[0].idRecursoPadre)"></mat-checkbox>
+<!--                <div fxLayout="column wrap"  class="m-r-10">-->
+<!--                  <div fxFlex="100" class="text-center font-10">Acciones</div>-->
+<!--                  <div fxFlex="100">-->
+<!--                  </div>-->
+<!--                </div>-->
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-group-header>
+
+        <ngx-datatable-column name="Acciones" [minWidth]="150" [maxWidth]="200" frozenLeft="True" [resizeable]="false"  [draggable]="false">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-group="group">
+            <mat-checkbox class="example-margin" [checked]="row.enUso" (change)="onCheck($event, row)" ></mat-checkbox>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Nombre" prop="nombre" frozenLeft="True" [resizeable]="false"  [draggable]="false"></ngx-datatable-column>
+        <ngx-datatable-column name="Descripcion" prop="descripcion" frozenLeft="True" [resizeable]="false"  [draggable]="false"></ngx-datatable-column>
+        <ngx-datatable-column name="URL" prop="url" frozenLeft="True" [resizeable]="false"  [draggable]="false"></ngx-datatable-column>
+        <ngx-datatable-column name="Ícono" prop="icon" frozenLeft="True" [resizeable]="false"  [draggable]="false">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-group="group">
+            <mat-icon color="accent">{{value}}</mat-icon>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Orden de Menú" prop="ordenMenu" frozenLeft="True" [resizeable]="false"  [draggable]="false"></ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+    <div fxFlex="100" class="v-padding-10" fxLayoutGap="5px" fxLayoutAlign="end center">
+      <button mat-stroked-button color="warn" (click)="this.location.back()">Cancelar</button>
+      <button mat-raised-button color="accent" (click)="this.saveConfig()">Guardar</button>
+    </div>
+  </div>
+</clic-page>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

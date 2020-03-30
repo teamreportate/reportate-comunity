@@ -1,0 +1,55 @@
+<clic-page [title]="'Edición de Alarma'" (reloadEmitter)="this.ngOnInit()">
+    <div fxLayout="row wrap">
+      <div fxFlex.gt-sm="50" fxFlex="100" class="h-padding-5">
+        <div fxLayout="row wrap" [formGroup]="this.form">
+          <div fxFlex="100">
+            <mat-form-field>
+              <input matInput placeholder="Asunto" formControlName="asunto">
+              <mat-error *ngIf="this.form.hasError('required', ['asunto'])">Se requiere un asunto para el email.</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100">
+            <mat-form-field>
+              <textarea rows="10" matInput maxlength="3500"  placeholder="Mensaje Adjunto" formControlName="contenido"></textarea>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxLayoutAlign="start bottom" class="p-t-10">
+            <button mat-raised-button color="accent" (click)="this.save()">Guardar Cambios</button>
+          </div>
+        </div>
+      </div>
+      <div fxFlex.gt-sm="50" fxFlex="100" class="h-padding-5">
+        <div class="tm-container">
+          <div class="tm-container">
+            <div class="tm-main-content">
+              <section class="tm-section">
+                <div class="tm-section-title">Nombre de Empresa</div>
+                <div class="tm-section-subtitle">Proceso Generador de Alarma</div>
+                <div class="parrafo"><strong>(Por ejemplo):</strong> Alarma generada para la sucursal 'Caza Matriz' en el Punto de Venta 'POS-1'.</div>
+                <div class="parrafo">{{this.form.get('contenido').value}}</div>
+                <div class="parrafo"><strong>(Por ejemplo):</strong> Ocurrió un error de validación contra XSD al generar la Factura.</div>
+              </section>
+              <section class="tm-section-table">
+                <div class="tm-responsive-table">
+                  <label for="table">Detalles de la alarma</label>
+                  <table id="table">
+                    <tr class="tm-tr-header"><th></th><td class="tm-text-left"></td></tr>
+                    <tr class="tm-tr-header"><th></th><td class="tm-text-left"></td></tr>
+                    <tr class="tm-tr-header"><th></th><td class="tm-text-left"></td></tr>
+                  </table>
+                </div>
+              </section>
+              <section class="tm-section-footer">
+                <div id="tm-footer-img" fxLayoutAlign="center end">
+                  <img src="assets/images/background/login-back.png" alt="Logo CLIC" width="50%" height="100%">
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</clic-page>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

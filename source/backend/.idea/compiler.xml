@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="web-backoffice-api" />
+        <module name="core-generic" />
+        <module name="model" />
+        <module name="web-security" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="core-generic" target="1.8" />
+      <module name="model" target="1.8" />
+      <module name="reportate" target="1.8" />
+      <module name="web-backoffice-api" target="1.8" />
+      <module name="web-security" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="core-generic" options="-parameters" />
+      <module name="model" options="-parameters" />
+      <module name="web-backoffice-api" options="-parameters" />
+      <module name="web-security" options="-parameters" />
+    </option>
+  </component>
+</project>

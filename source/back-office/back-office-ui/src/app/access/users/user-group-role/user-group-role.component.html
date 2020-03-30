@@ -1,0 +1,211 @@
+<clic-page [title]="'CONFIGURACION DE USUARIO'" (reloadEmitter)="this.ngOnInit()">
+  <div fxLayout="row wrap" class="h-padding-5">
+    <div fxFlex="100">
+      <mat-tab-group>
+        <mat-tab label="GRUPOS DEL USUARIO">
+          <div fxLayout="row wrap" fxLayoutAlign="center center">
+            <div fxFlex="100" fxLayoutAlign="start center">
+              <p class="bold {{this.asigned ? 'text-accent' : 'text-warning'}}">{{this.asigned ? 'Listado de grupos asignados al usuario' : 'Listado de grupos NO asignados al usuario'}}</p>
+            </div>
+            <div fxFlex="100">
+              <mat-form-field>
+                <input *ngIf="this.asigned" matInput placeholder='Buscar...' [formControl]="this.searchControl"/>
+                <input *ngIf="!this.asigned" matInput placeholder='Buscar...' [formControl]="this.searchControlNotGroup"/>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxLayoutGap="10px">
+              <button *ngIf="this.asigned" class="btn-full" mat-flat-button color="warn" [disabled]="!(this.selectedGroupList && this.selectedGroupList.length>0)" (click)="this.removeGroups()">REMOVER GRUPOS</button>
+              <button *ngIf="!this.asigned" class="btn-full" mat-flat-button color="warn" [disabled]="!(this.selectedAddGroupList && this.selectedAddGroupList.length>0)" (click)="this.asignGroup()">AGREGAR GRUPOS</button>
+              <button mat-flat-button class="btn-full" color="accent" (click)="this.asigned = !this.asigned;">{{this.asigned ? 'ASIGNAR MAS GRUPOS' : 'VOLVER'}}</button>
+            </div>
+            <div fxFlex="100" fxLayoutAlign="center center" *ngIf="!this.render">
+              <mat-spinner [diameter]="75"></mat-spinner>
+            </div>
+            <div fxFlex="100" class="p-t-20" *ngIf="this.asigned && this.render" >
+              <ngx-datatable #table class="material" [messages]="this.tableMessages()"
+                             [columnMode]="'force'"
+                             [selectionType]="'checkbox'"
+                             [headerHeight]="40"
+                             [footerHeight]="50"
+                             [rowHeight]="50"
+                             [limit]="10"
+                             [scrollbarH]="this.scrollH"
+                             [rows]="this.asignedGroupList"
+                             [selected]="this.selectedGroupList"
+                             (select)="this.onCheck($event, true)">
+
+                <ngx-datatable-column
+                  [sortable]="false"
+                  [draggable]="false"
+                  [resizeable]="false"
+                  [checkboxable]="true"
+                  [headerCheckboxable]="true"
+                  [maxWidth]="100"
+                  [minWidth]="100">
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Nombre de Grupo" [maxWidth]="250" [draggable]="false" [resizeable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.nombre}}
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Descripción del Grupo" [draggable]="false" [resizeable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.descripcion}}
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+
+            <div fxFlex="100" class="p-t-20" *ngIf="!this.asigned && this.render" >
+              <ngx-datatable #table class="material" [messages]="this.tableMessages()"
+                             [columnMode]="'force'"
+                             [selectionType]="'checkbox'"
+                             [headerHeight]="50"
+                             [footerHeight]="50"
+                             [rowHeight]="'auto'"
+                             [limit]="10"
+                             [rows]="this.notAsignedGroupList"
+                             [scrollbarH]="this.scrollH"
+                             [selected]="this.selectedAddGroupList"
+                             (select)="this.onCheck($event, false)">
+
+                <ngx-datatable-column
+                  [sortable]="false"
+                  [draggable]="false"
+                  [resizeable]="false"
+                  [checkboxable]="true"
+                  [headerCheckboxable]="true"
+                  [maxWidth]="100"
+                  [minWidth]="100">
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Nombre de Grupo2"  [draggable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.nombre}}
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Descripción del Grupo"  [draggable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.descripcion}}
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="ROLES DEL USUARIO">
+          <div fxLayout="row wrap" fxLayoutAlign="center center">
+            <div fxFlex="100" fxLayoutAlign="start center">
+              <p class="bold {{this.asignedRole ? 'text-accent' : 'text-warning'}}">{{this.asignedRole ? 'Listado de Roles asignados al usuario' : 'Listado de Roles NO asignados al usuario'}}</p>
+            </div>
+            <div fxFlex="100">
+              <mat-form-field>
+                <input *ngIf="this.asignedRole" matInput placeholder='Buscar...' [formControl]="this.searchControlRole"/>
+                <input *ngIf="!this.asignedRole" matInput placeholder='Buscar...' [formControl]="this.searchControlNotRole"/>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxLayoutGap="10px">
+              <button *ngIf="this.asignedRole" mat-flat-button color="warn" [disabled]="!(this.selectedRolList && this.selectedRolList.length>0)" (click)="this.removeRoles()">REMOVER ROLES</button>
+              <button *ngIf="!this.asignedRole" mat-flat-button color="warn" [disabled]="!(this.selectedAddRolList && this.selectedAddRolList.length>0)" (click)="this.asignRoles()">AGREGAR ROLES</button>
+              <button mat-flat-button color="accent" (click)="this.asignedRole = !this.asignedRole;">{{this.asignedRole ? 'ASIGNAR MAS ROLES' : 'VOLVER'}}</button>
+            </div>
+            <div fxFlex="100" fxLayoutAlign="center center" *ngIf="!this.renderRole">
+              <mat-spinner [diameter]="75"></mat-spinner>
+            </div>
+            <div fxFlex="100" class="p-t-20" *ngIf="this.asignedRole && this.renderRole">
+              <ngx-datatable #table class="material" [messages]="this.tableMessages()"
+                             [columnMode]="'force'"
+                             [selectionType]="'checkbox'"
+                             [headerHeight]="40"
+                             [footerHeight]="50"
+                             [rowHeight]="50"
+                             [limit]="10"
+                             [scrollbarH]="this.scrollH"
+                             [rows]="this.asignedRolList"
+                             [selected]="this.selectedRolList"
+                             (select)="this.onCheckRole($event, true)">
+
+                <ngx-datatable-column
+                  [sortable]="false"
+                  [draggable]="false"
+                  [resizeable]="false"
+                  [checkboxable]="true"
+                  [headerCheckboxable]="true"
+                  [maxWidth]="100"
+                  [minWidth]="100">
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Nombre de Rol" [maxWidth]="250" [draggable]="false" [resizeable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.nombre}}
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Descripción del Rol" [draggable]="false" [resizeable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.descripcion}}
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+
+            <div fxFlex="100" class="p-t-20" *ngIf="!this.asignedRole && this.renderRole">
+              <ngx-datatable #table class="material" [messages]="this.tableMessages()"
+                             [columnMode]="'force'"
+                             [selectionType]="'checkbox'"
+                             [headerHeight]="50"
+                             [footerHeight]="50"
+                             [rowHeight]="'auto'"
+                             [limit]="10"
+                             [rows]="this.notAsignedRolList"
+                             [scrollbarH]="this.scrollH"
+                             [selected]="this.selectedAddRolList"
+                             (select)="this.onCheckRole($event, false)">
+
+                <ngx-datatable-column
+                  [sortable]="false"
+                  [draggable]="false"
+                  [resizeable]="false"
+                  [checkboxable]="true"
+                  [headerCheckboxable]="true"
+                  [maxWidth]="100"
+                  [minWidth]="100">
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Nombre de Rol"  [draggable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.nombre}}
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Descripción del Rol"  [draggable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.descripcion}}
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</clic-page>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>
+<!--CARD CUADRO PEQUENIO TITLE, CONTENT, BUTTON-->
+<!--<div fxFlex="20">-->
+  <!--<div class="small-box mat-elevation-z4">-->
+    <!--<div fxLayout="row wrap" fxLayoutAlign="center end">-->
+      <!--<div fxFlex="100" style="height: 35px; border-radius: 4px; font-size: 11px; text-justify: auto" class="bg-accent-theme text-center text-white">ADMINISTRADORES DE SISTEMA</div>-->
+      <!--<div fxFlex="100" style="height: 40px; text-justify: distribute; font-size: 11px;" class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>-->
+      <!--<div fxFlex="100" style="height: 40px;" fxLayoutAlign="center end"><mat-slide-toggle></mat-slide-toggle></div>-->
+      <!--<div fxFlex="100" style="height: 10px; font-size: 12px" class="text-center text-danger">No asignado</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->

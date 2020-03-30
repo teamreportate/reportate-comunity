@@ -1,0 +1,57 @@
+<clic-page [title]="'Listado de Roles'" (reloadEmitter)="this.ngOnInit()">
+  <div fxLayout="row wrap">
+    <div [fxFlex]="this.flex" fxLayoutAlign="start center" class="h-padding-5">
+      <button mat-raised-button class="btn-full" color="accent" (click)="this.createRole()">Nuevo Rol</button>
+    </div>
+    <div [fxFlex]="this.flex===100?100:100-this.flex" fxLayoutAlign="center center" class="h-padding-5">
+      <mat-form-field>
+        <input matInput placeholder='Buscar...' (keyup)="this.onRoleFilter($event.target.value)" maxlength="30"/>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div fxLayout="row wrap" class="h-padding-5">
+    <div fxFlex="100">
+      <ngx-datatable #table class="material"
+                     [messages]="this.tableMessages()"
+                     [columnMode]="'force'"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     [rowHeight]="'auto'"
+                     [limit]='10'
+                     [scrollbarH]="this.scrollH"
+                     [rows]="this.roleList">
+
+        <ngx-datatable-column name="Acciones" [maxWidth]="200" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <button mat-icon-button matTooltip="Actualizar Rol" (click)="this.editRole(row)"><mat-icon fxLayoutAlign="start start" color="accent">edit</mat-icon></button>
+            <button mat-icon-button matTooltip="Asignar Recursos" (click)="this.configRole(row)"><mat-icon fxLayoutAlign="start start" color="accent">group</mat-icon></button>
+            <button mat-icon-button (click)="this.changeRoleState(row)"><mat-icon fxLayoutAlign="start start" color="{{row.estadoRol === 'ACTIVO'?'warn':'accent'}}" matTooltip="{{row.estadoRol === 'ACTIVO'?'Bloquear rol':'Activar rol'}}">{{row.estadoRol === 'ACTIVO' ? 'close' : 'check'}}</mat-icon></button>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Rol" [draggable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
+            {{row.nombre}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Descripción" [draggable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.descripcion}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Estado" [maxWidth]="150" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div class="{{row.estadoRol === 'ACTIVO'?'primary-state':'warn-state'}}"><span
+              class="text-white">{{row.estadoRol}}</span></div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</clic-page>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

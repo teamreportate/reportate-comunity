@@ -1,0 +1,19 @@
+
+
+<!--<mat-dialog-content style="position: relative; min-height: 95% !important;">-->
+<mat-card>
+  <mat-card-header class="header-component text-white">
+    <mat-card-title>Archivo de factura seleccionada</mat-card-title>
+    <mat-card-subtitle>Descarga o Impresion de factura</mat-card-subtitle>
+  </mat-card-header>
+  <mat-dialog-content>
+    <!--<button color="primary" mat-flat-button (click)="previousPdfPage()" ><mat-icon>chevron_left</mat-icon></button>-->
+    <!--<button color="primary" mat-flat-button (click)="nextPdfPage()" ><mat-icon>chevron_right</mat-icon></button>-->
+    <pdf-viewer [src]="obj" [page]="pageNumber" [original-size]="true" [show-all]="false"></pdf-viewer>
+  </mat-dialog-content>
+  <mat-card-actions fxLayoutAlign="end center" fxLayoutGap="5px">
+    <button color="accent" mat-stroked-button (click)="onCloseFileDialog()">Cerrar</button>
+    <button color="warn" mat-flat-button (click)="printFile()" >Imprimir</button>
+  </mat-card-actions>
+</mat-card>
+<!--</mat-dialog-content>-->

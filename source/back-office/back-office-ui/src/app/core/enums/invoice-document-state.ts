@@ -1,0 +1,25 @@
+/**
+ * MC4
+ * Santa Cruz - Bolivia
+ * project: back-office-ui
+ * package:
+ * date:    05-02-19
+ * author:  fmontero
+ **/
+
+export enum InvoiceDocumentState {
+  ERROR_REGISTRO_EMISION = 'ERROR_REGISTRO_EMISION',
+  NUEVO = 'NUEVO',
+  ERROR_GENERACION_FACTURA = 'ERROR_GENERACION_FACTURA',
+  FACTURA_GENERADO = 'FACTURA_GENERADO',
+  ENVIADO_SIN = 'ENVIADO_SIN',
+  ERROR_ENVIO_SIN = 'ERROR_ENVIO_SIN',
+  VERIFICADO = 'VERIFICADO',
+  ERROR_VERIFICACION_SIN = 'ERROR_VERIFICACION_SIN',
+  ERROR_VERIFICACION_POR_CUF_SIN = 'ERROR_VERIFICACION_POR_CUF_SIN',
+  ANULADO = 'ANULADO',
+}
+export enum InvoiceInvalidatedDocumentState {
+  ANULADO = 'ANULADO',
+  VERIFICADO = 'VERIFICADO',
+}

@@ -1,0 +1,59 @@
+<mat-card>
+    <mat-card-header class="header-component text-white">
+        <mat-card-title>Actualizar Recurso</mat-card-title>
+    </mat-card-header>
+    <form [formGroup]="this.form" (ngSubmit)="this.formUpdateSubmit()">
+        <mat-card-content>
+            <div fxLayout="row wrap">
+                <div fxFlex="100">
+                    <mat-form-field>
+                        <input matInput placeholder="Nombre del Recurso" [formControl]="this.form.controls['nombre']" maxlength="50">
+                        <mat-hint align="end">{{this.form.get('nombre').value? this.form.get('nombre').value.length:0}} / 50</mat-hint>
+                        <mat-error *ngIf="this.form.get('nombre').hasError('required') && this.form.get('nombre').touched" class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div fxFlex="100">
+                    <mat-form-field>
+                        <input matInput placeholder="Descripción del Recurso" [formControl]="this.form.controls['descripcion']" maxlength="150">
+                        <mat-hint align="end">{{this.form.get('descripcion').value? this.form.get('descripcion').value.length:0}} / 150</mat-hint>
+                        <mat-error *ngIf="this.form.get('descripcion').hasError('required') && this.form.get('descripcion').touched" class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div fxFlex="100">
+                    <mat-form-field>
+                        <input matInput placeholder="URL" [formControl]="this.form.controls['url']">
+                        <mat-error *ngIf="this.form.get('url').hasError('required') && this.form.get('url').touched" class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div fxFlex="100">
+                  <mat-form-field>
+                    <mat-select [formControl]="this.form.controls['icon']" placeholder="ÍCONO">
+                      <mat-select-trigger>
+                        <mat-icon>{{ this.form.get('icon').value }}</mat-icon>
+                      </mat-select-trigger>
+                      <mat-option *ngFor="let icon of this.iconList" [value]="icon">
+                        <mat-icon matListIcon>{{icon}}</mat-icon>Seleccionar este ícono
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div fxFlex="100">
+                    <mat-form-field>
+                        <input matInput type="number" placeholder="Orden de Menú" [formControl]="this.form.controls['ordenMenu']" min="1" max="99">
+                        <mat-error *ngIf="this.form.get('ordenMenu').hasError('required') && this.form.get('ordenMenu').touched" class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
+                        <mat-error *ngIf="this.form.get('ordenMenu').hasError('max') && this.form.get('ordenMenu').touched" class="text-danger font-11">Debe ingresar valores dentro del <strong>rango 1-99</strong>.</mat-error>
+                        <mat-error *ngIf="this.form.get('ordenMenu').hasError('min') && this.form.get('ordenMenu').touched" class="text-danger font-11">Debe ingresar valores dentro del <strong>rango 1-99</strong>.</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-actions fxLayout="row wrap" fxLayoutAlign="end end" fxLayoutGap="5px">
+            <button mat-stroked-button color="warn" type="button" (click)="this.onCancel()">Cancelar</button>
+            <button mat-flat-button color="accent" type="submit" [disabled]="!this.form.valid">Guardar</button>
+        </mat-card-actions>
+    </form>
+</mat-card>

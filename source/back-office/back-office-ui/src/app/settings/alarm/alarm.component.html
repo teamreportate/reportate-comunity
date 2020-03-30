@@ -1,0 +1,51 @@
+<clic-page [title]="'Listado de Alarmas'" (reloadEmitter)="this.ngOnInit()">
+  <div fxLayout="row wrap" fxLayoutAlign="start center">
+    <div [fxFlex]="this.flex" class="h-padding-5">
+      <mat-form-field>
+        <input matInput placeholder='Buscar...' (keyup)='this.filterAlarms($event.target.value)' maxlength="30"/>
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row wrap" class="h-padding-5">
+    <div fxFlex="100">
+      <ngx-datatable #table class="material" [messages]="this.tableMessages()"
+                     [columnMode]="'force'"
+                     [headerHeight]="50"
+                     [rowHeight]="'auto'"
+                     [footerHeight]="50"
+                     [limit]="7"
+                     [scrollbarH]="this.scrollH"
+                     [rows]="this.alarmList">
+
+        <ngx-datatable-column name="Acciones" [maxWidth]="200" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <button mat-icon-button (click)="this.onAlarmEdit(row)">
+              <mat-icon fxLayoutAlign="start start" color="accent" matTooltip="Editar alarma">edit</mat-icon>
+            </button>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Nombre" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.nombre | deleteUnderline}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Tipo Alarma" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.tipoAlarma | deleteUnderline}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Descripcion" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.descripcion}}
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</clic-page>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

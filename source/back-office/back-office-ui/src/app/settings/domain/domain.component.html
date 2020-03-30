@@ -1,0 +1,49 @@
+<clic-page [title]="'Dominios de Aplicación'" (reloadEmitter)="this.ngOnInit()">
+  <div fxLayout="row wrap" class="h-padding-5">
+    <div [fxFlex]="this.flexSelect">
+      <mat-form-field>
+        <mat-select placeholder="Seleccionar Un Grupo de Dominios" [formControl]="this.domainControl">
+          <mat-option *ngFor="let domain of this.domainList" [value]="domain">
+            {{domain.codigo | deleteUnderline}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="this.domainControl.hasError('required') && this.domainControl.touched">Este campo es <strong>requerido</strong>.</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row wrap">
+    <div [fxFlex]="this.flex" fxLayoutAlign="start center" class="h-padding-5">
+      <button mat-raised-button class="btn-full" [disabled]="!this.domainControl.valid" color="accent" (click)="this.addDomainValue()">Agregar Valor</button>
+    </div>
+    <div [fxFlex]="this.flex===100?100:100-this.flex" class="h-padding-5">
+      <mat-form-field>
+        <input matInput placeholder="Buscar..." maxlength="30" [disabled]="!this.domainControl.valid" (keyup)="this.applyFilter($event.target.value)"/>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100">
+      <ngx-datatable #table class="material"
+                     [messages]="this.tableMessages()"
+                     [columnMode]="'force'"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     [rowHeight]="'auto'"
+                     [limit]='10'
+                     [rows]="this.domainValueList"
+                     [scrollbarH]="this.scrollH">
+
+        <ngx-datatable-column name="Acciones" [minWidth]="200" [maxWidth]="240" [draggable]="false" [resizeable]="false">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-group="group">
+            <button mat-icon-button color="accent" matTooltip="Editar valor del dominio" (click)="this.editDomainValue(row)"><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button color="accent" matTooltip="Eliminar valor del dominio" (click)="this.deleteDomainValue(row)"><mat-icon>delete</mat-icon></button>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Valor" prop="valor" [draggable]="false" [resizeable]="false"></ngx-datatable-column>
+        <ngx-datatable-column name="Descripción" prop="descripcion" [draggable]="false" [resizeable]="false"></ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</clic-page>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

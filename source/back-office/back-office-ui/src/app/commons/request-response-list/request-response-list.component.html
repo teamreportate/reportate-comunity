@@ -1,0 +1,66 @@
+<clic-page [title]="'LISTA DE PETICIONES/RESPUESTAS DE ENVÍO AL SIN'" (reloadEmitter)="this.ngOnInit()">
+  <div fxLayout="row wrap" class="bottom-divider card-header" *ngIf="this.type === 1">
+    <div fxFlex="100" fxLayoutAlign="end center" class="invoice-number h-padding-5">FACTURA # {{this.entity.numeroFactura}}</div>
+    <div fxFlex="100" class="invoice-client-title h-padding-5">DOCUMENTO FISCAL</div>
+    <div fxFlex="100" class="request-detail h-padding-5"><strong>NIT Emisor:</strong> <span class="p-l-20">{{this.entity.nitEmisor}}</span></div>
+    <div fxFlex="100" class="request-detail h-padding-5" ><strong>Modalidad:</strong> <span class="p-l-20">{{this.entity.modalidad}}</span></div>
+    <div fxFlex="100" class="request-detail h-padding-5"><strong>Tipo de Emisión:</strong> <span class="p-l-20">{{this.entity.tipoEmision}}</span></div>
+    <div fxFlex="100" class="request-detail h-padding-5"><strong>CUF:</strong> <span class="p-l-20">{{this.entity.cuf}}</span></div>
+    <div fxFlex="100" class="request-detail h-padding-5"><strong>CUFD:</strong> <span class="p-l-20">{{this.entity.cufd}}</span></div>
+    <div fxFlex="100" class="request-detail h-padding-5"><strong>Tipo de Documento Fiscal:</strong> <span class="p-l-20">{{this.entity.tipoDocumentoFiscal.codigoSfe}}</span></div>
+    <div fxFlex="100" class="request-detail h-padding-5"><strong>Tipo de Documento Sector:</strong> <span class="p-l-20">{{this.entity.tipoDocumentoSector.codigoSfe}}</span></div>
+    <div fxFlex="100" class="request-detail h-padding-5"><strong>Fecha de Envío al SIN:</strong> <span class="p-l-20">{{this.entity.fechaEnvio? (this.entity.fechaEnvio | date: 'dd/MM/yyyy, H:mm'): 'sin fecha'}}</span></div>
+  </div>
+  <div fxLayout="row wrap" class="bottom-divider card-header" *ngIf="this.type === 2">
+    <div fxFlex="100" class="invoice-client-title h-padding-5">PAQUETE</div>
+    <div fxFlex="100" class="request-detail h-padding-5"><strong>Cantidad de Facturas:</strong> <span class="p-l-20">{{this.entity.countInvoices}}</span></div>
+    <div fxFlex="100" class="request-detail h-padding-5"><strong>NIT Emisor:</strong> <span class="p-l-20">{{this.entity.nitEmisor}}</span></div>
+    <div fxFlex="100" class="request-detail h-padding-5" ><strong>Modalidad:</strong> <span class="p-l-20">{{this.entity.modalidad}}</span></div>
+    <div fxFlex="100" class="request-detail h-padding-5"><strong>Tipo de Emisión:</strong> <span class="p-l-20">{{this.entity.tipoEmision}}</span></div>
+    <div fxFlex="100" class="request-detail h-padding-5"><strong>Estado del Paquete:</strong> <span class="p-l-20">{{this.entity.estadoPaquete}}</span></div>
+    <div fxFlex="100" class="request-detail h-padding-5"><strong>CUFD:</strong> <span class="p-l-20">{{this.entity.cufd}}</span></div>
+    <div fxFlex="100" class="request-detail h-padding-5"><strong>CUIS:</strong> <span class="p-l-20">{{this.entity.cuis}}</span></div>
+    <div fxFlex="100" class="request-detail h-padding-5"><strong>Fecha de Envío al SIN:</strong> <span class="p-l-20">{{this.entity.fechaEnvio? (this.entity.fechaEnvio | date: 'dd/MM/yyyy, H:mm'): 'sin fecha'}}</span></div>
+  </div>
+  <div fxLayout="row wrap" class="v-padding-10">
+    <div fxFlex="100" fxLayoutAlign="center center"><h5><strong>Listado de Peticiones/Respuestas</strong></h5></div>
+    <div fxFlex="100" *ngFor="let item of this.requestResponseList" class="v-padding-10">
+      <div fxLayout="row wrap" class="cutom-elevation">
+        <div fxFlex="100" class="request-title bottom-divider">XML de Petición y Respuesta Correspondiente a:</div>
+        <div fxFlex="100" class="h-padding-5 request-detail"><strong>TIPO DE PROCESO SFE:</strong> <span class="p-l-20">{{item.procesoSfe}}</span></div>
+        <div fxFlex="100" class="h-padding-5 request-detail"><strong>FECHA DE INICIO:</strong> <span class="p-l-20">{{item.fechaInicio| date: "dd/MM/yyyy H:mm:ss.SSS"}}</span></div>
+        <div fxFlex="100" class="h-padding-5 request-detail"><strong>FECHA DE FIN:</strong> <span class="p-l-20">{{item.response ? (item.response.fechaFin | date: "dd/MM/yyyy H:mm:ss.SSS") : 'Sin fecha'}}</span></div>
+        <div fxFlex="100" class="h-padding-5 request-detail"><strong>TIPO DE RESPUESTA:</strong> <span class="p-l-20">{{item.response.tipoResponseSinTracking}}</span></div>
+        <div fxFlex="100">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header style="background-color: #f5f7f7">
+              <mat-panel-title>
+                <div fxLayout="row wrap">
+                  <div fxFlex="100" fxLayoutAlign="start center">
+                    <strong>Ver XML</strong>
+                    <button mat-icon-button color="warn" matTooltip="Descargar en Archivo" (click)="this.xmlDownload($event, item)"><mat-icon>get_app</mat-icon></button>
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div fxLayout="row wrap">
+              <div fxFlex="100">
+                <div class="copy-container">
+                  <label for="xml-request" class="text-bold">XML de Petición</label>
+                  <button mat-icon-button color="accent" matTooltip="Copiar Request" (click)="this.copyToClipboard(item.requestXml)"><mat-icon>file_copy</mat-icon></button>
+                  <textarea style="" class="form-control clipboard tareaxml" id="xml-request" name="xml-request" cols="180" rows="16" [readonly]="true">{{item.requestXml}}</textarea>
+                  <label for="xml-response" class="text-bold">XML de Respuesta</label>
+                  <button mat-icon-button color="accent" matTooltip="Copiar Response" (click)="this.copyToClipboard(item.response.responseXml)"><mat-icon>file_copy</mat-icon></button>
+                  <textarea class="form-control clipboard tareaxml" id="xml-response" name="xml-response" cols="180" rows="10" [readonly]="true">{{item.response.responseXml}}</textarea>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </div>
+      </div>
+    </div>
+  </div>
+</clic-page>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

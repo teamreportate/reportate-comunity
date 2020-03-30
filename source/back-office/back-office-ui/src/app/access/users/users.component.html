@@ -1,0 +1,83 @@
+<clic-page [title]="'Listado de Usuarios'" (reloadEmitter)="this.ngOnInit()">
+  <div fxLayout="row wrap">
+    <div [fxFlex]="this.flex" fxLayoutAlign="start center" class="h-padding-5">
+      <button mat-raised-button class="btn-full" color="accent" (click)="this.createUser()">Nuevo Usuario</button>
+    </div>
+    <div [fxFlex]="this.flex===100?100:100-this.flex" fxLayoutAlign="center center" class="h-padding-5">
+      <mat-form-field>
+        <input matInput placeholder='Buscar...' (keyup)="this.onUserFilter($event.target.value)" maxlength="30"/>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div fxLayout="row wrap" class="h-padding-5">
+    <div fxFlex="100">
+      <ngx-datatable #table class="material"
+                     [messages]="this.tableMessages()"
+                     [columnMode]="'force'"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     [rowHeight]="'auto'"
+                     [limit]='10'
+                     [rows]="this.userList"
+                     [scrollbarH]="this.scrollH">
+
+        <ngx-datatable-column name="Acciones" [minWidth]="200" [maxWidth]="240" [draggable]="false"
+                              [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <button mat-icon-button matTooltip="Actualizar Usuario" (click)="this.editUser(row)"><mat-icon fxLayoutAlign="start start" color="accent">edit</mat-icon></button>
+            <button mat-icon-button (click)="this.onChangeUserState(row)"><mat-icon fxLayoutAlign="start start" color="{{row.estadoUsuario === 'ACTIVO'?'warn':'accent'}}" matTooltip="{{row.estadoUsuario === 'ACTIVO'?'Bloquear usuario':'Activar usuario'}}">{{row.estadoUsuario === 'ACTIVO' ? 'close' : 'check'}}</mat-icon></button>
+            <button mat-icon-button matTooltip="Cambiar contraseña" (click)="this.changePassword(row)" *ngIf="row.authType === 'PWD'"><mat-icon fxLayoutAlign="start start" color="accent">lock</mat-icon></button>
+            <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon color="accent" matTooltip="Más opciones" fxLayoutAlign="start start">more_vert</mat-icon></button>
+            <mat-menu #menu>
+              <button *ngIf="row.authType === 'PWD'" mat-menu-item (click)="this.toTokenLis(row)">
+                <mat-icon color="accent">vpn_key</mat-icon>
+                <span>Ver Tokens</span>
+              </button>
+            </mat-menu>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Nombre Completo" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
+            {{row.nombre}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Nombre de Usuario" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
+            {{row.username}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Tipo de Usuario" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
+            {{row.authType === 'AD' ? 'Active Directory' : 'Sistema' }}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <!-- <ngx-datatable-column name="Fecha Creación" [draggable]="false" [resizeable]="false">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.createdDate | date: 'dd/MM/yyyy, H:mm'}}
+            </ng-template>
+        </ngx-datatable-column> -->
+
+        <ngx-datatable-column name="Estado" [maxWidth]="200" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div class="{{row.estadoUsuario === 'ACTIVO'?'primary-state':'warn-state'}}"><span
+              class="text-white">{{row.estadoUsuario}}</span></div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <!-- <ngx-datatable-column name="Otras op." [maxWidth]="150" [draggable]="false" [resizeable]="false">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+
+            </ng-template>
+        </ngx-datatable-column> -->
+      </ngx-datatable>
+    </div>
+  </div>
+</clic-page>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

@@ -1,0 +1,96 @@
+<clic-page [title]="'Asignación de Usuarios'" (reloadEmitter)="this.ngOnInit()">
+  <div fxLayout="row wrap" class="h-padding-5">
+    <div fxFlex="100">
+        <div fxLayout="row wrap" fxLayoutAlign="center center">
+          <div fxFlex="100">
+            <mat-form-field>
+              <input matInput placeholder='Buscar...' [formControl]="this.searchControl"/>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" class="p-t-20" *ngIf="this.asigned">
+            <ngx-datatable #table class="material" [messages]="this.tableMessages()"
+                           [columnMode]="'force'"
+                           [headerHeight]="40"
+                           [footerHeight]="50"
+                           [rowHeight]="'auto'"
+                           [limit]="10"
+                           [scrollbarH]="this.scrollH"
+                           [rows]="this.groupList">
+
+              <ngx-datatable-column [sortable]="false" [draggable]="false" [resizeable]="false"
+                                     [maxWidth]="100" [minWidth]="100" >
+                <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-group="group">
+                  <mat-checkbox class="example-margin" [checked]="row.enUso" (change)="onCheckUsers($event, row)" ></mat-checkbox>
+                </ng-template>
+              </ngx-datatable-column >
+
+              <ngx-datatable-column name="Nombre Completo" [draggable]="false" [resizeable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{row.nombre}}
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column name="Nombre de Usuario" [draggable]="false" [resizeable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{row.username}}
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column name="Email" [draggable]="false" [resizeable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{row.email}}
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+          </div>
+
+          <div fxFlex="100" class="p-t-20" *ngIf="!this.asigned">
+            <ngx-datatable #table class="material"
+                           [messages]="this.tableMessages()"
+                           [columnMode]="'force'"
+                           [selectionType]="'checkbox'"
+                           [headerHeight]="50"
+                           [footerHeight]="50"
+                           [rowHeight]="'auto'"
+                           [limit]="10"
+                           [scrollbarH]="this.scrollH"
+                           [selected]="this.selectedAddUserList"
+                           [rows]="this.notAsignedUserList"
+                           (select)="this.onCheck($event, false)">
+
+              <ngx-datatable-column [sortable]="false" [draggable]="false" [resizeable]="false" [checkboxable]="true"
+                                    [headerCheckboxable]="true" [maxWidth]="100" [minWidth]="100">
+              </ngx-datatable-column>
+
+              <ngx-datatable-column name="Nombre" [draggable]="false" [resizeable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{row.nombre}}
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column name="Nombre de Usuario" [draggable]="false" [resizeable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{row.username}}
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column name="Email" [draggable]="false" [resizeable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{row.email}}
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+          </div>
+        </div>
+    </div>
+    <div fxFlex="100" class="v-padding-10" fxLayoutGap="5px" fxLayoutAlign="end center">
+      <button mat-stroked-button color="warn" (click)="this.location.back()">Cancelar</button>
+      <button mat-raised-button color="accent" (click)="this.saveConfig()">Guardar</button>
+
+      {{this.nav}}
+    </div>
+  </div>
+</clic-page>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

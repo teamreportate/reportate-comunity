@@ -1,0 +1,39 @@
+<div class="login-register" style="background-image:url(assets/images/background/clic2-01.png);">
+    <div class="login-register-box">
+        <mat-card>
+            <mat-card-content>
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div fxLayout="row wrap">
+                        <div class="text-center" fxFlex="100">
+                            <img alt="homepage" src="assets/images/background/login-back.png" width="50%">
+                        </div>
+                    </div>
+                    <div fxLayout="row wrap">
+                        <!-- col full-->
+                        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                            <mat-form-field style="width: 100%">
+                                <input matInput type="password" placeholder="Contraseña (*)" [formControl]="form.controls['newPassword']">
+                            </mat-form-field>
+                            <small *ngIf="form.controls['newPassword'].hasError('required') && form.controls['newPassword'].touched" class="text-danger support-text">Debe proporcionar una contraseña.</small>
+                            <small *ngIf="form.controls['newPassword'].errors?.minlength && form.controls['newPassword'].touched" class="text-danger support-text">Se requiere mínimo 8 caracteres.</small>
+                        </div>
+                        <!-- col full-->
+                        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                            <mat-form-field style="width: 100%">
+                                <input matInput placeholder="Confirmar contraseña (*)" [formControl]="form.controls['confirmPassword']" type="password">
+                            </mat-form-field>
+                            <small *ngIf="form.controls['confirmPassword'].hasError('required') && form.controls['confirmPassword'].touched" class="text-danger support-text">Por favor verifique su contraseña.</small>
+                            <small *ngIf="form.controls['confirmPassword'].errors?.equalTo" class="text-danger support-text">Las contraseñas no coinciden.</small>
+                        </div>
+                        <!-- col full-->
+                        <!--<div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">-->
+                        <!--<mat-checkbox class="font-14">Acepto los terminos y condiciones-->
+                        <!--<a href="javascript:void(0)" class="link text-info">terms</a>.</mat-checkbox>-->
+                        <!--</div>-->
+                        <button mat-raised-button color="primary" class="btn-block btn-lg m-t-20 m-b-20" type="submit" [disabled]="!form.valid">Guardar</button>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
