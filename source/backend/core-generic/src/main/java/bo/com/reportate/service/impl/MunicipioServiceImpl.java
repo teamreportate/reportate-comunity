@@ -67,6 +67,8 @@ public class MunicipioServiceImpl implements MunicipioService {
     @Override
     @Transactional(readOnly = true)
     public List<MunicipioUsuarioDto> listarMuniciposAsignados(String username) {
-        return this.municipioUsuarioRepository.listarMunicipiosAsignados(username);
+        List<MunicipioUsuarioDto> list = this.municipioUsuarioRepository.listarMunicipiosAsignados(username);
+        list.addAll(this.municipioUsuarioRepository.listarMunicipiosNoAsignados(username));
+        return list;
     }
 }

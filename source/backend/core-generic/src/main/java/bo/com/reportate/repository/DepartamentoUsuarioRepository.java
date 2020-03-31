@@ -23,7 +23,20 @@ import java.util.List;
 public interface DepartamentoUsuarioRepository extends JpaRepository<DepartamentoUsuario, Long> {
     boolean existsByMuUsuarioAndDepartamentoAndEstado(MuUsuario muUsuario, Departamento departamento, EstadoEnum estadoEnum);
 
-    @Query("SELECT new bo.com.reportate.model.dto.DepartamentoUsuarioDto(d) " +
-            "from Departamento d left join d.departamentoUsuarios du where du.muUsuario.username =:username")
+    @Query("SELECT new bo.com.reportate.model.dto.DepartamentoUsuarioDto(du.departamento) " +
+            "FROM DepartamentoUsuario du INNER JOIN du.muUsuario u " +
+            "WHERE u.username =:username " +
+            "AND du.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND u.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<DepartamentoUsuarioDto> listarDepartamentoAsignados(@Param("username") String username);
+
+    @Query("SELECT new bo.com.reportate.model.dto.DepartamentoUsuarioDto(d) " +
+            "from Departamento d " +
+            "WHERE d NOT IN" +
+            "   (SELECT du.departamento FROM DepartamentoUsuario du INNER JOIN du.muUsuario u " +
+            "   WHERE u.username=:username AND du.estado =bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "   AND u.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO" +
+            "   ) " +
+            "AND d.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
+    List<DepartamentoUsuarioDto> listarDepartamentoNoAsignados(@Param("username") String username);
 }

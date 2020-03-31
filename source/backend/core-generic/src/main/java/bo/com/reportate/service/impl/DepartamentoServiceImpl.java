@@ -55,6 +55,8 @@ public class DepartamentoServiceImpl implements DepartamentoService {
     @Override
     @Transactional(readOnly = true)
     public List<DepartamentoUsuarioDto> listarDepartamentosAsignados(String username) {
-        return departamentoUsuarioRepository.listarDepartamentoAsignados(username);
+        List<DepartamentoUsuarioDto> departamentoUsuarioDtos = departamentoUsuarioRepository.listarDepartamentoAsignados(username);
+        departamentoUsuarioDtos.addAll(departamentoUsuarioRepository.listarDepartamentoNoAsignados(username));
+        return departamentoUsuarioDtos;
     }
 }

@@ -23,7 +23,17 @@ import java.util.List;
  */
 public interface MunicipioUsuarioRepository extends JpaRepository<MunicipioUsuario, Long> {
     boolean existsByMuUsuarioAndMunicipioAndEstado(MuUsuario muUsuario, Municipio municipio, EstadoEnum estadoEnum);
-    @Query("SELECT new bo.com.reportate.model.dto.MunicipioUsuarioDto(d) " +
-            "from Municipio d left join d.municipioUsuarios du where du.muUsuario.username =:username")
+    @Query("SELECT new bo.com.reportate.model.dto.MunicipioUsuarioDto(mu.municipio) " +
+            "from MunicipioUsuario mu left join mu.muUsuario u " +
+            "where u.username =:username " +
+            "AND mu.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND u.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<MunicipioUsuarioDto> listarMunicipiosAsignados(@Param("username") String username);
+
+    @Query("SELECT new bo.com.reportate.model.dto.MunicipioUsuarioDto(mu) " +
+            "from Municipio mu WHERE mu NOT IN (SELECT mud FROM MunicipioUsuario mud INNER JOIN mud.muUsuario u " +
+            " WHERE u.username =:username " +
+            " AND u.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            " AND mud.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO) AND mu.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
+    List<MunicipioUsuarioDto> listarMunicipiosNoAsignados(@Param("username") String username);
 }

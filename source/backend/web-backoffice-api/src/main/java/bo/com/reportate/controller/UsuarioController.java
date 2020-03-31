@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.util.Date;
 import java.util.List;
 
@@ -255,7 +256,7 @@ public class UsuarioController {
     }
 
     @RequestMapping(value = "/departamentos-asignados", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public ResponseEntity<List<DepartamentoUsuarioDto>> listarDepartamentos( @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<List<DepartamentoUsuarioDto>> listarDepartamentos(@AuthenticationPrincipal UserDetails userDetails) {
         try {
             return ok(this.departamentoService.listarDepartamentosAsignados(userDetails.getUsername()));
         } catch (NotDataFoundException e) {
@@ -263,6 +264,19 @@ public class UsuarioController {
             return CustomErrorType.badRequest("Obtener Departamentos", e.getMessage());
         } catch (Exception e) {
             log.error("Ocurrio un error al recuperar lista de departamentos para usuario: [{}]", userDetails.getUsername(), e);
+            return CustomErrorType.serverError("Obtener Departamentos", "Ocurrió un error interno");
+        }
+    }
+
+    @RequestMapping(value = "{username}/departamentos-asignados", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    public ResponseEntity<List<DepartamentoUsuarioDto>> listarDepartamentos(@PathVariable("username") String username) {
+        try {
+            return ok(this.departamentoService.listarDepartamentosAsignados(username));
+        } catch (NotDataFoundException e) {
+            log.error("Ocurrio un problema al recuperar lista de departamentos para el usuario: [{}]", username);
+            return CustomErrorType.badRequest("Obtener Departamentos", e.getMessage());
+        } catch (Exception e) {
+            log.error("Ocurrio un error al recuperar lista de departamentos para usuario: [{}]", username, e);
             return CustomErrorType.serverError("Obtener Departamentos", "Ocurrió un error interno");
         }
     }
