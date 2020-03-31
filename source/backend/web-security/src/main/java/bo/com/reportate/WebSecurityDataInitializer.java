@@ -45,12 +45,19 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
     ValorDominioRepository valorDominioRepository;
     @Autowired
     DominioService dominioService;
+    @Autowired
+    DepartamentoRepository departamentoRepository;
+    @Autowired
+    MunicipioRepository municipioRepository;
+    @Autowired
+    CentroSaludRepository centroSaludRepository;
 
     @Override
     public void run(String... args) throws Exception {
         addUsers();
         addParams();
         addDomain();
+        cargarDatos();
     }
     private void addUsers(){
         log.info("************************* Cargando usuarios por defecto *************************");
@@ -186,6 +193,70 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
 //        this.dominioService.saveValorDominio(valorDominio);
         
         log.info("************************* Fin Cargando dominios *************************");
+    }
+
+    private void cargarDatos(){
+        if(!this.departamentoRepository.existsByNombreIgnoreCase("Santa Cruz")){
+            Departamento departamento = Departamento.builder().nombre("Santa Cruz").latitud(0.0).longitud(0.0).build();
+            departamentoRepository.save(departamento);
+
+            if(!municipioRepository.existsByNombreIgnoreCaseAndDepartamento("Andres Ibañez",departamento)){
+                Municipio municipio = Municipio.builder().nombre("Andres Ibañez").latitud(0.0).longitud(0.0).departamento(departamento).build();
+                this.municipioRepository.save(municipio);
+                if(!centroSaludRepository.existsByMunicipioAndNombreIgnoreCase(municipio,"La Colorada")){
+                    CentroSalud centroSalud = CentroSalud.builder().nombre("La Colorada").direccion("Av. La colorada").zona("sur").ciudad("Santa Cruz de la Sierra").latitud(0.0).longitud(0.0).municipio(municipio).build();
+                    this.centroSaludRepository.save(centroSalud);
+                }
+                if(!centroSaludRepository.existsByMunicipioAndNombreIgnoreCase(municipio,"El Bajio")){
+                    CentroSalud centroSalud = CentroSalud.builder().nombre("El Bajio").direccion("Av. El Bajio").zona("sur").ciudad("Santa Cruz de la Sierra").latitud(0.0).longitud(0.0).municipio(municipio).build();
+                    this.centroSaludRepository.save(centroSalud);
+                }
+            }
+
+            if(!municipioRepository.existsByNombreIgnoreCaseAndDepartamento("Montero",departamento)){
+                Municipio municipio = Municipio.builder().nombre("Montero").latitud(0.0).longitud(0.0).departamento(departamento).build();
+                this.municipioRepository.save(municipio);
+                if(!centroSaludRepository.existsByMunicipioAndNombreIgnoreCase(municipio,"Montero hoyos")){
+                    CentroSalud centroSalud = CentroSalud.builder().nombre("Montero hoyos").direccion("Av. La colorada").zona("sur").ciudad("Montero").latitud(0.0).longitud(0.0).municipio(municipio).build();
+                    this.centroSaludRepository.save(centroSalud);
+                }
+                if(!centroSaludRepository.existsByMunicipioAndNombreIgnoreCase(municipio,"Principal")){
+                    CentroSalud centroSalud = CentroSalud.builder().nombre("Principal").direccion("Av. El Bajio").zona("sur").ciudad("Montero").latitud(0.0).longitud(0.0).municipio(municipio).build();
+                    this.centroSaludRepository.save(centroSalud);
+                }
+            }
+        }
+
+        if(!this.departamentoRepository.existsByNombreIgnoreCase("La Paz")){
+            Departamento departamento = Departamento.builder().nombre("La Paz").latitud(0.0).longitud(0.0).build();
+            departamentoRepository.save(departamento);
+
+            if(!municipioRepository.existsByNombreIgnoreCaseAndDepartamento("La Paz",departamento)){
+                Municipio municipio = Municipio.builder().nombre("La Paz").latitud(0.0).longitud(0.0).departamento(departamento).build();
+                this.municipioRepository.save(municipio);
+                if(!centroSaludRepository.existsByMunicipioAndNombreIgnoreCase(municipio,"Central")){
+                    CentroSalud centroSalud = CentroSalud.builder().nombre("Central").direccion("Av. Central").zona("sur").ciudad("La Paz").latitud(0.0).latitud(0.0).municipio(municipio).build();
+                    this.centroSaludRepository.save(centroSalud);
+                }
+                if(!centroSaludRepository.existsByMunicipioAndNombreIgnoreCase(municipio,"El sur")){
+                    CentroSalud centroSalud = CentroSalud.builder().nombre("El sur").direccion("Av. El Bajio").zona("sur").ciudad("La Paz").latitud(0.0).latitud(0.0).municipio(municipio).build();
+                    this.centroSaludRepository.save(centroSalud);
+                }
+            }
+
+            if(!municipioRepository.existsByNombreIgnoreCaseAndDepartamento("Cobapabana",departamento)){
+                Municipio municipio = Municipio.builder().nombre("Cobapabana").latitud(0.0).longitud(0.0).departamento(departamento).build();
+                this.municipioRepository.save(municipio);
+                if(!centroSaludRepository.existsByMunicipioAndNombreIgnoreCase(municipio,"Cobapabana")){
+                    CentroSalud centroSalud = CentroSalud.builder().nombre("Cobapabana").direccion("Av. Principal").zona("sur").ciudad("Tiquina").latitud(0.0).latitud(0.0).municipio(municipio).build();
+                    this.centroSaludRepository.save(centroSalud);
+                }
+                if(!centroSaludRepository.existsByMunicipioAndNombreIgnoreCase(municipio,"Tiquina")){
+                    CentroSalud centroSalud = CentroSalud.builder().nombre("Tiquina").direccion("Tiquina").zona("sur").ciudad("Tiquina").latitud(0.0).latitud(0.0).municipio(municipio).build();
+                    this.centroSaludRepository.save(centroSalud);
+                }
+            }
+        }
     }
 
 

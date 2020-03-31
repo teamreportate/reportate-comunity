@@ -1,9 +1,10 @@
 package bo.com.reportate.service;
 
+import bo.com.reportate.model.CentroSalud;
+import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.MuUsuario;
-import bo.com.reportate.model.dto.GrupoDto;
-import bo.com.reportate.model.dto.RolDto;
-import bo.com.reportate.model.dto.UsuarioDto;
+import bo.com.reportate.model.Municipio;
+import bo.com.reportate.model.dto.*;
 
 import java.util.List;
 
@@ -38,30 +39,12 @@ public interface UsuarioService {
     UsuarioDto obtener(Long id);
 
     /**
-     * Realiza la creacion del usuario que se loguea desde la web backend
-     * @param nombre
-     * @param username
-     * @param password
-     * @param passwordConfirm
-     * @param listaGrupos
-     * @return
-     */
-    Long crear(String nombre, String username, String password, String passwordConfirm, List<GrupoDto> listaGrupos);
-
-    /**
      * Realiza la modificacion del objeto
      * @param authUsuario
      * @param id
      * @return
      */
     UsuarioDto actualizarUsuario(UsuarioDto authUsuario, Long id);
-
-    /**
-     * Realiza la eliminacion logica del objeto
-     * @param id
-     * @return
-     */
-    boolean eliminar(Long id);
 
     /**
      * Permite cambiar de estado al objeto seleccionado
@@ -75,7 +58,6 @@ public interface UsuarioService {
     List<GrupoDto> listarGruposNoAsignados(Long usuarioId);
 
     void removerGrupos(Long usuarioId, List<GrupoDto> MuGrupoList);
-
     /**
      * Actualizar lista de grupos asignados
      * @param usuarioId
@@ -83,20 +65,19 @@ public interface UsuarioService {
      * @return
      */
     void agregarGrupos(Long usuarioId, List<GrupoDto> gruposList);
-
-
+    void agregarGrupos(MuUsuario muUsuario, List<GrupoDto> gruposList);
 
     List<UsuarioDto> findUsuariosNoAsignados(Long alarmaId);
 
-    List<UsuarioDto> findUsuariosAsignados(Long alarmaId);
-
     UsuarioDto nuevoUsuario(UsuarioDto authUsuario, String passwordConfirm);
-
-    void agregarRoles(Long usuarioId, List<RolDto> listaRoles);
-
-    void removerRoles(Long usuarioId, List<RolDto> listaRoles);
 
     void cambiarContrasenia(Long usuarioId, String newPassword, String confirmPassword);
 
     MuUsuario obtenerUsuario(Long usuarioId);
+    void agregarDepartamento(Long usuarioId, List<DepartamentoDto> departamentos);
+    void agregarDepartamento(MuUsuario muUsuario, List<DepartamentoDto> departamentos);
+    void agregarCentroSalud(Long usuarioId, List<CentroSaludDto> centroSaluds);
+    void agregarCentroSalud(MuUsuario muUsuario, List<CentroSaludDto> centroSaluds);
+    void agregarMunicipio(MuUsuario muUsuario, List<MunicipioDto> municipios);
+    void agregarMunicipio(Long usuarioId, List<MunicipioDto> municipios);
 }

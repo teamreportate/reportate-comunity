@@ -1,8 +1,12 @@
 package bo.com.reportate.model.dto;
 
+import bo.com.reportate.model.CentroSalud;
+import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.MuUsuario;
+import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.enums.AuthTypeEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
+import bo.com.reportate.model.enums.TipoUsuarioEnum;
 import bo.com.reportate.model.enums.UserStatusEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,8 +33,12 @@ public class UsuarioDto  implements Serializable {
     private Boolean passwordGenerado = false;
     private String token;
     private String password;
+    private TipoUsuarioEnum tipoUsuario;
 
     private List<GrupoDto> grupos = new ArrayList<>();
+    private List<DepartamentoDto> departamentos = new ArrayList<>();
+    private List<MunicipioDto> municipios = new ArrayList<>();
+    private List<CentroSaludDto> centroSaluds = new ArrayList<>();
 
     public UsuarioDto(MuUsuario userx){
         this.id= userx.getId();
@@ -42,6 +50,7 @@ public class UsuarioDto  implements Serializable {
         this.estado = userx.getEstado();
         this.passwordGenerado = userx.getPasswordGenerado();
         this.token = userx.getToken();
+        this.tipoUsuario = userx.getTipoUsuario();
     }
 
 }
