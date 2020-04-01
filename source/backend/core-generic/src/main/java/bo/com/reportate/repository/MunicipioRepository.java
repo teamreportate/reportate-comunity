@@ -2,6 +2,7 @@ package bo.com.reportate.repository;
 
 import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.Municipio;
+import bo.com.reportate.model.dto.MunicipioDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -17,5 +18,6 @@ import java.util.List;
  */
 public interface MunicipioRepository extends JpaRepository<Municipio, Long> {
     boolean existsByNombreIgnoreCaseAndDepartamento(String nombre, Departamento departamento);
-    List<Municipio> findByDepartamentoIdOrderByIdDesc(Long id);
+    List<MunicipioDto> findByDepartamentoIdOrderByNombreAsc(Long id);
+    boolean existsByIdIsNotAndNombreIgnoreCase(Long municipioId, String nombre);
 }

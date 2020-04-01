@@ -2,6 +2,7 @@ package bo.com.reportate.service;
 
 import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.MunicipioUsuario;
+import bo.com.reportate.model.dto.MunicipioDto;
 import bo.com.reportate.model.dto.MunicipioUsuarioDto;
 
 import java.util.List;
@@ -17,8 +18,12 @@ import java.util.List;
  */
 public interface MunicipioService {
     List<Municipio> findAll();
-    List<Municipio> findByDepartamento(Long idDepartamento);
+    List<MunicipioDto> findByDepartamento(Long idDepartamento);
     Municipio save(Municipio municipio);
     Municipio save(Long idDepartamento, String nombre, Double latitud, Double longitud);
     List<MunicipioUsuarioDto> listarMuniciposAsignados(String username);
+
+    Municipio findById(Long municipioId);
+
+    Municipio update(Long municipioId, String nombre, Double latitud, Double longitud);
 }

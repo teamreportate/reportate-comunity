@@ -1,6 +1,7 @@
 package bo.com.reportate.service;
 
 import bo.com.reportate.model.CentroSalud;
+import bo.com.reportate.model.dto.CentroSaludDto;
 import bo.com.reportate.model.dto.CentroSaludUsuarioDto;
 
 import java.util.List;
@@ -15,10 +16,13 @@ import java.util.List;
  * @Copyright :MC4
  */
 public interface CentroSaludService {
+    CentroSalud findById(Long centroSaludId);
     List<CentroSalud> findAll();
-    List<CentroSalud> findByMunicipio(Long idMunicipio);
+    List<CentroSaludDto> findByMunicipio(Long idMunicipio);
     CentroSalud save(CentroSalud departamento);
     CentroSalud save(Long idMunicipio, String nombre, String direccion, String zona, String ciudad, Double latitud, Double longitud);
 
     List<CentroSaludUsuarioDto> listarCentroSaludAsignados(String username);
+
+    CentroSalud update(Long municipioId, String nombre, String direccion, String zona, String ciudad, Double latitud, Double longitud);
 }

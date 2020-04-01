@@ -39,4 +39,8 @@ public interface DepartamentoUsuarioRepository extends JpaRepository<Departament
             "   ) " +
             "AND d.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<DepartamentoUsuarioDto> listarDepartamentoNoAsignados(@Param("username") String username);
+
+    @Query(" UPDATE DepartamentoUsuario du SET du.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE du.muUsuario =:usuario AND du.departamento.id NOT IN(:departamentos)")
+    void eliminaDepartamentosNoAsignados(@Param("usuario") MuUsuario muUsuario, @Param("departamentos") List<Long> departamentoIds);
+
 }

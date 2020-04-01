@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface DepartamentoRepository extends JpaRepository<Departamento, Long> {
     boolean existsByNombreIgnoreCase(String nombre);
-
+    boolean existsByIdIsNotAndNombreIgnoreCase(Long departamentoID, String nombre);
     @Query(" SELECT new bo.com.reportate.model.dto.DepartamentoDto(d) FROM Departamento d WHERE d.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO ")
     List<DepartamentoDto> cargarConMunicipio();
 }

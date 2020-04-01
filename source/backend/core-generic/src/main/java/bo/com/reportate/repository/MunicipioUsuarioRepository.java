@@ -36,4 +36,7 @@ public interface MunicipioUsuarioRepository extends JpaRepository<MunicipioUsuar
             " AND u.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
             " AND mud.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO) AND mu.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<MunicipioUsuarioDto> listarMunicipiosNoAsignados(@Param("username") String username);
+
+    @Query(" UPDATE MunicipioUsuario du SET du.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE du.muUsuario =:usuario AND du.municipio.id NOT IN(:municipios)")
+    void eliminaMunicipiosNoAsignados(@Param("usuario") MuUsuario muUsuario, @Param("municipios") List<Long> municipiosIds);
 }

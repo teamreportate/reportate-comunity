@@ -1,9 +1,8 @@
 package bo.com.reportate.service.impl;
 
+import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.Departamento;
-import bo.com.reportate.model.DepartamentoUsuario;
-import bo.com.reportate.model.MuUsuario;
 import bo.com.reportate.model.dto.DepartamentoDto;
 import bo.com.reportate.model.dto.DepartamentoUsuarioDto;
 import bo.com.reportate.repository.DepartamentoRepository;
@@ -29,6 +28,12 @@ import java.util.List;
 public class DepartamentoServiceImpl implements DepartamentoService {
     @Autowired private DepartamentoRepository departamentoRepository;
     @Autowired private DepartamentoUsuarioRepository departamentoUsuarioRepository;
+
+    @Override
+    public Departamento findById(Long departamentoId) {
+        return this.departamentoRepository.findById(departamentoId).orElseThrow(()-> new NotDataFoundException("No se encontro ningún departamento con ID: "+departamentoId));
+    }
+
     @Override
     @Transactional(readOnly = true)
     public List<DepartamentoDto> findAllConMunicipio() {
@@ -50,6 +55,19 @@ public class DepartamentoServiceImpl implements DepartamentoService {
             throw new OperationException("Ya existe un departamento con el nombre: "+nombre);
         }
         return departamentoRepository.save(Departamento.builder().nombre(nombre).latitud(latitud).longitud(longitud).build());
+    }
+
+    @Override
+    public Departamento update(Long departamentoId, String nombre, Double latitud, Double longitud) {
+        ValidationUtil.throwExceptionIfInvalidText("nombre",nombre,true,100);
+        if(departamentoRepository.existsByIdIsNotAndNombreIgnoreCase(departamentoId, nombre)){
+            throw new OperationException("Ya existe un departamento con el nombre: "+nombre);
+        }
+        Departamento departamento = this.departamentoRepository.findById(departamentoId).orElseThrow(()-> new NotDataFoundException("No se encontró ningún departamento con ID: "+departamentoId));
+        departamento.setNombre(nombre);
+        departamento.setLatitud(latitud);
+        departamento.setLongitud(longitud);
+        return this.departamentoRepository.save(departamento);
     }
 
     @Override

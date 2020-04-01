@@ -4,7 +4,7 @@ import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.Municipio;
-import bo.com.reportate.model.MunicipioUsuario;
+import bo.com.reportate.model.dto.MunicipioDto;
 import bo.com.reportate.model.dto.MunicipioUsuarioDto;
 import bo.com.reportate.repository.DepartamentoRepository;
 import bo.com.reportate.repository.MunicipioRepository;
@@ -42,8 +42,8 @@ public class MunicipioServiceImpl implements MunicipioService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Municipio> findByDepartamento(Long idDepartamento) {
-        return municipioRepository.findByDepartamentoIdOrderByIdDesc(idDepartamento);
+    public List<MunicipioDto> findByDepartamento(Long idDepartamento) {
+        return municipioRepository.findByDepartamentoIdOrderByNombreAsc(idDepartamento);
     }
 
     @Override
@@ -70,5 +70,25 @@ public class MunicipioServiceImpl implements MunicipioService {
         List<MunicipioUsuarioDto> list = this.municipioUsuarioRepository.listarMunicipiosAsignados(username);
         list.addAll(this.municipioUsuarioRepository.listarMunicipiosNoAsignados(username));
         return list;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Municipio findById(Long municipioId) {
+        return this.municipioRepository.findById(municipioId).orElseThrow(()->new NotDataFoundException("No se encontro ningún municipio con ID: "+municipioId));
+    }
+
+    @Override
+    public Municipio update(Long municipioId, String nombre, Double latitud, Double longitud) {
+        ValidationUtil.throwExceptionIfInvalidText("nombre",nombre,true,100);
+        if(municipioRepository.existsByIdIsNotAndNombreIgnoreCase(municipioId, nombre)){
+            throw new OperationException("Ya existe un municipio con el nombre: "+nombre);
+        }
+        Municipio municipio = this.municipioRepository.findById(municipioId).orElseThrow(()-> new NotDataFoundException("No se encontró ningún departamento con ID: "+municipioId));
+        municipio.setNombre(nombre);
+        municipio.setLatitud(latitud);
+        municipio.setLongitud(longitud);
+        return this.municipioRepository.save(municipio);
+
     }
 }

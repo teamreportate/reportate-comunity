@@ -3,7 +3,9 @@ package bo.com.reportate.service.impl;
 import bo.com.reportate.model.CentroSalud;
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
+import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.Municipio;
+import bo.com.reportate.model.dto.CentroSaludDto;
 import bo.com.reportate.model.dto.CentroSaludUsuarioDto;
 import bo.com.reportate.repository.CentroSaludRepository;
 import bo.com.reportate.repository.CentroSaludUsuarioRepository;
@@ -32,12 +34,17 @@ public class CentroSaludServiceImpl implements CentroSaludService {
     @Autowired private CentroSaludUsuarioRepository centroSaludUsuarioRepository;
 
     @Override
+    public CentroSalud findById(Long centroSaludId) {
+        return this.centroSaludRepository.findById(centroSaludId).orElseThrow(()->new NotDataFoundException("No se encontró ningún centro de salud con ID: "+centroSaludId));
+    }
+
+    @Override
     public List<CentroSalud> findAll() {
         return centroSaludRepository.findAll();
     }
 
     @Override
-    public List<CentroSalud> findByMunicipio(Long idMunicipio) {
+    public List<CentroSaludDto> findByMunicipio(Long idMunicipio) {
         return centroSaludRepository.findByMunicipioIdOrderByIdDesc(idMunicipio);
     }
 
@@ -70,7 +77,28 @@ public class CentroSaludServiceImpl implements CentroSaludService {
     @Override
     @Transactional(readOnly = true)
     public List<CentroSaludUsuarioDto> listarCentroSaludAsignados(String username) {
-        return this.centroSaludUsuarioRepository.listarCentrosSaludAsignados(username);
+        List<CentroSaludUsuarioDto> list = this.centroSaludUsuarioRepository.listarCentrosSaludAsignados(username);
+        list.addAll(this.centroSaludUsuarioRepository.listarCentrosSaludNoAsignados(username));
+        return list;
+    }
+
+    @Override
+    public CentroSalud update(Long centroSaludId, String nombre, String direccion, String zona, String ciudad, Double latitud, Double longitud) {
+        ValidationUtil.throwExceptionIfInvalidText("nombre",nombre,true,100);
+        ValidationUtil.throwExceptionIfInvalidText("direccion",direccion,true,200);
+        ValidationUtil.throwExceptionIfInvalidText("zona",zona,true,100);
+        ValidationUtil.throwExceptionIfInvalidText("ciudad",ciudad,true,100);
+        if(centroSaludRepository.existsByIdIsNotAndNombreIgnoreCase(centroSaludId, nombre)){
+            throw new OperationException("Ya existe un centro de salud con el nombre: "+nombre+" en el municipio");
+        }
+        CentroSalud centroSalud = this.centroSaludRepository.findById(centroSaludId).orElseThrow(()-> new NotDataFoundException("No se encontró ningún departamento con ID: "+centroSaludId));
+        centroSalud.setNombre(nombre);
+        centroSalud.setDireccion(direccion);
+        centroSalud.setZona(zona);
+        centroSalud.setCiudad(ciudad);
+        centroSalud.setLatitud(latitud);
+        centroSalud.setLongitud(longitud);
+        return this.centroSaludRepository.save(centroSalud);
     }
 
 }

@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @Package :bo.com.reportate.model
  * @Copyright :MC4
  */
-@Setter @Getter
+@Setter @Getter @AllArgsConstructor @NoArgsConstructor
 public class MunicipioDto implements Serializable {
     private Long id;
     private String nombre;

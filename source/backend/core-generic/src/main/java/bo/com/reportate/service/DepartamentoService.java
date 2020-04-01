@@ -18,8 +18,11 @@ import java.util.List;
  * @Copyright :MC4
  */
 public interface DepartamentoService {
+    Departamento findById(Long  departamentoId);
     List<DepartamentoDto> findAllConMunicipio();
     Departamento save(Departamento departamento);
     Departamento save(String nombre, Double latitud, Double longitud);
+
+    Departamento update(Long departamentoId, String nombre, Double latitud, Double longitud);
     List<DepartamentoUsuarioDto> listarDepartamentosAsignados(String username);
 }

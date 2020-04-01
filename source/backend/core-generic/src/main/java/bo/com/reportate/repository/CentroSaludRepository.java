@@ -2,6 +2,7 @@ package bo.com.reportate.repository;
 
 import bo.com.reportate.model.CentroSalud;
 import bo.com.reportate.model.Municipio;
+import bo.com.reportate.model.dto.CentroSaludDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -16,6 +17,8 @@ import java.util.List;
  * @Copyright :MC4
  */
 public interface CentroSaludRepository extends JpaRepository<CentroSalud, Long> {
-    List<CentroSalud> findByMunicipioIdOrderByIdDesc(Long idMunicipio);
+    List<CentroSaludDto> findByMunicipioIdOrderByIdDesc(Long idMunicipio);
     boolean existsByMunicipioAndNombreIgnoreCase(Municipio municipio, String nombre);
+
+    boolean existsByIdIsNotAndNombreIgnoreCase(Long municipioId, String nombre);
 }

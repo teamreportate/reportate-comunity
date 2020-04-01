@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -254,6 +255,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void agregarDepartamento(MuUsuario muUsuario, List<DepartamentoDto> departamentos) {
+        List<Long> depIds = new ArrayList<>();
+        departamentos.forEach(departamentoDto -> depIds.add(departamentoDto.getId()));
+        this.departamentoUsuarioRepository.eliminaDepartamentosNoAsignados(muUsuario,depIds);
         for (DepartamentoDto auxDep : departamentos) {
             Departamento departamento = this.departamentoRepository.findById(auxDep.getId()).orElseThrow(()->new NotDataFoundException("No se encontro un departamento con ID: "+auxDep.getId()));
             if(!departamentoUsuarioRepository.existsByMuUsuarioAndDepartamentoAndEstado(muUsuario,departamento,EstadoEnum.ACTIVO)){
@@ -264,6 +268,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void agregarCentroSalud(MuUsuario muUsuario, List<CentroSaludDto> centroSaluds) {
+        List<Long> ceIds = new ArrayList<>();
+        centroSaluds.forEach(centroSaludDto -> ceIds.add(centroSaludDto.getId()));
+        this.centroSaludUsuarioRepository.eliminaCentrosNoAsignados(muUsuario, ceIds);
         for (CentroSaludDto auxCentro:centroSaluds) {
             CentroSalud centroSalud = this.centroSaludRepository.findById(auxCentro.getId()).orElseThrow(()->new NotDataFoundException("No se encontro ningún centro de salud con ID: "+auxCentro.getId()));
             if(!centroSaludUsuarioRepository.existsByMuUsuarioAndCentroSaludAndEstado(muUsuario,centroSalud,EstadoEnum.ACTIVO)){
@@ -275,6 +282,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void agregarMunicipio(MuUsuario muUsuario, List<MunicipioDto> municipios) {
+        List<Long> muIds = new ArrayList<>();
+        municipios.forEach(municipioDto -> muIds.add(municipioDto.getId()));
+        this.municipioUsuarioRepository.eliminaMunicipiosNoAsignados(muUsuario, muIds);
         for (MunicipioDto auxMunic : municipios) {
             Municipio municipio = this.municipioRepository.findById(auxMunic.getId()).orElseThrow(()->new NotDataFoundException("No se encontro ningún municipio con ID:"+auxMunic.getId()));
             if(!this.municipioUsuarioRepository.existsByMuUsuarioAndMunicipioAndEstado(muUsuario, municipio,EstadoEnum.ACTIVO)){
