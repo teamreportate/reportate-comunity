@@ -27,7 +27,8 @@ import {
   MatSidenavModule,
   MatSlideToggleModule,
   MatSnackBarModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatTabsModule
 } from '@angular/material';
 import {dateFormatProvider} from './core/providers/date-format.provider';
 import {BlockUIModule} from 'ng-block-ui';
@@ -109,7 +110,7 @@ const customNotifierOptions: NotifierOptions = {
     MatSnackBarModule,
     MatButtonModule,
     MatDialogModule,
-
+    MatTabsModule,
     FormsModule,
     FlexLayoutModule,
     HttpClientModule,
