@@ -6,9 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="web-backoffice-api" />
         <module name="core-generic" />
         <module name="model" />
+        <module name="web-backoffice-api" />
         <module name="web-security" />
       </profile>
     </annotationProcessing>

@@ -16,6 +16,7 @@ import {UserGroupRoleComponent} from './users/user-group-role/user-group-role.co
 import {GroupUsersRoleComponent} from './groups/group-users-role/group-users-role.component';
 import {RoleUserGroupComponent} from './roles/role-user-group/role-user-group.component';
 import {UserTokenComponent} from './users/user-token/user-token.component';
+import { UserComponent } from './users/user-form/user.component';
 
 // const menuBuilder: MenuBuilderService = new MenuBuilderService(new JwtHelperService());
 //
@@ -37,6 +38,11 @@ export const AccessRouting: Routes = [
       {
         path: 'users/token',
         component: UserTokenComponent,
+        canActivate: [AuthGuardService]
+      },
+      {
+        path: 'users/create',
+        component: UserComponent,
         canActivate: [AuthGuardService]
       },
       {

@@ -4,18 +4,18 @@
 /*Material Theme Colors*/
 
 $custom: (
-  100:  #F68922,
-  200: #F68922,
+  100:  #02adc6,
+  200: #02adc6,
   //200: #5494D5,
-  300: #F68922,
+  300: #02adc6,
   contrast: (
     100: $light-primary-text,
     200: $light-primary-text,
     300: $light-primary-text,
   )
 );
-$primary-theme:#F68922;
-$accent-theme:#F68922;
+$primary-theme:#02adc6;
+$accent-theme:#02adc6;
 $warn-theme:#EFEFEF;
 $success-theme: #4CAF50;
 $primary: mat-palette($custom, 100);
@@ -39,7 +39,7 @@ $foreground: map-get($theme, foreground);
 $sidebar: #fff;
 $sidebar-white: #e5edef;
 $sidebar-alt:#f2f6f8;
-$bodycolor: #eef5f9;
+$bodycolor: #f5f5f5;
 $headingtext: #455a64;
 $bodytext: #67757c;
 $sidebar-text: #8f999e;
@@ -49,7 +49,7 @@ $font-16: 16px;
 
 $light-text: #a6b7bf;
 //$themecolor: #1e88e5;
-$themecolor: #F68922;
+$themecolor: #02adc6;
 $themecolor-alt: #26c6da;
 $themecolor-dark: #028ee1;
 
