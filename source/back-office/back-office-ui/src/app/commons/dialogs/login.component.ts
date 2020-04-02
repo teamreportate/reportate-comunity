@@ -21,7 +21,7 @@ import {AUTH_DATA} from '../../../environments/environment';
                 <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
                     <div fxLayout="row wrap">
                         <div class="text-center" fxFlex="100">
-                            <img alt="homepage" src="assets/images/logo/clic-logo.png" width="70%">
+                            <img alt="homepage" src="assets/images/background/logo-white.png" width="70%">
                         </div>
                     </div>
                     <br>
