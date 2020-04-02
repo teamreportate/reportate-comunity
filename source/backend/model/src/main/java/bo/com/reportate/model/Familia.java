@@ -42,10 +42,22 @@ public class Familia extends AbstractAuditableEntity{
     private String direccion;
     @Column(name = "ZONA", length = 100, nullable = false)
     private String zona;
+    @Column(name = "CIUDAD", length = 100)
+    private String ciudad;
+
+    @JsonIgnore
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_DEPARTAMENTO", referencedColumnName = "ID")
+    private Departamento departamento;
 
     @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_MUNICIPIO", referencedColumnName = "ID")
     private Municipio municipio;
+
+    @JsonIgnore
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID")
+    private MuUsuario usuario;
 
 }

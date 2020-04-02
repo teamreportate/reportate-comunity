@@ -66,4 +66,4 @@ tmlog*
 # logs de SQL
 classes/
 !resource/application.properties
-!front-office-ui
+!.DS_Store

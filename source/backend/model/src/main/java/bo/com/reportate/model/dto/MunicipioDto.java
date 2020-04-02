@@ -18,12 +18,8 @@ import java.io.Serializable;
 public class MunicipioDto implements Serializable {
     private Long id;
     private String nombre;
-    private Double latitud;
-    private Double longitud;
     public MunicipioDto(Municipio municipio){
         this.id = municipio.getId();
         this.nombre = municipio.getNombre();
-        this.latitud = municipio.getLatitud();
-        this.longitud = municipio.getLongitud();
     }
 }

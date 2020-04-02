@@ -122,8 +122,15 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         recHijo("Dominios", "configuracion", "Interfaz para administración de dominios", "dominios", 2, "code", rolAdmin);
         recHijo("Alarmas", "configuracion", "Interfaz para administración de Alarmas", "alarmas", 3, "code", rolAdmin);
 
-        log.info("************************* Fin de cargar permisos por defecto *************************");
+        recPadre("Administración", "Configuraciones de los escenarios", "administracion", 1, "menu", rolAdmin);
+        recHijo("Paises", "administracion", "Gestión de Paises", "paises", 1, "code", rolAdmin);
+        recHijo("Sintomas", "administracion", "Gestión de Sintomas", "sintomas", 2, "code", rolAdmin);
+        recHijo("Enfermedades", "administracion", "Gestión de Enfermedades", "enfermedades", 3, "code", rolAdmin);
+        recHijo("Municipios", "administracion", "Gestión de Municipios", "municipios", 4, "code", rolAdmin);
+        recHijo("Centros de Salud", "administracion", "Gestión de Centros", "centros", 5, "code", rolAdmin);
+        recHijo("Departamentos", "administracion", "Gestión de Departamentos", "departamentos", 6, "code", rolAdmin);
 
+        log.info("************************* Fin de cargar permisos por defecto *************************");
     }
 
     /**
