@@ -51,136 +51,142 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <ng-container *ngIf="form.controls['authType'] && form.controls['authType'].value === 'PWD'">
-            <div fxFlex="23">
-              <mat-form-field>
-                <input matInput type="password" autocomplete="false" placeholder="Contraseña de Usuario"
-                  formControlName="password" [type]="ocultar ? 'password' : 'text'" (input)="onPasswordInput()"
-                  id="password" maxlength="20">
-                <button mat-icon-button color="accent" matSuffix (click)="ocultar = !ocultar"
-                  [attr.aria-pressed]="ocultar">
-                  <mat-icon>{{ocultar ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-                <mat-hint align="end">{{this.form.get('password').value? this.form.get('password').value.length:0}} / 20
-                </mat-hint>
-                <mat-error *ngIf="this.form.get('password').hasError('required') && this.form.get('password').touched"
-                  class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
-                <mat-error *ngIf="this.form.get('password').hasError('maxlength') && this.form.get('password').touched"
-                  class="text-danger font-11">Solo se permite <strong>20 caracteres</strong>.</mat-error>
-                <mat-error *ngIf="this.form.get('password').hasError('minlength') && this.form.get('password').touched"
-                  class="text-danger font-11">Se requiere al menos <strong>8 caracteres</strong>.</mat-error>
-              </mat-form-field>
-            </div>
+          <div fxFlex="23">
+            <mat-form-field>
+              <input matInput type="password" autocomplete="false" placeholder="Contraseña de Usuario"
+                formControlName="password" [type]="ocultar ? 'password' : 'text'" (input)="onPasswordInput()"
+                id="password" maxlength="20">
+              <button mat-icon-button color="accent" matSuffix (click)="ocultar = !ocultar"
+                [attr.aria-pressed]="ocultar">
+                <mat-icon>{{ocultar ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-hint align="end">{{this.form.get('password').value? this.form.get('password').value.length:0}} / 20
+              </mat-hint>
+              <mat-error *ngIf="this.form.get('password').hasError('required') && this.form.get('password').touched"
+                class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
+              <mat-error *ngIf="this.form.get('password').hasError('maxlength') && this.form.get('password').touched"
+                class="text-danger font-11">Solo se permite <strong>20 caracteres</strong>.</mat-error>
+              <mat-error *ngIf="this.form.get('password').hasError('minlength') && this.form.get('password').touched"
+                class="text-danger font-11">Se requiere al menos <strong>8 caracteres</strong>.</mat-error>
+            </mat-form-field>
+          </div>
 
-            <div fxFlex="23">
-              <mat-form-field>
-                <input matInput type="password" placeholder="Confirmar Contraseña" autocomplete="false"
-                  formControlName="passwordConfirm" [type]="ocultar ? 'password' : 'text'" (input)="onPasswordInput()"
-                  maxlength="20">
-                <button mat-icon-button color="accent" matSuffix (click)="ocultar = !ocultar"
-                  [attr.aria-pressed]="ocultar">
-                  <mat-icon>{{ocultar ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-                <mat-hint align="end">
-                  {{this.form.get('passwordConfirm').value? this.form.get('passwordConfirm').value.length:0}} / 20
-                </mat-hint>
-                <mat-error
-                  *ngIf="this.form.get('passwordConfirm').hasError('required') && this.form.get('passwordConfirm').touched"
-                  class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
-                <mat-error *ngIf="form.get('passwordConfirm').invalid && !form.get('password').hasError('required')">
-                  Las contraseñas no coinciden</mat-error>
-              </mat-form-field>
-            </div>
-          </ng-container>
-          <div fxFlex="98">
+          <div fxFlex="23">
+            <mat-form-field>
+              <input matInput type="password" placeholder="Confirmar Contraseña" autocomplete="false"
+                formControlName="passwordConfirm" [type]="ocultar ? 'password' : 'text'" (input)="onPasswordInput()"
+                maxlength="20">
+              <button mat-icon-button color="accent" matSuffix (click)="ocultar = !ocultar"
+                [attr.aria-pressed]="ocultar">
+                <mat-icon>{{ocultar ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-hint align="end">
+                {{this.form.get('passwordConfirm').value? this.form.get('passwordConfirm').value.length:0}} / 20
+              </mat-hint>
+              <mat-error
+                *ngIf="this.form.get('passwordConfirm').hasError('required') && this.form.get('passwordConfirm').touched"
+                class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
+              <mat-error *ngIf="form.get('passwordConfirm').invalid && !form.get('password').hasError('required')">
+                Las contraseñas no coinciden</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="23">
             <mat-form-field>
               <mat-label>Asignar Grupos</mat-label>
               <mat-select formControlName="grupos" multiple>
-                <mat-option *ngFor="let group of asignedGroupList" [value]="group">{{group.nombre}}</mat-option>
+                <mat-option *ngFor="let group of groups" [value]="group">{{group.nombre}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
+          <div fxFlex="23"></div>
         </div>
 
       </div>
-      <br>
       <div class="card">
         <mat-tab-group>
           <mat-tab [label]="'Departamentos'">
             <div class="card-body">
-              <mat-checkbox class="example-margin" [(ngModel)]="allDepartments"
-                (ngModelChange)="selectAllDepartament(allDepartments)">Seleccionar Todo</mat-checkbox>
+              <mat-checkbox class="example-margin" [(ngModel)]="isSelectAllDepartments"
+                (ngModelChange)="selectAllDepartament(isSelectAllDepartments)">Seleccionar Todo</mat-checkbox>
               <hr>
               <div fxLayout="row wrap">
                 <div fxFlex="25" *ngFor="let item of departments; let i = index;">
-                  <mat-checkbox class="example-margin" [(ngModel)]="item.isSelect">{{item.name}}</mat-checkbox>
+                  <mat-checkbox class="example-margin" [(ngModel)]="item.asignado">{{item.nombre}}</mat-checkbox>
                 </div>
               </div>
             </div>
           </mat-tab>
+
           <mat-tab [label]="'Municipios'">
             <div class="card-body">
               <div fxLayout="row wrap" fxLayoutAlign="space-between">
                 <div fxFlex="25">
                   <mat-form-field>
-                    <mat-label>Departamentos</mat-label>
+                    <mat-label>Filtrar por departamento</mat-label>
                     <mat-select required aria-placeholder="seleccionar" [(ngModel)]="selectedDepartment"
                       (ngModelChange)="filterMunicipalities(selectedDepartment)">
-                      <mat-option [value]="item.id" *ngFor="let item of departments;">{{item.name}}</mat-option>
+                      <mat-option [value]="item.id" *ngFor="let item of departments;">{{item.nombre}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
                 <div fxFlex="25">
                   <br>
-                  <mat-checkbox class="example-margin" [(ngModel)]="allMunicipalities"
-                    (ngModelChange)="selectAllMunicipalities(allMunicipalities)">Seleccionar Todo</mat-checkbox>
+                  <mat-checkbox class="example-margin" [(ngModel)]="isSelectAllMunicipalities"
+                    (ngModelChange)="selectAllMunicipalities(isSelectAllMunicipalities)">Seleccionar Todo</mat-checkbox>
                 </div>
               </div>
               <hr>
               <div fxLayout="row wrap">
-                <div fxFlex="25" *ngFor="let item of filteredMunicipalities; let i = index;">
-                  <mat-checkbox class="example-margin" [(ngModel)]="item.isSelect">{{item.name}}</mat-checkbox>
+                <div fxFlex="25" *ngFor="let item of municipalities; let i = index;">
+                  <mat-checkbox class="example-margin" [(ngModel)]="item.asignado">{{item.nombre}}</mat-checkbox>
                 </div>
               </div>
             </div>
           </mat-tab>
+
           <mat-tab [label]="'Centros de salud'">
             <div class="card-body">
               <div fxLayout="row wrap" fxLayoutAlign="space-between">
                 <div fxFlex="25">
                   <mat-form-field>
-                    <mat-label>Departamentos</mat-label>
+                    <mat-label>Filtrar por departamento</mat-label>
                     <mat-select required aria-placeholder="seleccionar" [(ngModel)]="selectedDepartment"
                       (ngModelChange)="filterMunicipalities(selectedDepartment)">
-                      <mat-option [value]="item.id" *ngFor="let item of departments;">{{item.name}}</mat-option>
+                      <mat-option [value]="item.id" *ngFor="let item of departments;">{{item.nombre}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
                 <div fxFlex="25">
                   <mat-form-field>
-                    <mat-label>Municipios</mat-label>
+                    <mat-label>Filtrar por municipio</mat-label>
                     <mat-select required aria-placeholder="seleccionar" [(ngModel)]="selectedSaludCentre"
                       (ngModelChange)="filterSaludCetres(selectedSaludCentre)">
-                      <mat-option [value]="item.id" *ngFor="let item of filteredMunicipalities;">{{item.name}}
+                      <mat-option [value]="item.id" *ngFor="let item of municipalities;">{{item.nombre}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
                 <div fxFlex="25">
                   <br>
-                  <mat-checkbox class="example-margin" [(ngModel)]="allSaludCentres"
-                    (ngModelChange)="selectAllSaludCentres(allSaludCentres)">Seleccionar Todo</mat-checkbox>
+                  <mat-checkbox class="example-margin" [(ngModel)]="isSelectAllSaludCentres"
+                    (ngModelChange)="selectAllSaludCentres(isSelectAllSaludCentres)">Seleccionar Todo</mat-checkbox>
                 </div>
               </div>
               <hr>
               <div fxLayout="row wrap">
-                <div fxFlex="25" *ngFor="let item of filteredSaludCentres; let i = index;">
-                  <mat-checkbox class="example-margin" [(ngModel)]="item.isSelect">{{item.name}}</mat-checkbox>
+                <div fxFlex="25" *ngFor="let item of saludCentres; let i = index;">
+                  <mat-checkbox class="example-margin" [(ngModel)]="item.asignado">{{item.nombre}}</mat-checkbox>
                 </div>
               </div>
             </div>
           </mat-tab>
         </mat-tab-group>
+      </div>
+      <div class="card" fxLayoutAlign="end center" fxLayoutGap="5px">
+        <button mat-stroked-button color="warn" type="button" [disabled]="this.load"
+          (click)="this.cancel()">Cancelar</button>
+        <button mat-flat-button color="accent" type="button" [disabled]="this.load"
+          (click)="this.createUser()">Guardar</button>
       </div>
     </div>
   </div>

@@ -1,24 +1,26 @@
-import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AccessService } from '../../access.service';
 import { AuthUser } from '../../../core/models/AuthUser';
 import { AuthGroup } from '../../../core/models/auth-group';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { passwordMatchValidator } from '../../resources/utils/password-match-validator';
 import { ClicComponent } from 'src/app/core/utils/clic-component';
 import { NotifierService } from 'angular-notifier';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Page } from 'src/app/core/utils/paginator/page';
 import { CustomOptions } from 'src/app/core/models/dto/custom-options';
-import { AddUserDialogComponent } from '../components/add-user-dialog.component';
+import { GroupService } from 'src/app/core/services/http-services/group.service';
+import { NgBlockUI, BlockUI } from 'ng-block-ui';
+
+import { Department, Group, SaludCentre, Municipaly } from '../user.type';
 
 @Component({
   selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.sass']
+  templateUrl: './user.component.html'
 })
 export class UserComponent extends ClicComponent implements OnInit {
+
+  @BlockUI() blockUI: NgBlockUI;
 
   title = 'Nuevo usuario';
 
@@ -32,89 +34,40 @@ export class UserComponent extends ClicComponent implements OnInit {
 
   private EMAIL_REGEX = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
-  asignedGroupList: AuthGroup[];
+  groups: Group[] = [];
 
-  allDepartments = false;
-  departments = [
-    { id: 1, name: 'Santa Cruz', isSelect: false },
-    { id: 2, name: 'La Paz', isSelect: false },
-    { id: 3, name: 'Cochabamba', isSelect: false },
-    { id: 4, name: 'Oruro', isSelect: false },
-    { id: 5, name: 'Potosí', isSelect: false },
-    { id: 6, name: 'Beni', isSelect: false },
-    { id: 7, name: 'Pando', isSelect: false },
-    { id: 8, name: 'Sucre', isSelect: false },
-    { id: 9, name: 'Tarija', isSelect: false },
-  ];
+  departments: Department[] = [];
+  municipalities: Municipaly[] = [];
+  filteredMunicipalities: Municipaly[] = [];
+  saludCentres: SaludCentre[] = [];
+  filteredSaludCentres: SaludCentre[] = [];
 
-  allMunicipalities = false;
+  isSelectAllDepartments = false;
+  isSelectAllMunicipalities = false;
+  isSelectAllSaludCentres = false;
+
   selectedDepartment: number;
-  municipalities = [
-    { id: 1, name: 'Santa Cruz de la Sierra', isSelect: false, departmentId: 1 },
-    { id: 2, name: 'Cotoca', isSelect: false, departmentId: 1 },
-    { id: 3, name: 'El Torno', isSelect: false, departmentId: 1 },
-    { id: 4, name: 'La Guardia', isSelect: false, departmentId: 1 },
-    { id: 5, name: 'Porongo', isSelect: false, departmentId: 1 },
-    { id: 6, name: 'San Matias', isSelect: false, departmentId: 1 },
-    { id: 7, name: 'San José de Chiquitos', isSelect: false, departmentId: 1 },
-    { id: 8, name: 'Pailón ', isSelect: false, departmentId: 1 },
-    { id: 9, name: 'Roboré', isSelect: false, departmentId: 1 },
-    { id: 10, name: 'Lagunillas ', isSelect: false, departmentId: 1 },
-    { id: 11, name: 'Colcapirhua ', isSelect: false, departmentId: 3 },
-    { id: 12, name: 'Tolata ', isSelect: false, departmentId: 3 },
-    { id: 13, name: 'Tarata ', isSelect: false, departmentId: 3 },
-    { id: 14, name: 'Pasorapa ', isSelect: false, departmentId: 3 },
-    { id: 15, name: 'Aiquile ', isSelect: false, departmentId: 3 },
-    { id: 16, name: 'El alto ', isSelect: false, departmentId: 2 },
-    { id: 17, name: 'La paz', isSelect: false, departmentId: 2 },
-    { id: 18, name: 'Viacha', isSelect: false, departmentId: 2 },
-    { id: 19, name: 'Caranavi', isSelect: false, departmentId: 2 },
-    { id: 20, name: 'Sica Sica', isSelect: false, departmentId: 2 },
-    { id: 20, name: 'Coipasa', isSelect: false, departmentId: 4 },
-    { id: 20, name: 'Chipaya', isSelect: false, departmentId: 4 },
-    { id: 20, name: 'Choquecota', isSelect: false, departmentId: 4 },
-    { id: 20, name: 'Soracachi', isSelect: false, departmentId: 4 },
-  ];
-
-  filteredMunicipalities = [];
-
-  allSaludCentres = false;
   selectedSaludCentre: number;
-  saludCentres = [
-    { id: 1, name: 'Mapaizo', isSelect: false, municipalityId: 2 },
-    { id: 2, name: 'Tarope', isSelect: false, municipalityId: 2 },
-    { id: 3, name: 'La sagrada familia', isSelect: false, municipalityId: 3 },
-    { id: 4, name: 'Limoncito', isSelect: false, municipalityId: 3 },
-    { id: 5, name: 'Monte verde', isSelect: false, municipalityId: 3 },
-    { id: 6, name: 'Taruma', isSelect: false, municipalityId: 3 },
-    { id: 7, name: 'San Juan Bautista', isSelect: false, municipalityId: 5 },
-    { id: 8, name: 'San Pedro ', isSelect: false, municipalityId: 5 },
-    { id: 9, name: 'Sombrerito', isSelect: false, municipalityId: 5 },
-    { id: 10, name: 'San Pedro ', isSelect: false, municipalityId: 5 },
-    { id: 11, name: 'El pajonal', isSelect: false, municipalityId: 1 },
-    { id: 12, name: 'Hamacas ', isSelect: false, municipalityId: 1 },
-    { id: 13, name: 'La colorada', isSelect: false, municipalityId: 1 },
-    { id: 14, name: 'La Fortaleza ', isSelect: false, municipalityId: 1 },
-    { id: 15, name: 'Pampa de la Isla', isSelect: false, municipalityId: 1 },
-    { id: 16, name: 'Palmar del Oratorio', isSelect: false, municipalityId: 1 },
-    { id: 17, name: 'Perpetuo socorro', isSelect: false, municipalityId: 1 },
-    { id: 18, name: 'San Luis', isSelect: false, municipalityId: 1 },
-    { id: 19, name: 'Santa Rosita', isSelect: false, municipalityId: 1 },
-    { id: 20, name: 'Tierras Nuevas', isSelect: false, municipalityId: 1 }
-  ];
-
-  filteredSaludCentres = [];
 
 
   constructor(
     private accessService: AccessService,
     private notifier: NotifierService,
+    private groupService: GroupService,
     private changeDetector: ChangeDetectorRef, private media: MediaMatcher) {
     super();
   }
 
   ngOnInit() {
     this.initialListener(this.changeDetector, this.media);
+    this.getGroups();
+    this.getDepartments();
+    this.getMunicipalities();
+    this.getSaludCentres();
+    this.initForm();
+  }
+
+  initForm() {
     this.form = new FormGroup({
       nombre: new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(100), Validators.minLength(5)])),
       username: new FormControl(null, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_]*$'),
@@ -128,9 +81,56 @@ export class UserComponent extends ClicComponent implements OnInit {
     }, {
       validators: passwordMatchValidator
     });
-    this.error = null;
-    let grupos: any[] = [];
-    this.asignedGroupList = grupos.reverse();
+  }
+
+  getGroups() {
+    this.blockUI.start('Recuperando lista de grupos');
+    this.groupService.requestGroupList().subscribe(response => {
+      this.groups = response.body;
+      /* this.userList.sort((a: AuthUser, b: AuthUser) => a.nombre.localeCompare(b.nombre));
+      this.tmp = this.userList;
+       */
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
+    });
+  }
+
+  getDepartments() {
+    this.accessService.requestAsignedDepartmentsList().subscribe(response => {
+      this.departments = response.body;
+      /* this.userList.sort((a: AuthUser, b: AuthUser) => a.nombre.localeCompare(b.nombre));
+      this.tmp = this.userList;*/
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
+    });
+  }
+
+  getMunicipalities() {
+    this.accessService.requestAsignedMunicipalitiesList().subscribe(response => {
+      this.municipalities = response.body;
+      /* this.userList.sort((a: AuthUser, b: AuthUser) => a.nombre.localeCompare(b.nombre));
+      this.tmp = this.userList;*/
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
+    });
+  }
+
+  getSaludCentres() {
+    this.accessService.requestAsignedSaludCentreList().subscribe(response => {
+      this.saludCentres = response.body;
+      /* this.userList.sort((a: AuthUser, b: AuthUser) => a.nombre.localeCompare(b.nombre));
+      this.tmp = this.userList;*/
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
+    });
   }
 
   createUser() {
@@ -207,32 +207,33 @@ export class UserComponent extends ClicComponent implements OnInit {
     this.dialogWidth = '99%';
   }
 
-  setPage(pageInfo: Page) { }
 
 
-  selectAllDepartament(isSelect: boolean) {
+
+  selectAllDepartament(iAsigned: boolean) {
     this.departments.forEach(elem => {
-      elem.isSelect = isSelect;
+      elem.asignado = iAsigned;
     });
    }
 
    filterMunicipalities(id: number) {
-     this.filteredMunicipalities = this.municipalities.filter(x => x.departmentId == id);
+     this.municipalities.filter(x => x.departamentoId == 1);
+     console.log(this.municipalities);
    }
 
-   selectAllMunicipalities(isSelect: boolean) {
-    this.filteredMunicipalities.forEach(elem => {
-      elem.isSelect = isSelect;
+   selectAllMunicipalities(iAsigned: boolean) {
+    this.municipalities.forEach(elem => {
+      elem.asignado = iAsigned;
     });
    }
 
    filterSaludCetres(id: number) {
-     this.filteredSaludCentres = this.saludCentres.filter(x => x.municipalityId == id);
+     // this.filteredSaludCentres = this.saludCentres.filter(x => x.municipalityId == id);
    }
 
-   selectAllSaludCentres(isSelect: boolean) {
-    this.filteredSaludCentres.forEach(elem => {
-      elem.isSelect = isSelect;
+   selectAllSaludCentres(iAsigned: boolean) {
+    this.saludCentres.forEach(elem => {
+      elem.asignado = iAsigned;
     });
    }
 
