@@ -30,7 +30,7 @@ public class Municipio extends AbstractAuditableEntity{
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MUNICIPIO_ID_GENERATOR")
     @Column(name = "ID")
     private Long id;
-    @Column(name = "NOMBRE", length = 100)
+    @Column(name = "NOMBRE", length = 100, nullable = false)
     private String nombre;
     @Column(name = "LATITUD")
     private Double latitud;

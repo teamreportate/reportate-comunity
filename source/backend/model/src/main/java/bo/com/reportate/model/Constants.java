@@ -13,7 +13,7 @@ package bo.com.reportate.model;
 public interface Constants {
 
     interface Domain{
-        String DEPARTAMENTOS = "DEPARTAMENTOS";
+
     }
 
     interface Parameters{
