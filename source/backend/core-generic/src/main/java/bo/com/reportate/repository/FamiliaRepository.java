@@ -28,4 +28,5 @@ public interface FamiliaRepository extends JpaRepository<Familia, Long> {
     @Modifying
     @Query(" UPDATE Familia f set f.estado= bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE f.id=:familiaId")
     void eliminarFamilia(@Param("familiaId") Long familiaId);
+
 }

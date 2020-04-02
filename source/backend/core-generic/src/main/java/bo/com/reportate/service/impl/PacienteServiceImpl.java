@@ -4,12 +4,16 @@ import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.*;
 import bo.com.reportate.model.dto.PacienteDto;
+import bo.com.reportate.model.dto.request.EnfermedadRequest;
+import bo.com.reportate.model.dto.request.PaisRequest;
+import bo.com.reportate.model.dto.request.SintomaRequest;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
-import bo.com.reportate.repository.FamiliaRepository;
-import bo.com.reportate.repository.PacienteRepository;
+import bo.com.reportate.repository.*;
+import bo.com.reportate.service.LogService;
 import bo.com.reportate.service.PacienteService;
 import bo.com.reportate.util.ValidationUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -27,9 +31,19 @@ import java.util.List;
  * @Copyright :MC4
  */
 @Service
+@Slf4j
 public class PacienteServiceImpl implements PacienteService {
     @Autowired private FamiliaRepository familiaRepository;
     @Autowired private PacienteRepository pacienteRepository;
+    @Autowired private LogService logService;
+    @Autowired private ControlDiarioRepository controlDiarioRepository;
+    @Autowired private ControlDiarioSintomaRepository controlDiarioSintomaRepository;
+    @Autowired private ControlDiarioPaisRepository controlDiarioPaisRepository;
+    @Autowired private ControlDiarioEnfermedadRepository controlDiarioEnfermedadRepository;
+    @Autowired private SintomaRepository sintomaRepository;
+    @Autowired private PaisRepository paisRepository;
+    @Autowired private EnfermedadRepository enfermedadRepository;
+
     @Override
     public PacienteDto save(Authentication userDetails, String nombre, Integer edad, GeneroEnum genero, Boolean gestacion, Integer tiempoGestacion) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",nombre, true,100);
@@ -80,7 +94,44 @@ public class PacienteServiceImpl implements PacienteService {
     }
 
     @Override
-    public String controlDiario(Long pacienteId, List<Enfermedad> enfermedadesBase, List<Pais> paisesVisitados, List<Sintoma> sintomas) {
+    public String controlDiario(Long pacienteId, List<EnfermedadRequest> enfermedadesBase, List<PaisRequest> paisesVisitados, List<SintomaRequest> sintomas) {
+        log.info("Inician el registro del control diario.");
+        ValidationUtil.throwExceptionIfInvalidNumber("paciente",pacienteId,true,0L);
+        if(sintomas == null || sintomas.isEmpty()){
+            log.error("No existe sintomas para registrar en el control diario");
+            throw new OperationException("No existe sintomas para registrar en el control diario");
+        }
+
+        Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No existe el paciente registrado"));
+        ControlDiario controlDiario = ControlDiario.builder().paciente(paciente).build();
+        this.controlDiarioRepository.save(controlDiario);
+        for (SintomaRequest sintAux : sintomas) {
+            ValidationUtil.throwExceptionIfInvalidNumber("sintoma",sintAux.getId(),true,0L);
+            Sintoma sintoma = this.sintomaRepository.findByIdAndEstado(sintAux.getId(),EstadoEnum.ACTIVO).orElseThrow(()-> new NotDataFoundException("No se encontro el sintoma que quiere registrar"));
+            this.controlDiarioSintomaRepository.save(ControlDiarioSintoma.builder()
+                    .controlDiario(controlDiario)
+                    .respuesta(sintAux.getRespuesta())
+                    .observacion(sintAux.getObservacion())
+                    .sintoma(sintoma).build());
+        }
+
+        if(enfermedadesBase != null && !enfermedadesBase.isEmpty()){
+            for (EnfermedadRequest enferAux : enfermedadesBase) {
+                ValidationUtil.throwExceptionIfInvalidNumber("enfermedad",enferAux.getId(),true,0L);
+                Enfermedad enfermedad = this.enfermedadRepository.findByIdAndEstado(enferAux.getId(),EstadoEnum.ACTIVO).orElseThrow(()-> new NotDataFoundException("No se encontro la enfermedad que quiere reportar"));
+                this.controlDiarioEnfermedadRepository.save(ControlDiarioEnfermedad.builder().controlDiario(controlDiario).enfermedad(enfermedad).build());
+            }
+        }
+
+        if(paisesVisitados != null && !paisesVisitados.isEmpty()){
+            for (PaisRequest paisAux : paisesVisitados) {
+                ValidationUtil.throwExceptionIfInvalidNumber("pais",paisAux.getId(),true,0L);
+                Pais pais = this.paisRepository.findByIdAndEstado(paisAux.getId(),EstadoEnum.ACTIVO).orElseThrow(()-> new NotDataFoundException("No se encontro el pais que quiere reportar"));
+                this.controlDiarioPaisRepository.save(ControlDiarioPais.builder().controlDiario(controlDiario).pais(pais).build());
+            }
+        }
+
+        log.info("Se registro los sintomas correctamente");
         return "";
     }
 }

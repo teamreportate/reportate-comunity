@@ -1,4 +1,4 @@
-package bo.com.reportate.web;
+package bo.com.reportate.model.dto.response;
 
 import bo.com.reportate.model.dto.request.EnfermedadRequest;
 import bo.com.reportate.model.dto.request.PaisRequest;
@@ -20,7 +20,7 @@ import java.util.List;
  * @Copyright :MC4
  */
 @Getter @Setter @NoArgsConstructor
-public class ControlDiarioRequest implements Serializable {
+public class ControlDiarioResponse implements Serializable {
     private List<PaisRequest> paises;
     private List<EnfermedadRequest> enfermedadesBase;
     private List<SintomaRequest> sintomas;

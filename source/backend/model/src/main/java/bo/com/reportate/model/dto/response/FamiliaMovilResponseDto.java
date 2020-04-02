@@ -1,6 +1,8 @@
-package bo.com.reportate.model.dto;
+package bo.com.reportate.model.dto.response;
 
 import bo.com.reportate.model.Familia;
+import bo.com.reportate.model.dto.DepartamentoDto;
+import bo.com.reportate.model.dto.MunicipioDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

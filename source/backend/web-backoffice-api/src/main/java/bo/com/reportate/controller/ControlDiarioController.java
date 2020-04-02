@@ -2,22 +2,23 @@ package bo.com.reportate.controller;
 
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
-import bo.com.reportate.model.dto.FamiliaMovilResponseDto;
+import bo.com.reportate.model.dto.response.ControlDiarioFullResponse;
+import bo.com.reportate.model.dto.response.SintomaResponse;
 import bo.com.reportate.model.enums.Process;
-import bo.com.reportate.service.FamiliaService;
+import bo.com.reportate.service.ControlDiarioService;
 import bo.com.reportate.service.LogService;
 import bo.com.reportate.util.CustomErrorType;
-import bo.com.reportate.web.FamiliaRequest;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -35,30 +36,38 @@ import static org.springframework.http.ResponseEntity.ok;
 @Slf4j
 @Tag(name = "control_diario", description = "API para registro de controles diarios")
 public class ControlDiarioController {
-    @Autowired private FamiliaService familiaService;
+    @Autowired private ControlDiarioService controlDiarioService;
     @Autowired private LogService logService;
 
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Crea un registro de control diario", description = "Guarda un registro de control diario para un paciente", tags = { "control_diario" })
-    public ResponseEntity<FamiliaMovilResponseDto> saveFamilia(
-            @AuthenticationPrincipal Authentication userDetails,
-            @Parameter(description = "Objeto de control diario", required = true)
-            @RequestBody FamiliaRequest familiaRequest) {
+    @RequestMapping(value = "/encuesta-inicial", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Obtención de encuestas inicial", description = "Método para obtener la encuesta de control diario inicial", tags = { "control_diario" })
+    public ResponseEntity<ControlDiarioFullResponse> getEncuestaFull() {
         try {
-            FamiliaMovilResponseDto responseDto = this.familiaService.save(userDetails,familiaRequest.getDepartamentoId(), familiaRequest.getMunicipioId(),familiaRequest.getNombre(),
-                    familiaRequest.getTelefono(),familiaRequest.getDireccion(),familiaRequest.getLatitud(),
-                    familiaRequest.getLongitud(),familiaRequest.getCiudad(),familiaRequest.getZona());
-            log.info("Se registro de manera correcta la familia: {}",familiaRequest.getNombre());
-            logService.info(Process.REGISTRO_FAMILIA,"Se registro de manera correcta la familia: {}",familiaRequest.getNombre());
-            return ok(responseDto);
+            return ok(controlDiarioService.getEncuentaFull());
         }catch (NotDataFoundException | OperationException e){
-            log.error("Se genero un error al guardar la familia: {}. Causa. {}",familiaRequest.getNombre(),e.getMessage());
-            logService.error(Process.REGISTRO_FAMILIA,"Se genero un error al guardar la familia: {}. Causa. {}",familiaRequest.getNombre(),e.getMessage());
-            return CustomErrorType.badRequest("Guardar Familia", e.getMessage());
+            log.error("Se genero un error al obtener las encuenta inicial. Causa. {}",e.getMessage());
+            logService.error(Process.CONTROL_DIARIO,"Se genero un error al obtener las encuenta inicial. Causa. {}",e.getMessage());
+            return CustomErrorType.badRequest("Obtener Encuesta", e.getMessage());
         }catch (Exception e){
-            log.error("Se genero un error al guardar la familia : {}",familiaRequest.getNombre(),e);
-            logService.error(Process.REGISTRO_FAMILIA,"Se genero un error al guardar la familia : {}",familiaRequest.getNombre());
-            return CustomErrorType.serverError("Guardar Familia", "Ocurrió un error al guardar la familia: "+familiaRequest.getNombre());
+            log.error("Se genero un error al obtener las encuenta inicial.",e);
+            logService.error(Process.CONTROL_DIARIO,"Se genero un error al obtener las encuenta inicial");
+            return CustomErrorType.serverError("Obtener Encuesta", "Se genero un error al obtener las encuenta inicial.");
+        }
+    }
+
+    @RequestMapping(value = "/encuesta-diaria", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Obtención de encuestas diaria", description = "Método para obtener la encuesta de control diario", tags = { "control_diario" })
+    public ResponseEntity<List<SintomaResponse>> getEncuesta() {
+        try {
+            return ok(controlDiarioService.getEncuesta());
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al obtener las encuenta inicial. Causa. {}",e.getMessage());
+            logService.error(Process.CONTROL_DIARIO,"Se genero un error al obtener las encuenta inicial. Causa. {}", e.getMessage());
+            return CustomErrorType.badRequest("Obtener Encuesta", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al obtener las encuenta inicial.",e);
+            logService.error(Process.CONTROL_DIARIO,"Se genero un error al obtener las encuenta inicial");
+            return CustomErrorType.serverError("Obtener Encuesta", "Se genero un error al obtener las encuenta inicial.");
         }
     }
 

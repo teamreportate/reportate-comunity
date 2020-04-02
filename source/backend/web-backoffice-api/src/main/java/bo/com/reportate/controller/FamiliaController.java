@@ -2,7 +2,8 @@ package bo.com.reportate.controller;
 
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
-import bo.com.reportate.model.dto.FamiliaMovilResponseDto;
+import bo.com.reportate.model.dto.response.FamiliaMovilResponseDto;
+import bo.com.reportate.model.dto.response.FamiliaResponse;
 import bo.com.reportate.model.enums.Process;
 import bo.com.reportate.service.FamiliaService;
 import bo.com.reportate.service.LogService;
@@ -102,6 +103,22 @@ public class FamiliaController {
             log.error("Se genero un error al eliminar la familia con id: {}.",familiaId,e);
             logService.error(Process.REGISTRO_FAMILIA,"Se genero un error al eliminar la familia con id: {}.",familiaId);
             return CustomErrorType.serverError("Eliminar Familia", "Se genero un error al eliminar la familia con id: " + familiaId);
+        }
+    }
+
+    @RequestMapping(value = "/informacion",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Obteniene información de la familia", description = "Obtiene información de la familia del usuario autentificado", tags = { "familia" })
+    public ResponseEntity<FamiliaResponse> getInfo(@AuthenticationPrincipal Authentication authentication) {
+        try {
+            return ok(this.familiaService.getInfo(authentication));
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al obtener la familia del usuario. Causa. {} ",e.getMessage());
+            logService.error(Process.REGISTRO_FAMILIA,"Se genero un error al obtener la familia del usuario. Causa. {}",e.getMessage());
+            return CustomErrorType.badRequest("Obtener Familia", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al obtener la familia del usuario",e);
+            logService.error(Process.REGISTRO_FAMILIA,"Se genero un error al obtener la familia del usuario");
+            return CustomErrorType.serverError("Obtener Familia", "Se genero un error al obtener la familia del usuario");
         }
     }
 }

@@ -1,13 +1,15 @@
 package bo.com.reportate.service.impl;
 
 import bo.com.reportate.exception.NotDataFoundException;
+import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.Familia;
 import bo.com.reportate.model.MuUsuario;
 import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.dto.DepartamentoDto;
-import bo.com.reportate.model.dto.FamiliaMovilResponseDto;
+import bo.com.reportate.model.dto.response.FamiliaMovilResponseDto;
 import bo.com.reportate.model.dto.MunicipioDto;
+import bo.com.reportate.model.dto.response.FamiliaResponse;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.repository.DepartamentoRepository;
 import bo.com.reportate.repository.FamiliaRepository;
@@ -20,6 +22,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 /**
  * @Created by :MC4
@@ -122,5 +126,12 @@ public class FamiliaServiceImpl implements FamiliaService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void delete(Long familiaId) {
         this.familiaRepository.eliminarFamilia(familiaId);
+    }
+
+    @Override
+    public FamiliaResponse getInfo(Authentication authentication) {
+        MuUsuario user = (MuUsuario) authentication.getPrincipal();
+        Optional<Familia> familiaOptional = this.familiaRepository.findFirstByUsuarioIdAndEstadoOrderByIdDesc(user.getId(), EstadoEnum.ACTIVO);
+        return familiaOptional.map(FamiliaResponse::new).orElseGet(FamiliaResponse::new);
     }
 }

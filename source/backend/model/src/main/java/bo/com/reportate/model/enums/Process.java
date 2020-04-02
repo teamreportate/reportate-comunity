@@ -18,7 +18,8 @@ public enum Process {
     // Grupo
     GRUPO("PROCESS"), SESION("SESION"),
     REGISTRO_FAMILIA("REGISTRO_FAMILIA"),
-    REGISTRO_PACIENTE("REGISTRO_PACIENTE");
+    REGISTRO_PACIENTE("REGISTRO_PACIENTE"),
+    CONTROL_DIARIO("CONTROL_DIARIO");
     private String proceso;
     Process(String proceso){
         this.proceso = proceso;
