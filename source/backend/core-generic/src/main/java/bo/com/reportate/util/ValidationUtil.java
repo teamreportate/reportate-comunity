@@ -80,11 +80,12 @@ public class ValidationUtil {
         }
     }
 
+
     public static void throwExceptionIfInvalidNumber(String name, Integer value, boolean required, Integer greaterThan) throws OperationException {
         throwExceptionIfInvalidNumber(name, value, required, greaterThan, null);
     }
 
-    private static void throwExceptionIfInvalidNumber(String name, Integer value, boolean required, Integer greaterThan, Integer lessThan) throws OperationException {
+    public static void throwExceptionIfInvalidNumber(String name, Integer value, boolean required, Integer greaterThan, Integer lessThan) throws OperationException {
         if (!required && value == null)
             return;
 
@@ -94,7 +95,7 @@ public class ValidationUtil {
             throw new OperationException("El campo '" + name + "' debe ser mayor que " + greaterThan);
         }
 
-        if (lessThan != null && value.compareTo(lessThan) <= 0) { // value es mayor o igual
+        if (lessThan != null && value.compareTo(lessThan) >= 0) { // value es mayor o igual
             throw new OperationException("El campo '" + name + "' debe ser menor que " + lessThan);
         }
     }

@@ -38,9 +38,9 @@ public class CentroSaludCotroller {
     public ResponseEntity<CentroSalud> getById(@PathVariable("centroSaludId") Long centroSaludId) {
         try {
             return ok(this.centroSaludService.findById(centroSaludId));
-        }catch (NotDataFoundException e){
+        }catch (NotDataFoundException | OperationException e ){
             log.error("Se genero un error al obtener el centro de salud con ID: {}. Causa. {}",centroSaludId,e.getMessage());
-            return CustomErrorType.badRequest("Obtener Centro de Salud", "Ocurrió un error al obtener el centro de salud con ID: "+centroSaludId);
+            return CustomErrorType.badRequest("Obtener Centro de Salud", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al obtener el municipio con ID: {}",centroSaludId,e);
             return CustomErrorType.serverError("Obtener Centro de Salud", "Ocurrió un error al obtener el centro de salud con ID: "+centroSaludId);
@@ -54,7 +54,7 @@ public class CentroSaludCotroller {
                     centroSaludRequest.getDireccion(), centroSaludRequest.getZona(),centroSaludRequest.getCiudad(),centroSaludRequest.getLatitud(), centroSaludRequest.getLongitud()));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al guardar el centro de salud: {}. Causa. {}",centroSaludRequest.getNombre(),e.getMessage());
-            return CustomErrorType.badRequest("Guardar Centro de Salud", "Ocurrió un error al guardar el centro de salud: "+centroSaludRequest.getNombre());
+            return CustomErrorType.badRequest("Guardar Centro de Salud", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al guardar el centro de salud : {}",centroSaludRequest.getNombre(),e);
             return CustomErrorType.serverError("Guardar Centro de Salud", "Ocurrió un error al guardar el centro de salud: "+centroSaludRequest.getNombre());
@@ -67,7 +67,7 @@ public class CentroSaludCotroller {
             return ok(this.centroSaludService.update(centroSaludId, centroSaludRequest.getNombre(), centroSaludRequest.getDireccion(), centroSaludRequest.getZona(), centroSaludRequest.getCiudad(), centroSaludRequest.getLatitud(), centroSaludRequest.getLongitud()));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al modificar el centro de salud: {}. Causa. {}",centroSaludId,e.getMessage());
-            return CustomErrorType.badRequest("Modificar Centro de Salud", "Ocurrió un error al modificar el centro de salud: "+centroSaludId);
+            return CustomErrorType.badRequest("Modificar Centro de Salud", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al modificar el municipio : {}",centroSaludId,e);
             return CustomErrorType.serverError("Modificar Centro de Salud", "Ocurrió un error al modificar el centro de salud: "+centroSaludId);

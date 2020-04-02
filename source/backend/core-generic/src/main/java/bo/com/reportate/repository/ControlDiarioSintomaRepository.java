@@ -1,6 +1,5 @@
 package bo.com.reportate.repository;
 
-import bo.com.reportate.model.ControlDiario;
 import bo.com.reportate.model.ControlDiarioSintoma;
 import org.springframework.data.jpa.repository.JpaRepository;
 

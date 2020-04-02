@@ -21,19 +21,17 @@ import java.io.Serializable;
 public class CentroSaludDto implements Serializable {
     private Long id;
     private String nombre;
-    private Double latitud;
-    private Double longitud;
     private String direccion;
     private String zona;
     private String ciudad;
+    private Long municipioId;
 
     public CentroSaludDto(CentroSalud centroSalud){
         this.id = centroSalud.getId();
         this.nombre = centroSalud.getNombre();
-        this.latitud = centroSalud.getLatitud();
-        this.longitud = centroSalud.getLongitud();
         this.direccion = centroSalud.getDireccion();
         this.zona = centroSalud.getZona();
         this.ciudad = centroSalud.getCiudad();
+        this.municipioId = centroSalud.getMunicipio().getId();
     }
 }

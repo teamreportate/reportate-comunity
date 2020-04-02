@@ -1,9 +1,9 @@
 package bo.com.reportate.model.dto;
 
-import bo.com.reportate.model.CentroSalud;
-import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.MuUsuario;
-import bo.com.reportate.model.Municipio;
+import bo.com.reportate.model.dto.request.CentroSaludRequest;
+import bo.com.reportate.model.dto.request.DepartamentoRequest;
+import bo.com.reportate.model.dto.request.MunicipioRequest;
 import bo.com.reportate.model.enums.AuthTypeEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.TipoUsuarioEnum;
@@ -36,9 +36,9 @@ public class UsuarioDto  implements Serializable {
     private TipoUsuarioEnum tipoUsuario;
 
     private List<GrupoDto> grupos = new ArrayList<>();
-    private List<DepartamentoDto> departamentos = new ArrayList<>();
-    private List<MunicipioDto> municipios = new ArrayList<>();
-    private List<CentroSaludDto> centroSaluds = new ArrayList<>();
+    private List<DepartamentoRequest> departamentos = new ArrayList<>();
+    private List<MunicipioRequest> municipios = new ArrayList<>();
+    private List<CentroSaludRequest> centroSaluds = new ArrayList<>();
 
     public UsuarioDto(MuUsuario userx){
         this.id= userx.getId();

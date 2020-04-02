@@ -9,6 +9,7 @@ import bo.com.reportate.model.dto.MunicipioDto;
 import bo.com.reportate.service.DepartamentoService;
 import bo.com.reportate.service.MunicipioService;
 import bo.com.reportate.util.CustomErrorType;
+import bo.com.reportate.web.DepartamentoRequestDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -61,7 +62,7 @@ public class DepartamentoCotroller {
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Departamento> saveDepartamento(@RequestBody DepartamentoDto departamentoDto) {
+    public ResponseEntity<Departamento> saveDepartamento(@RequestBody DepartamentoRequestDto departamentoDto) {
         try {
             return ok(this.departamentoService.save(departamentoDto.getNombre(), departamentoDto.getLatitud(), departamentoDto.getLongitud()));
         }catch (NotDataFoundException | OperationException e){
@@ -74,7 +75,7 @@ public class DepartamentoCotroller {
     }
 
     @RequestMapping(value = "/{departamentoId}",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity updateDepartamento(@PathVariable("departamentoID")Long departamentoId, @RequestBody DepartamentoDto departamentoDto) {
+    public ResponseEntity updateDepartamento(@PathVariable("departamentoID")Long departamentoId, @RequestBody DepartamentoRequestDto departamentoDto) {
         try {
             return ok(this.departamentoService.update(departamentoId, departamentoDto.getNombre(), departamentoDto.getLatitud(), departamentoDto.getLongitud()));
         }catch (NotDataFoundException | OperationException e){
