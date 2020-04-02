@@ -27,7 +27,8 @@ export class UsersComponent extends ClicComponent implements OnInit {
   public userList: AuthUser[];
   private tmp: AuthUser[];
   constructor(private accessService: AccessService, private matDialog: MatDialog, private groupService: GroupService,
-              private changeDetector: ChangeDetectorRef, private media: MediaMatcher, private router: Router, private notifier: NotifierService) {
+              private changeDetector: ChangeDetectorRef, private media: MediaMatcher,
+              private router: Router, private notifier: NotifierService) {
     super();
   }
 
@@ -142,12 +143,14 @@ export class UsersComponent extends ClicComponent implements OnInit {
 
   notifierError(error: any, type?: string) {
     if (error && error.error) {
-      const customOptions: CustomOptions = {type: type ? type : 'error', tile: error.error.title, message: error.error.detail, template: this.customNotificationTmpl};
+      const customOptions: CustomOptions = {
+        type: type ? type : 'error', tile: error.error.title, message: error.error.detail, template: this.customNotificationTmpl
+      };
       this.notifier.show(customOptions);
     }
   }
 
-  public flex: number ;
+  public flex: number;
   onGtLgScreen() {
     this.flex = 10;
     this.dialogWidth = '750px';

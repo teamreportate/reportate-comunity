@@ -28,9 +28,10 @@ public class Enfermedad extends AbstractAuditableEntity{
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ENFERMEDAD_ID_GENERATOR")
     @Column(name = "ID")
     private Long id;
-    @Column(name = "NOMBRE", length = 100)
+    @Column(name = "NOMBRE", length = 100, nullable = false)
     private String nombre;
-    @Column(name = "ENFERMEDAD_BASE")
+    @Column(name = "ENFERMEDAD_BASE",nullable = false)
     private Boolean enfermedadBase;
-
+    @Column(name = "MENSAJE_DIAGNOSTICO", length = 4000)
+    private String mensajeDiagnostico;
 }

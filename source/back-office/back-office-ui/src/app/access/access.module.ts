@@ -58,6 +58,7 @@ import {TokenCreateComponent} from './users/components/token-create.component';
 import {ChangePasswordDialogComponent} from './users/components/change-password-dialog.component';
 import {TokenUserDialogComponent} from './users/components/token-user-dialog.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { UserComponent } from './users/user-form/user.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     ChangePasswordDialogComponent,
     TokenUserDialogComponent,
     UserTokenComponent,
-    TokenCreateComponent
+    TokenCreateComponent,
+    UserComponent
   ],
   imports: [
     CommonModule,

@@ -28,14 +28,12 @@ public class Sintoma extends AbstractAuditableEntity{
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SINTOMA_ID_GENERATOR")
     @Column(name = "ID")
     private Long id;
-    @Column(name = "NOMBRE", length = 100)
+    @Column(name = "NOMBRE", length = 100, nullable = false)
     private String nombre;
-    @Column(name = "PREGUNTA", length = 500)
+    @Column(name = "PREGUNTA", length = 500, nullable = true)
     private String pregunta;
-    @Column(name = "CONTROL_DIARIO")
+    @Column(name = "CONTROL_DIARIO", nullable = false)
     private Boolean controlDiario;
-    @Column(name = "ayuda", length = 500)
+    @Column(name = "AYUDA", length = 500)
     private String ayuda;
-
-
 }
