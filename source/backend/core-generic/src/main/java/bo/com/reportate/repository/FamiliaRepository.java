@@ -1,6 +1,7 @@
 package bo.com.reportate.repository;
 
-import bo.com.reportate.model.ControlDiarioSintoma;
+import bo.com.reportate.model.ControlDiarioEnfermedad;
+import bo.com.reportate.model.Familia;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -12,5 +13,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @Package :bo.com.reportate.repository
  * @Copyright :MC4
  */
-public interface ControlDiarioSintomaRepository extends JpaRepository<ControlDiarioSintoma, Long> {
+public interface FamiliaRepository extends JpaRepository<Familia, Long> {
 }

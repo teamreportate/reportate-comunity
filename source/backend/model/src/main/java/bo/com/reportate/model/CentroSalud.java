@@ -43,6 +43,7 @@ public class CentroSalud extends AbstractAuditableEntity{
     @Column(name = "CIUDAD", length = 100, nullable = false)
     private String ciudad;
 
+    @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_MUNICIPIO", referencedColumnName = "ID")
     private Municipio municipio;

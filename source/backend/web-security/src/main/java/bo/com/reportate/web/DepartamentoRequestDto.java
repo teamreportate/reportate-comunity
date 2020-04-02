@@ -1,12 +1,14 @@
 package bo.com.reportate.web;
 
-import bo.com.reportate.model.CentroSalud;
-import lombok.AllArgsConstructor;
+import bo.com.reportate.model.Departamento;
+import bo.com.reportate.model.dto.MunicipioDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Created by :MC4
@@ -17,15 +19,13 @@ import java.io.Serializable;
  * @Package :bo.com.reportate.model
  * @Copyright :MC4
  */
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
-public class CentroSaludRequest implements Serializable {
+@Getter
+@Setter
+@NoArgsConstructor
+public class DepartamentoRequestDto implements Serializable {
     private Long id;
     private String nombre;
     private Double latitud;
     private Double longitud;
-    private String direccion;
-    private String zona;
-    private String ciudad;
-    private Long municipioId;
 
 }

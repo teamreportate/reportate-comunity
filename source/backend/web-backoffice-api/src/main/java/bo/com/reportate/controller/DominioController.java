@@ -55,7 +55,7 @@ public class DominioController {
             log.error("Ocurrio un problema al Listar Valores del Dominio, Mensaje: [{}]", e.getMessage());
             return CustomErrorType.badRequest("Listar Valores del Dominio", e.getMessage());
         } catch (Exception e){
-            log.error("Se ha generado un error no controlado al Listar Valores del Dominio, Mensaje: [{}]", e);
+            log.error("Se ha generado un error no controlado al Listar Valores del Dominio.", e);
             return CustomErrorType.serverError("Listar Valores del Domini","Ocurrió un error interno");
         }
     }

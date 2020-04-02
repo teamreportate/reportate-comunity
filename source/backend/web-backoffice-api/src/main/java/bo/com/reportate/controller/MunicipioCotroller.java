@@ -68,9 +68,9 @@ public class MunicipioCotroller {
     }
 
     @RequestMapping(value = "/{municipioId}",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Municipio> updateMunicipio(@PathVariable("municipioId")Long municipioId, @RequestBody DepartamentoDto departamentoDto) {
+    public ResponseEntity<Municipio> updateMunicipio(@PathVariable("municipioId")Long municipioId, @RequestBody MunicipioRequest municipioRequest) {
         try {
-            return ok(this.municipioService.update(municipioId, departamentoDto.getNombre(), departamentoDto.getLatitud(), departamentoDto.getLongitud()));
+            return ok(this.municipioService.update(municipioId, municipioRequest.getNombre(), municipioRequest.getLatitud(), municipioRequest.getLongitud()));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al modificar el municipio: {}. Causa. {}",municipioId,e.getMessage());
             return CustomErrorType.badRequest("Modificar Municipio", "Ocurrió un error al modificar el municipio: "+municipioId);
