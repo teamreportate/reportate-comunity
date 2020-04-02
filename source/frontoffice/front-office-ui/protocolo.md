@@ -175,7 +175,7 @@ arreglo de familiares
   "status" : 200
 }
 ```
-## servicio /actualizar-familiar-emfermedad-base
+## servicio /actualizar-familiar-enfermedad-base
 ### `parametros`
 ```json
 {
@@ -198,6 +198,92 @@ arreglo de familiares
 ```json
 {
   "status" : 200
+}
+```
+
+
+```
+### `resultado`
+```json
+{
+  "status" : 200
+}
+```
+
+## servicio /actualizar-familiar-enfermedad-base
+### `parametros`
+```json
+{
+  "id"        : 1,
+  "enfermedades" : [
+    {
+      "enfermedadId": 1
+    },
+    {
+      "enfermedadId": 2
+    },
+    {
+      "enfermedadId": 3
+    }
+     
+  ]
+}
+```
+### `resultado`
+```json
+{
+  "status" : 200
+}
+```
+
+## servicio /actualizar-familiar-sintomas-base
+### `parametros`
+```json
+{
+  "id"        : 1,
+  "sintomas" : [
+    {
+      "sintomaId": 1
+    },
+    {
+      "sintomaId": 2
+    },
+    {
+      "sintomaId": 3
+    }
+     
+  ]
+}
+```
+### `resultado`
+```json
+{
+  "status" : 200
+}
+```
+
+## servicio /contenido-faq
+### `parametros`
+```json
+{
+}
+```
+### `resultado`
+```json
+{
+  "status" : 200,
+  "data"   : [
+    {
+      "id"        : 1,
+      "pregunta"  : "pregunta",
+      "respuesta" : "respuesta"
+    },
+    {
+      "id"        : 2,
+      "pregunta"  : "pregunta",
+      "respuesta" : "respuesta"
+    }
+  ]
 }
 ```
 
