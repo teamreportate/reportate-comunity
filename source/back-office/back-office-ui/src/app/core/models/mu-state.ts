@@ -8,5 +8,6 @@
 
 export enum MuState {
   ACTIVO = 'ACTIVO',
-  BLOQUEADO = 'BLOQUEADO'
+  BLOQUEADO = 'BLOQUEADO',
+  INACTIVO = 'INACTIVO'
 }
