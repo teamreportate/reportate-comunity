@@ -18,8 +18,14 @@ import java.io.Serializable;
 public class MunicipioDto implements Serializable {
     private Long id;
     private String nombre;
+    private Long departamentoId;
     public MunicipioDto(Municipio municipio){
         this.id = municipio.getId();
         this.nombre = municipio.getNombre();
+        this.departamentoId = municipio.getDepartamento().getId();
+    }
+    public MunicipioDto(Long id, String nombre){
+        this.id = id;
+        this.nombre = nombre;
     }
 }

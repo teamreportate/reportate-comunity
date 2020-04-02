@@ -24,6 +24,7 @@ public class CentroSaludDto implements Serializable {
     private String direccion;
     private String zona;
     private String ciudad;
+    private Long municipioId;
 
     public CentroSaludDto(CentroSalud centroSalud){
         this.id = centroSalud.getId();
@@ -31,5 +32,6 @@ public class CentroSaludDto implements Serializable {
         this.direccion = centroSalud.getDireccion();
         this.zona = centroSalud.getZona();
         this.ciudad = centroSalud.getCiudad();
+        this.municipioId = centroSalud.getMunicipio().getId();
     }
 }

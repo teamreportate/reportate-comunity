@@ -1,6 +1,9 @@
 package bo.com.reportate.model.dto;
 
 import bo.com.reportate.model.Familia;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
@@ -14,6 +17,7 @@ import java.io.Serializable;
  * @Package :bo.com.reportate.model
  * @Copyright :MC4
  */
+@Getter @Setter @NoArgsConstructor
 public class FamiliaMovilResponseDto implements Serializable {
     private Long id;
     private String nombre;

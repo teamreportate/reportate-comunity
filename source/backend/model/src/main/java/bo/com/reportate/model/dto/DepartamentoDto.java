@@ -32,5 +32,9 @@ public class DepartamentoDto implements Serializable {
         this.nombre = departamento.getNombre();
         departamento.getMunicipios().forEach(municipio -> municipios.add(new MunicipioDto(municipio)) );
     }
+    public DepartamentoDto(Long id, String nombre){
+        this.id = id;
+        this.nombre = nombre;
+    }
 
 }

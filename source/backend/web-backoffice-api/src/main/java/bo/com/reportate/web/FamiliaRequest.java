@@ -19,6 +19,7 @@ import java.io.Serializable;
  */
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class FamiliaRequest implements Serializable {
+    private Long id;
     @NotNull
     private String nombre;
     @NotNull

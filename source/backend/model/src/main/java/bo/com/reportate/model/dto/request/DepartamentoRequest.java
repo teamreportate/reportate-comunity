@@ -1,7 +1,8 @@
-package bo.com.reportate.model.dto;
+package bo.com.reportate.model.dto.request;
 
 import bo.com.reportate.model.Departamento;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -19,14 +20,10 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class DepartamentoUsuarioDto implements Serializable {
+@NoArgsConstructor
+public class DepartamentoRequest implements Serializable {
     private Long id;
     private String nombre;
     private Boolean asignado;
-    public DepartamentoUsuarioDto(Departamento departamento){
-        this.id = departamento.getId();
-        this.nombre = departamento.getNombre();
-        this.asignado = (departamento.getDepartamentoUsuarios() != null && !departamento.getDepartamentoUsuarios().isEmpty());
-    }
 
 }
