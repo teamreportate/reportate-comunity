@@ -1,10 +1,14 @@
 import React, {useEffect} from "react";
-import {Button} from 'antd';
+import {Alert, Button} from 'antd';
 import FamilyList from "./FamilyList";
 import {useHistory} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {appConfigSetMessage} from "../../store/appConfig/actions";
 
 export default () => {
-	let history = useHistory();
+	let history    = useHistory();
+	const message  = useSelector(store => store.appConfig.message);
+	const dispatch = useDispatch();
 	
 	
 	useEffect(() => {
@@ -16,6 +20,16 @@ export default () => {
 	};
 	
 	return <div>
+		{
+			message
+			?
+			<Alert message={message.text} type={message.type} showIcon style={{marginBottom: 16}} closable afterClose={() => {
+				dispatch(appConfigSetMessage(false));
+			}}/>
+			: null
+		}
+		
+		
 		<FamilyList/>
 		<hr/>
 		<div style={{display: 'flex'}}>
