@@ -91,6 +91,25 @@ public class UsuarioController {
     }
 
     /**
+     * Permite actualizarGrupo los atributos de un usuario
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/{usuarioId}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UsuarioDto> findById(@PathVariable("usuarioId") Long id) {
+        try {
+            return ok(this.usuarioService.findById( id));
+        } catch (OperationException | NotDataFoundException e) {
+            log.error("Error al actualizar usuario:  Causa: [{}]", e.getMessage());
+            return CustomErrorType.badRequest("Actualizar Usuario", e.getMessage());
+        } catch (Exception e) {
+            log.error("Error no controlado al actualizar usuario", e);
+            return CustomErrorType.serverError("Actualizar Usuario", "Ocurrió un error interno al actualizar el usuario.");
+        }
+    }
+
+    /**
      * Permite cambiar el estado de un usuario
      *
      * @param usuarioId

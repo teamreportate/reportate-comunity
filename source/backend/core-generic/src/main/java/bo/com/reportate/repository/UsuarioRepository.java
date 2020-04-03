@@ -25,6 +25,11 @@ public interface UsuarioRepository extends JpaRepository<MuUsuario, Long> {
     void modifyPassword(@Param("userName") String userName
             ,@Param("password") String password);
 
+    @Query("SELECT new bo.com.reportate.model.dto.UsuarioDto(u) FROM MuUsuario  u " +
+            "WHERE u.id =:id " +
+            "AND u.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND u.estadoUsuario=bo.com.reportate.model.enums.UserStatusEnum.ACTIVO")
+    Optional<UsuarioDto> obtenerUsuarioPorId(@Param("id") Long id);
 
     List<UsuarioDto> findAllByEstadoOrderByNombreAsc(EstadoEnum estadoEnum);
 

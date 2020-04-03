@@ -6,6 +6,7 @@ import bo.com.reportate.model.MuUsuario;
 import bo.com.reportate.model.dto.DepartamentoUsuarioDto;
 import bo.com.reportate.model.enums.EstadoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -32,6 +33,13 @@ public interface DepartamentoUsuarioRepository extends JpaRepository<Departament
 
     @Query("SELECT new bo.com.reportate.model.dto.DepartamentoUsuarioDto(du.departamento) " +
             "FROM DepartamentoUsuario du INNER JOIN du.muUsuario u " +
+            "WHERE u.id =:userId " +
+            "AND du.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND u.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
+    List<DepartamentoUsuarioDto> listarDepartamentoAsignados(@Param("userId") Long userId);
+
+    @Query("SELECT new bo.com.reportate.model.dto.DepartamentoUsuarioDto(du.departamento) " +
+            "FROM DepartamentoUsuario du INNER JOIN du.muUsuario u " +
             "WHERE u=:usuario " +
             "AND du.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
             "AND u.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
@@ -47,7 +55,19 @@ public interface DepartamentoUsuarioRepository extends JpaRepository<Departament
             "AND d.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<DepartamentoUsuarioDto> listarDepartamentoNoAsignados(@Param("username") String username);
 
+    @Query("SELECT new bo.com.reportate.model.dto.DepartamentoUsuarioDto(d) " +
+            "from Departamento d " +
+            "WHERE d NOT IN" +
+            "   (SELECT du.departamento FROM DepartamentoUsuario du INNER JOIN du.muUsuario u " +
+            "   WHERE u.username=:userId AND du.estado =bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "   AND u.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO" +
+            "   ) " +
+            "AND d.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
+    List<DepartamentoUsuarioDto> listarDepartamentoNoAsignados(@Param("userId") Long userId);
+
+    @Modifying
     @Query(" UPDATE DepartamentoUsuario du SET du.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE du.muUsuario =:usuario AND du.departamento.id NOT IN(:departamentos)")
     void eliminaDepartamentosNoAsignados(@Param("usuario") MuUsuario muUsuario, @Param("departamentos") List<Long> departamentoIds);
+
 
 }

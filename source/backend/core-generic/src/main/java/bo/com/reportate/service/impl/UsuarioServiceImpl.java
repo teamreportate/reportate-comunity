@@ -50,6 +50,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired private MunicipioRepository municipioRepository;
     @Autowired private CentroSaludRepository centroSaludRepository;
 
+
     @Override
     public List<UsuarioDto> listar() {
         return usuarioRepository.findAllByEstadoOrderByNombreAsc(EstadoEnum.ACTIVO);
@@ -244,24 +245,24 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void agregarDepartamento(Long usuarioId, List<DepartamentoRequest> departamentos) {
+    public void agregarDepartamento(Long usuarioId, List<DepartamentoUsuarioDto> departamentos) {
         MuUsuario muUsuario = this.usuarioRepository.findById(usuarioId).orElseThrow(()->new NotDataFoundException("No se encontro nungún usuario con ID:"+usuarioId));
         agregarDepartamento(muUsuario,departamentos);
     }
 
     @Override
-    public void agregarCentroSalud(Long usuarioId, List<CentroSaludRequest> centroSaluds) {
+    public void agregarCentroSalud(Long usuarioId, List<CentroSaludUsuarioDto> centroSaluds) {
         MuUsuario muUsuario = this.usuarioRepository.findById(usuarioId).orElseThrow(()->new NotDataFoundException("No se encontro nungún usuario con ID:"+usuarioId));
         agregarCentroSalud(muUsuario,centroSaluds);
     }
 
 
     @Override
-    public void agregarDepartamento(MuUsuario muUsuario, List<DepartamentoRequest> departamentos) {
+    public void agregarDepartamento(MuUsuario muUsuario, List<DepartamentoUsuarioDto> departamentos) {
         List<Long> depIds = new ArrayList<>();
         departamentos.forEach(departamentoDto -> depIds.add(departamentoDto.getId()));
         this.departamentoUsuarioRepository.eliminaDepartamentosNoAsignados(muUsuario,depIds);
-        for (DepartamentoRequest auxDep : departamentos) {
+        for (DepartamentoUsuarioDto auxDep : departamentos) {
             Departamento departamento = this.departamentoRepository.findById(auxDep.getId()).orElseThrow(()->new NotDataFoundException("No se encontro un departamento con ID: "+auxDep.getId()));
             if(!departamentoUsuarioRepository.existsByMuUsuarioAndDepartamentoAndEstado(muUsuario,departamento,EstadoEnum.ACTIVO)){
                 this.departamentoUsuarioRepository.save(DepartamentoUsuario.builder().departamento(departamento).muUsuario(muUsuario).build());
@@ -270,11 +271,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void agregarCentroSalud(MuUsuario muUsuario, List<CentroSaludRequest> centroSaluds) {
+    public void agregarCentroSalud(MuUsuario muUsuario, List<CentroSaludUsuarioDto> centroSaluds) {
         List<Long> ceIds = new ArrayList<>();
         centroSaluds.forEach(centroSaludDto -> ceIds.add(centroSaludDto.getId()));
         this.centroSaludUsuarioRepository.eliminaCentrosNoAsignados(muUsuario, ceIds);
-        for (CentroSaludRequest auxCentro:centroSaluds) {
+        for (CentroSaludUsuarioDto auxCentro:centroSaluds) {
             CentroSalud centroSalud = this.centroSaludRepository.findById(auxCentro.getId()).orElseThrow(()->new NotDataFoundException("No se encontro ningún centro de salud con ID: "+auxCentro.getId()));
             if(!centroSaludUsuarioRepository.existsByMuUsuarioAndCentroSaludAndEstado(muUsuario,centroSalud,EstadoEnum.ACTIVO)){
                 this.centroSaludUsuarioRepository.save(CentroSaludUsuario.builder().muUsuario(muUsuario).centroSalud(centroSalud).build());
@@ -284,11 +285,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void agregarMunicipio(MuUsuario muUsuario, List<MunicipioRequest> municipios) {
+    public void agregarMunicipio(MuUsuario muUsuario, List<MunicipioUsuarioDto> municipios) {
         List<Long> muIds = new ArrayList<>();
         municipios.forEach(municipioDto -> muIds.add(municipioDto.getId()));
         this.municipioUsuarioRepository.eliminaMunicipiosNoAsignados(muUsuario, muIds);
-        for (MunicipioRequest auxMunic : municipios) {
+        for (MunicipioUsuarioDto auxMunic : municipios) {
             Municipio municipio = this.municipioRepository.findById(auxMunic.getId()).orElseThrow(()->new NotDataFoundException("No se encontro ningún municipio con ID:"+auxMunic.getId()));
             if(!this.municipioUsuarioRepository.existsByMuUsuarioAndMunicipioAndEstado(muUsuario, municipio,EstadoEnum.ACTIVO)){
                 this.municipioUsuarioRepository.save(MunicipioUsuario.builder().muUsuario(muUsuario).municipio(municipio).build());
@@ -297,9 +298,28 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void agregarMunicipio(Long usuarioId, List<MunicipioRequest> municipios) {
+    public void agregarMunicipio(Long usuarioId, List<MunicipioUsuarioDto> municipios) {
         MuUsuario muUsuario = this.usuarioRepository.findById(usuarioId).orElseThrow(()->new NotDataFoundException("No se encontro nungún usuario con ID:"+usuarioId));
         agregarMunicipio(muUsuario,municipios);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UsuarioDto findById(Long usuarioId) {
+        UsuarioDto usuarioDto = this.usuarioRepository.obtenerUsuarioPorId(usuarioId).orElseThrow(()-> new NotDataFoundException("No se encontro ningún usuario"));
+        List<DepartamentoUsuarioDto> departamentoUsuarioDtos = departamentoUsuarioRepository.listarDepartamentoAsignados(usuarioId);
+        departamentoUsuarioDtos.addAll(departamentoUsuarioRepository.listarDepartamentoNoAsignados(usuarioId));
+        usuarioDto.setDepartamentos(departamentoUsuarioDtos);
+
+        List<MunicipioUsuarioDto> usuarioDtoList = municipioUsuarioRepository.listarMunicipiosAsignados(usuarioId);
+        usuarioDtoList.addAll(municipioUsuarioRepository.listarMunicipiosNoAsignados(usuarioId));
+        usuarioDto.setMunicipios(usuarioDtoList);
+
+        List<CentroSaludUsuarioDto> centroSaludUsuarioDtos = centroSaludUsuarioRepository.listarCentrosSaludAsignados(usuarioId);
+        centroSaludUsuarioDtos.addAll(centroSaludUsuarioRepository.listarCentrosSaludNoAsignados(usuarioId));
+        usuarioDto.setCentroSaluds(centroSaludUsuarioDtos);
+
+        return usuarioDto;
     }
 
     private String registroValidacionCreacionUsuario(UsuarioDto authUsuario, String passConfirm) {

@@ -77,10 +77,12 @@ public interface UsuarioService {
     void cambiarContrasenia(Long usuarioId, String newPassword, String confirmPassword);
 
     MuUsuario obtenerUsuario(Long usuarioId);
-    void agregarDepartamento(Long usuarioId, List<DepartamentoRequest> departamentos);
-    void agregarDepartamento(MuUsuario muUsuario, List<DepartamentoRequest> departamentos);
-    void agregarCentroSalud(Long usuarioId, List<CentroSaludRequest> centroSaluds);
-    void agregarCentroSalud(MuUsuario muUsuario, List<CentroSaludRequest> centroSaluds);
-    void agregarMunicipio(MuUsuario muUsuario, List<MunicipioRequest> municipios);
-    void agregarMunicipio(Long usuarioId, List<MunicipioRequest> municipios);
+    void agregarDepartamento(Long usuarioId, List<DepartamentoUsuarioDto> departamentos);
+    void agregarDepartamento(MuUsuario muUsuario, List<DepartamentoUsuarioDto> departamentos);
+    void agregarCentroSalud(Long usuarioId, List<CentroSaludUsuarioDto> centroSaluds);
+    void agregarCentroSalud(MuUsuario muUsuario, List<CentroSaludUsuarioDto> centroSaluds);
+    void agregarMunicipio(MuUsuario muUsuario, List<MunicipioUsuarioDto> municipios);
+    void agregarMunicipio(Long usuarioId, List<MunicipioUsuarioDto> municipios);
+
+    UsuarioDto findById(Long usuarioId);
 }

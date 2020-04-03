@@ -27,6 +27,7 @@ public interface DepartamentoService {
     Departamento update(Long departamentoId, String nombre, Double latitud, Double longitud);
     void eliminar(Long departamentoId);
     List<DepartamentoUsuarioDto> listarDepartamentosAsignados(String username);
+    List<DepartamentoUsuarioDto> listarDepartamentosAsignados(Long userId);
 
     List<DepartamentoUsuarioDto> listarAsignados(Authentication userDetails);
 }

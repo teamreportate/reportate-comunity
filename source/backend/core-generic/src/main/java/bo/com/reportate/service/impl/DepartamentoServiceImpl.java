@@ -88,6 +88,13 @@ public class DepartamentoServiceImpl implements DepartamentoService {
     }
 
     @Override
+    public List<DepartamentoUsuarioDto> listarDepartamentosAsignados(Long userId) {
+        List<DepartamentoUsuarioDto> departamentoUsuarioDtos = departamentoUsuarioRepository.listarDepartamentoAsignados(userId);
+        departamentoUsuarioDtos.addAll(departamentoUsuarioRepository.listarDepartamentoNoAsignados(userId));
+        return departamentoUsuarioDtos;
+    }
+
+    @Override
     public List<DepartamentoUsuarioDto> listarAsignados(Authentication userDetails) {
         MuUsuario usuario = (MuUsuario) userDetails;
         return departamentoUsuarioRepository.listarAsignados(usuario);
