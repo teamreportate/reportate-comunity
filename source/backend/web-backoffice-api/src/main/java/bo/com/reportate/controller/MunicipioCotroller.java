@@ -80,6 +80,20 @@ public class MunicipioCotroller {
         }
     }
 
+//    @RequestMapping(value = "/{municipioId}/eliminar",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity eliminarDepartamento(@PathVariable("municipioId")Long municipioId) {
+//        try {
+//            this.municipioService.eliminar(municipioId);
+//            return ok().build();
+//        }catch (NotDataFoundException | OperationException e){
+//            log.error("Se genero un error al elimianr el departamento: {}. Causa. {}",departamentoId,e.getMessage());
+//            return CustomErrorType.badRequest("Eliminar Departamento", "Ocurrió un error al eliminar el departamento: "+departamentoId);
+//        }catch (Exception e){
+//            log.error("Se genero un error al eliminar el departamento : {}",departamentoId,e);
+//            return CustomErrorType.serverError("Eliminar Departamento", "Ocurrió un error al eliminar el departamento: "+departamentoId);
+//        }
+//    }
+
     @RequestMapping(value = "/{municipioId}/centros-de-salud",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CentroSaludDto>> listarMunicipios(@PathVariable("municipioId")Long municipioId) {
         try {

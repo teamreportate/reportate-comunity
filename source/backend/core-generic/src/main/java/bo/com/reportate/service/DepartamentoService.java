@@ -24,8 +24,8 @@ public interface DepartamentoService {
     List<DepartamentoDto> findAllConMunicipio();
     Departamento save(Departamento departamento);
     Departamento save(String nombre, Double latitud, Double longitud);
-
     Departamento update(Long departamentoId, String nombre, Double latitud, Double longitud);
+    void eliminar(Long departamentoId);
     List<DepartamentoUsuarioDto> listarDepartamentosAsignados(String username);
 
     List<DepartamentoUsuarioDto> listarAsignados(Authentication userDetails);

@@ -13,6 +13,7 @@ import bo.com.reportate.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -70,6 +71,12 @@ public class DepartamentoServiceImpl implements DepartamentoService {
         departamento.setLatitud(latitud);
         departamento.setLongitud(longitud);
         return this.departamentoRepository.save(departamento);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void eliminar(Long departamentoId) {
+        this.departamentoRepository.eliminar(departamentoId);
     }
 
     @Override

@@ -83,7 +83,7 @@ public class DepartamentoCotroller {
     }
 
     @RequestMapping(value = "/{departamentoId}",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity updateDepartamento(@PathVariable("departamentoID")Long departamentoId, @RequestBody DepartamentoRequestDto departamentoDto) {
+    public ResponseEntity updateDepartamento(@PathVariable("departamentoId")Long departamentoId, @RequestBody DepartamentoRequestDto departamentoDto) {
         try {
             return ok(this.departamentoService.update(departamentoId, departamentoDto.getNombre(), departamentoDto.getLatitud(), departamentoDto.getLongitud()));
         }catch (NotDataFoundException | OperationException e){
@@ -92,6 +92,20 @@ public class DepartamentoCotroller {
         }catch (Exception e){
             log.error("Se genero un error al modificar el departamento : {}",departamentoId,e);
             return CustomErrorType.serverError("Modificar Departamento", "Ocurrió un error al modificar el departamento: "+departamentoId);
+        }
+    }
+
+    @RequestMapping(value = "/{departamentoId}/eliminar",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity eliminarDepartamento(@PathVariable("departamentoId")Long departamentoId) {
+        try {
+            this.departamentoService.eliminar(departamentoId);
+            return ok().build();
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al elimianr el departamento: {}. Causa. {}",departamentoId,e.getMessage());
+            return CustomErrorType.badRequest("Eliminar Departamento", "Ocurrió un error al eliminar el departamento: "+departamentoId);
+        }catch (Exception e){
+            log.error("Se genero un error al eliminar el departamento : {}",departamentoId,e);
+            return CustomErrorType.serverError("Eliminar Departamento", "Ocurrió un error al eliminar el departamento: "+departamentoId);
         }
     }
 
