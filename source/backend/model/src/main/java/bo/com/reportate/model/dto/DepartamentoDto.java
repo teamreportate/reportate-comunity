@@ -1,6 +1,7 @@
 package bo.com.reportate.model.dto;
 
 import bo.com.reportate.model.Departamento;
+import bo.com.reportate.model.enums.EstadoEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +27,7 @@ public class DepartamentoDto implements Serializable {
     private String nombre;
     private Double latitud;
     private Double longitud;
+    private EstadoEnum estado;
     private List<MunicipioDto> municipios = new ArrayList<>();
 
     public DepartamentoDto(Departamento departamento){
@@ -33,6 +35,7 @@ public class DepartamentoDto implements Serializable {
         this.nombre = departamento.getNombre();
         this.latitud = departamento.getLatitud();
         this.longitud = departamento.getLongitud();
+        this.estado = departamento.getEstado();
         departamento.getMunicipios().forEach(municipio -> municipios.add(new MunicipioDto(municipio)) );
 
     }

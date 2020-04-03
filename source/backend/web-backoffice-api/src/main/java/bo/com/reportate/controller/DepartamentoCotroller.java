@@ -12,6 +12,7 @@ import bo.com.reportate.service.MunicipioService;
 import bo.com.reportate.util.CustomErrorType;
 import bo.com.reportate.web.DepartamentoRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +84,12 @@ public class DepartamentoCotroller {
     }
 
     @RequestMapping(value = "/{departamentoId}",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity updateDepartamento(@PathVariable("departamentoId")Long departamentoId, @RequestBody DepartamentoRequestDto departamentoDto) {
+    @Operation(summary = "Actualizar un departamento", description = "Método para actualizar un departamento", tags = { "departamento" })
+    public ResponseEntity updateDepartamento(
+            @Parameter(description = "Identificador de Departamento", required = true)
+            @PathVariable("departamentoId")Long departamentoId,
+            @Parameter(description = "Objeto departamento que se va a modificar", required = true)
+            @RequestBody DepartamentoRequestDto departamentoDto) {
         try {
             return ok(this.departamentoService.update(departamentoId, departamentoDto.getNombre(), departamentoDto.getLatitud(), departamentoDto.getLongitud()));
         }catch (NotDataFoundException | OperationException e){

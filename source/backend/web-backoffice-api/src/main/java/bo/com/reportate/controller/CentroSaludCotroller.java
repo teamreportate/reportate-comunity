@@ -9,6 +9,9 @@ import bo.com.reportate.service.CentroSaludService;
 import bo.com.reportate.util.CustomErrorType;
 import bo.com.reportate.web.CentroSaludRequest;
 import bo.com.reportate.web.MunicipioRequest;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -29,6 +32,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @Slf4j
 @RestController
 @RequestMapping("/api/centros-de-salud")
+@Tag(name = "cento de salud", description = "API de centro de salud")
 public class CentroSaludCotroller {
     @Autowired
     private CentroSaludService centroSaludService;
@@ -48,6 +52,7 @@ public class CentroSaludCotroller {
     }
 
     @RequestMapping( method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Guardar Centro de Salud", description = "Metodo para guardar centro de salud", tags = { "cento de salud" })
     public ResponseEntity<CentroSalud> saveCentroSalud(@RequestBody CentroSaludRequest centroSaludRequest) {
         try {
             return ok(this.centroSaludService.save(centroSaludRequest.getMunicipioId(), centroSaludRequest.getNombre(),
@@ -62,7 +67,12 @@ public class CentroSaludCotroller {
     }
 
     @RequestMapping(value = "/{centroSaludId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CentroSalud> updateCentroSalud(@PathVariable("centroSaludId")Long centroSaludId, @RequestBody CentroSaludRequest centroSaludRequest) {
+    @Operation(summary = "Actualizar Centro de Salud", description = "Metodo para actualizar centro de salud", tags = { "cento de salud" })
+    public ResponseEntity<CentroSalud> updateCentroSalud(
+            @Parameter(description = "Identificador del centro de salud", required = true)
+            @PathVariable("centroSaludId")Long centroSaludId,
+            @Parameter(description = "Objeto centro de salud a actualizar", required = true)
+            @RequestBody CentroSaludRequest centroSaludRequest) {
         try {
             return ok(this.centroSaludService.update(centroSaludId, centroSaludRequest.getNombre(), centroSaludRequest.getDireccion(), centroSaludRequest.getZona(), centroSaludRequest.getCiudad(), centroSaludRequest.getLatitud(), centroSaludRequest.getLongitud()));
         }catch (NotDataFoundException | OperationException e){
@@ -75,7 +85,10 @@ public class CentroSaludCotroller {
     }
 
     @RequestMapping(value = "/{centroSaludId}/eliminar",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity eliminarCentroSalud(@PathVariable("centroSaludId")Long centroSaludId) {
+    @Operation(summary = "Elimina Centro de Salud", description = "Metodo para eliminar centro de salud", tags = { "cento de salud" })
+    public ResponseEntity eliminarCentroSalud(
+            @Parameter(description = "Identificador de centro de salud", required = true)
+            @PathVariable("centroSaludId")Long centroSaludId) {
         try {
             this.centroSaludService.eliminar(centroSaludId);
             return ok().build();

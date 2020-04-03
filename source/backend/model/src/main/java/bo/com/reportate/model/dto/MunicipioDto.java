@@ -1,6 +1,7 @@
 package bo.com.reportate.model.dto;
 
 import bo.com.reportate.model.Municipio;
+import bo.com.reportate.model.enums.EstadoEnum;
 import lombok.*;
 
 import java.io.Serializable;
@@ -20,11 +21,13 @@ public class MunicipioDto implements Serializable {
     private String nombre;
     private Double latitud;
     private Double longitud;
+    private EstadoEnum estado;
     public MunicipioDto(Municipio municipio){
         this.id = municipio.getId();
         this.nombre = municipio.getNombre();
         this.latitud = municipio.getLatitud();
         this.longitud = municipio.getLongitud();
+        this.estado = municipio.getEstado();
     }
 
     public MunicipioDto(Long id, String nombre){

@@ -9,4 +9,5 @@ package bo.com.reportate.service;
  * author:  fmontero
  **/
 public interface NotificacionService {
+    void notificacionSospechoso(String to, String asunto, String mensaje);
 }
