@@ -21,7 +21,13 @@ import java.util.Optional;
 public interface EnfermedadRepository extends JpaRepository<Enfermedad, Long> {
     Optional<Enfermedad> findByIdAndEstado(Long id, EstadoEnum activo);
     @Query("SELECT new bo.com.reportate.model.dto.response.EnfermedadResponse(e) From Enfermedad e WHERE e.estado =bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
-    List<EnfermedadResponse> listarEnfermedades();
+    List<EnfermedadResponse> listarEnfermedadesActivos();
 
     boolean existsByNombreIgnoreCase(String nombre);
+
+    Optional<Enfermedad> findByNombreAndEstado(String nombre, EstadoEnum estadoEnum);
+
+    @Query(" SELECT e FROM Enfermedad e" +
+            " order by e.id desc")
+    List<Enfermedad> listAll();
 }

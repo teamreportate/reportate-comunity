@@ -10,8 +10,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Constantes} from '../../../../environments/environment';
 import {Observable} from 'rxjs';
-import {DomainValue} from '../../models/domain-value';
-import { Constants } from '../../constants';
+import {Constants} from '../../constants';
 
 @Injectable()
 export class DepartamentoService {
@@ -20,7 +19,7 @@ export class DepartamentoService {
   constructor(private httpClient: HttpClient) {}
 
   getDepartamentosAsignados(): Observable<HttpResponse<any>> {
-    this.endPoint = Constantes.baseUri + Constants.departamentoApi;
+    this.endPoint = Constantes.baseUri + Constants.departmentApi;
     return this.httpClient.get<HttpResponse<any>>(this.endPoint, {observe: 'response'});
   }
 

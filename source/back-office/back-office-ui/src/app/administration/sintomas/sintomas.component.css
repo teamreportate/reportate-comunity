@@ -1,0 +1,11 @@
+.a-toggle {
+  color: black;
+  margin-right: 15px;
+}
+.text-bottom {
+  vertical-align: bottom;
+}
+.content-center {
+  display: flex;
+  align-items: center;
+}

@@ -26,15 +26,11 @@ import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {CommonsModule} from '../commons/commons.module';
-
-import {SeguimientoEnfermedadComponent} from './seguimiento-enfermedad/seguimiento-enfermedad.component';
 import {SeguimientoRoute} from './seguimiento.routes';
-import {SeguimientoEnfermedadService} from '../core/services/http-services/seguimiento-enfermedad.service';
-import {EnfermedadService} from '../core/services/http-services/enfermedad.service';
-import {DepartamentoService} from '../core/services/http-services/departamento.service';
+import {SeguimientoEnfermedadComponent} from './seguimiento-enfermedad/seguimiento-enfermedad.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [SeguimientoEnfermedadComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(SeguimientoRoute),
@@ -66,4 +62,4 @@ import {DepartamentoService} from '../core/services/http-services/departamento.s
   ],
   providers: []
 })
-export class AdministrationModule { }
+export class SeguimientoModule { }

@@ -3,7 +3,7 @@
     <div [fxFlex]="this.filterFlex" class="h-padding-5">
       <mat-form-field>
         <mat-select placeholder="Enfermedad" [formControl]="this.form.get('enfermedadId')"
-                   >
+        >
           <mat-option *ngFor="let enfermedad of this.enfermedadList" [value]="enfermedad.id">
             {{enfermedad.nombre}}
           </mat-option>
@@ -14,8 +14,8 @@
   <div fxLayout="row wrap">
     <div [fxFlex]="this.filterFlex" class="h-padding-5">
       <mat-form-field>
-        <mat-select placeholder="Clasificación Enfermedades" [formControl]="this.form.get('clasificacion ')"
-                  >
+        <mat-select placeholder="Clasificación Enfermedades" [formControl]="this.form.get('clasificacion')"
+        >
           <mat-option *ngFor="let clasificacion of this.clasificacionList" [value]="clasificacion.key">
             {{clasificacion.value}}
           </mat-option>
@@ -26,8 +26,8 @@
   <div fxLayout="row wrap">
     <div [fxFlex]="this.filterFlex" class="h-padding-5">
       <mat-form-field>
-        <mat-select placeholder="Departamento" [formControl]="this.form.get('departamentoId ')"
-                   >
+        <mat-select placeholder="Departamento" [formControl]="this.form.get('departamentoId')"
+        >
           <mat-option *ngFor="let departamentos of this.departamentoList" [value]="departamentos.id">
             {{departamentos.nombre}}
           </mat-option>
@@ -99,7 +99,15 @@
 
         <ngx-datatable-column name="Teléfono" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
-            {{row.telefono}}
+            <div *ngIf="validateNumber(row.telefono)">
+              <mat-icon color="primary">phone</mat-icon>
+              <a href="javascript:;" [target]="'_blank'" (click)="row.urlWhatsApp">
+                {{row.telefono}}
+              </a>
+            </div>
+            <div *ngIf="!validateNumber(row.telefono)">
+              {{row.telefono}}
+            </div>
           </ng-template>
         </ngx-datatable-column>
 
@@ -123,7 +131,10 @@
 
         <ngx-datatable-column name="Ubicación Geográfica" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
-            {{row.urlCoordenada}}
+            <mat-icon color="primary">map</mat-icon>
+            <a href="javascript:;" (click)="this.viewCoordenada(row.urlCoordenada)">
+              {{ 'Ubicación' }}
+            </a>
           </ng-template>
         </ngx-datatable-column>
 
@@ -142,7 +153,7 @@
 
         <ngx-datatable-column name="Confirmación" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
-            {{//row.mensaje}}
+            {{''}}
           </ng-template>
         </ngx-datatable-column>
 

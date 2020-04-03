@@ -19,7 +19,7 @@ export class SeguimientoEnfermedadService {
   }
 
   filterSeguimientoEnfermedad(enfermedadId: string, clasificacion: string, departamentoId: string, initial: string, final: string, page: number, size: number): Observable<HttpResponse<any>> {
-    const url = Constantes.baseUri +  `/listar-filtro/${page}/${size}?from=${initial}&to=${final}&departamentoId=${enfermedadId}&clasificacion=${clasificacion}&enfermedadId=${departamentoId}`;
+    const url = Constantes.baseUri + Constants.diagnosticoApi +  `/listar-filtro/${page}/${size}?from=${initial}&to=${final}&departamentoId=${enfermedadId}&clasificacion=${clasificacion}&enfermedadId=${departamentoId}`;
     return this.httpClient.get(url, {observe: 'response'});
   }
 

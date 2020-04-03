@@ -10,7 +10,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Constantes} from '../../../../environments/environment';
 import {Observable} from 'rxjs';
-import {DomainValue} from '../../models/domain-value';
 import {Constants} from '../../constants';
 
 @Injectable()

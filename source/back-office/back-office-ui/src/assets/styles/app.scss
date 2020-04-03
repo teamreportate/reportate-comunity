@@ -1389,17 +1389,22 @@ html body {
 
 /* add */
 
-.card {
+.card, .ngx-datatable.material {
   border: 0;
   padding: 20px;
   border-radius: 6px;
   background: #fff;
   width: 100%;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15)!important;
+  margin-bottom: 25px;
 }
 .card-body {
   margin: 20px;
 }
 .m-t-10 {
   margin-top: 10px;
+}
+
+.block-ui-wrapper {
+  background: rgba(0, 0, 0, 0.40)!important;
 }

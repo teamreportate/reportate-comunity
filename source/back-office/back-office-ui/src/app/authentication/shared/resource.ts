@@ -7,7 +7,7 @@
  * author:  fmontero
  **/
 
-export class Resource{
+export class Resource {
   id: any;
   version: any;
   createdDate: any;

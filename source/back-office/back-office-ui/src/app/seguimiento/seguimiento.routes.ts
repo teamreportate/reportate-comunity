@@ -1,16 +1,16 @@
 import {Routes} from '@angular/router';
-import { AuthGuardService } from '../core/services/util-services/auth-guard.service';
 import {SeguimientoEnfermedadComponent} from './seguimiento-enfermedad/seguimiento-enfermedad.component';
+import {AuthGuardService} from '../core/services/util-services/auth-guard.service';
 
 export const SeguimientoRoute: Routes = [
   {
     path: '',
     children: [
-      // {
-      //   path: 'seguimientio-enfermedades',
-      //   component: SeguimientoEnfermedadComponent,
-      //   canActivate: [AuthGuardService]
-      // }
+      {
+        path: 'diagnostico',
+        component: SeguimientoEnfermedadComponent,
+        canActivate: [AuthGuardService]
+      }
     ]
   }
 ];

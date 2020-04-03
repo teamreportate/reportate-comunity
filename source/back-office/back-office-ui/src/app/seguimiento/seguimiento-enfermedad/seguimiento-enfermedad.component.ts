@@ -48,12 +48,12 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
     this.form = this.initialForm();
     this.today = moment().toDate();
     this.render = false;
-    this.initializePage(15, true);
+    this.initializePage(15, false );
     this.enfermedadService.getEnfermedades().subscribe(response => {
       this.enfermedadList = response.body;
     });
     this.departamentoService.getDepartamentosAsignados().subscribe(response => {
-      this.enfermedadList = response.body;
+      this.departamentoList = response.body;
     });
   }
 
@@ -87,7 +87,7 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
   setPage(pageInfo: any) {
     this.pageControl.number = pageInfo.offset;
     this.blockUI.start('Recuperando lista de bitacora...');
-    this.seguimientoEnfermedadService.filterSeguimientoEnfermedad(this.enfermedadId, this.clasificacion, this.departamentoId, this.startDate.format('DD-MM-YYYY'), this.endDate.format('DD-MM-YYYY'), this.pageControl.number, this.pageControl.size).subscribe(response => {
+    this.seguimientoEnfermedadService.filterSeguimientoEnfermedad(this.enfermedadId, this.clasificacion, this.departamentoId, this.startDate.format('DD/MM/YYYY'), this.endDate.format('DD/MM/YYYY'), this.pageControl.number, this.pageControl.size).subscribe(response => {
       this.pageControl = response.body;
       this.render = true;
       this.blockUI.stop();
@@ -100,8 +100,8 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
   }
 
   updateDate() {
-    this.startDate = moment(moment.utc(this.form.get('fechaInicial').value));
-    this.endDate = moment(moment.utc(this.form.get('fechaFinal').value));
+    this.startDate = moment(moment.utc(this.form.get('from').value));
+    this.endDate = moment(moment.utc(this.form.get('to').value));
     this.departamentoId = this.form.get('departamentoId').value;
     this.enfermedadId = this.form.get('enfermedadId').value;
     this.clasificacion = this.form.get('clasificacion').value;
@@ -144,5 +144,25 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
   onGtLgScreen() {
     this.filterFlex = 33;
     this.scrollH = false;
+  }
+
+
+
+  viewCoordenada(myURL: any) {
+    console.warn(myURL);
+    const title = 'UBICACION';
+    // const myWidth = 1000;
+    // const myHeight = 900;
+    // const left = (screen.width - myWidth) / 2;
+    // const top = (screen.height - myHeight) / 4;
+    window.open(myURL, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no');
+  }
+
+  validateNumber(telefono: string) {
+    if (telefono.length > 8 || !telefono) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

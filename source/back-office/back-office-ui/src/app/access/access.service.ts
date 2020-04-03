@@ -201,4 +201,29 @@ export class AccessService {
     const url = Constantes.baseUri + Constants.groupApi + `/${grupoId}/configurar-usuarios`;
     return this.http.post<HttpResponse<any>>(url, JSON.stringify(userList), {observe: 'response'});
   }
+
+  requestDepartmentList(): Observable<HttpResponse<any>> {
+    const url = Constantes.baseUri + Constants.departmentApi;
+    return this.http.get<HttpResponse<any>>(url, {observe: 'response'});
+  }
+
+  requestAsignedDepartmentsList(): Observable<HttpResponse<any>> {
+    const url = Constantes.baseUri + Constants.userApi + '/departamentos-asignados';
+    return this.http.get<HttpResponse<any>>(url, {observe: 'response'});
+  }
+
+  requestAsignedMunicipalitiesList(): Observable<HttpResponse<any>> {
+    const url = Constantes.baseUri + Constants.userApi + '/municipios-asignados';
+    return this.http.get<HttpResponse<any>>(url, {observe: 'response'});
+  }
+
+  requestAsignedSaludCentreList(): Observable<HttpResponse<any>> {
+    const url = Constantes.baseUri + Constants.userApi + '/centro-salud-asignados';
+    return this.http.get<HttpResponse<any>>(url, {observe: 'response'});
+  }
+
+  requestGetUserById(userId: number): Observable<HttpResponse<any>> {
+    const url = Constantes.baseUri + Constants.userApi + '/' + userId;
+    return this.http.get<HttpResponse<any>>(url, {observe: 'response'});
+  }
 }

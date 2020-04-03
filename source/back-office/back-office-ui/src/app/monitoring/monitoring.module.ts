@@ -20,7 +20,7 @@ import {CommonsModule} from '../commons/commons.module';
 import {SeguimientoEnfermedadComponent} from '../seguimiento/seguimiento-enfermedad/seguimiento-enfermedad.component';
 
 @NgModule({
-  declarations: [SeguimientoEnfermedadComponent],
+  declarations: [BinnacleComponent],
   imports: [
     CommonModule,
     CommonsModule,

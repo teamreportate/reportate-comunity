@@ -21,9 +21,11 @@ export class Constants {
   static jobApi = 'scheduler/';
   static alarmApi = 'api/alarmas';
   static LOGIN_PATH = '/authentication/login';
-  static enfermedadApi = '/api/enfermedades';
-  static departamentoApi = '/api/departamentos';
-   diagnosticoApi = '/api/diagnosticos';
+  static paisApi = 'api/pais';
+  static sintomasApi = 'api/sintoma';
+  static enfermedadApi = 'api/enfermedades';
+  static departmentApi = 'api/departamentos';
+  static diagnosticoApi = 'api/diagnosticos';
 
 // CLASIFICACION ENFERMEDAD
   static CLASIFICACION_ENFERMEDAD = [{key: 'SOSPECHOSO', value: 'SOSPECHOSO'}, {key: 'NEGATIVO', value: 'NEGATIVO'}, {
