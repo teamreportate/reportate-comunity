@@ -1,17 +1,20 @@
 import axios from "axios";
 
-const COUNTRY_SERVICE = 'https://restcountries-v1.p.rapidapi.com/';
+const BASE_SERVICE = 'https://dev.mc4.com.bo:9443/';
 
 class ServiceBase {
-	getCountryService = () => COUNTRY_SERVICE;
+	getBaseService = () => BASE_SERVICE;
 	
 	constructor() {
-		this.axios = axios.create({
-			headers: {
-				"x-rapidapi-host": "restcountries-v1.p.rapidapi.com",
-				"x-rapidapi-key" : "e52e06287dmsh511c521506f5579p18dd9cjsna9fea31c67b7"
-			}
-		});
+		this.axios = axios.create({});
+	}
+	
+	getHeaders() {
+		let token   = localStorage.getItem('token');
+		let headers = {};
+		if (token !== undefined && token !== null && token !== "")
+			headers = {Authorization: "Bearer " + token};
+		return headers;
 	}
 	
 	handleAxiosErrors = error => {
