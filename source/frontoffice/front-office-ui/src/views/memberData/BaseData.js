@@ -1,4 +1,4 @@
-import {Button, Checkbox, Form, Modal, Select, Tabs} from "antd";
+import {Button, Checkbox, Form, Modal, Tabs} from "antd";
 import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import ServiceAppConfig from "../../services/ServiceAppConfig";
@@ -8,10 +8,9 @@ import {familySetFirstControl} from "../../store/family/actions";
 import {appConfigSetMessage} from "../../store/appConfig/actions";
 
 const {TabPane} = Tabs;
-const {Option}  = Select;
-export default ({newMember}) => {
-	const [step, setStep]             = useState("1");
-	const [countries, setCountries]   = useState([]);
+
+export default () => {
+	const [step, setStep] = useState("1");
 	const [sicknesses, setSicknesses] = useState([]);
 	const [symptoms, setSymptoms]     = useState([]);
 	let history                       = useHistory();

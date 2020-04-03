@@ -12,6 +12,7 @@ class ServiceFamily extends ServiceBase {
 		)
 				.then(result => {
 					if (onSuccess) {
+						console.log(result.data);
 						onSuccess(result.data);
 					}
 				})
@@ -32,6 +33,8 @@ class ServiceFamily extends ServiceBase {
 				departamentoId: family.department,
 				municipioId   : family.municipality,
 				controlInicial: 'false',
+			}, {
+				headers: this.getHeaders()
 			})
 				.then((result) => {
 						if (onSuccess) {

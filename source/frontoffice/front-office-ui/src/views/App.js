@@ -27,7 +27,6 @@ function App() {
 	// const user                  = useSelector(store => store.auth);
 	// const [checked, setChecked] = useState(false);
 	// const [valid, setValid]     = useState(false);
-	console.log(user);
 	useEffect(() => {
 	
 	}, []);

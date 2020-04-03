@@ -6,7 +6,7 @@ const SERVICE_APP_GET_DAILY_DATA = 'api/control-diario/encuesta-diaria';
 
 class ServiceAppConfig extends ServiceBase {
 	
-	getDepartamentos = (onSuccess = false) => {
+	getDepartments = (onSuccess = false) => {
 		this.axios.get(this.getBaseService() + SERVICE_APP_GET_DEPARTMENT,
 			{
 				headers: this.getHeaders()

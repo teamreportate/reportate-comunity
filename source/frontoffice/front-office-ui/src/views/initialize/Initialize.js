@@ -21,7 +21,6 @@ export default () => {
 			(result) => {
 				// user valid
 				localStorage.setItem('token', result.token);
-				console.log(localStorage.getItem('token'));
 				dispatch(authSetUser({...result, logged: true}));
 				// getting family information
 				ServiceFamily.getFamily(family => {
@@ -36,10 +35,10 @@ export default () => {
 	useEffect(() => {
 		if (user.logged) {
 			if (family.fetched) {
-				if (family.id === "") {
-					history.push("/family-data");
-				} else {
+				if (family.id > 0) {
 					history.push("/dashboard");
+				} else {
+					history.push("/family-data");
 				}
 			} else {
 				//wait until fetch
