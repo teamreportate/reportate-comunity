@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -19,6 +22,10 @@ import java.util.Optional;
  * @Copyright :MC4
  */
 public interface SintomaRepository extends JpaRepository<Sintoma, Long> {
+    @Query(" SELECT s FROM Sintoma s" +
+            " order by s.id desc")
+    List<Sintoma> listAll();
+
     Optional<Sintoma> findByIdAndEstado(Long id, EstadoEnum estadoEnum);
     @Query("SELECT new bo.com.reportate.model.dto.response.SintomaResponse(s) FROM Sintoma s where s.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO AND s.controlDiario = true")
     List<SintomaResponse> findByEstadoAndControlDiarioTrue();

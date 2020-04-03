@@ -1,3 +1,60 @@
-<p>
-  sintomas works!
-</p>
+<clic-page [title]="'Gestión de Síntomas'" (reloadEmitter)="this.ngOnInit()">
+  <div fxLayout="row wrap">
+      <div [fxFlex]="this.flex" fxLayoutAlign="start center" class="h-padding-5">
+        <button mat-raised-button class="btn-full" color="accent" (click)="this.openDialog(null)">Nuevo Síntoma</button>
+      </div>
+      <div [fxFlex]="this.flex===100?100:100-this.flex" fxLayoutAlign="center center" class="h-padding-5">
+        <mat-form-field>
+          <input matInput placeholder='Buscar...' (keyup)="this.applyFilter($event.target.value)" maxlength="30"/>
+        </mat-form-field>
+      </div>
+    
+    <div fxFlex="100">
+      <ngx-datatable #table class="material"
+                     [messages]="this.tableMessages()"
+                     [columnMode]="'force'"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     [rowHeight]="'auto'"
+                     [limit]='10'
+                     [rows]="this.list"
+                     [scrollbarH]="this.scrollH">
+
+        <ngx-datatable-column name="Acciones" [minWidth]="200" [maxWidth]="240" [draggable]="false" [resizeable]="false">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-group="group">
+            <button mat-icon-button color="accent" matTooltip="Editar Síntoma" (click)="this.openDialog(row)"><mat-icon fxLayoutAlign="start start">edit</mat-icon></button>
+            <button mat-icon-button (click)="this.onChangePaisState(row)"><mat-icon fxLayoutAlign="start start" color="{{row.estado === 'ACTIVO'?'warn':'accent'}}" matTooltip="{{row.estado === 'ACTIVO'?'Inhabilitar síntoma':'Habilitar síntoma'}}">{{row.estado === 'ACTIVO' ? 'close' : 'check'}}</mat-icon></button>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Nombre" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.nombre}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Pregunta" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.pregunta}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Control Diario" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <mat-checkbox [(ngModel)]="row.controlDiario"></mat-checkbox>
+          </ng-template>
+        </ngx-datatable-column>
+        
+        <ngx-datatable-column name="Estado" [maxWidth]="200" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div class="{{row.estado === 'ACTIVO'?'primary-state':'warn-state'}}"><span
+              class="text-white">{{row.estado}}</span></div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</clic-page>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

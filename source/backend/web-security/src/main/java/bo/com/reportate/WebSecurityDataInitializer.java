@@ -129,7 +129,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         recHijo("Alarmas", "configuracion", "Interfaz para administración de Alarmas", "alarmas", 3, "code", rolAdmin);
 
         recPadre("Administración", "Configuraciones de los escenarios", "administracion", 1, "menu", rolAdmin);
-        recHijo("Paises", "administracion", "Gestión de Paises", "paises", 1, "code", rolAdmin);
+        recHijo("Países", "administracion", "Gestión de Países", "paises", 1, "code", rolAdmin);
         recHijo("Sintomas", "administracion", "Gestión de Sintomas", "sintomas", 2, "code", rolAdmin);
         recHijo("Enfermedades", "administracion", "Gestión de Enfermedades", "enfermedades", 3, "code", rolAdmin);
         recHijo("Municipios", "administracion", "Gestión de Municipios", "municipios", 4, "code", rolAdmin);
