@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * MC4 SRL
  * Santa Cruz - Bolivia
@@ -23,5 +26,10 @@ public class NotificacionServiceImpl implements NotificacionService {
     @Async
     public void notificacionSospechoso(String to, String asunto, String mensaje) {
         emailService.sendSimpleMessage(to, asunto, mensaje);
+
+    }
+    @Async
+    public void notificacionSospechosoSintomas(String paciente, String to, String asunto, String mensaje, List<String> sintomas){
+        emailService.sentMessageEmail(paciente,asunto,to, sintomas, mensaje);
     }
 }

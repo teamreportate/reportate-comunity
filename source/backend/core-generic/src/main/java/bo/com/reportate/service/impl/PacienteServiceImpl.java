@@ -53,6 +53,7 @@ public class PacienteServiceImpl implements PacienteService {
     @Autowired private DiagnosticoRepository diagnosticoRepository;
     @Autowired private MatrizDiagnosticoRepository matrizDiagnosticoRepository;
     @Autowired private NotificacionService notificacionService;
+    @Autowired private UsuarioRepository usuarioRepository;
 
     @Override
     public PacienteDto save(Authentication userDetails, String nombre, Integer edad, GeneroEnum genero, Boolean gestacion, Integer tiempoGestacion) {
@@ -115,6 +116,7 @@ public class PacienteServiceImpl implements PacienteService {
         Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No existe el paciente registrado"));
         ControlDiario controlDiario = ControlDiario.builder().paciente(paciente).build();
         this.controlDiarioRepository.save(controlDiario);
+        log.info("Registrando sintomas..");
         List<Sintoma> sintomasRecibidos = new ArrayList<>();
         for (SintomaRequest sintAux : sintomas) {
             ValidationUtil.throwExceptionIfInvalidNumber("sintoma",sintAux.getId(),true,0L);
@@ -127,7 +129,9 @@ public class PacienteServiceImpl implements PacienteService {
             sintomasRecibidos.add(sintoma);
         }
 
+
         if(enfermedadesBase != null && !enfermedadesBase.isEmpty()){
+            log.info("Registrando enfermedades..");
             for (EnfermedadRequest enferAux : enfermedadesBase) {
                 ValidationUtil.throwExceptionIfInvalidNumber("enfermedad",enferAux.getId(),true,0L);
                 Enfermedad enfermedad = this.enfermedadRepository.findByIdAndEstado(enferAux.getId(),EstadoEnum.ACTIVO).orElseThrow(()-> new NotDataFoundException("No se encontro la enfermedad que quiere reportar"));
@@ -136,6 +140,7 @@ public class PacienteServiceImpl implements PacienteService {
         }
 
         if(paisesVisitados != null && !paisesVisitados.isEmpty()){
+            log.info("Registrando paises..");
             for (PaisRequest paisAux : paisesVisitados) {
                 ValidationUtil.throwExceptionIfInvalidNumber("pais",paisAux.getId(),true,0L);
                 Pais pais = this.paisRepository.findByIdAndEstado(paisAux.getId(),EstadoEnum.ACTIVO).orElseThrow(()-> new NotDataFoundException("No se encontro el pais que quiere reportar"));
@@ -143,21 +148,27 @@ public class PacienteServiceImpl implements PacienteService {
             }
         }
 
+        log.info("Calculando diagnostico ...");
         List<Enfermedad> enfermedades = this.matrizDiagnosticoRepository.listarEnfermedades();
         for(Enfermedad enfermedad: enfermedades){
             List<MatrizDiagnostico> matrizDiagnosticos = this.matrizDiagnosticoRepository.findByEnfermedadAndEstado(enfermedad,EstadoEnum.ACTIVO);
+            List<String> sintomasMail = new ArrayList<>();
             BigDecimal resultadoPeso = BigDecimal.ZERO;
             for (MatrizDiagnostico matrizDiagnostico: matrizDiagnosticos){
                 if(sintomasRecibidos.contains(matrizDiagnostico.getSintoma())){
                     resultadoPeso = resultadoPeso.add(matrizDiagnostico.getPeso());
+                    sintomasMail.add(matrizDiagnostico.getSintoma().getNombre());
                 }
             }
             if(resultadoPeso.compareTo(BigDecimal.ZERO) > 0) {// Sintomas de la enfermedad
                 log.info("Resultado enfermedad:{}  del calculo:{}",enfermedad.getNombre(), resultadoPeso);
                 if(resultadoPeso.compareTo(new BigDecimal("5")) > 0){
-                    //NOTIFICAR
-                    notificacionService.notificacionSospechoso("rllayus@gmail.com","Caso sospechoso "+enfermedad.getNombre(),"Existe un nuevo caso sospechoso de "+enfermedad.getNombre() +" con una valorción de "+resultadoPeso.toPlainString());
-                    log.info("Enviando notificacion");
+                    List<MuUsuario> medicos = this.usuarioRepository.obtenerMedicoPordepartamento(controlDiario.getPaciente().getFamilia().getDepartamento());
+                    for (MuUsuario medico: medicos) {
+//                        notificacionService.notificacionSospechoso(medico.getEmail(), , );
+                        notificacionService.notificacionSospechosoSintomas("Dr. "+ medico.getNombre(), medico.getEmail(),"Caso sospechoso " + enfermedad.getNombre(),"Existe un nuevo caso sospechoso de " + enfermedad.getNombre() + " con una valoración de " + resultadoPeso.toPlainString() , sintomasMail);
+                        log.info("Enviando notificacion");
+                    }
                 }
                 this.diagnosticoRepository.save(Diagnostico.builder()
                         .controlDiario(controlDiario)
@@ -166,8 +177,7 @@ public class PacienteServiceImpl implements PacienteService {
                         .estadoDiagnostico(EstadoDiagnosticoEnum.SOSPECHOSO).build());
             }
         }
-
         log.info("Se registro los sintomas correctamente");
-        return "Se registro los sintomas correctamente";
+        return enfermedades.get(0).getMensajeDiagnostico();
     }
 }

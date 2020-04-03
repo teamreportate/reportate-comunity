@@ -299,7 +299,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         Sintoma disnea = null;
         if(!sintomaRepository.existsByNombreIgnoreCase("Disnea")){
             disnea = Sintoma.builder()
-                    .nombre("disnea")
+                    .nombre("Disnea")
                     .controlDiario(true)
                     .pregunta("Tiene dificultad para respirar?")
                     .ayuda("Cuente hasta 10 y verifique si le falta la respiración").build();

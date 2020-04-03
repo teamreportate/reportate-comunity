@@ -28,7 +28,7 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
     @Query("SELECT new bo.com.reportate.model.dto.response.DiagnosticoResponseDto(d) " +
             "FROM Diagnostico d INNER JOIN d.enfermedad enf INNER JOIN d.controlDiario cd " +
             "INNER JOIN cd.paciente p INNER JOIN p.familia f INNER JOIN f.departamento dep " +
-            " WHERE d.createdDate BETWEEN :fechaInicio AND :fechaFin AND dep=:departamento AND d.estadoDiagnostico=:diagnostico AND enf=:enfermedad")
+            " WHERE d.createdDate BETWEEN :fechaInicio AND :fechaFin AND dep=:departamento AND d.estadoDiagnostico=:diagnostico AND enf=:enfermedad ORDER BY d.id DESC")
     Page<DiagnosticoResponseDto> listarDiagnostico(
             @Param("fechaInicio") Date date,
             @Param("fechaFin") Date to,

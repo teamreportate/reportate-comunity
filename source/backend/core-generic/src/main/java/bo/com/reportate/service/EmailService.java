@@ -1,5 +1,8 @@
 package bo.com.reportate.service;
 
+import java.util.List;
+import java.util.Locale;
+
 /**
  * Created by :MC4
  * Autor      :Ricardo Laredo
@@ -12,4 +15,5 @@ package bo.com.reportate.service;
 
 public interface EmailService {
     void sendSimpleMessage(String to, String subject, String text);
+    void sentMessageEmail(String nombrePaciente, String subject, String to, List<String> sintomas,  String mensaje);
 }
