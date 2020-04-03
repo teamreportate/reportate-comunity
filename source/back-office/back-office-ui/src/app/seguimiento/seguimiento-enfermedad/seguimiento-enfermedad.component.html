@@ -138,14 +138,15 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="Clasificación" [maxWidth]="150" [draggable]="false" [resizeable]="false">
+        <ngx-datatable-column name="Clasificación" [maxWidth]="250" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
             <div *ngIf="row.clasificacion==='NEGATIVO'" class="text-white color-green"><span
               class="text-white">{{row.clasificacion}}</span></div>
+
             <div *ngIf="row.clasificacion==='CONFIRMADO'" class="color-red"><span
               class="text-white">{{row.clasificacion}}</span>
             </div>
-            <div *ngIf="row.clasificacion==='SOSPECHOSO'" class="text-dark color-yellow">{{row.clasificacion}}
+            <div *ngIf="row.clasificacion==='SOSPECHOSO'" class="color-yellow" >{{row.clasificacion}}
             </div>
           </ng-template>
         </ngx-datatable-column>
