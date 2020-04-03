@@ -25,4 +25,5 @@ export class Constants {
   static paisApi = 'api/pais';
   static sintomasApi = 'api/sintoma';
   static enfermedadApi = 'api/enfermedades';
+  static departmentApi = 'api/departamentos';
 }
