@@ -1,0 +1,155 @@
+<clic-page [title]="'Seguimiento de enfermedades'" (reloadEmitter)="this.ngOnInit()">
+  <div fxLayout="row wrap">
+    <div [fxFlex]="this.filterFlex" class="h-padding-5">
+      <mat-form-field>
+        <mat-select placeholder="Enfermedad" [formControl]="this.form.get('enfermedadId')"
+                   >
+          <mat-option *ngFor="let enfermedad of this.enfermedadList" [value]="enfermedad.id">
+            {{enfermedad.nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row wrap">
+    <div [fxFlex]="this.filterFlex" class="h-padding-5">
+      <mat-form-field>
+        <mat-select placeholder="Clasificación Enfermedades" [formControl]="this.form.get('clasificacion ')"
+                  >
+          <mat-option *ngFor="let clasificacion of this.clasificacionList" [value]="clasificacion.key">
+            {{clasificacion.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row wrap">
+    <div [fxFlex]="this.filterFlex" class="h-padding-5">
+      <mat-form-field>
+        <mat-select placeholder="Departamento" [formControl]="this.form.get('departamentoId ')"
+                   >
+          <mat-option *ngFor="let departamentos of this.departamentoList" [value]="departamentos.id">
+            {{departamentos.nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row wrap">
+    <div [fxFlex]="this.filterFlex" class="h-padding-5">
+      <mat-form-field class="picker-date-filter">
+        <input matInput [matDatepicker]="startDate" [max]="this.today" placeholder="Fecha Inicial"
+               [formControl]="this.form.get('from')" disabled>
+        <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+        <mat-datepicker #startDate disabled="false"></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div [fxFlex]="this.filterFlex" class="h-padding-5">
+      <mat-form-field class="picker-date-filter">
+        <input matInput [matDatepicker]="endDate" [max]="this.today" placeholder="Fecha Final"
+               [formControl]="this.form.get('to')" disabled>
+        <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+        <mat-datepicker #endDate disabled="false"></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div fxLayout="row wrap">
+    <div fxFlex="100" class="h-padding-5">
+      <button mat-flat-button color="accent" (click)="this.onSearch()">Buscar</button>
+    </div>
+    <div fxFlex="100" class="p-5">
+      <ngx-datatable #table class="material" [messages]="this.tableMessages()"
+                     [columnMode]="'force'"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     [scrollbarH]="this.scrollH"
+                     [externalPaging]="true"
+                     [rowHeight]="'auto'"
+                     [count]="this.pageControl.totalElements"
+                     [offset]="this.pageControl.number"
+                     [limit]="this.pageControl.size"
+                     [rows]="this.pageControl.content"
+                     (page)='this.setPage($event)'>
+
+        <ngx-datatable-column name="Acciones" [maxWidth]="80" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div fxLayout="row" fxFlexAlign="start start">
+              <div fxFlex="100" fxFlexAlign="center top">
+                <button mat-icon-button matTooltip="Detalles">
+                  <mat-icon color="accent">info</mat-icon>
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Fecha Registro" [maxWidth]="250" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.fechaRegistro | date: "dd/MM/yyyy H:mm"}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Nombre" [maxWidth]="300" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.nombrePaciente | deleteUnderline}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Teléfono" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.telefono}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Dirección" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.direccion}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Zona" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.zona}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Ciudad" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.ciudad}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Ubicación Geográfica" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.urlCoordenada}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Clasificación" [maxWidth]="150" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div *ngIf="row.tipoLog==='NEGATIVO'" class="log-lvl-info"><span
+              class="text-white">{{row.clasificacion}}</span></div>
+            <div *ngIf="row.tipoLog==='CONFIRMADO'" class="log-lvl-error"><span
+              class="text-white">{{row.clasificacion}}</span>
+            </div>
+            <div *ngIf="row.tipoLog==='SOSPECHOSO'" class="log-lvl-warning"><span
+              class="text-white">{{row.clasificacion}}</span>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Confirmación" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{//row.mensaje}}
+          </ng-template>
+        </ngx-datatable-column>
+
+      </ngx-datatable>
+    </div>
+  </div>
+</clic-page>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

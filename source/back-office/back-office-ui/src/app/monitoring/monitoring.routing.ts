@@ -9,12 +9,13 @@
 import {Routes} from '@angular/router';
 import {BinnacleComponent} from './binnacle/binnacle.component';
 import {AuthGuardService} from '../core/services/util-services/auth-guard.service';
+import {SeguimientoEnfermedadComponent} from '../seguimiento/seguimiento-enfermedad/seguimiento-enfermedad.component';
 
 
 export const MonitoringRoutes: Routes = [
       {
         path: 'bitacora',
-        component: BinnacleComponent,
+        component: SeguimientoEnfermedadComponent,
         canActivate: [AuthGuardService]
       }
 ];
