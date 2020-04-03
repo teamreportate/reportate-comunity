@@ -25,7 +25,7 @@ export class CustomDateAdapter extends NativeDateAdapter{
 
   format(date: Date, displayFormat: any): string {
     moment.locale('es-BO');
-    if (displayFormat === KEY) return moment(moment.utc(date)).format('DD-MM-YYYY');
+    if (displayFormat === KEY) return moment(moment.utc(date)).format('DD/MM/YYYY');
     else return moment(moment.utc(date)).format('ll');
   }
 

@@ -36,6 +36,6 @@ export class AppSidebarComponent implements OnDestroy {
   }
 
   clickbt() {
-    return alert('Proximamente')
+    return alert('Proximamente');
   }
 }

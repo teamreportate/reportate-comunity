@@ -130,7 +130,25 @@ export class UserComponent extends ClicComponent implements OnInit {
 
   getUserById(id: number) {
     this.accessService.requestGetUserById(id).subscribe(response => {
-      console.log(response.body);
+      const user = response.body;
+      this.form.setValue({
+        nombre: user.nombre,
+        username: user.username,
+        authType: user.authType,
+        tipoUsuario: user.tipoUsuario,
+        password: '',
+        passwordConfirm: '',
+        email: user.email,
+        grupos: new FormControl(null),
+        departamentos:  new FormControl(null),
+        municipios:  new FormControl(null),
+        centroSaluds:  new FormControl(null),
+      });
+
+      this.departments = user.departamentos;
+      this.municipalities = user.municipios;
+      this.saludCentres = user.centroSaluds;
+
       this.blockUI.stop();
     }, error => {
       this.blockUI.stop();
@@ -168,15 +186,18 @@ export class UserComponent extends ClicComponent implements OnInit {
     });
   }
 
+  save() {
+    this.userId > 0 ? this.updateUser() : this.createUser();
+  }
 
   createUser() {
     this.error = null;
     if (this.form.valid) {
       const user: AuthUser = this.form.value;
       user.authType = 'SISTEMA';
-      user.departamentos = this.departments;
-      user.municipios = this.municipalities;
-      user.centroSaluds = this.saludCentres;
+      user.departamentos = this.departments.filter(x => x.asignado == true);
+      user.municipios = this.municipalities.filter(x => x.asignado == true);
+      user.centroSaluds = this.saludCentres.filter(x => x.asignado == true);
       const confirm: string = this.form.get('passwordConfirm').value;
       if (user.password !== confirm) {
         this.confirm = false;
@@ -184,6 +205,35 @@ export class UserComponent extends ClicComponent implements OnInit {
       }
       this.load = true;
       this.accessService.requestUserStore(user, confirm).subscribe(response => {
+        this.goBack();
+      }, error1 => {
+        this.load = false;
+        if (error1) this.notifierError(error1);
+      });
+    } else {
+      for (const controlsKey in this.form.controls) {
+        if (this.form.controls[controlsKey].errors)
+          this.form.controls[controlsKey].markAsTouched({ onlySelf: true });
+      }
+    }
+  }
+
+  updateUser() {
+    this.error = null;
+    if (this.form.valid) {
+      const user: AuthUser = this.form.value;
+      user.id = this.userId;
+      user.authType = 'SISTEMA';
+      user.departamentos = this.departments.filter(x => x.asignado == true);
+      user.municipios = this.municipalities.filter(x => x.asignado == true);
+      user.centroSaluds = this.saludCentres.filter(x => x.asignado == true);
+      const confirm: string = this.form.get('passwordConfirm').value;
+      if (user.password !== confirm) {
+        this.confirm = false;
+        return;
+      }
+      this.load = true;
+      this.accessService.requestUserUpdate(user, this.userId.toString()).subscribe(response => {
         this.goBack();
       }, error1 => {
         this.load = false;
@@ -220,6 +270,7 @@ export class UserComponent extends ClicComponent implements OnInit {
       this.notifier.show(customOptions);
     }
   }
+
   public flex: number;
   onGtLgScreen() {
     this.flex = 10;

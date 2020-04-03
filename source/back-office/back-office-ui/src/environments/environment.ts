@@ -9,7 +9,7 @@ export const environment = {
     loginDialogWidth: 'WD'
   },
   services: {
-     baseUri : 'https://localhost:9443/',
+     baseUri : 'https://192.168.0.12:9443/',
      baseUriFact : 'https://localhost:9443/facturacion-core/',
   }
 };
