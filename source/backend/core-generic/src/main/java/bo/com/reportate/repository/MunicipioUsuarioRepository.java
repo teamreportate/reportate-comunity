@@ -31,7 +31,7 @@ public interface MunicipioUsuarioRepository extends JpaRepository<MunicipioUsuar
             "AND u.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<MunicipioUsuarioDto> listarMunicipiosAsignados(@Param("username") String username);
 
-    @Query("SELECT new bo.com.reportate.model.dto.MunicipioUsuarioDto(mu.municipio) " +
+    @Query("SELECT new bo.com.reportate.model.dto.MunicipioUsuarioDto(mu.municipio.id, mu.municipio.nombre, true, mu.municipio.departamento.id) " +
             "from MunicipioUsuario mu left join mu.muUsuario u " +
             "where u.id =:userId " +
             "AND mu.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
@@ -45,7 +45,7 @@ public interface MunicipioUsuarioRepository extends JpaRepository<MunicipioUsuar
             " AND mud.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO) AND mu.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<MunicipioUsuarioDto> listarMunicipiosNoAsignados(@Param("username") String username);
 
-    @Query("SELECT new bo.com.reportate.model.dto.MunicipioUsuarioDto(mu) " +
+    @Query("SELECT new bo.com.reportate.model.dto.MunicipioUsuarioDto(mu.id, mu.nombre, false , mu.departamento.id) " +
             "from Municipio mu WHERE mu NOT IN (SELECT mud FROM MunicipioUsuario mud INNER JOIN mud.muUsuario u " +
             " WHERE u.id =:userId " +
             " AND u.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +

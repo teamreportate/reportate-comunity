@@ -33,7 +33,7 @@ public interface CentroSaludUsuarioRepository extends JpaRepository<CentroSaludU
             "AND u.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<CentroSaludUsuarioDto> listarCentrosSaludAsignados(@Param("username") String username);
 
-    @Query("SELECT new bo.com.reportate.model.dto.CentroSaludUsuarioDto(du.centroSalud) " +
+    @Query("SELECT new bo.com.reportate.model.dto.CentroSaludUsuarioDto(du.centroSalud.id, du.centroSalud.nombre, true, du.centroSalud.municipio.id) " +
             "FROM CentroSaludUsuario du INNER JOIN du.muUsuario u " +
             "WHERE u.id =:userId " +
             "AND du.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
@@ -51,7 +51,7 @@ public interface CentroSaludUsuarioRepository extends JpaRepository<CentroSaludU
             "AND d.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<CentroSaludUsuarioDto> listarCentrosSaludNoAsignados(@Param("username") String username);
 
-    @Query("SELECT new bo.com.reportate.model.dto.CentroSaludUsuarioDto(d) " +
+    @Query("SELECT new bo.com.reportate.model.dto.CentroSaludUsuarioDto(d.id, d.nombre, false, d.municipio.id) " +
             "from CentroSalud d " +
             "WHERE d NOT IN" +
             "   (SELECT du.centroSalud FROM CentroSaludUsuario du INNER JOIN du.muUsuario u " +
