@@ -7,6 +7,7 @@ import bo.com.reportate.model.dto.PacienteDto;
 import bo.com.reportate.model.dto.request.EnfermedadRequest;
 import bo.com.reportate.model.dto.request.PaisRequest;
 import bo.com.reportate.model.dto.request.SintomaRequest;
+import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
 import bo.com.reportate.repository.*;
@@ -20,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @Created by :MC4
@@ -43,6 +45,7 @@ public class PacienteServiceImpl implements PacienteService {
     @Autowired private SintomaRepository sintomaRepository;
     @Autowired private PaisRepository paisRepository;
     @Autowired private EnfermedadRepository enfermedadRepository;
+    @Autowired private DiagnosticoRepository diagnosticoRepository;
 
     @Override
     public PacienteDto save(Authentication userDetails, String nombre, Integer edad, GeneroEnum genero, Boolean gestacion, Integer tiempoGestacion) {
@@ -131,7 +134,13 @@ public class PacienteServiceImpl implements PacienteService {
             }
         }
 
+        Optional<Enfermedad> enfermedad = this.enfermedadRepository.findByNombreAndEstado("Codiv-19", EstadoEnum.ACTIVO);
+        enfermedad.ifPresent(value -> this.diagnosticoRepository.save(Diagnostico.builder()
+                .controlDiario(controlDiario)
+                .enfermedad(value)
+                .estadoDiagnostico(EstadoDiagnosticoEnum.CONFIRMADO).build()));
+
         log.info("Se registro los sintomas correctamente");
-        return "";
+        return "Se registro los sintomas correctamente";
     }
 }

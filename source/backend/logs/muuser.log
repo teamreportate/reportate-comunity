@@ -21262,3 +21262,647 @@ Verify the connector's configuration, identify and stop any process that's liste
 02/04/2020 17:13:21.077 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
 02/04/2020 17:13:21.077 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-3 - Shutdown initiated...
 02/04/2020 17:13:21.084 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-3 - Shutdown completed.
+02/04/2020 19:11:22.592 [restartedMain] INFO  b.c.r.WebBackofficeApplication.logStarting - Starting WebBackofficeApplication on Ricardos-MacBook-Pro.local with PID 4361 (/Users/rlaredo/Documents/projects/reportate-covid-19/source/backend/web-backoffice-api/target/classes started by rlaredo in /Users/rlaredo/Documents/projects/reportate-covid-19/source/backend)
+02/04/2020 19:11:22.597 [restartedMain] INFO  b.c.r.WebBackofficeApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+02/04/2020 19:11:22.794 [restartedMain] INFO  o.s.b.d.restart.ChangeableUrls.logTo - The Class-Path manifest attribute in /Users/rlaredo/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/jaxb-runtime-2.3.2.jar referenced one or more files that do not exist: file:/Users/rlaredo/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/jakarta.xml.bind-api-2.3.2.jar,file:/Users/rlaredo/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/txw2-2.3.2.jar,file:/Users/rlaredo/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/istack-commons-runtime-3.0.8.jar,file:/Users/rlaredo/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/stax-ex-1.8.1.jar,file:/Users/rlaredo/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/FastInfoset-1.2.16.jar,file:/Users/rlaredo/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/jakarta.activation-api-1.2.1.jar
+02/04/2020 19:11:22.794 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor.logTo - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+02/04/2020 19:11:22.794 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor.logTo - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+02/04/2020 19:11:23.414 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+02/04/2020 19:11:23.565 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 144ms. Found 32 JPA repository interfaces.
+02/04/2020 19:11:23.571 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+02/04/2020 19:11:23.607 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 35ms. Found 32 JPA repository interfaces.
+02/04/2020 19:11:23.608 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+02/04/2020 19:11:23.644 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 35ms. Found 32 JPA repository interfaces.
+02/04/2020 19:11:24.057 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$6c7bf7e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:11:24.080 [restartedMain] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping.afterPropertiesSet - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+02/04/2020 19:11:24.134 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:11:24.140 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:11:24.142 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@2115fe81' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:11:24.143 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:11:24.148 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:11:24.493 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 9443 (https) 9090 (http)
+02/04/2020 19:11:24.499 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Initializing ProtocolHandler ["https-jsse-nio-9443"]
+02/04/2020 19:11:24.500 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Initializing ProtocolHandler ["http-nio-9090"]
+02/04/2020 19:11:24.522 [restartedMain] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+02/04/2020 19:11:24.523 [restartedMain] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.31]
+02/04/2020 19:11:24.589 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
+02/04/2020 19:11:24.589 [restartedMain] INFO  o.s.web.context.ContextLoader.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 1794 ms
+02/04/2020 19:11:24.653 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+02/04/2020 19:11:24.784 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+02/04/2020 19:11:24.846 [restartedMain] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 5.4.12.Final
+02/04/2020 19:11:24.949 [restartedMain] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+02/04/2020 19:11:25.038 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+02/04/2020 19:11:25.092 [restartedMain] INFO  com.zaxxer.hikari.pool.PoolBase.getAndSetNetworkTimeout - HikariPool-1 - Driver does not support get/set network timeout for connections. (Method org.postgresql.jdbc.PgConnection.getNetworkTimeout() is not yet implemented.)
+02/04/2020 19:11:25.108 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+02/04/2020 19:11:25.123 [restartedMain] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+02/04/2020 19:11:26.663 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+02/04/2020 19:11:26.674 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+02/04/2020 19:11:27.063 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:11:27.064 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:11:27.064 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:11:27.065 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:11:27.310 [restartedMain] INFO  bo.com.reportate.jwt.CorsFilter.init - [init], CORS Filter init
+02/04/2020 19:11:27.352 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer.startServer - LiveReload server is running on port 35729
+02/04/2020 19:11:27.389 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:11:27.389 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:11:27.393 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:11:27.393 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:11:28.123 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:11:28.124 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:11:28.124 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:11:28.124 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:11:28.429 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:11:28.430 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:11:28.433 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:11:28.434 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:11:28.434 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:11:28.434 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:11:28.694 [restartedMain] INFO  o.s.c.e.EhCacheManagerFactoryBean.afterPropertiesSet - Initializing EhCache CacheManager
+02/04/2020 19:11:28.747 [restartedMain] WARN  n.s.e.config.CacheConfiguration.warnTieredSizing - Configuration problem for cache parametrosCache: MaxEntriesLocalHeap equal or greater than MaxEntriesLocalDisk. This will result in useless disk storage.
+02/04/2020 19:11:28.901 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor.initialize - Initializing ExecutorService 'applicationTaskExecutor'
+02/04/2020 19:11:29.499 [restartedMain] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@32e405ad, org.springframework.security.web.context.SecurityContextPersistenceFilter@1f3a54c6, org.springframework.security.web.header.HeaderWriterFilter@6c733086, org.springframework.security.web.authentication.logout.LogoutFilter@6157bda, bo.com.reportate.jwt.JwtTokenFilter@9a8228c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3d3613d6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@735e8de8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@789c3134, bo.com.reportate.jwt.CorsFilter@3aff1432, org.springframework.security.web.session.SessionManagementFilter@31beb6ea, org.springframework.security.web.access.ExceptionTranslationFilter@41de211c, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@25e4e3e2]
+02/04/2020 19:11:29.517 [restartedMain] DEBUG o.s.w.s.e.m.PayloadRootAnnotationMethodEndpointMapping.initApplicationContext - Looking for endpoints in application context: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@57d4d897, started on Thu Apr 02 19:11:22 BOT 2020
+02/04/2020 19:11:29.522 [restartedMain] DEBUG o.s.w.s.s.e.m.SoapActionAnnotationMethodEndpointMapping.initApplicationContext - Looking for endpoints in application context: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@57d4d897, started on Thu Apr 02 19:11:22 BOT 2020
+02/04/2020 19:11:29.533 [restartedMain] DEBUG o.s.w.s.e.a.DefaultMethodEndpointAdapter.initMethodArgumentResolvers - No MethodArgumentResolvers set, using defaults: [org.springframework.ws.server.endpoint.adapter.method.dom.DomPayloadMethodProcessor@3cd779e1, org.springframework.ws.server.endpoint.adapter.method.MessageContextMethodArgumentResolver@49122ebf, org.springframework.ws.server.endpoint.adapter.method.SourcePayloadMethodProcessor@5f1ffef9, org.springframework.ws.server.endpoint.adapter.method.XPathParamMethodArgumentResolver@498021d2, org.springframework.ws.soap.server.endpoint.adapter.method.SoapMethodArgumentResolver@4e1f5172, org.springframework.ws.soap.server.endpoint.adapter.method.SoapHeaderElementMethodArgumentResolver@16a0e9d8, org.springframework.ws.server.endpoint.adapter.method.dom.Dom4jPayloadMethodProcessor@366825c3, org.springframework.ws.server.endpoint.adapter.method.jaxb.XmlRootElementPayloadMethodProcessor@7e2e0c6d, org.springframework.ws.server.endpoint.adapter.method.jaxb.JaxbElementPayloadMethodProcessor@4a0e561b, org.springframework.ws.server.endpoint.adapter.method.StaxPayloadMethodArgumentResolver@5b7188ab]
+02/04/2020 19:11:29.534 [restartedMain] DEBUG o.s.w.s.e.a.DefaultMethodEndpointAdapter.initMethodReturnValueHandlers - No MethodReturnValueHandlers set, using defaults: [org.springframework.ws.server.endpoint.adapter.method.dom.DomPayloadMethodProcessor@2cc0f83b, org.springframework.ws.server.endpoint.adapter.method.SourcePayloadMethodProcessor@2283c4aa, org.springframework.ws.server.endpoint.adapter.method.dom.Dom4jPayloadMethodProcessor@1a85e06f, org.springframework.ws.server.endpoint.adapter.method.jaxb.XmlRootElementPayloadMethodProcessor@4d660744, org.springframework.ws.server.endpoint.adapter.method.jaxb.JaxbElementPayloadMethodProcessor@66cc3ff3]
+02/04/2020 19:11:29.580 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Starting ProtocolHandler ["https-jsse-nio-9443"]
+02/04/2020 19:11:29.972 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Starting ProtocolHandler ["http-nio-9090"]
+02/04/2020 19:11:29.976 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 9443 (https) 9090 (http) with context path ''
+02/04/2020 19:11:29.979 [restartedMain] INFO  b.c.r.WebBackofficeApplication.logStarted - Started WebBackofficeApplication in 7.809 seconds (JVM running for 8.616)
+02/04/2020 19:11:29.981 [restartedMain] INFO  b.c.r.WebSecurityDataInitializer.addUsers - ************************* Cargando usuarios por defecto *************************
+02/04/2020 19:11:29.984 [restartedMain] INFO  b.c.r.WebSecurityDataInitializer.addUsers - ************************* Fin de cargar usuarios por defecto *************************
+02/04/2020 19:11:29.984 [restartedMain] INFO  b.c.r.WebSecurityDataInitializer.addParams - ************************* Cargando parametros *************************
+02/04/2020 19:11:30.012 [restartedMain] INFO  b.c.r.WebSecurityDataInitializer.addParams - ************************* Fin Cargando parametros *************************
+02/04/2020 19:11:30.012 [restartedMain] INFO  b.c.r.WebSecurityDataInitializer.addDomain - ************************* Cargando dominios *************************
+02/04/2020 19:11:30.012 [restartedMain] INFO  b.c.r.WebSecurityDataInitializer.addDomain - ************************* Fin Cargando dominios *************************
+02/04/2020 19:11:53.432 [Thread-18] INFO  o.s.s.c.ThreadPoolTaskExecutor.shutdown - Shutting down ExecutorService 'applicationTaskExecutor'
+02/04/2020 19:11:53.433 [Thread-18] INFO  o.s.c.e.EhCacheManagerFactoryBean.destroy - Shutting down EhCache CacheManager
+02/04/2020 19:11:53.446 [Thread-18] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
+02/04/2020 19:11:53.449 [Thread-18] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+02/04/2020 19:11:53.451 [Thread-18] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.
+02/04/2020 19:11:53.737 [restartedMain] INFO  b.c.r.WebBackofficeApplication.logStarting - Starting WebBackofficeApplication on Ricardos-MacBook-Pro.local with PID 4361 (/Users/rlaredo/Documents/projects/reportate-covid-19/source/backend/web-backoffice-api/target/classes started by rlaredo in /Users/rlaredo/Documents/projects/reportate-covid-19/source/backend)
+02/04/2020 19:11:53.738 [restartedMain] INFO  b.c.r.WebBackofficeApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+02/04/2020 19:11:54.037 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+02/04/2020 19:11:54.067 [restartedMain] ERROR o.s.boot.SpringApplication.reportFailure - Application run failed
+java.lang.TypeNotPresentException: Type bo.com.reportate.model.MuAlarma not present
+	at sun.reflect.generics.factory.CoreReflectionFactory.makeNamedType(CoreReflectionFactory.java:117)
+	at sun.reflect.generics.visitor.Reifier.visitClassTypeSignature(Reifier.java:125)
+	at sun.reflect.generics.tree.ClassTypeSignature.accept(ClassTypeSignature.java:49)
+	at sun.reflect.generics.visitor.Reifier.reifyTypeArguments(Reifier.java:68)
+	at sun.reflect.generics.visitor.Reifier.visitClassTypeSignature(Reifier.java:138)
+	at sun.reflect.generics.tree.ClassTypeSignature.accept(ClassTypeSignature.java:49)
+	at sun.reflect.generics.repository.ClassRepository.getSuperInterfaces(ClassRepository.java:108)
+	at java.lang.Class.getGenericInterfaces(Class.java:913)
+	at org.springframework.core.ResolvableType.getInterfaces(ResolvableType.java:492)
+	at org.springframework.core.GenericTypeResolver.buildTypeVariableMap(GenericTypeResolver.java:271)
+	at org.springframework.core.GenericTypeResolver.getTypeVariableMap(GenericTypeResolver.java:248)
+	at org.springframework.data.util.ClassTypeInformation.getTypeVariableMap(ClassTypeInformation.java:115)
+	at org.springframework.data.util.ClassTypeInformation.getTypeVariableMap(ClassTypeInformation.java:104)
+	at org.springframework.data.util.ClassTypeInformation.<init>(ClassTypeInformation.java:93)
+	at java.util.concurrent.ConcurrentMap.computeIfAbsent(ConcurrentMap.java:324)
+	at org.springframework.data.util.ClassTypeInformation.from(ClassTypeInformation.java:71)
+	at org.springframework.data.repository.core.support.AbstractRepositoryMetadata.<init>(AbstractRepositoryMetadata.java:58)
+	at org.springframework.data.repository.core.support.DefaultRepositoryMetadata.<init>(DefaultRepositoryMetadata.java:52)
+	at org.springframework.data.repository.core.support.AbstractRepositoryMetadata.getMetadata(AbstractRepositoryMetadata.java:73)
+	at org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport.getRepositoryConfigurations(RepositoryConfigurationExtensionSupport.java:102)
+	at org.springframework.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn(RepositoryConfigurationDelegate.java:148)
+	at org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupport.registerBeanDefinitions(RepositoryBeanDefinitionRegistrarSupport.java:107)
+	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.lambda$loadBeanDefinitionsFromRegistrars$1(ConfigurationClassBeanDefinitionReader.java:385)
+	at java.util.LinkedHashMap.forEach(LinkedHashMap.java:684)
+	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsFromRegistrars(ConfigurationClassBeanDefinitionReader.java:384)
+	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForConfigurationClass(ConfigurationClassBeanDefinitionReader.java:148)
+	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitions(ConfigurationClassBeanDefinitionReader.java:120)
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:331)
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:236)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:275)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:95)
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:706)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:532)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:141)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:747)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1215)
+	at bo.com.reportate.WebBackofficeApplication.main(WebBackofficeApplication.java:34)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: java.lang.ClassNotFoundException: bo.com.reportate.model.MuAlarma
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:382)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:349)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:144)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at sun.reflect.generics.factory.CoreReflectionFactory.makeNamedType(CoreReflectionFactory.java:114)
+	... 44 common frames omitted
+02/04/2020 19:11:56.943 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor.logTo - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+02/04/2020 19:11:56.944 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor.logTo - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+02/04/2020 19:11:56.951 [restartedMain] INFO  b.c.r.WebBackofficeApplication.logStarting - Starting WebBackofficeApplication on Ricardos-MacBook-Pro.local with PID 4361 (/Users/rlaredo/Documents/projects/reportate-covid-19/source/backend/web-backoffice-api/target/classes started by rlaredo in /Users/rlaredo/Documents/projects/reportate-covid-19/source/backend)
+02/04/2020 19:11:56.951 [restartedMain] INFO  b.c.r.WebBackofficeApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+02/04/2020 19:11:57.191 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+02/04/2020 19:11:57.208 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 16ms. Found 0 JPA repository interfaces.
+02/04/2020 19:11:57.211 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+02/04/2020 19:11:57.212 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 0ms. Found 0 JPA repository interfaces.
+02/04/2020 19:11:57.332 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$6c7bf7e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:11:57.335 [restartedMain] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping.afterPropertiesSet - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+02/04/2020 19:11:57.349 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:11:57.350 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:11:57.351 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@d1d4779' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:11:57.351 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:11:57.352 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:11:57.445 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 9443 (https) 9090 (http)
+02/04/2020 19:11:57.446 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Initializing ProtocolHandler ["https-jsse-nio-9443"]
+02/04/2020 19:11:57.447 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Initializing ProtocolHandler ["http-nio-9090"]
+02/04/2020 19:11:57.448 [restartedMain] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+02/04/2020 19:11:57.448 [restartedMain] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.31]
+02/04/2020 19:11:57.460 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
+02/04/2020 19:11:57.460 [restartedMain] INFO  o.s.web.context.ContextLoader.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 507 ms
+02/04/2020 19:11:57.509 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+02/04/2020 19:11:57.613 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+02/04/2020 19:11:57.649 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-2 - Starting...
+02/04/2020 19:11:57.666 [restartedMain] INFO  com.zaxxer.hikari.pool.PoolBase.getAndSetNetworkTimeout - HikariPool-2 - Driver does not support get/set network timeout for connections. (Method org.postgresql.jdbc.PgConnection.getNetworkTimeout() is not yet implemented.)
+02/04/2020 19:11:57.667 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-2 - Start completed.
+02/04/2020 19:11:57.668 [restartedMain] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+02/04/2020 19:11:58.585 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+02/04/2020 19:11:58.586 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+02/04/2020 19:11:58.631 [restartedMain] ERROR o.s.b.w.e.tomcat.TomcatStarter.onStartup - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'securityConfig': Unsatisfied dependency expressed through field 'jwtTokenProvider'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jwtTokenProvider' defined in file [/Users/rlaredo/Documents/projects/reportate-covid-19/source/backend/web-security/target/classes/bo/com/reportate/jwt/JwtTokenProvider.class]: Post-processing of merged bean definition failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [bo.com.reportate.jwt.JwtTokenProvider] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@70887c8e]
+02/04/2020 19:11:58.632 [restartedMain] INFO  o.a.catalina.core.StandardService.log - Stopping service [Tomcat]
+02/04/2020 19:11:58.634 [restartedMain] WARN  o.a.c.loader.WebappClassLoaderBase.log - The web application [ROOT] appears to have started a thread named [HikariPool-2 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ sun.misc.Unsafe.park(Native Method)
+ java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+ java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+ java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1093)
+ java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809)
+ java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1074)
+ java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+ java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ java.lang.Thread.run(Thread.java:748)
+02/04/2020 19:11:58.635 [restartedMain] WARN  o.a.c.loader.WebappClassLoaderBase.log - The web application [ROOT] appears to have started a thread named [HikariPool-2 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ sun.misc.Unsafe.park(Native Method)
+ java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+ java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+ java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:467)
+ java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1073)
+ java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+ java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ java.lang.Thread.run(Thread.java:748)
+02/04/2020 19:11:58.636 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext.refresh - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+02/04/2020 19:11:58.636 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
+02/04/2020 19:11:58.637 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-2 - Shutdown initiated...
+02/04/2020 19:11:58.641 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-2 - Shutdown completed.
+02/04/2020 19:11:58.649 [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener.logMessage - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+02/04/2020 19:11:58.651 [restartedMain] ERROR o.s.boot.SpringApplication.reportFailure - Application run failed
+org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:544)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:141)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:747)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1215)
+	at bo.com.reportate.WebBackofficeApplication.main(WebBackofficeApplication.java:34)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:126)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:88)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:438)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:191)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:180)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:153)
+	... 13 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'securityConfig': Unsatisfied dependency expressed through field 'jwtTokenProvider'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jwtTokenProvider' defined in file [/Users/rlaredo/Documents/projects/reportate-covid-19/source/backend/web-security/target/classes/bo/com/reportate/jwt/JwtTokenProvider.class]: Post-processing of merged bean definition failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [bo.com.reportate.jwt.JwtTokenProvider] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@70887c8e]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:643)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:130)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:399)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1422)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:594)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:321)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:409)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1338)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1177)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:557)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:321)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:211)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:174)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:169)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAdaptableBeans(ServletContextInitializerBeans.java:154)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:86)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:253)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:227)
+	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:53)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5135)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1384)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1374)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+	at java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:134)
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:909)
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:841)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1384)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1374)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+	at java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:134)
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:909)
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:262)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:421)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:930)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:467)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:107)
+	... 18 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jwtTokenProvider' defined in file [/Users/rlaredo/Documents/projects/reportate-covid-19/source/backend/web-security/target/classes/bo/com/reportate/jwt/JwtTokenProvider.class]: Post-processing of merged bean definition failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [bo.com.reportate.jwt.JwtTokenProvider] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@70887c8e]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:572)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:321)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1287)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1207)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:640)
+	... 68 common frames omitted
+Caused by: java.lang.IllegalStateException: Failed to introspect Class [bo.com.reportate.jwt.JwtTokenProvider] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@70887c8e]
+	at org.springframework.util.ReflectionUtils.getDeclaredFields(ReflectionUtils.java:734)
+	at org.springframework.util.ReflectionUtils.doWithLocalFields(ReflectionUtils.java:666)
+	at org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor.buildPersistenceMetadata(PersistenceAnnotationBeanPostProcessor.java:428)
+	at org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor.findPersistenceMetadata(PersistenceAnnotationBeanPostProcessor.java:409)
+	at org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor.postProcessMergedBeanDefinition(PersistenceAnnotationBeanPostProcessor.java:336)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors(AbstractAutowireCapableBeanFactory.java:1094)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569)
+	... 77 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: Lbo/com/reportate/service/TokenService;
+	at java.lang.Class.getDeclaredFields0(Native Method)
+	at java.lang.Class.privateGetDeclaredFields(Class.java:2583)
+	at java.lang.Class.getDeclaredFields(Class.java:1916)
+	at org.springframework.util.ReflectionUtils.getDeclaredFields(ReflectionUtils.java:729)
+	... 83 common frames omitted
+Caused by: java.lang.ClassNotFoundException: bo.com.reportate.service.TokenService
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:382)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:349)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:144)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 87 common frames omitted
+02/04/2020 19:12:01.148 [restartedMain] INFO  b.c.r.WebBackofficeApplication.logStarting - Starting WebBackofficeApplication on Ricardos-MacBook-Pro.local with PID 4361 (/Users/rlaredo/Documents/projects/reportate-covid-19/source/backend/web-backoffice-api/target/classes started by rlaredo in /Users/rlaredo/Documents/projects/reportate-covid-19/source/backend)
+02/04/2020 19:12:01.148 [restartedMain] INFO  b.c.r.WebBackofficeApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+02/04/2020 19:12:01.466 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+02/04/2020 19:12:01.594 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 127ms. Found 32 JPA repository interfaces.
+02/04/2020 19:12:01.595 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+02/04/2020 19:12:01.676 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 80ms. Found 32 JPA repository interfaces.
+02/04/2020 19:12:01.924 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$6c7bf7e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:12:01.928 [restartedMain] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping.afterPropertiesSet - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+02/04/2020 19:12:01.956 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext.refresh - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'servletContainer' defined in class path resource [bo/com/reportate/configuration/ConnectorConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.boot.web.servlet.server.ServletWebServerFactory]: Factory method 'servletContainer' threw exception; nested exception is java.lang.NoClassDefFoundError: bo/com/reportate/configuration/ConnectorConfig$1
+02/04/2020 19:12:01.963 [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener.logMessage - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+02/04/2020 19:12:01.964 [restartedMain] ERROR o.s.boot.SpringApplication.reportFailure - Application run failed
+org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'servletContainer' defined in class path resource [bo/com/reportate/configuration/ConnectorConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.boot.web.servlet.server.ServletWebServerFactory]: Factory method 'servletContainer' threw exception; nested exception is java.lang.NoClassDefFoundError: bo/com/reportate/configuration/ConnectorConfig$1
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:544)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:141)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:747)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1215)
+	at bo.com.reportate.WebBackofficeApplication.main(WebBackofficeApplication.java:34)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'servletContainer' defined in class path resource [bo/com/reportate/configuration/ConnectorConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.boot.web.servlet.server.ServletWebServerFactory]: Factory method 'servletContainer' threw exception; nested exception is java.lang.NoClassDefFoundError: bo/com/reportate/configuration/ConnectorConfig$1
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:656)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:484)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1338)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1177)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:557)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:321)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getWebServerFactory(ServletWebServerApplicationContext.java:210)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:179)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:153)
+	... 13 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.boot.web.servlet.server.ServletWebServerFactory]: Factory method 'servletContainer' threw exception; nested exception is java.lang.NoClassDefFoundError: bo/com/reportate/configuration/ConnectorConfig$1
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:185)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:651)
+	... 25 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: bo/com/reportate/configuration/ConnectorConfig$1
+	at bo.com.reportate.configuration.ConnectorConfig.servletContainer(ConnectorConfig.java:27)
+	at bo.com.reportate.configuration.ConnectorConfig$$EnhancerBySpringCGLIB$$dea2883d.CGLIB$servletContainer$0(<generated>)
+	at bo.com.reportate.configuration.ConnectorConfig$$EnhancerBySpringCGLIB$$dea2883d$$FastClassBySpringCGLIB$$9a2defe3.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:244)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:331)
+	at bo.com.reportate.configuration.ConnectorConfig$$EnhancerBySpringCGLIB$$dea2883d.servletContainer(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	... 26 common frames omitted
+Caused by: java.lang.ClassNotFoundException: bo.com.reportate.configuration.ConnectorConfig$1
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:382)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:349)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:144)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 37 common frames omitted
+02/04/2020 19:12:04.472 [restartedMain] INFO  b.c.r.WebBackofficeApplication.logStarting - Starting WebBackofficeApplication on Ricardos-MacBook-Pro.local with PID 4361 (/Users/rlaredo/Documents/projects/reportate-covid-19/source/backend/web-backoffice-api/target/classes started by rlaredo in /Users/rlaredo/Documents/projects/reportate-covid-19/source/backend)
+02/04/2020 19:12:04.472 [restartedMain] INFO  b.c.r.WebBackofficeApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+02/04/2020 19:12:04.712 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+02/04/2020 19:12:04.819 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 106ms. Found 32 JPA repository interfaces.
+02/04/2020 19:12:04.820 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+02/04/2020 19:12:04.860 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 39ms. Found 32 JPA repository interfaces.
+02/04/2020 19:12:04.861 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+02/04/2020 19:12:04.901 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 39ms. Found 32 JPA repository interfaces.
+02/04/2020 19:12:05.026 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$6c7bf7e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:12:05.027 [restartedMain] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping.afterPropertiesSet - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+02/04/2020 19:12:05.038 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:12:05.039 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:12:05.040 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@415f39f' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:12:05.040 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:12:05.041 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 19:12:05.109 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 9443 (https) 9090 (http)
+02/04/2020 19:12:05.109 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Initializing ProtocolHandler ["https-jsse-nio-9443"]
+02/04/2020 19:12:05.109 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Initializing ProtocolHandler ["http-nio-9090"]
+02/04/2020 19:12:05.110 [restartedMain] ERROR o.apache.catalina.util.LifecycleBase.log - Failed to initialize component [Connector[HTTP/1.1-9090]]
+org.apache.catalina.LifecycleException: Protocol handler initialization failed
+	at org.apache.catalina.connector.Connector.initInternal(Connector.java:1013)
+	at org.apache.catalina.util.LifecycleBase.init(LifecycleBase.java:136)
+	at org.apache.catalina.core.StandardService.initInternal(StandardService.java:533)
+	at org.apache.catalina.util.LifecycleBase.init(LifecycleBase.java:136)
+	at org.apache.catalina.core.StandardServer.initInternal(StandardServer.java:1057)
+	at org.apache.catalina.util.LifecycleBase.init(LifecycleBase.java:136)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:173)
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:467)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:107)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:88)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:438)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:191)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:180)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:153)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:544)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:141)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:747)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1215)
+	at bo.com.reportate.WebBackofficeApplication.main(WebBackofficeApplication.java:34)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:433)
+	at sun.nio.ch.Net.bind(Net.java:425)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:223)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.apache.tomcat.util.net.NioEndpoint.initServerSocket(NioEndpoint.java:229)
+	at org.apache.tomcat.util.net.NioEndpoint.bind(NioEndpoint.java:212)
+	at org.apache.tomcat.util.net.AbstractEndpoint.bindWithCleanup(AbstractEndpoint.java:1141)
+	at org.apache.tomcat.util.net.AbstractEndpoint.init(AbstractEndpoint.java:1154)
+	at org.apache.coyote.AbstractProtocol.init(AbstractProtocol.java:581)
+	at org.apache.coyote.http11.AbstractHttp11Protocol.init(AbstractHttp11Protocol.java:74)
+	at org.apache.catalina.connector.Connector.initInternal(Connector.java:1010)
+	... 26 common frames omitted
+02/04/2020 19:12:05.111 [restartedMain] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+02/04/2020 19:12:05.111 [restartedMain] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.31]
+02/04/2020 19:12:05.117 [restartedMain] INFO  o.a.c.c.C.[Tomcat-1].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
+02/04/2020 19:12:05.117 [restartedMain] INFO  o.s.web.context.ContextLoader.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 643 ms
+02/04/2020 19:12:05.154 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+02/04/2020 19:12:05.204 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+02/04/2020 19:12:05.211 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-3 - Starting...
+02/04/2020 19:12:05.216 [restartedMain] INFO  com.zaxxer.hikari.pool.PoolBase.getAndSetNetworkTimeout - HikariPool-3 - Driver does not support get/set network timeout for connections. (Method org.postgresql.jdbc.PgConnection.getNetworkTimeout() is not yet implemented.)
+02/04/2020 19:12:05.217 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-3 - Start completed.
+02/04/2020 19:12:05.217 [restartedMain] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+02/04/2020 19:12:05.955 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+02/04/2020 19:12:05.956 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+02/04/2020 19:12:06.053 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:12:06.053 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:12:06.053 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:12:06.054 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:12:06.125 [restartedMain] INFO  bo.com.reportate.jwt.CorsFilter.init - [init], CORS Filter init
+02/04/2020 19:12:06.155 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer.startServer - LiveReload server is running on port 35729
+02/04/2020 19:12:06.187 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:12:06.187 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:12:06.190 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:12:06.191 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:12:06.698 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:12:06.698 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:12:06.699 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:12:06.699 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:12:06.978 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:12:06.978 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:12:06.981 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:12:06.982 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:12:06.982 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:12:06.982 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 19:12:07.117 [restartedMain] INFO  o.s.c.e.EhCacheManagerFactoryBean.afterPropertiesSet - Initializing EhCache CacheManager
+02/04/2020 19:12:07.121 [restartedMain] WARN  n.s.e.config.CacheConfiguration.warnTieredSizing - Configuration problem for cache parametrosCache: MaxEntriesLocalHeap equal or greater than MaxEntriesLocalDisk. This will result in useless disk storage.
+02/04/2020 19:12:07.179 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor.initialize - Initializing ExecutorService 'applicationTaskExecutor'
+02/04/2020 19:12:07.570 [restartedMain] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3ed93a32, org.springframework.security.web.context.SecurityContextPersistenceFilter@15f5f9f, org.springframework.security.web.header.HeaderWriterFilter@488a5b44, org.springframework.security.web.authentication.logout.LogoutFilter@2d9ea945, bo.com.reportate.jwt.JwtTokenFilter@40bfd3b0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@75b4d69, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@175fb27e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5a2e11e5, bo.com.reportate.jwt.CorsFilter@1f9f3950, org.springframework.security.web.session.SessionManagementFilter@70046f87, org.springframework.security.web.access.ExceptionTranslationFilter@781ac5bb, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3777304c]
+02/04/2020 19:12:07.580 [restartedMain] DEBUG o.s.w.s.e.m.PayloadRootAnnotationMethodEndpointMapping.initApplicationContext - Looking for endpoints in application context: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@58403683, started on Thu Apr 02 19:12:04 BOT 2020
+02/04/2020 19:12:07.584 [restartedMain] DEBUG o.s.w.s.s.e.m.SoapActionAnnotationMethodEndpointMapping.initApplicationContext - Looking for endpoints in application context: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@58403683, started on Thu Apr 02 19:12:04 BOT 2020
+02/04/2020 19:12:07.590 [restartedMain] DEBUG o.s.w.s.e.a.DefaultMethodEndpointAdapter.initMethodArgumentResolvers - No MethodArgumentResolvers set, using defaults: [org.springframework.ws.server.endpoint.adapter.method.dom.DomPayloadMethodProcessor@21359441, org.springframework.ws.server.endpoint.adapter.method.MessageContextMethodArgumentResolver@7a758094, org.springframework.ws.server.endpoint.adapter.method.SourcePayloadMethodProcessor@42fe79ba, org.springframework.ws.server.endpoint.adapter.method.XPathParamMethodArgumentResolver@1a7096c7, org.springframework.ws.soap.server.endpoint.adapter.method.SoapMethodArgumentResolver@17ea9e54, org.springframework.ws.soap.server.endpoint.adapter.method.SoapHeaderElementMethodArgumentResolver@41cdcd1d, org.springframework.ws.server.endpoint.adapter.method.dom.Dom4jPayloadMethodProcessor@70cf5f37, org.springframework.ws.server.endpoint.adapter.method.jaxb.XmlRootElementPayloadMethodProcessor@6e973947, org.springframework.ws.server.endpoint.adapter.method.jaxb.JaxbElementPayloadMethodProcessor@2dcc02ff, org.springframework.ws.server.endpoint.adapter.method.StaxPayloadMethodArgumentResolver@246977e]
+02/04/2020 19:12:07.591 [restartedMain] DEBUG o.s.w.s.e.a.DefaultMethodEndpointAdapter.initMethodReturnValueHandlers - No MethodReturnValueHandlers set, using defaults: [org.springframework.ws.server.endpoint.adapter.method.dom.DomPayloadMethodProcessor@87a56e6, org.springframework.ws.server.endpoint.adapter.method.SourcePayloadMethodProcessor@5f701baf, org.springframework.ws.server.endpoint.adapter.method.dom.Dom4jPayloadMethodProcessor@12662144, org.springframework.ws.server.endpoint.adapter.method.jaxb.XmlRootElementPayloadMethodProcessor@242db911, org.springframework.ws.server.endpoint.adapter.method.jaxb.JaxbElementPayloadMethodProcessor@7eba0614]
+02/04/2020 19:12:07.622 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Starting ProtocolHandler ["https-jsse-nio-9443"]
+02/04/2020 19:12:07.981 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Stopping ProtocolHandler ["http-nio-9090"]
+02/04/2020 19:12:07.982 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Starting ProtocolHandler ["http-nio-9090"]
+02/04/2020 19:12:07.982 [restartedMain] ERROR o.apache.catalina.util.LifecycleBase.log - Failed to start component [Connector[HTTP/1.1-9090]]
+org.apache.catalina.LifecycleException: Protocol handler start failed
+	at org.apache.catalina.connector.Connector.startInternal(Connector.java:1038)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.core.StandardService.addConnector(StandardService.java:227)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.addPreviouslyRemovedConnectors(TomcatWebServer.java:278)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.start(TomcatWebServer.java:197)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.startWebServer(ServletWebServerApplicationContext.java:297)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.finishRefresh(ServletWebServerApplicationContext.java:163)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:553)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:141)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:747)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1215)
+	at bo.com.reportate.WebBackofficeApplication.main(WebBackofficeApplication.java:34)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:433)
+	at sun.nio.ch.Net.bind(Net.java:425)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:223)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.apache.tomcat.util.net.NioEndpoint.initServerSocket(NioEndpoint.java:229)
+	at org.apache.tomcat.util.net.NioEndpoint.bind(NioEndpoint.java:212)
+	at org.apache.tomcat.util.net.AbstractEndpoint.bindWithCleanup(AbstractEndpoint.java:1141)
+	at org.apache.tomcat.util.net.AbstractEndpoint.start(AbstractEndpoint.java:1227)
+	at org.apache.coyote.AbstractProtocol.start(AbstractProtocol.java:592)
+	at org.apache.catalina.connector.Connector.startInternal(Connector.java:1035)
+	... 19 common frames omitted
+02/04/2020 19:12:07.983 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Pausing ProtocolHandler ["https-jsse-nio-9443"]
+02/04/2020 19:12:07.991 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Pausing ProtocolHandler ["http-nio-9090"]
+02/04/2020 19:12:07.992 [restartedMain] INFO  o.a.catalina.core.StandardService.log - Stopping service [Tomcat]
+02/04/2020 19:12:07.995 [restartedMain] WARN  o.a.c.loader.WebappClassLoaderBase.log - The web application [ROOT] appears to have started a thread named [HikariPool-3 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ sun.misc.Unsafe.park(Native Method)
+ java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+ java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+ java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1093)
+ java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809)
+ java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1074)
+ java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+ java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ java.lang.Thread.run(Thread.java:748)
+02/04/2020 19:12:07.996 [restartedMain] WARN  o.a.c.loader.WebappClassLoaderBase.log - The web application [ROOT] appears to have started a thread named [HikariPool-3 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ sun.misc.Unsafe.park(Native Method)
+ java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+ java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+ java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:467)
+ java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1073)
+ java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+ java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ java.lang.Thread.run(Thread.java:748)
+02/04/2020 19:12:07.996 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Stopping ProtocolHandler ["https-jsse-nio-9443"]
+02/04/2020 19:12:08.000 [restartedMain] INFO  o.apache.catalina.util.LifecycleBase.log - The stop() method was called on component [StandardServer[-1]] after stop() had already been called. The second call will be ignored.
+02/04/2020 19:12:08.000 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Destroying ProtocolHandler ["https-jsse-nio-9443"]
+02/04/2020 19:12:08.000 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Stopping ProtocolHandler ["http-nio-9090"]
+02/04/2020 19:12:08.001 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Destroying ProtocolHandler ["http-nio-9090"]
+02/04/2020 19:12:08.002 [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener.logMessage - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+02/04/2020 19:12:08.003 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter.report - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The Tomcat connector configured to listen on port 9090 failed to start. The port may already be in use or the connector may be misconfigured.
+
+Action:
+
+Verify the connector's configuration, identify and stop any process that's listening on port 9090, or configure this application to listen on another port.
+
+02/04/2020 19:12:08.005 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor.shutdown - Shutting down ExecutorService 'applicationTaskExecutor'
+02/04/2020 19:12:08.005 [restartedMain] INFO  o.s.c.e.EhCacheManagerFactoryBean.destroy - Shutting down EhCache CacheManager
+02/04/2020 19:12:08.011 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
+02/04/2020 19:12:08.012 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-3 - Shutdown initiated...
+02/04/2020 19:12:08.016 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-3 - Shutdown completed.
+02/04/2020 20:13:37.329 [restartedMain] INFO  b.c.r.WebBackofficeApplication.logStarting - Starting WebBackofficeApplication on Ricardos-MacBook-Pro.local with PID 4791 (/Users/rlaredo/Documents/projects/reportate-covid-19/source/backend/web-backoffice-api/target/classes started by rlaredo in /Users/rlaredo/Documents/projects/reportate-covid-19/source/backend)
+02/04/2020 20:13:37.335 [restartedMain] INFO  b.c.r.WebBackofficeApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+02/04/2020 20:13:37.561 [restartedMain] INFO  o.s.b.d.restart.ChangeableUrls.logTo - The Class-Path manifest attribute in /Users/rlaredo/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/jaxb-runtime-2.3.2.jar referenced one or more files that do not exist: file:/Users/rlaredo/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/jakarta.xml.bind-api-2.3.2.jar,file:/Users/rlaredo/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/txw2-2.3.2.jar,file:/Users/rlaredo/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/istack-commons-runtime-3.0.8.jar,file:/Users/rlaredo/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/stax-ex-1.8.1.jar,file:/Users/rlaredo/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/FastInfoset-1.2.16.jar,file:/Users/rlaredo/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/jakarta.activation-api-1.2.1.jar
+02/04/2020 20:13:37.562 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor.logTo - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+02/04/2020 20:13:37.562 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor.logTo - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+02/04/2020 20:13:38.155 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+02/04/2020 20:13:38.320 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 158ms. Found 32 JPA repository interfaces.
+02/04/2020 20:13:38.329 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+02/04/2020 20:13:38.378 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 48ms. Found 32 JPA repository interfaces.
+02/04/2020 20:13:38.379 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+02/04/2020 20:13:38.423 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 44ms. Found 32 JPA repository interfaces.
+02/04/2020 20:13:38.860 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$b0ce1444] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 20:13:38.883 [restartedMain] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping.afterPropertiesSet - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+02/04/2020 20:13:38.939 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 20:13:38.944 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 20:13:38.946 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@4e8da855' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 20:13:38.947 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 20:13:38.951 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+02/04/2020 20:13:39.283 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 9443 (https) 9090 (http)
+02/04/2020 20:13:39.289 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Initializing ProtocolHandler ["https-jsse-nio-9443"]
+02/04/2020 20:13:39.290 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Initializing ProtocolHandler ["http-nio-9090"]
+02/04/2020 20:13:39.312 [restartedMain] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+02/04/2020 20:13:39.312 [restartedMain] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.31]
+02/04/2020 20:13:39.376 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
+02/04/2020 20:13:39.376 [restartedMain] INFO  o.s.web.context.ContextLoader.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 1814 ms
+02/04/2020 20:13:39.438 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+02/04/2020 20:13:39.558 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+02/04/2020 20:13:39.613 [restartedMain] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 5.4.12.Final
+02/04/2020 20:13:39.713 [restartedMain] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+02/04/2020 20:13:39.805 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+02/04/2020 20:13:39.850 [restartedMain] INFO  com.zaxxer.hikari.pool.PoolBase.getAndSetNetworkTimeout - HikariPool-1 - Driver does not support get/set network timeout for connections. (Method org.postgresql.jdbc.PgConnection.getNetworkTimeout() is not yet implemented.)
+02/04/2020 20:13:39.862 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+02/04/2020 20:13:39.876 [restartedMain] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+02/04/2020 20:13:41.250 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+02/04/2020 20:13:41.257 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+02/04/2020 20:13:41.622 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 20:13:41.623 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 20:13:41.623 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 20:13:41.624 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 20:13:41.866 [restartedMain] INFO  bo.com.reportate.jwt.CorsFilter.init - [init], CORS Filter init
+02/04/2020 20:13:41.904 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer.startServer - LiveReload server is running on port 35729
+02/04/2020 20:13:41.934 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 20:13:41.935 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 20:13:41.938 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 20:13:41.939 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 20:13:42.641 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 20:13:42.641 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 20:13:42.642 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 20:13:42.642 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 20:13:42.939 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 20:13:42.940 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 20:13:42.943 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 20:13:42.943 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 20:13:42.944 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 20:13:42.944 [restartedMain] WARN  o.h.d.function.TemplateRenderer.render - HHH000174: Function template anticipated 4 arguments, but 1 arguments encountered
+02/04/2020 20:13:43.206 [restartedMain] INFO  o.s.c.e.EhCacheManagerFactoryBean.afterPropertiesSet - Initializing EhCache CacheManager
+02/04/2020 20:13:43.252 [restartedMain] WARN  n.s.e.config.CacheConfiguration.warnTieredSizing - Configuration problem for cache parametrosCache: MaxEntriesLocalHeap equal or greater than MaxEntriesLocalDisk. This will result in useless disk storage.
+02/04/2020 20:13:43.427 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor.initialize - Initializing ExecutorService 'applicationTaskExecutor'
+02/04/2020 20:13:44.423 [restartedMain] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5fadebe, org.springframework.security.web.context.SecurityContextPersistenceFilter@21483084, org.springframework.security.web.header.HeaderWriterFilter@309cf58f, org.springframework.security.web.authentication.logout.LogoutFilter@3aa635e3, bo.com.reportate.jwt.JwtTokenFilter@2830a9da, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1e6a1921, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@64f542a5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@44c6dc70, bo.com.reportate.jwt.CorsFilter@5f91fdc2, org.springframework.security.web.session.SessionManagementFilter@2a632c90, org.springframework.security.web.access.ExceptionTranslationFilter@49cb7d9d, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2031ae2f]
+02/04/2020 20:13:44.459 [restartedMain] DEBUG o.s.w.s.e.m.PayloadRootAnnotationMethodEndpointMapping.initApplicationContext - Looking for endpoints in application context: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5935437e, started on Thu Apr 02 20:13:37 BOT 2020
+02/04/2020 20:13:44.466 [restartedMain] DEBUG o.s.w.s.s.e.m.SoapActionAnnotationMethodEndpointMapping.initApplicationContext - Looking for endpoints in application context: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5935437e, started on Thu Apr 02 20:13:37 BOT 2020
+02/04/2020 20:13:44.488 [restartedMain] DEBUG o.s.w.s.e.a.DefaultMethodEndpointAdapter.initMethodArgumentResolvers - No MethodArgumentResolvers set, using defaults: [org.springframework.ws.server.endpoint.adapter.method.dom.DomPayloadMethodProcessor@7541781c, org.springframework.ws.server.endpoint.adapter.method.MessageContextMethodArgumentResolver@2d9b1d14, org.springframework.ws.server.endpoint.adapter.method.SourcePayloadMethodProcessor@26bdbe37, org.springframework.ws.server.endpoint.adapter.method.XPathParamMethodArgumentResolver@3513c86c, org.springframework.ws.soap.server.endpoint.adapter.method.SoapMethodArgumentResolver@4becc74a, org.springframework.ws.soap.server.endpoint.adapter.method.SoapHeaderElementMethodArgumentResolver@3e6a109e, org.springframework.ws.server.endpoint.adapter.method.dom.Dom4jPayloadMethodProcessor@75ed5d62, org.springframework.ws.server.endpoint.adapter.method.jaxb.XmlRootElementPayloadMethodProcessor@5e96bb1b, org.springframework.ws.server.endpoint.adapter.method.jaxb.JaxbElementPayloadMethodProcessor@73ede114, org.springframework.ws.server.endpoint.adapter.method.StaxPayloadMethodArgumentResolver@1d6de117]
+02/04/2020 20:13:44.499 [restartedMain] DEBUG o.s.w.s.e.a.DefaultMethodEndpointAdapter.initMethodReturnValueHandlers - No MethodReturnValueHandlers set, using defaults: [org.springframework.ws.server.endpoint.adapter.method.dom.DomPayloadMethodProcessor@2f4a995, org.springframework.ws.server.endpoint.adapter.method.SourcePayloadMethodProcessor@69d194b3, org.springframework.ws.server.endpoint.adapter.method.dom.Dom4jPayloadMethodProcessor@75282ddc, org.springframework.ws.server.endpoint.adapter.method.jaxb.XmlRootElementPayloadMethodProcessor@73f0f37, org.springframework.ws.server.endpoint.adapter.method.jaxb.JaxbElementPayloadMethodProcessor@20a0a644]
+02/04/2020 20:13:44.557 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Starting ProtocolHandler ["https-jsse-nio-9443"]
+02/04/2020 20:13:44.988 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol.log - Starting ProtocolHandler ["http-nio-9090"]
+02/04/2020 20:13:44.991 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 9443 (https) 9090 (http) with context path ''
+02/04/2020 20:13:44.994 [restartedMain] INFO  b.c.r.WebBackofficeApplication.logStarted - Started WebBackofficeApplication in 8.05 seconds (JVM running for 8.822)
+02/04/2020 20:13:44.996 [restartedMain] INFO  b.c.r.WebSecurityDataInitializer.addUsers - ************************* Cargando usuarios por defecto *************************
+02/04/2020 20:13:45.000 [restartedMain] INFO  b.c.r.WebSecurityDataInitializer.addUsers - ************************* Fin de cargar usuarios por defecto *************************
+02/04/2020 20:13:45.000 [restartedMain] INFO  b.c.r.WebSecurityDataInitializer.addParams - ************************* Cargando parametros *************************
+02/04/2020 20:13:45.028 [restartedMain] INFO  b.c.r.WebSecurityDataInitializer.addParams - ************************* Fin Cargando parametros *************************
+02/04/2020 20:13:45.028 [restartedMain] INFO  b.c.r.WebSecurityDataInitializer.addDomain - ************************* Cargando dominios *************************
+02/04/2020 20:13:45.028 [restartedMain] INFO  b.c.r.WebSecurityDataInitializer.addDomain - ************************* Fin Cargando dominios *************************
+02/04/2020 20:13:55.082 [https-jsse-nio-9443-exec-8] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
+02/04/2020 20:13:55.082 [https-jsse-nio-9443-exec-8] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
+02/04/2020 20:13:55.088 [https-jsse-nio-9443-exec-8] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 5 ms
+02/04/2020 20:13:55.382 [https-jsse-nio-9443-exec-6] INFO  bo.com.reportate.jwt.JwtTokenFilter.doFilter - Request Sin Token: https://localhost:9443/v3/api-docs
+02/04/2020 20:13:56.221 [https-jsse-nio-9443-exec-6] INFO  o.s.api.AbstractOpenApiResource.getOpenApi - Init duration for springdoc-openapi is: 819 ms
+02/04/2020 20:14:08.545 [https-jsse-nio-9443-exec-3] INFO  bo.com.reportate.jwt.JwtTokenFilter.doFilter - Request Sin Token: https://localhost:9443/api/departamentos
