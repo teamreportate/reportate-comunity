@@ -51,7 +51,7 @@ export class ModalSintomaComponent extends ClicComponent  implements OnInit {
       this.blockUi.start('Procesando solicitud...');
       this.service.requestSaveSintoma(this.form.value).subscribe(response => {
         this.blockUi.stop();
-        const msg = { title: 'Registro de Sintoma', detail: 'Sintoma registrado satisfactoriamente.'};
+        const msg = { title: 'Registro de Síntoma', detail: 'Síntoma registrado satisfactoriamente.'};
         this.dialogRef.close(msg);
       }, error => {
         this.blockUi.stop();
@@ -61,7 +61,7 @@ export class ModalSintomaComponent extends ClicComponent  implements OnInit {
       this.blockUi.start('Procesando solicitud...');
       this.service.requestUpdateSintoma(this.data.id, this.form.value).subscribe(response => {
         this.blockUi.stop();
-        const msg = { title: 'Actualizar Sintoma', detail: 'Sintoma actualizado satisfactoriamente.'};
+        const msg = { title: 'Actualizar Síntoma', detail: 'Síntoma actualizado satisfactoriamente.'};
         this.dialogRef.close(msg);
       }, error => {
         this.blockUi.stop();

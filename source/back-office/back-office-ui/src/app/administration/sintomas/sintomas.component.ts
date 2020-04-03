@@ -33,7 +33,7 @@ export class SintomasComponent extends ClicComponent implements OnInit {
   }
 
   requestSintoma() {
-    this.blockUI.start('Recuperando lista de sintomas...');
+    this.blockUI.start('Recuperando lista de síntomas...');
     this.service.requestSintomaList().subscribe(response => {
       if (response.body && response.body.length > 0) {
         this.loadList(response.body);
@@ -88,8 +88,8 @@ export class SintomasComponent extends ClicComponent implements OnInit {
   }
   onChangePaisState(row: any) {
     const target = row.estado === MuState.ACTIVO ? MuState.INACTIVO : MuState.ACTIVO;
-    const textContent: String = `Confirmar para cambiar el estado del Sintoma: ${row.nombre}, de ${row.estado} -> ${target}`;
-    this.dialog.open(ConfirmDialogComponent, this.confirmConfig({ textContent, title: 'Cambiar Estado del Sintoma' }))
+    const textContent: String = `Confirmar para cambiar el estado del Síntoma: ${row.nombre}, de ${row.estado} -> ${target}`;
+    this.dialog.open(ConfirmDialogComponent, this.confirmConfig({ textContent, title: 'Cambiar Estado del Síntoma' }))
       .afterClosed()
       .subscribe(confirm => {
         if (confirm) {
@@ -98,7 +98,7 @@ export class SintomasComponent extends ClicComponent implements OnInit {
             this.blockUI.stop();
             this.ngOnInit();
             // tslint:disable-next-line:max-line-length
-            const notif = { error: { title: `${row.estado === MuState.ACTIVO ? 'Inhabilitar Sintoma' : 'Habilitar Sintoma'}`, detail: `${row.estado === MuState.ACTIVO ? 'Sintoma inhabilitado satisfactoriamente.' : 'Sintoma habilitado satisfactoriamente.'}` } };
+            const notif = { error: { title: `${row.estado === MuState.ACTIVO ? 'Inhabilitar Síntoma' : 'Habilitar Síntoma'}`, detail: `${row.estado === MuState.ACTIVO ? 'Síntoma inhabilitado satisfactoriamente.' : 'Síntoma habilitado satisfactoriamente.'}` } };
             this.notifierError(notif, 'info');
           }, error => {
             this.blockUI.stop();

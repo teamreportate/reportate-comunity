@@ -1,11 +1,11 @@
 <mat-card>
   <mat-card-header class="bg-primary-theme text-white">
-    <mat-card-title>{{form.controls['id'].value?"Actualizar Sintoma":"Registro de Sintoma"}}</mat-card-title></mat-card-header>
+    <mat-card-title>{{form.controls['id'].value?"Actualizar Síntoma":"Registro de Síntoma"}}</mat-card-title></mat-card-header>
     <mat-card-content>
       <div fxLayout="row wrap" [formGroup]="this.form">
         <div fxFlex="100">
           <mat-form-field>
-            <input maxlength="100" matInput placeholder="Nombre del sintoma" formControlName="nombre">
+            <input maxlength="100" matInput placeholder="Nombre del síntoma" formControlName="nombre">
           </mat-form-field>
         </div>
         <div fxFlex="100">

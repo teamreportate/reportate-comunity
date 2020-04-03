@@ -38,10 +38,10 @@ public class SintomaController {
             return ok(this.sintomaService.findById(sintomaId));
         }catch (NotDataFoundException e){
             log.error("Se genero un error al obtener el sintoma con ID: {}. Causa. {}",sintomaId,e.getMessage());
-            return CustomErrorType.badRequest("Obtener país", "Ocurrió un error al obtener el país con ID: "+sintomaId);
+            return CustomErrorType.badRequest("Obtener síntoma", "Ocurrió un error al obtener el síntoma con ID: "+sintomaId);
         }catch (Exception e){
             log.error("Se genero un error al obtener el sintoma con ID: {}",sintomaId,e);
-            return CustomErrorType.serverError("Obtener sintoma", "Ocurrió un error al obtener el sintoma con ID: "+sintomaId);
+            return CustomErrorType.serverError("Obtener síntoma", "Ocurrió un error al obtener el síntoma con ID: "+sintomaId);
         }
     }
 
@@ -51,10 +51,10 @@ public class SintomaController {
             return ok(this.sintomaService.save(sintomaDto));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al guardar el sintoma: {}. Causa. {}",sintomaDto.getNombre(),e.getMessage());
-            return CustomErrorType.badRequest("Guardar sintoma", "Ocurrió un error al guardar el sintoma: "+sintomaDto.getNombre());
+            return CustomErrorType.badRequest("Guardar síntoma", "Ocurrió un error al guardar el síntoma: "+sintomaDto.getNombre());
         }catch (Exception e){
             log.error("Se genero un error al guardar el pais : {}",sintomaDto.getNombre(),e);
-            return CustomErrorType.serverError("Guardar sintoma", "Ocurrió un error al guardar el sintoma: "+sintomaDto.getNombre());
+            return CustomErrorType.serverError("Guardar síntoma", "Ocurrió un error al guardar el síntoma: "+sintomaDto.getNombre());
         }
     }
 
@@ -64,10 +64,10 @@ public class SintomaController {
             return ok(this.sintomaService.update(sintomaId, sintomaDto));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al modificar el sintoma: {}. Causa. {}",sintomaId,e.getMessage());
-            return CustomErrorType.badRequest("Modificar sintoma", "Ocurrió un error al modificar el sintoma: "+sintomaId);
+            return CustomErrorType.badRequest("Modificar síntoma", "Ocurrió un error al modificar el síntoma: "+sintomaId);
         }catch (Exception e){
             log.error("Se genero un error al modificar el sintoma : {}",sintomaId,e);
-            return CustomErrorType.serverError("Modificar sintoma", "Ocurrió un error al modificar el sintoma: "+sintomaId);
+            return CustomErrorType.serverError("Modificar síntoma", "Ocurrió un error al modificar el síntoma: "+sintomaId);
         }
     }
 
@@ -77,10 +77,10 @@ public class SintomaController {
             return ok(this.sintomaService.listAll());
         }catch (NotDataFoundException e){
             log.error("Se genero un error al obtener los sintomas.",e.getMessage());
-            return CustomErrorType.badRequest("Obtener sintomas", "Ocurrió un error al obtener los sintomas");
+            return CustomErrorType.badRequest("Obtener síntomas", "Ocurrió un error al obtener los síntomas");
         }catch (Exception e){
             log.error("Se genero un error al obtener los sintomas.",e.getMessage());
-            return CustomErrorType.serverError("Obtener sintomas", "Ocurrió un error al obtener los sintomas");
+            return CustomErrorType.serverError("Obtener síntomas", "Ocurrió un error al obtener los síntomas");
         }
     }
 
@@ -96,11 +96,11 @@ public class SintomaController {
             }
         }
         catch (OperationException e){
-            log.error("Error al cambiar de estado el sintoma: {}", e.getMessage());
+            log.error("Error al cambiar de estado el síntoma: {}", e.getMessage());
             return CustomErrorType.badRequest(FormatUtil.MSG_TITLE_ERROR, e.getMessage());
         }
         catch (Exception e){
-            log.error("Error no controlado al cambiar de estado el sintoma.", e);
+            log.error("Error no controlado al cambiar de estado el síntoma.", e);
             return CustomErrorType.badRequest(FormatUtil.MSG_TITLE_ERROR, FormatUtil.defaultError());
         }
     }
