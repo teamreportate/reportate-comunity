@@ -34,7 +34,7 @@ export class UserComponent extends ClicComponent implements OnInit {
 
   private EMAIL_REGEX = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
-  groups: Group[] = [];
+  groups: AuthGroup[] = [];
 
   departments: Department[] = [];
   municipalities: Municipaly[] = [];
@@ -72,12 +72,16 @@ export class UserComponent extends ClicComponent implements OnInit {
       nombre: new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(100), Validators.minLength(5)])),
       username: new FormControl(null, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_]*$'),
       Validators.minLength(5), Validators.maxLength(50)])),
-      authType: new FormControl(null, Validators.compose([Validators.required])),
+      authType: new FormControl(null),
+      tipoUsuario: new FormControl(null, Validators.compose([Validators.required])),
       password: new FormControl(null, Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(20)])),
       passwordConfirm: new FormControl(null, Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(20)])),
       email: new FormControl(null, Validators.compose([Validators.required,
       Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])),
-      grupos: new FormControl(null)
+      grupos: new FormControl(null),
+      departamentos: new FormControl(null),
+      municipios: new FormControl(null),
+      centroSaluds: new FormControl(null)
     }, {
       validators: passwordMatchValidator
     });
@@ -87,9 +91,6 @@ export class UserComponent extends ClicComponent implements OnInit {
     this.blockUI.start('Recuperando lista de grupos');
     this.groupService.requestGroupList().subscribe(response => {
       this.groups = response.body;
-      /* this.userList.sort((a: AuthUser, b: AuthUser) => a.nombre.localeCompare(b.nombre));
-      this.tmp = this.userList;
-       */
       this.blockUI.stop();
     }, error => {
       this.blockUI.stop();
@@ -100,8 +101,6 @@ export class UserComponent extends ClicComponent implements OnInit {
   getDepartments() {
     this.accessService.requestAsignedDepartmentsList().subscribe(response => {
       this.departments = response.body;
-      /* this.userList.sort((a: AuthUser, b: AuthUser) => a.nombre.localeCompare(b.nombre));
-      this.tmp = this.userList;*/
       this.blockUI.stop();
     }, error => {
       this.blockUI.stop();
@@ -112,8 +111,6 @@ export class UserComponent extends ClicComponent implements OnInit {
   getMunicipalities() {
     this.accessService.requestAsignedMunicipalitiesList().subscribe(response => {
       this.municipalities = response.body;
-      /* this.userList.sort((a: AuthUser, b: AuthUser) => a.nombre.localeCompare(b.nombre));
-      this.tmp = this.userList;*/
       this.blockUI.stop();
     }, error => {
       this.blockUI.stop();
@@ -124,8 +121,6 @@ export class UserComponent extends ClicComponent implements OnInit {
   getSaludCentres() {
     this.accessService.requestAsignedSaludCentreList().subscribe(response => {
       this.saludCentres = response.body;
-      /* this.userList.sort((a: AuthUser, b: AuthUser) => a.nombre.localeCompare(b.nombre));
-      this.tmp = this.userList;*/
       this.blockUI.stop();
     }, error => {
       this.blockUI.stop();
@@ -135,15 +130,12 @@ export class UserComponent extends ClicComponent implements OnInit {
 
   createUser() {
     this.error = null;
-
-    if (this.form.controls['authType'].value === 'AD') {
-      this.form.controls['password'].setValue('');
-      this.form.controls['password'].setErrors(null);
-      this.form.controls['passwordConfirm'].setValue('');
-      this.form.controls['passwordConfirm'].setErrors(null);
-    }
     if (this.form.valid) {
       const user: AuthUser = this.form.value;
+      user.authType = 'SISTEMA';
+      user.departamentos = this.departments;
+      user.municipios = this.municipalities;
+      user.centroSaluds = this.saludCentres;
       const confirm: string = this.form.get('passwordConfirm').value;
       if (user.password !== confirm) {
         this.confirm = false;
@@ -207,6 +199,7 @@ export class UserComponent extends ClicComponent implements OnInit {
     this.dialogWidth = '99%';
   }
 
+  setPage(pageInfo: Page) { }
 
 
 
@@ -214,28 +207,28 @@ export class UserComponent extends ClicComponent implements OnInit {
     this.departments.forEach(elem => {
       elem.asignado = iAsigned;
     });
-   }
+  }
 
-   filterMunicipalities(id: number) {
-     this.municipalities.filter(x => x.departamentoId == 1);
-     console.log(this.municipalities);
-   }
+  filterMunicipalities(id: number) {
+    this.municipalities.filter(x => x.departamentoId == 1);
+    console.log(this.municipalities);
+  }
 
-   selectAllMunicipalities(iAsigned: boolean) {
+  selectAllMunicipalities(iAsigned: boolean) {
     this.municipalities.forEach(elem => {
       elem.asignado = iAsigned;
     });
-   }
+  }
 
-   filterSaludCetres(id: number) {
-     // this.filteredSaludCentres = this.saludCentres.filter(x => x.municipalityId == id);
-   }
+  filterSaludCetres(id: number) {
+    // this.filteredSaludCentres = this.saludCentres.filter(x => x.municipalityId == id);
+  }
 
-   selectAllSaludCentres(iAsigned: boolean) {
+  selectAllSaludCentres(iAsigned: boolean) {
     this.saludCentres.forEach(elem => {
       elem.asignado = iAsigned;
     });
-   }
+  }
 
 }
 

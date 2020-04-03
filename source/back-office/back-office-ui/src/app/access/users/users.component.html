@@ -2,7 +2,6 @@
   <div fxLayout="row wrap">
     <div [fxFlex]="this.flex" fxLayoutAlign="start center" class="h-padding-5">
       <button mat-raised-button class="btn-full" color="accent" [routerLink]="['create']">Nuevo Usuario</button>
-      <button mat-raised-button class="btn-full" color="accent" (click)="this.createUser()">Nuevo Modal</button>
     </div>
     <div [fxFlex]="this.flex===100?100:100-this.flex" fxLayoutAlign="center center" class="h-padding-5">
       <mat-form-field>
