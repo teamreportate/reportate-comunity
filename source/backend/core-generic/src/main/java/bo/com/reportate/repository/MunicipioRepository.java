@@ -4,6 +4,9 @@ import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.dto.MunicipioDto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -20,4 +23,7 @@ public interface MunicipioRepository extends JpaRepository<Municipio, Long> {
     boolean existsByNombreIgnoreCaseAndDepartamento(String nombre, Departamento departamento);
     List<MunicipioDto> findByDepartamentoIdOrderByNombreAsc(Long id);
     boolean existsByIdIsNotAndNombreIgnoreCase(Long municipioId, String nombre);
+    @Modifying
+    @Query("UPDATE Municipio d SET d.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO where d.id =:id")
+    void eliminar(@Param("id") Long id);
 }

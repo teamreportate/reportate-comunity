@@ -2,16 +2,13 @@ package bo.com.reportate.service.impl;
 
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
-import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.Pais;
 import bo.com.reportate.model.dto.PaisDto;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.repository.PaisRepository;
 import bo.com.reportate.service.PaisService;
-import bo.com.reportate.service.SintomaService;
 import bo.com.reportate.util.ValidationUtil;
 import bo.com.reportate.utils.FormatUtil;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.jfree.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * @Created by :MC4

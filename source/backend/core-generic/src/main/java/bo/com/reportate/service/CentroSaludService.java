@@ -25,4 +25,6 @@ public interface CentroSaludService {
     List<CentroSaludUsuarioDto> listarCentroSaludAsignados(String username);
 
     CentroSalud update(Long municipioId, String nombre, String direccion, String zona, String ciudad, Double latitud, Double longitud);
+
+    void eliminar(Long centroSaludId);
 }

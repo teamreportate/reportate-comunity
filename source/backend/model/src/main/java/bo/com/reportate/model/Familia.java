@@ -61,6 +61,7 @@ public class Familia extends AbstractAuditableEntity{
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID")
     private MuUsuario usuario;
 
+    @JsonIgnore
     @OneToMany( mappedBy = "familia", fetch = FetchType.LAZY)
     private List<Paciente> pacientes;
 

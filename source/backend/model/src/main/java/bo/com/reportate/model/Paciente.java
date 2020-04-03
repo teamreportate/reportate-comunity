@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @Created by :MC4
@@ -46,5 +47,9 @@ public class Paciente extends AbstractAuditableEntity{
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_FAMILIA", referencedColumnName = "ID")
     private Familia familia;
+
+    @JsonIgnore
+    @OneToMany( mappedBy = "paciente", fetch = FetchType.LAZY)
+    private List<ControlDiario> controlDiarios;
 
 }

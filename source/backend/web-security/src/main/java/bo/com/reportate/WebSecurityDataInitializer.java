@@ -137,7 +137,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         recHijo("Departamentos", "administracion", "Gestión de Departamentos", "departamentos", 6, "code", rolAdmin);
 
         recPadre("Seguimiento", "Interfaz para seguimiento de diagnosticos", "seguimiento", 1, "menu", rolAdmin);
-        recHijo("Diagnostico", "Seguimiento", "Interfaz para seguimiento de interfaces", "diagnostico", 1, "code", rolAdmin);
+        recHijo("Diagnostico", "seguimiento", "Interfaz para seguimiento de interfaces", "diagnostico", 1, "code", rolAdmin);
         log.info("************************* Fin de cargar permisos por defecto *************************");
     }
 

@@ -14,6 +14,7 @@ import bo.com.reportate.service.CentroSaludService;
 import bo.com.reportate.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -99,6 +100,12 @@ public class CentroSaludServiceImpl implements CentroSaludService {
         centroSalud.setLatitud(latitud);
         centroSalud.setLongitud(longitud);
         return this.centroSaludRepository.save(centroSalud);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void eliminar(Long centroSaludId) {
+        this.centroSaludRepository.eliminar(centroSaludId);
     }
 
 }

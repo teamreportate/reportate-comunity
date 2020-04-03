@@ -74,6 +74,19 @@ public class CentroSaludCotroller {
         }
     }
 
+    @RequestMapping(value = "/{centroSaludId}/eliminar",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity eliminarCentroSalud(@PathVariable("centroSaludId")Long centroSaludId) {
+        try {
+            this.centroSaludService.eliminar(centroSaludId);
+            return ok().build();
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al elimianr el centro de salud: {}. Causa. {}",centroSaludId,e.getMessage());
+            return CustomErrorType.badRequest("Eliminar Municipio", "Ocurrió un error al eliminar el centro de salud: "+centroSaludId);
+        }catch (Exception e){
+            log.error("Se genero un error al eliminar el centro de salud : {}",centroSaludId,e);
+            return CustomErrorType.serverError("Eliminar Municipio", "Ocurrió un error al eliminar el centro de salud: "+centroSaludId);
+        }
+    }
 
 
 }

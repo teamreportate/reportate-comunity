@@ -91,4 +91,9 @@ public class MunicipioServiceImpl implements MunicipioService {
         return this.municipioRepository.save(municipio);
 
     }
+
+    @Override
+    public void eliminar(Long municipioId) {
+
+    }
 }

@@ -4,6 +4,9 @@ import bo.com.reportate.model.CentroSalud;
 import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.dto.CentroSaludDto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -21,4 +24,8 @@ public interface CentroSaludRepository extends JpaRepository<CentroSalud, Long> 
     boolean existsByMunicipioAndNombreIgnoreCase(Municipio municipio, String nombre);
 
     boolean existsByIdIsNotAndNombreIgnoreCase(Long municipioId, String nombre);
+
+    @Modifying
+    @Query("UPDATE CentroSalud d SET d.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO where d.id =:id")
+    void eliminar(@Param("id") Long id);
 }

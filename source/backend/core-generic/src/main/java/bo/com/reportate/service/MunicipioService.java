@@ -26,4 +26,6 @@ public interface MunicipioService {
     Municipio findById(Long municipioId);
 
     Municipio update(Long municipioId, String nombre, Double latitud, Double longitud);
+
+    void eliminar(Long municipioId);
 }
