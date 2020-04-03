@@ -1,0 +1,32 @@
+<mat-card>
+  <mat-card-header class="bg-primary-theme text-white">
+    <mat-card-title>{{form.controls['id'].value?"Actualizar Sintoma":"Registro de Sintoma"}}</mat-card-title></mat-card-header>
+    <mat-card-content>
+      <div fxLayout="row wrap" [formGroup]="this.form">
+        <div fxFlex="100">
+          <mat-form-field>
+            <input maxlength="100" matInput placeholder="Nombre del sintoma" formControlName="nombre">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100">
+          <mat-form-field>
+            <input maxlength="500" matInput placeholder="Pregunta" formControlName="pregunta">
+          </mat-form-field>
+           <mat-checkbox formControlName="controlDiario">Control Diario</mat-checkbox>
+        </div>
+        <br>
+        <div fxFlex="100">
+          <mat-form-field>
+            <input maxlength="500" matInput placeholder="Ayuda" formControlName="ayuda">
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-card-actions fxLayoutAlign="end center" fxLayoutGap="5px" >
+        <button mat-stroked-button color="warn" type="button" (click)="this.cancel()">Cancelar</button>
+        <button mat-flat-button color="accent" type="button" [disabled]="!this.form.valid" (click)="this.save()">Guardar</button>
+      </mat-card-actions>
+    </mat-card-content>
+</mat-card>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>
