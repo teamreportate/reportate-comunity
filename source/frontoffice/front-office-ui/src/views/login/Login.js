@@ -7,7 +7,7 @@ import {familySetData} from "../../store/family/actions";
 import ServiceAuth from "../../services/ServiceAuth";
 import {authSetUser} from "../../store/auth/actions";
 import ServiceFamily from "../../services/ServiceFamily";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 
 
@@ -15,9 +15,23 @@ export default () => {
 	const history  = useHistory();
 	const [form]   = Form.useForm();
 	const dispatch = useDispatch();
+	const user     = useSelector(store => store.auth.user);
+	const family   = useSelector(store => store.family);
 	useEffect(() => {
-		//TODO validate if login redirect to dashboard, else redirect to loginpage
-	}, []);
+		if (user.logged) {
+			if (family.fetched) {
+				if (family.id > 0) {
+					history.push("/dashboard");
+				} else {
+					history.push("/family-data");
+				}
+			} else {
+				//wait until fetch
+			}
+		} else {
+			//TODO goto login page
+		}
+	}, [user, family]);
 	
 	
 	const onFinish = values => {
