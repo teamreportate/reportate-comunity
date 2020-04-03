@@ -102,8 +102,10 @@
         </div>
 
       </div>
+
       <div class="card">
-        <mat-tab-group>
+
+        <mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)">
           <mat-tab [label]="'Departamentos'">
             <div class="card-body">
               <mat-checkbox class="example-margin" [(ngModel)]="isSelectAllDepartments"

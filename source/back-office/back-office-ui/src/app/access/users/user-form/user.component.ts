@@ -1,18 +1,23 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AccessService } from '../../access.service';
-import { AuthUser } from '../../../core/models/AuthUser';
-import { AuthGroup } from '../../../core/models/auth-group';
-import { passwordMatchValidator } from '../../resources/utils/password-match-validator';
-import { ClicComponent } from 'src/app/core/utils/clic-component';
-import { NotifierService } from 'angular-notifier';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { Page } from 'src/app/core/utils/paginator/page';
-import { CustomOptions } from 'src/app/core/models/dto/custom-options';
-import { GroupService } from 'src/app/core/services/http-services/group.service';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
 
-import { Department, Group, SaludCentre, Municipaly } from '../user.type';
+import { AccessService } from '../../access.service';
+import { NotifierService } from 'angular-notifier';
+import { GroupService } from 'src/app/core/services/http-services/group.service';
+
+import { passwordMatchValidator } from '../../resources/utils/password-match-validator';
+import { ClicComponent } from 'src/app/core/utils/clic-component';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { Page } from 'src/app/core/utils/paginator/page';
+
+import { AuthUser } from '../../../core/models/AuthUser';
+import { AuthGroup } from '../../../core/models/auth-group';
+import { CustomOptions } from 'src/app/core/models/dto/custom-options';
+
+import { Department, SaludCentre, Municipaly } from '../user.type';
 
 @Component({
   selector: 'app-user',
@@ -22,7 +27,7 @@ export class UserComponent extends ClicComponent implements OnInit {
 
   @BlockUI() blockUI: NgBlockUI;
 
-  title = 'Nuevo usuario';
+  title = '';
 
   public form: FormGroup;
   public asswordForm: FormGroup;
@@ -32,11 +37,15 @@ export class UserComponent extends ClicComponent implements OnInit {
   public error = null;
   public ocultar = true;
 
-  private EMAIL_REGEX = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
+  private EMAIL_REGEX = '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$';
+
+  userId: number;
+  userCloneId: number;
 
   groups: AuthGroup[] = [];
 
   departments: Department[] = [];
+  filteredDepartments: Department[] = [];
   municipalities: Municipaly[] = [];
   filteredMunicipalities: Municipaly[] = [];
   saludCentres: SaludCentre[] = [];
@@ -46,14 +55,17 @@ export class UserComponent extends ClicComponent implements OnInit {
   isSelectAllMunicipalities = false;
   isSelectAllSaludCentres = false;
 
-  selectedDepartment: number;
-  selectedSaludCentre: number;
+  selectedDepartment = null;
+  selectedMunicipaly = null;
+  selectedSaludCentre = null;
 
 
   constructor(
     private accessService: AccessService,
     private notifier: NotifierService,
     private groupService: GroupService,
+    private location: Location,
+    private route: ActivatedRoute,
     private changeDetector: ChangeDetectorRef, private media: MediaMatcher) {
     super();
   }
@@ -65,6 +77,24 @@ export class UserComponent extends ClicComponent implements OnInit {
     this.getMunicipalities();
     this.getSaludCentres();
     this.initForm();
+    this.initTypeAction();
+  }
+
+  initTypeAction() {
+    this.route.params.subscribe(params => {
+      this.userId = params['id'];
+      this.userCloneId = params['cid'];
+      if (this.userId) {
+        this.title = 'Editar usuario';
+        this.getUserById(this.userId);
+      } else {
+        this.title = 'Nuevo usuario';
+        /* if (this.entityCloneId) {
+          this.getById(this.entityCloneId);
+          return;
+        } */
+      }
+    });
   }
 
   initForm() {
@@ -98,9 +128,9 @@ export class UserComponent extends ClicComponent implements OnInit {
     });
   }
 
-  getDepartments() {
-    this.accessService.requestAsignedDepartmentsList().subscribe(response => {
-      this.departments = response.body;
+  getUserById(id: number) {
+    this.accessService.requestGetUserById(id).subscribe(response => {
+      console.log(response.body);
       this.blockUI.stop();
     }, error => {
       this.blockUI.stop();
@@ -128,6 +158,17 @@ export class UserComponent extends ClicComponent implements OnInit {
     });
   }
 
+  getDepartments() {
+    this.accessService.requestAsignedDepartmentsList().subscribe(response => {
+      this.departments = response.body;
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
+    });
+  }
+
+
   createUser() {
     this.error = null;
     if (this.form.valid) {
@@ -143,6 +184,7 @@ export class UserComponent extends ClicComponent implements OnInit {
       }
       this.load = true;
       this.accessService.requestUserStore(user, confirm).subscribe(response => {
+        this.goBack();
       }, error1 => {
         this.load = false;
         if (error1) this.notifierError(error1);
@@ -154,6 +196,11 @@ export class UserComponent extends ClicComponent implements OnInit {
       }
     }
   }
+
+  goBack(): void {
+    this.location.back();
+  }
+
 
   onPasswordInput() {
     if (this.form.hasError('passwordMismatch')) {
@@ -201,6 +248,23 @@ export class UserComponent extends ClicComponent implements OnInit {
 
   setPage(pageInfo: Page) { }
 
+  tabChanged(event: any) {
+    switch (event.tab.textLabel) {
+      case 'Departamentos':
+
+        break;
+      case 'Municipios':
+        console.log(this.selectedDepartment);
+        this.filterDepartments();
+        break;
+      case 'Centros de salud':
+        console.log(this.selectedDepartment);
+        this.filterDepartments();
+        break;
+      default:
+        break;
+    }
+  }
 
 
   selectAllDepartament(iAsigned: boolean) {
@@ -209,23 +273,28 @@ export class UserComponent extends ClicComponent implements OnInit {
     });
   }
 
+  filterDepartments() {
+    this.filteredDepartments = this.departments.filter(x => x.asignado == true);
+  }
+
   filterMunicipalities(id: number) {
-    this.municipalities.filter(x => x.departamentoId == 1);
-    console.log(this.municipalities);
+    console.log(this.selectedDepartment);
+    id > 0 ? this.filteredMunicipalities = this.municipalities.filter(x => x.departamentoId == id) : this.filteredMunicipalities = [];
+    this.filteredSaludCentres = [];
   }
 
   selectAllMunicipalities(iAsigned: boolean) {
-    this.municipalities.forEach(elem => {
+    this.filteredMunicipalities.forEach(elem => {
       elem.asignado = iAsigned;
     });
   }
 
   filterSaludCetres(id: number) {
-    // this.filteredSaludCentres = this.saludCentres.filter(x => x.municipalityId == id);
+    id > 0 ? this.filteredSaludCentres = this.saludCentres.filter(x => x.municipioId == id) : this.filteredSaludCentres = [];
   }
 
   selectAllSaludCentres(iAsigned: boolean) {
-    this.saludCentres.forEach(elem => {
+    this.filteredSaludCentres.forEach(elem => {
       elem.asignado = iAsigned;
     });
   }

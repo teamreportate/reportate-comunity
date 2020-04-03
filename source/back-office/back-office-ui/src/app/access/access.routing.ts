@@ -46,6 +46,11 @@ export const AccessRouting: Routes = [
         canActivate: [AuthGuardService]
       },
       {
+        path: 'users/edit/:id',
+        component: UserComponent,
+        canActivate: [AuthGuardService]
+      },
+      {
         path: 'groups',
         component: GroupsComponent,
         canActivate: [AuthGuardService]

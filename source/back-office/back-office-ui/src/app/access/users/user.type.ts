@@ -1,10 +1,3 @@
-export class Single {
-  constructor(
-    public id: number = 0,
-    public name: string = '',
-    ) { }
-}
-
 export class Department {
   constructor(
     public id: number = 0,
@@ -31,25 +24,3 @@ export class SaludCentre {
     public asignado: boolean = false
     ) { }
 }
-
-export class Group {
-  constructor(
-    public id: number = 0,
-    public nombre: string = null,
-    public descripcion: string = null,
-    public estadoGrupo: string = null,
-    public version: number = null,
-
-    public createdDate: any = null,
-    public lastModifiedDate: any = null,
-    public createdBy: string = null,
-    public lastModifiedBy: string = null,
-    public estadoUsuario: string = null,
-    public estado: string = null,
-
-    public roles: Single[] = [],
-    public muUsuarioGrupos: Single[] = []
-
-    ) { }
-}
-

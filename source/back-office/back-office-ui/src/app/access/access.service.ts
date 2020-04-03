@@ -221,4 +221,9 @@ export class AccessService {
     const url = Constantes.baseUri + Constants.userApi + '/centro-salud-asignados';
     return this.http.get<HttpResponse<any>>(url, {observe: 'response'});
   }
+
+  requestGetUserById(userId: number): Observable<HttpResponse<any>> {
+    const url = Constantes.baseUri + Constants.userApi + '/' + userId;
+    return this.http.get<HttpResponse<any>>(url, {observe: 'response'});
+  }
 }
