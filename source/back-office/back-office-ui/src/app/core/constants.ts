@@ -7,7 +7,6 @@
  * author:  fmontero
  **/
 export class Constants {
-  static userApi = 'api/usuarios';
   static groupApi = 'api/grupos';
   static roleApi = 'api/roles';
   static resourceApi = 'api/recursos';
@@ -26,4 +25,14 @@ export class Constants {
   static sintomasApi = 'api/sintoma';
   static enfermedadApi = 'api/enfermedades';
   static departmentApi = 'api/departamentos';
+  static diagnosticoApi = 'api/diagnosticos';
+
+// CLASIFICACION ENFERMEDAD
+  static CLASIFICACION_ENFERMEDAD = [{key: 'SOSPECHOSO', value: 'SOSPECHOSO'}, {key: 'NEGATIVO', value: 'NEGATIVO'}, {
+    key: 'CONFIRMADO',
+    value: 'CONFIRMADO'
+
+  }];
+  static userApi = 'api/usuarios';
 }
+

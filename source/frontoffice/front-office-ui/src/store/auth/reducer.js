@@ -2,9 +2,9 @@ import {AUTH_SET_USER} from "../actionTypes";
 
 const initialState   = {
 	user: {
-		id   : 0,
-		name : '',
-		token: '',
+		username: '',
+		token   : '',
+		logged   : false,
 	}
 };
 const countryReducer = (state = initialState, action) => {
@@ -15,7 +15,6 @@ const countryReducer = (state = initialState, action) => {
 				user: action.data,
 			};
 		}
-		
 		default:
 			return state;
 	}

@@ -17,6 +17,7 @@ import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {CommonsModule} from '../commons/commons.module';
+import {SeguimientoEnfermedadComponent} from '../seguimiento/seguimiento-enfermedad/seguimiento-enfermedad.component';
 
 @NgModule({
   declarations: [BinnacleComponent],

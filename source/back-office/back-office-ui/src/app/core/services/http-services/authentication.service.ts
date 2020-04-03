@@ -12,7 +12,6 @@ import {AUTH_DATA, Constantes} from '../../../../environments/environment';
 import {Authentication} from '../../../authentication/shared/authentication';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
-import {Constants} from '../../constants';
 
 @Injectable({
   providedIn: 'root'

@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import './App.scss';
-import {useDispatch, useSelector} from "react-redux";
 import Dashboard from "./dashboard/Dashboard";
 import Login from "./login/Login";
 import {Col, Layout, Row} from "antd";
 import Navigation from "../components/Navigation";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 import Initialize from "./initialize/Initialize";
 import FamilyData from "./familiyData/FamilyData";
 import MemberData from "./memberData/MemberData";
@@ -15,32 +14,53 @@ import BaseData from "./memberData/BaseData";
 import BaseSymptom from "./memberData/BaseSymptom";
 import Report from "./report/Report";
 import Faq from "./faq/Faq";
+import Register from "./register/Register";
+import EmailLogin from "./register/Login";
+import DailyData from "./memberData/DailyData";
+import {useSelector} from "react-redux";
 
-const {Header, Content, Footer} = Layout;
+const {Content, Footer} = Layout;
 
 function App() {
-	const dispatch              = useDispatch();
-	const user                  = useSelector(store => store.auth);
-	const [checked, setChecked] = useState(false);
-	const [valid, setValid]     = useState(false);
-	
+	const user = useSelector(store => store.auth.user);
+	// const dispatch              = useDispatch();
+	// const user                  = useSelector(store => store.auth);
+	// const [checked, setChecked] = useState(false);
+	// const [valid, setValid]     = useState(false);
 	useEffect(() => {
 	
 	}, []);
 	
-	let content = <p>cargando</p>;
-	
-	if (user)
-	// user stored, verifying token
-		if (checked && !valid) {
-			content = <Login/>;
-		} else {
-			content = <Dashboard/>;
-		}
-	else
-	// no user stored so go login
-		content = <Login/>;
-	
+	// let content = <p>cargando</p>;
+	//
+	// if (user)
+	// // user stored, verifying token
+	// 	if (checked && !valid) {
+	// 		content = <Login/>;
+	// 	} else {
+	// 		content = <Dashboard/>;
+	// 	}
+	// else
+	// // no user stored so go login
+	// 	content = <Login/>;
+	function PrivateRoute({children, ...rest}) {
+		return (
+			<Route
+				{...rest}
+				render={({location}) =>
+					user.logged ? (
+						children
+					) : (
+						<Redirect
+							to={{
+								pathname: "/",
+							}}
+						/>
+					)
+				}
+			/>
+		);
+	}
 	
 	return (<Layout id='theme_bus'>
 		
@@ -60,36 +80,45 @@ function App() {
 							<Route path="/login">
 								<Login/>
 							</Route>
-							<Route path="/family-data">
+							<PrivateRoute path="/family-data">
 								<FamilyData/>
-							</Route>
-							<Route path="/dashboard">
+							</PrivateRoute>
+							<PrivateRoute path="/dashboard">
 								<Dashboard/>
-							</Route>
-							<Route path="/add-member">
+							</PrivateRoute>
+							<PrivateRoute path="/add-member">
 								<MemberData newMember={true}/>
-							</Route>
-							<Route path="/update-member">
+							</PrivateRoute>
+							<PrivateRoute path="/update-member">
 								<MemberData newMember={false}/>
-							</Route>
-							<Route path="/gestation">
+							</PrivateRoute>
+							<PrivateRoute path="/gestation">
 								<Gestation/>
-							</Route>
-							<Route path="/external-contact">
+							</PrivateRoute>
+							<PrivateRoute path="/external-contact">
 								<ExternalContact/>
-							</Route>
-							<Route path="/base-data">
+							</PrivateRoute>
+							<PrivateRoute path="/base-data">
 								<BaseData/>
-							</Route>
-							<Route path="/base-symptom">
+							</PrivateRoute>
+							<PrivateRoute path="/base-symptom">
 								<BaseSymptom/>
-							</Route>
-							<Route path="/report">
+							</PrivateRoute>
+							<PrivateRoute path="/report">
 								<Report/>
-							</Route>
-							<Route path="/faq">
+							</PrivateRoute>
+							<PrivateRoute path="/faq">
 								<Faq/>
-							</Route>
+							</PrivateRoute>
+							<PrivateRoute path="/register">
+								<Register/>
+							</PrivateRoute>
+							<PrivateRoute path="/email-login">
+								<EmailLogin/>
+							</PrivateRoute>
+							<PrivateRoute path="/daily-data">
+								<DailyData/>
+							</PrivateRoute>
 						</Switch>
 					</Router>
 				</Col>
