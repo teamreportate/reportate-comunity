@@ -153,9 +153,11 @@ public class PacienteServiceImpl implements PacienteService {
                 }
             }
             if(resultadoPeso.compareTo(BigDecimal.ZERO) > 0) {// Sintomas de la enfermedad
+                log.info("Resultado enfermedad:{}  del calculo:{}",enfermedad.getNombre(), resultadoPeso);
                 if(resultadoPeso.compareTo(new BigDecimal("5")) > 0){
                     //NOTIFICAR
-                    notificacionService.notificacionSospechoso("rllayus@gmail.com","Caso sospechoso","Existe un nuevo caso sospechoso de "+enfermedad.getNombre() +" con una valorción de "+resultadoPeso.toPlainString());
+                    notificacionService.notificacionSospechoso("rllayus@gmail.com","Caso sospechoso "+enfermedad.getNombre(),"Existe un nuevo caso sospechoso de "+enfermedad.getNombre() +" con una valorción de "+resultadoPeso.toPlainString());
+                    log.info("Enviando notificacion");
                 }
                 this.diagnosticoRepository.save(Diagnostico.builder()
                         .controlDiario(controlDiario)

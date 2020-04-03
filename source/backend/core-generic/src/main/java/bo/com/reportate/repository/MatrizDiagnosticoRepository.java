@@ -19,7 +19,7 @@ import java.util.List;
  */
 public interface MatrizDiagnosticoRepository extends JpaRepository<MatrizDiagnostico, Long> {
     List<MatrizDiagnostico> findAllByEstado(EstadoEnum estadoEnum);
-    @Query("SELECT e FROM MatrizDiagnostico m INNER JOIN m.enfermedad e " +
+    @Query("SELECT distinct (e) FROM MatrizDiagnostico m INNER JOIN m.enfermedad e " +
             "WHERE m.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
             "AND e.estado =bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<Enfermedad> listarEnfermedades();

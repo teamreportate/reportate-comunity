@@ -44,7 +44,7 @@ public class EmailServiceImpl implements EmailService {
             messageHelper.setTo(to);
             messageHelper.setFrom(new InternetAddress(cacheService.getStringParam(Constants.Parameters.MAIL_FROM), cacheService.getStringParam(Constants.Parameters.MAIL_FROM)));
             messageHelper.setReplyTo(new InternetAddress(cacheService.getStringParam(Constants.Parameters.MAIL_FROM), false) );
-            messageHelper.setSubject("Test");
+            messageHelper.setSubject(subject);
             String content = mailContentBuilder.build(text);
             messageHelper.setText(content, true);
         };
