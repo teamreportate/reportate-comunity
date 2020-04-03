@@ -62,7 +62,7 @@ public class SintomaServiceImpl implements SintomaService {
 
     @Override
     public Sintoma findById(Long sintomaId) {
-        return this.sintomaRepository.findById(sintomaId).orElseThrow(()->new NotDataFoundException("No se encontro ningún sintoma con ID: "+sintomaId));
+        return this.sintomaRepository.findById(sintomaId).orElseThrow(()->new NotDataFoundException("No se encontro ningún síntoma con ID: "+sintomaId));
     }
 
     @Override
@@ -74,7 +74,7 @@ public class SintomaServiceImpl implements SintomaService {
 //        if(municipioRepository.existsByIdIsNotAndNombreIgnoreCase(municipioId, nombre)){
 //            throw new OperationException("Ya existe un municipio con el nombre: "+nombre);
 //        }
-        Sintoma sintoma = this.sintomaRepository.findById(id).orElseThrow(()-> new NotDataFoundException("No se encontró ningún sintoma con ID: "+id));
+        Sintoma sintoma = this.sintomaRepository.findById(id).orElseThrow(()-> new NotDataFoundException("No se encontró ningún síntoma con ID: "+id));
         sintoma.setNombre(sintomaDto.getNombre());
         sintoma.setPregunta(sintomaDto.getPregunta());
         sintoma.setControlDiario(sintomaDto.getControlDiario());
@@ -87,7 +87,7 @@ public class SintomaServiceImpl implements SintomaService {
     public boolean cambiarEstado(Long id) {
         Sintoma sintoma = sintomaRepository.getOne(id);
         if (sintoma == null) {
-            throw new OperationException(FormatUtil.noRegistrado("Sintoma", id));
+            throw new OperationException(FormatUtil.noRegistrado("Síntoma", id));
         }
         Log.info("Persistiendo el objeto");
         EstadoEnum estado = sintoma.getEstado() == EstadoEnum.ACTIVO ? EstadoEnum.INACTIVO : EstadoEnum.ACTIVO;

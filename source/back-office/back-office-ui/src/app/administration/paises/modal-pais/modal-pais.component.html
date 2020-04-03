@@ -5,7 +5,17 @@
       <div fxLayout="row wrap" [formGroup]="this.form">
         <div fxFlex="100">
           <mat-form-field>
-            <input maxlength="100" matInput placeholder="Nombre del país" formControlName="nombre">
+            <input maxlength="100" matInput placeholder="Nombre del País" formControlName="nombre">
+            <mat-hint align="end">
+              {{this.form.get('nombre').value? this.form.get('nombre').value.length:0}} / 100
+            </mat-hint>
+             <mat-error
+              *ngIf="this.form.get('nombre').hasError('required') && this.form.get('nombre').touched"
+              class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
+             <mat-error
+              *ngIf="this.form.get('nombre').hasError('maxlength') && this.form.get('nombre').touched"
+              class="text-danger font-11">Sólo se permite <strong>100 caracteres</strong>.
+             </mat-error>
           </mat-form-field>
         </div>
       </div>

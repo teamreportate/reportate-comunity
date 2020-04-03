@@ -27,4 +27,7 @@ public interface EnfermedadRepository extends JpaRepository<Enfermedad, Long> {
 
     Optional<Enfermedad> findByNombreAndEstado(String nombre, EstadoEnum estadoEnum);
 
+    @Query(" SELECT e FROM Enfermedad e" +
+            " order by e.id desc")
+    List<Enfermedad> listAll();
 }

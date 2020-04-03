@@ -5,12 +5,32 @@
       <div fxLayout="row wrap" [formGroup]="this.form">
         <div fxFlex="100">
           <mat-form-field>
-            <input maxlength="100" matInput placeholder="Nombre del síntoma" formControlName="nombre">
+            <input maxlength="100" matInput placeholder="Nombre del Síntoma" formControlName="nombre">
+            <mat-hint align="end">
+              {{this.form.get('nombre').value? this.form.get('nombre').value.length:0}} / 100
+            </mat-hint>
+             <mat-error
+              *ngIf="this.form.get('nombre').hasError('required') && this.form.get('nombre').touched"
+              class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
+             <mat-error
+              *ngIf="this.form.get('nombre').hasError('maxlength') && this.form.get('nombre').touched"
+              class="text-danger font-11">Sólo se permite <strong>100 caracteres</strong>.
+             </mat-error>
           </mat-form-field>
         </div>
         <div fxFlex="100">
           <mat-form-field>
             <input maxlength="500" matInput placeholder="Pregunta" formControlName="pregunta">
+            <mat-hint align="end">
+              {{this.form.get('pregunta').value? this.form.get('pregunta').value.length:0}} / 500
+            </mat-hint>
+             <mat-error
+              *ngIf="this.form.get('pregunta').hasError('required') && this.form.get('pregunta').touched"
+              class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
+             <mat-error
+              *ngIf="this.form.get('pregunta').hasError('maxlength') && this.form.get('pregunta').touched"
+              class="text-danger font-11">Sólo se permite <strong>500 caracteres</strong>.
+             </mat-error>
           </mat-form-field>
            <mat-checkbox formControlName="controlDiario">Control Diario</mat-checkbox>
         </div>
@@ -18,6 +38,13 @@
         <div fxFlex="100">
           <mat-form-field>
             <input maxlength="500" matInput placeholder="Ayuda" formControlName="ayuda">
+            <mat-hint align="end">
+              {{this.form.get('ayuda').value? this.form.get('ayuda').value.length:0}} / 500
+            </mat-hint>
+             <mat-error
+              *ngIf="this.form.get('ayuda').hasError('maxlength') && this.form.get('ayuda').touched"
+              class="text-danger font-11">Sólo se permite <strong>500 caracteres</strong>.
+             </mat-error>
           </mat-form-field>
         </div>
       </div>
