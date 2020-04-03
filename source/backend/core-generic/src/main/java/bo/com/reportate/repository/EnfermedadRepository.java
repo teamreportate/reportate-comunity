@@ -6,7 +6,6 @@ import bo.com.reportate.model.enums.EstadoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,9 +21,10 @@ import java.util.Optional;
 public interface EnfermedadRepository extends JpaRepository<Enfermedad, Long> {
     Optional<Enfermedad> findByIdAndEstado(Long id, EstadoEnum activo);
     @Query("SELECT new bo.com.reportate.model.dto.response.EnfermedadResponse(e) From Enfermedad e WHERE e.estado =bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
-    List<EnfermedadResponse> listarEnfermedades();
+    List<EnfermedadResponse> listarEnfermedadesActivos();
 
     boolean existsByNombreIgnoreCase(String nombre);
 
     Optional<Enfermedad> findByNombreAndEstado(String nombre, EstadoEnum estadoEnum);
+
 }

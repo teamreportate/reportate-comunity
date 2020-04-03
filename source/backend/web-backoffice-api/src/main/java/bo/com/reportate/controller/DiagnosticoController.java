@@ -2,7 +2,7 @@ package bo.com.reportate.controller;
 
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
-import bo.com.reportate.model.dto.response.DiagnosticoResponse;
+import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.service.DiagnosticoService;
 import bo.com.reportate.util.CustomErrorType;
@@ -21,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.List;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -43,7 +42,7 @@ public class DiagnosticoController {
 
     @RequestMapping(value = "/listar-filtro/{page}/{size}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Listar los diagnosticos", description = "Listar los diagnosticos", tags = { "diagnostico" })
-    public ResponseEntity<Page<DiagnosticoResponse>> controlDiario(
+    public ResponseEntity<Page<DiagnosticoResponseDto>> controlDiario(
             @Parameter(description = "Indice de página", required = true)
             @PathVariable("page") Integer page,
             @Parameter(description = "Tamaño de página", required = true)

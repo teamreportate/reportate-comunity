@@ -3,7 +3,7 @@ package bo.com.reportate.service.impl;
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.Enfermedad;
-import bo.com.reportate.model.dto.response.DiagnosticoResponse;
+import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.repository.ControlDiarioRepository;
@@ -38,10 +38,10 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
     @Autowired private EnfermedadRepository enfermedadRepository;
     @Override
     @Transactional(readOnly = true)
-    public Page<DiagnosticoResponse> listarDiagnostico(Date from, Date to, Long departamentoId, EstadoDiagnosticoEnum estadoDiagnostico, Long enfermedadId, Pageable pageable) {
+    public Page<DiagnosticoResponseDto> listarDiagnostico(Date from, Date to, Long departamentoId, EstadoDiagnosticoEnum estadoDiagnostico, Long enfermedadId, Pageable pageable) {
         Departamento departamento = this.departamentoRepository.findByIdAndEstado(departamentoId, EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontró el departamento seleccionado"));
         Enfermedad enfermedad = this.enfermedadRepository.findByIdAndEstado(enfermedadId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontró la enfermedad seleccionado"));
 
-        return diagnosticoRepository.listarDiagnostico(from, to, departamento,estadoDiagnostico,enfermedad,pageable );
+        return diagnosticoRepository.listarDiagnostico(from, to,departamento,estadoDiagnostico,enfermedad,pageable );
     }
 }

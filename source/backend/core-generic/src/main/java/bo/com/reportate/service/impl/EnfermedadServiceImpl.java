@@ -1,8 +1,12 @@
 package bo.com.reportate.service.impl;
 
+import bo.com.reportate.model.dto.response.EnfermedadResponse;
+import bo.com.reportate.repository.EnfermedadRepository;
 import bo.com.reportate.service.EnfermedadService;
-import bo.com.reportate.service.SintomaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Created by :MC4
@@ -15,4 +19,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class EnfermedadServiceImpl implements EnfermedadService {
+    @Autowired private EnfermedadRepository enfermedadRepository;
+    @Override
+    public List<EnfermedadResponse> list() {
+        return enfermedadRepository.listarEnfermedadesActivos();
+    }
 }
