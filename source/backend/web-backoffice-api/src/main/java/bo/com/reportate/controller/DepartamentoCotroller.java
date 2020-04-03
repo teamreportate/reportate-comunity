@@ -5,15 +5,21 @@ import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.dto.DepartamentoDto;
+import bo.com.reportate.model.dto.DepartamentoUsuarioDto;
 import bo.com.reportate.model.dto.MunicipioDto;
 import bo.com.reportate.service.DepartamentoService;
 import bo.com.reportate.service.MunicipioService;
 import bo.com.reportate.util.CustomErrorType;
 import bo.com.reportate.web.DepartamentoRequestDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +38,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @Slf4j
 @RestController
 @RequestMapping("/api/departamentos")
+@Tag(name = "departamento", description = "API de departamentos")
 public class DepartamentoCotroller {
     @Autowired
     private DepartamentoService departamentoService;
@@ -39,6 +46,7 @@ public class DepartamentoCotroller {
     private MunicipioService municipioService;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Listar los departamentos con sus municipios", description = "Listar los departamentos con sus municipios", tags = { "departamento" })
     public ResponseEntity<List<DepartamentoDto>> listAll() {
         try {
             return ok(this.departamentoService.findAllConMunicipio());
@@ -97,6 +105,19 @@ public class DepartamentoCotroller {
         }catch (Exception e){
             log.error("Se genero un error al listar municipios : {}",departamentoId,e);
             return CustomErrorType.serverError("Listar Municipios", "Ocurrió un error al listar municipios: "+departamentoId);
+        }
+    }
+
+    @RequestMapping(value = "/asignados", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    public ResponseEntity<List<DepartamentoUsuarioDto>> listarDepartamentos(@AuthenticationPrincipal Authentication userDetails) {
+        try {
+            return ok(this.departamentoService.listarAsignados(userDetails));
+        } catch (NotDataFoundException e) {
+            log.error("Ocurrio un problema al recuperar lista de departamentos");
+            return CustomErrorType.badRequest("Obtener Departamentos", e.getMessage());
+        } catch (Exception e) {
+            log.error("Ocurrio un error al recuperar lista de departamentos", e);
+            return CustomErrorType.serverError("Obtener Departamentos", "Ocurrió un error interno");
         }
     }
 
