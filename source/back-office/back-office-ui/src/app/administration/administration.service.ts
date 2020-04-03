@@ -40,4 +40,20 @@ export class AdministrationService {
   requestChangeSintomaStatus(id: number): Observable<any> {
     return this.http.delete<any>( Constantes.baseUri + Constants.sintomasApi + '/' + id + '/cambiar-estado');
   }
+
+  requestEnfermedadList(): Observable<HttpResponse<any>> {
+    const url = Constantes.baseUri + Constants.enfermedadApi + '/all';
+    return this.http.get<HttpResponse<any>>(url, {observe: 'response'});
+  }
+
+  requestUpdateEnfermedad(id: number, object: any): Observable<any> {
+    return this.http.put<any>( Constantes.baseUri + Constants.enfermedadApi + '/' + id, JSON.stringify(object));
+  }
+
+  requestSaveEnfermedad(object: any): Observable<any> {
+    return this.http.post<any>( Constantes.baseUri + Constants.enfermedadApi, JSON.stringify(object));
+  }
+  requestChangeEnfermedadStatus(id: number): Observable<any> {
+    return this.http.delete<any>( Constantes.baseUri + Constants.enfermedadApi + '/' + id + '/cambiar-estado');
+  }
 }
