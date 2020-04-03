@@ -1,10 +1,9 @@
 import React, {useEffect} from 'react';
-import ServiceAuth from "../../services/ServiceAuth";
 import {useDispatch, useSelector} from "react-redux";
 import {authSetUser} from "../../store/auth/actions";
-import {familySetData} from "../../store/family/actions";
 import {useHistory} from "react-router-dom";
 import ServiceFamily from "../../services/ServiceFamily";
+import {familySetData} from "../../store/family/actions";
 
 export default () => {
 	const history  = useHistory();
@@ -13,23 +12,34 @@ export default () => {
 	const family   = useSelector(store => store.family);
 	
 	useEffect(() => {
-		localStorage.setItem('token', "");
-		ServiceAuth.loginEmail({
-				username: 'admin',
-				password: 'admin'
-			},
-			(result) => {
-				// user valid
-				localStorage.setItem('token', result.token);
-				dispatch(authSetUser({...result, logged: true}));
-				// getting family information
-				ServiceFamily.getFamily(family => {
-					dispatch(familySetData({
-						...family,
-						fetched: true
-					}));
-				});
+		const token = localStorage.getItem('token');
+		if (token !== null && token !== undefined && token !== "") {
+			dispatch(authSetUser({token: token, logged: true}));
+			ServiceFamily.getFamily(family => {
+				dispatch(familySetData({
+					...family,
+					fetched: true
+				}));
 			});
+		} else {
+			history.push('/login');
+		}
+		// ServiceAuth.loginEmail({
+		// 		username: 'admin',
+		// 		password: 'admin'
+		// 	},
+		// 	(result) => {
+		// 		// user valid
+		// 		localStorage.setItem('token', result.token);
+		// 		dispatch(authSetUser({...result, logged: true}));
+		// 		// getting family information
+		// 		ServiceFamily.getFamily(family => {
+		// 			dispatch(familySetData({
+		// 				...family,
+		// 				fetched: true
+		// 			}));
+		// 		});
+		// 	});
 	}, []);
 	
 	useEffect(() => {
