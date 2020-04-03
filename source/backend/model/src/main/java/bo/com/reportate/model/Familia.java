@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @Created by :MC4
@@ -59,5 +60,8 @@ public class Familia extends AbstractAuditableEntity{
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID")
     private MuUsuario usuario;
+
+    @OneToMany( mappedBy = "familia", fetch = FetchType.LAZY)
+    private List<Paciente> pacientes;
 
 }

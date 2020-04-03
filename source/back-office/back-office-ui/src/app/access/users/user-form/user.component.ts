@@ -1,26 +1,33 @@
-import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { NgBlockUI, BlockUI } from 'ng-block-ui';
+
 import { AccessService } from '../../access.service';
-import { AuthUser } from '../../../core/models/AuthUser';
-import { AuthGroup } from '../../../core/models/auth-group';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NotifierService } from 'angular-notifier';
+import { GroupService } from 'src/app/core/services/http-services/group.service';
+
 import { passwordMatchValidator } from '../../resources/utils/password-match-validator';
 import { ClicComponent } from 'src/app/core/utils/clic-component';
-import { NotifierService } from 'angular-notifier';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Page } from 'src/app/core/utils/paginator/page';
+
+import { AuthUser } from '../../../core/models/AuthUser';
+import { AuthGroup } from '../../../core/models/auth-group';
 import { CustomOptions } from 'src/app/core/models/dto/custom-options';
-import { AddUserDialogComponent } from '../components/add-user-dialog.component';
+
+import { Department, SaludCentre, Municipaly } from '../user.type';
 
 @Component({
   selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.sass']
+  templateUrl: './user.component.html'
 })
 export class UserComponent extends ClicComponent implements OnInit {
 
-  title = 'Nuevo usuario';
+  @BlockUI() blockUI: NgBlockUI;
+
+  title = '';
 
   public form: FormGroup;
   public asswordForm: FormGroup;
@@ -30,120 +37,146 @@ export class UserComponent extends ClicComponent implements OnInit {
   public error = null;
   public ocultar = true;
 
-  private EMAIL_REGEX = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
+  private EMAIL_REGEX = '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$';
 
-  asignedGroupList: AuthGroup[];
+  userId: number;
+  userCloneId: number;
 
-  allDepartments = false;
-  departments = [
-    { id: 1, name: 'Santa Cruz', isSelect: false },
-    { id: 2, name: 'La Paz', isSelect: false },
-    { id: 3, name: 'Cochabamba', isSelect: false },
-    { id: 4, name: 'Oruro', isSelect: false },
-    { id: 5, name: 'Potosí', isSelect: false },
-    { id: 6, name: 'Beni', isSelect: false },
-    { id: 7, name: 'Pando', isSelect: false },
-    { id: 8, name: 'Sucre', isSelect: false },
-    { id: 9, name: 'Tarija', isSelect: false },
-  ];
+  groups: AuthGroup[] = [];
 
-  allMunicipalities = false;
-  selectedDepartment: number;
-  municipalities = [
-    { id: 1, name: 'Santa Cruz de la Sierra', isSelect: false, departmentId: 1 },
-    { id: 2, name: 'Cotoca', isSelect: false, departmentId: 1 },
-    { id: 3, name: 'El Torno', isSelect: false, departmentId: 1 },
-    { id: 4, name: 'La Guardia', isSelect: false, departmentId: 1 },
-    { id: 5, name: 'Porongo', isSelect: false, departmentId: 1 },
-    { id: 6, name: 'San Matias', isSelect: false, departmentId: 1 },
-    { id: 7, name: 'San José de Chiquitos', isSelect: false, departmentId: 1 },
-    { id: 8, name: 'Pailón ', isSelect: false, departmentId: 1 },
-    { id: 9, name: 'Roboré', isSelect: false, departmentId: 1 },
-    { id: 10, name: 'Lagunillas ', isSelect: false, departmentId: 1 },
-    { id: 11, name: 'Colcapirhua ', isSelect: false, departmentId: 3 },
-    { id: 12, name: 'Tolata ', isSelect: false, departmentId: 3 },
-    { id: 13, name: 'Tarata ', isSelect: false, departmentId: 3 },
-    { id: 14, name: 'Pasorapa ', isSelect: false, departmentId: 3 },
-    { id: 15, name: 'Aiquile ', isSelect: false, departmentId: 3 },
-    { id: 16, name: 'El alto ', isSelect: false, departmentId: 2 },
-    { id: 17, name: 'La paz', isSelect: false, departmentId: 2 },
-    { id: 18, name: 'Viacha', isSelect: false, departmentId: 2 },
-    { id: 19, name: 'Caranavi', isSelect: false, departmentId: 2 },
-    { id: 20, name: 'Sica Sica', isSelect: false, departmentId: 2 },
-    { id: 20, name: 'Coipasa', isSelect: false, departmentId: 4 },
-    { id: 20, name: 'Chipaya', isSelect: false, departmentId: 4 },
-    { id: 20, name: 'Choquecota', isSelect: false, departmentId: 4 },
-    { id: 20, name: 'Soracachi', isSelect: false, departmentId: 4 },
-  ];
+  departments: Department[] = [];
+  filteredDepartments: Department[] = [];
+  municipalities: Municipaly[] = [];
+  filteredMunicipalities: Municipaly[] = [];
+  saludCentres: SaludCentre[] = [];
+  filteredSaludCentres: SaludCentre[] = [];
 
-  filteredMunicipalities = [];
+  isSelectAllDepartments = false;
+  isSelectAllMunicipalities = false;
+  isSelectAllSaludCentres = false;
 
-  allSaludCentres = false;
-  selectedSaludCentre: number;
-  saludCentres = [
-    { id: 1, name: 'Mapaizo', isSelect: false, municipalityId: 2 },
-    { id: 2, name: 'Tarope', isSelect: false, municipalityId: 2 },
-    { id: 3, name: 'La sagrada familia', isSelect: false, municipalityId: 3 },
-    { id: 4, name: 'Limoncito', isSelect: false, municipalityId: 3 },
-    { id: 5, name: 'Monte verde', isSelect: false, municipalityId: 3 },
-    { id: 6, name: 'Taruma', isSelect: false, municipalityId: 3 },
-    { id: 7, name: 'San Juan Bautista', isSelect: false, municipalityId: 5 },
-    { id: 8, name: 'San Pedro ', isSelect: false, municipalityId: 5 },
-    { id: 9, name: 'Sombrerito', isSelect: false, municipalityId: 5 },
-    { id: 10, name: 'San Pedro ', isSelect: false, municipalityId: 5 },
-    { id: 11, name: 'El pajonal', isSelect: false, municipalityId: 1 },
-    { id: 12, name: 'Hamacas ', isSelect: false, municipalityId: 1 },
-    { id: 13, name: 'La colorada', isSelect: false, municipalityId: 1 },
-    { id: 14, name: 'La Fortaleza ', isSelect: false, municipalityId: 1 },
-    { id: 15, name: 'Pampa de la Isla', isSelect: false, municipalityId: 1 },
-    { id: 16, name: 'Palmar del Oratorio', isSelect: false, municipalityId: 1 },
-    { id: 17, name: 'Perpetuo socorro', isSelect: false, municipalityId: 1 },
-    { id: 18, name: 'San Luis', isSelect: false, municipalityId: 1 },
-    { id: 19, name: 'Santa Rosita', isSelect: false, municipalityId: 1 },
-    { id: 20, name: 'Tierras Nuevas', isSelect: false, municipalityId: 1 }
-  ];
-
-  filteredSaludCentres = [];
+  selectedDepartment = null;
+  selectedMunicipaly = null;
+  selectedSaludCentre = null;
 
 
   constructor(
     private accessService: AccessService,
     private notifier: NotifierService,
+    private groupService: GroupService,
+    private location: Location,
+    private route: ActivatedRoute,
     private changeDetector: ChangeDetectorRef, private media: MediaMatcher) {
     super();
   }
 
   ngOnInit() {
     this.initialListener(this.changeDetector, this.media);
+    this.getGroups();
+    this.getDepartments();
+    this.getMunicipalities();
+    this.getSaludCentres();
+    this.initForm();
+    this.initTypeAction();
+  }
+
+  initTypeAction() {
+    this.route.params.subscribe(params => {
+      this.userId = params['id'];
+      this.userCloneId = params['cid'];
+      if (this.userId) {
+        this.title = 'Editar usuario';
+        this.getUserById(this.userId);
+      } else {
+        this.title = 'Nuevo usuario';
+        /* if (this.entityCloneId) {
+          this.getById(this.entityCloneId);
+          return;
+        } */
+      }
+    });
+  }
+
+  initForm() {
     this.form = new FormGroup({
       nombre: new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(100), Validators.minLength(5)])),
       username: new FormControl(null, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_]*$'),
       Validators.minLength(5), Validators.maxLength(50)])),
-      authType: new FormControl(null, Validators.compose([Validators.required])),
+      authType: new FormControl(null),
+      tipoUsuario: new FormControl(null, Validators.compose([Validators.required])),
       password: new FormControl(null, Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(20)])),
       passwordConfirm: new FormControl(null, Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(20)])),
       email: new FormControl(null, Validators.compose([Validators.required,
       Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])),
-      grupos: new FormControl(null)
+      grupos: new FormControl(null),
+      departamentos: new FormControl(null),
+      municipios: new FormControl(null),
+      centroSaluds: new FormControl(null)
     }, {
       validators: passwordMatchValidator
     });
-    this.error = null;
-    let grupos: any[] = [];
-    this.asignedGroupList = grupos.reverse();
   }
+
+  getGroups() {
+    this.blockUI.start('Recuperando lista de grupos');
+    this.groupService.requestGroupList().subscribe(response => {
+      this.groups = response.body;
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
+    });
+  }
+
+  getUserById(id: number) {
+    this.accessService.requestGetUserById(id).subscribe(response => {
+      console.log(response.body);
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
+    });
+  }
+
+  getMunicipalities() {
+    this.accessService.requestAsignedMunicipalitiesList().subscribe(response => {
+      this.municipalities = response.body;
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
+    });
+  }
+
+  getSaludCentres() {
+    this.accessService.requestAsignedSaludCentreList().subscribe(response => {
+      this.saludCentres = response.body;
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
+    });
+  }
+
+  getDepartments() {
+    this.accessService.requestAsignedDepartmentsList().subscribe(response => {
+      this.departments = response.body;
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
+    });
+  }
+
 
   createUser() {
     this.error = null;
-
-    if (this.form.controls['authType'].value === 'AD') {
-      this.form.controls['password'].setValue('');
-      this.form.controls['password'].setErrors(null);
-      this.form.controls['passwordConfirm'].setValue('');
-      this.form.controls['passwordConfirm'].setErrors(null);
-    }
     if (this.form.valid) {
       const user: AuthUser = this.form.value;
+      user.authType = 'SISTEMA';
+      user.departamentos = this.departments;
+      user.municipios = this.municipalities;
+      user.centroSaluds = this.saludCentres;
       const confirm: string = this.form.get('passwordConfirm').value;
       if (user.password !== confirm) {
         this.confirm = false;
@@ -151,6 +184,7 @@ export class UserComponent extends ClicComponent implements OnInit {
       }
       this.load = true;
       this.accessService.requestUserStore(user, confirm).subscribe(response => {
+        this.goBack();
       }, error1 => {
         this.load = false;
         if (error1) this.notifierError(error1);
@@ -162,6 +196,11 @@ export class UserComponent extends ClicComponent implements OnInit {
       }
     }
   }
+
+  goBack(): void {
+    this.location.back();
+  }
+
 
   onPasswordInput() {
     if (this.form.hasError('passwordMismatch')) {
@@ -209,32 +248,56 @@ export class UserComponent extends ClicComponent implements OnInit {
 
   setPage(pageInfo: Page) { }
 
+  tabChanged(event: any) {
+    switch (event.tab.textLabel) {
+      case 'Departamentos':
 
-  selectAllDepartament(isSelect: boolean) {
+        break;
+      case 'Municipios':
+        console.log(this.selectedDepartment);
+        this.filterDepartments();
+        break;
+      case 'Centros de salud':
+        console.log(this.selectedDepartment);
+        this.filterDepartments();
+        break;
+      default:
+        break;
+    }
+  }
+
+
+  selectAllDepartament(iAsigned: boolean) {
     this.departments.forEach(elem => {
-      elem.isSelect = isSelect;
+      elem.asignado = iAsigned;
     });
-   }
+  }
 
-   filterMunicipalities(id: number) {
-     this.filteredMunicipalities = this.municipalities.filter(x => x.departmentId == id);
-   }
+  filterDepartments() {
+    this.filteredDepartments = this.departments.filter(x => x.asignado == true);
+  }
 
-   selectAllMunicipalities(isSelect: boolean) {
+  filterMunicipalities(id: number) {
+    console.log(this.selectedDepartment);
+    id > 0 ? this.filteredMunicipalities = this.municipalities.filter(x => x.departamentoId == id) : this.filteredMunicipalities = [];
+    this.filteredSaludCentres = [];
+  }
+
+  selectAllMunicipalities(iAsigned: boolean) {
     this.filteredMunicipalities.forEach(elem => {
-      elem.isSelect = isSelect;
+      elem.asignado = iAsigned;
     });
-   }
+  }
 
-   filterSaludCetres(id: number) {
-     this.filteredSaludCentres = this.saludCentres.filter(x => x.municipalityId == id);
-   }
+  filterSaludCetres(id: number) {
+    id > 0 ? this.filteredSaludCentres = this.saludCentres.filter(x => x.municipioId == id) : this.filteredSaludCentres = [];
+  }
 
-   selectAllSaludCentres(isSelect: boolean) {
+  selectAllSaludCentres(iAsigned: boolean) {
     this.filteredSaludCentres.forEach(elem => {
-      elem.isSelect = isSelect;
+      elem.asignado = iAsigned;
     });
-   }
+  }
 
 }
 

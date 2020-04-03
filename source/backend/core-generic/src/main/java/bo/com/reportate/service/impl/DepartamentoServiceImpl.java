@@ -3,6 +3,7 @@ package bo.com.reportate.service.impl;
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.Departamento;
+import bo.com.reportate.model.MuUsuario;
 import bo.com.reportate.model.dto.DepartamentoDto;
 import bo.com.reportate.model.dto.DepartamentoUsuarioDto;
 import bo.com.reportate.repository.DepartamentoRepository;
@@ -10,7 +11,9 @@ import bo.com.reportate.repository.DepartamentoUsuarioRepository;
 import bo.com.reportate.service.DepartamentoService;
 import bo.com.reportate.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -71,10 +74,22 @@ public class DepartamentoServiceImpl implements DepartamentoService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void eliminar(Long departamentoId) {
+        this.departamentoRepository.eliminar(departamentoId);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<DepartamentoUsuarioDto> listarDepartamentosAsignados(String username) {
         List<DepartamentoUsuarioDto> departamentoUsuarioDtos = departamentoUsuarioRepository.listarDepartamentoAsignados(username);
         departamentoUsuarioDtos.addAll(departamentoUsuarioRepository.listarDepartamentoNoAsignados(username));
         return departamentoUsuarioDtos;
+    }
+
+    @Override
+    public List<DepartamentoUsuarioDto> listarAsignados(Authentication userDetails) {
+        MuUsuario usuario = (MuUsuario) userDetails;
+        return departamentoUsuarioRepository.listarAsignados(usuario);
     }
 }

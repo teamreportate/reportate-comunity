@@ -5,6 +5,9 @@ import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.*;
 import bo.com.reportate.model.dto.*;
+import bo.com.reportate.model.dto.request.CentroSaludRequest;
+import bo.com.reportate.model.dto.request.DepartamentoRequest;
+import bo.com.reportate.model.dto.request.MunicipioRequest;
 import bo.com.reportate.model.enums.AuthTypeEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.UserStatusEnum;
@@ -241,24 +244,24 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void agregarDepartamento(Long usuarioId, List<DepartamentoDto> departamentos) {
+    public void agregarDepartamento(Long usuarioId, List<DepartamentoRequest> departamentos) {
         MuUsuario muUsuario = this.usuarioRepository.findById(usuarioId).orElseThrow(()->new NotDataFoundException("No se encontro nungún usuario con ID:"+usuarioId));
         agregarDepartamento(muUsuario,departamentos);
     }
 
     @Override
-    public void agregarCentroSalud(Long usuarioId, List<CentroSaludDto> centroSaluds) {
+    public void agregarCentroSalud(Long usuarioId, List<CentroSaludRequest> centroSaluds) {
         MuUsuario muUsuario = this.usuarioRepository.findById(usuarioId).orElseThrow(()->new NotDataFoundException("No se encontro nungún usuario con ID:"+usuarioId));
         agregarCentroSalud(muUsuario,centroSaluds);
     }
 
 
     @Override
-    public void agregarDepartamento(MuUsuario muUsuario, List<DepartamentoDto> departamentos) {
+    public void agregarDepartamento(MuUsuario muUsuario, List<DepartamentoRequest> departamentos) {
         List<Long> depIds = new ArrayList<>();
         departamentos.forEach(departamentoDto -> depIds.add(departamentoDto.getId()));
         this.departamentoUsuarioRepository.eliminaDepartamentosNoAsignados(muUsuario,depIds);
-        for (DepartamentoDto auxDep : departamentos) {
+        for (DepartamentoRequest auxDep : departamentos) {
             Departamento departamento = this.departamentoRepository.findById(auxDep.getId()).orElseThrow(()->new NotDataFoundException("No se encontro un departamento con ID: "+auxDep.getId()));
             if(!departamentoUsuarioRepository.existsByMuUsuarioAndDepartamentoAndEstado(muUsuario,departamento,EstadoEnum.ACTIVO)){
                 this.departamentoUsuarioRepository.save(DepartamentoUsuario.builder().departamento(departamento).muUsuario(muUsuario).build());
@@ -267,11 +270,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void agregarCentroSalud(MuUsuario muUsuario, List<CentroSaludDto> centroSaluds) {
+    public void agregarCentroSalud(MuUsuario muUsuario, List<CentroSaludRequest> centroSaluds) {
         List<Long> ceIds = new ArrayList<>();
         centroSaluds.forEach(centroSaludDto -> ceIds.add(centroSaludDto.getId()));
         this.centroSaludUsuarioRepository.eliminaCentrosNoAsignados(muUsuario, ceIds);
-        for (CentroSaludDto auxCentro:centroSaluds) {
+        for (CentroSaludRequest auxCentro:centroSaluds) {
             CentroSalud centroSalud = this.centroSaludRepository.findById(auxCentro.getId()).orElseThrow(()->new NotDataFoundException("No se encontro ningún centro de salud con ID: "+auxCentro.getId()));
             if(!centroSaludUsuarioRepository.existsByMuUsuarioAndCentroSaludAndEstado(muUsuario,centroSalud,EstadoEnum.ACTIVO)){
                 this.centroSaludUsuarioRepository.save(CentroSaludUsuario.builder().muUsuario(muUsuario).centroSalud(centroSalud).build());
@@ -281,11 +284,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void agregarMunicipio(MuUsuario muUsuario, List<MunicipioDto> municipios) {
+    public void agregarMunicipio(MuUsuario muUsuario, List<MunicipioRequest> municipios) {
         List<Long> muIds = new ArrayList<>();
         municipios.forEach(municipioDto -> muIds.add(municipioDto.getId()));
         this.municipioUsuarioRepository.eliminaMunicipiosNoAsignados(muUsuario, muIds);
-        for (MunicipioDto auxMunic : municipios) {
+        for (MunicipioRequest auxMunic : municipios) {
             Municipio municipio = this.municipioRepository.findById(auxMunic.getId()).orElseThrow(()->new NotDataFoundException("No se encontro ningún municipio con ID:"+auxMunic.getId()));
             if(!this.municipioUsuarioRepository.existsByMuUsuarioAndMunicipioAndEstado(muUsuario, municipio,EstadoEnum.ACTIVO)){
                 this.municipioUsuarioRepository.save(MunicipioUsuario.builder().muUsuario(muUsuario).municipio(municipio).build());
@@ -294,7 +297,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void agregarMunicipio(Long usuarioId, List<MunicipioDto> municipios) {
+    public void agregarMunicipio(Long usuarioId, List<MunicipioRequest> municipios) {
         MuUsuario muUsuario = this.usuarioRepository.findById(usuarioId).orElseThrow(()->new NotDataFoundException("No se encontro nungún usuario con ID:"+usuarioId));
         agregarMunicipio(muUsuario,municipios);
     }

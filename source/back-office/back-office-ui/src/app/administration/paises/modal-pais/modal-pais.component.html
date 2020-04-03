@@ -1,0 +1,30 @@
+<mat-card>
+  <mat-card-header class="bg-primary-theme text-white">
+    <mat-card-title>{{form.controls['id'].value?"Actualizar País":"Registro de País"}}</mat-card-title></mat-card-header>
+    <mat-card-content>
+      <div fxLayout="row wrap" [formGroup]="this.form">
+        <div fxFlex="100">
+          <mat-form-field>
+            <input maxlength="100" matInput placeholder="Nombre del País" formControlName="nombre">
+            <mat-hint align="end">
+              {{this.form.get('nombre').value? this.form.get('nombre').value.length:0}} / 100
+            </mat-hint>
+             <mat-error
+              *ngIf="this.form.get('nombre').hasError('required') && this.form.get('nombre').touched"
+              class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
+             <mat-error
+              *ngIf="this.form.get('nombre').hasError('maxlength') && this.form.get('nombre').touched"
+              class="text-danger font-11">Sólo se permite <strong>100 caracteres</strong>.
+             </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-card-actions fxLayoutAlign="end center" fxLayoutGap="5px" >
+        <button mat-stroked-button color="warn" type="button" (click)="this.cancel()">Cancelar</button>
+        <button mat-flat-button color="accent" type="button" [disabled]="!this.form.valid" (click)="this.save()">Guardar</button>
+      </mat-card-actions>
+    </mat-card-content>
+</mat-card>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

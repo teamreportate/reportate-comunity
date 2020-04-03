@@ -1,5 +1,10 @@
 package bo.com.reportate.service;
 
+import bo.com.reportate.model.Sintoma;
+import bo.com.reportate.model.dto.SintomaDto;
+
+import java.util.List;
+
 /**
  * @Created by :MC4
  * @Autor :Ricardo Laredo
@@ -10,5 +15,10 @@ package bo.com.reportate.service;
  * @Copyright :MC4
  */
 public interface SintomaService {
+    List<SintomaDto> listAll();
+    Sintoma save(SintomaDto sintomaDto);
+    Sintoma findById(Long sintomaId);
+    Sintoma update(Long id, SintomaDto sintomaDto);
+    boolean cambiarEstado(Long id);
 
 }

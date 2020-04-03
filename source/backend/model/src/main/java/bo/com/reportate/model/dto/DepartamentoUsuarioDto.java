@@ -22,15 +22,10 @@ import java.util.List;
 public class DepartamentoUsuarioDto implements Serializable {
     private Long id;
     private String nombre;
-    private Double latitud;
-    private Double longitud;
     private Boolean asignado;
-
     public DepartamentoUsuarioDto(Departamento departamento){
         this.id = departamento.getId();
         this.nombre = departamento.getNombre();
-        this.latitud = departamento.getLatitud();
-        this.longitud = departamento.getLongitud();
         this.asignado = (departamento.getDepartamentoUsuarios() != null && !departamento.getDepartamentoUsuarios().isEmpty());
     }
 

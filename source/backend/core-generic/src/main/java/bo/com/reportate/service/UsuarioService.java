@@ -5,6 +5,9 @@ import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.MuUsuario;
 import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.dto.*;
+import bo.com.reportate.model.dto.request.CentroSaludRequest;
+import bo.com.reportate.model.dto.request.DepartamentoRequest;
+import bo.com.reportate.model.dto.request.MunicipioRequest;
 
 import java.util.List;
 
@@ -74,10 +77,10 @@ public interface UsuarioService {
     void cambiarContrasenia(Long usuarioId, String newPassword, String confirmPassword);
 
     MuUsuario obtenerUsuario(Long usuarioId);
-    void agregarDepartamento(Long usuarioId, List<DepartamentoDto> departamentos);
-    void agregarDepartamento(MuUsuario muUsuario, List<DepartamentoDto> departamentos);
-    void agregarCentroSalud(Long usuarioId, List<CentroSaludDto> centroSaluds);
-    void agregarCentroSalud(MuUsuario muUsuario, List<CentroSaludDto> centroSaluds);
-    void agregarMunicipio(MuUsuario muUsuario, List<MunicipioDto> municipios);
-    void agregarMunicipio(Long usuarioId, List<MunicipioDto> municipios);
+    void agregarDepartamento(Long usuarioId, List<DepartamentoRequest> departamentos);
+    void agregarDepartamento(MuUsuario muUsuario, List<DepartamentoRequest> departamentos);
+    void agregarCentroSalud(Long usuarioId, List<CentroSaludRequest> centroSaluds);
+    void agregarCentroSalud(MuUsuario muUsuario, List<CentroSaludRequest> centroSaluds);
+    void agregarMunicipio(MuUsuario muUsuario, List<MunicipioRequest> municipios);
+    void agregarMunicipio(Long usuarioId, List<MunicipioRequest> municipios);
 }

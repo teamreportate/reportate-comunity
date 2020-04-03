@@ -51,6 +51,12 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
     MunicipioRepository municipioRepository;
     @Autowired
     CentroSaludRepository centroSaludRepository;
+    @Autowired
+    SintomaRepository sintomaRepository;
+    @Autowired
+    PaisRepository paisRepository;
+    @Autowired
+    EnfermedadRepository enfermedadRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -123,13 +129,15 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         recHijo("Alarmas", "configuracion", "Interfaz para administración de Alarmas", "alarmas", 3, "code", rolAdmin);
 
         recPadre("Administración", "Configuraciones de los escenarios", "administracion", 1, "menu", rolAdmin);
-        recHijo("Paises", "administracion", "Gestión de Paises", "paises", 1, "code", rolAdmin);
-        recHijo("Sintomas", "administracion", "Gestión de Sintomas", "sintomas", 2, "code", rolAdmin);
+        recHijo("Países", "administracion", "Gestión de Países", "paises", 1, "code", rolAdmin);
+        recHijo("Síntomas", "administracion", "Gestión de Sintomas", "sintomas", 2, "code", rolAdmin);
         recHijo("Enfermedades", "administracion", "Gestión de Enfermedades", "enfermedades", 3, "code", rolAdmin);
         recHijo("Municipios", "administracion", "Gestión de Municipios", "municipios", 4, "code", rolAdmin);
         recHijo("Centros de Salud", "administracion", "Gestión de Centros", "centros", 5, "code", rolAdmin);
         recHijo("Departamentos", "administracion", "Gestión de Departamentos", "departamentos", 6, "code", rolAdmin);
 
+        recPadre("Seguimiento", "Interfaz para seguimiento de diagnosticos", "seguimiento", 1, "menu", rolAdmin);
+        recHijo("Diagnostico", "Seguimiento", "Interfaz para seguimiento de interfaces", "diagnostico", 1, "code", rolAdmin);
         log.info("************************* Fin de cargar permisos por defecto *************************");
     }
 
@@ -264,6 +272,71 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
                 }
             }
         }
+
+        if(!sintomaRepository.existsByNombreIgnoreCase("Tos frecuente")){
+            sintomaRepository.save(Sintoma.builder()
+                    .nombre("Tos frecuente")
+                    .controlDiario(true)
+                    .pregunta("Usted tiene tos frecuente?")
+                    .ayuda("Debe contar la cantidad de veces que tuese en un minuto").build());
+        }
+
+        if(!sintomaRepository.existsByNombreIgnoreCase("Fiebre mayor a 38")){
+            sintomaRepository.save(Sintoma.builder()
+                    .nombre("Fiebre mayor a 38")
+                    .controlDiario(true)
+                    .pregunta("Usted presenta fiebre mayor a 38 grados?")
+                    .ayuda("Por favor midase la temperatura y registre el valor obtenido").build());
+        }
+
+        if(!sintomaRepository.existsByNombreIgnoreCase("Disnea")){
+            sintomaRepository.save(Sintoma.builder()
+                    .nombre("disnea")
+                    .controlDiario(true)
+                    .pregunta("Siente que le falta la resperacion?")
+                    .ayuda("Cuente hasta 10 y verifique si le falta la respiración").build());
+        }
+
+        if(!paisRepository.existsByNombreIgnoreCase("China")){
+            paisRepository.save(Pais.builder().nombre("China").build());
+        }
+
+        if(!paisRepository.existsByNombreIgnoreCase("Italia")){
+            paisRepository.save(Pais.builder().nombre("Italia").build());
+        }
+        if(!paisRepository.existsByNombreIgnoreCase("España")){
+            paisRepository.save(Pais.builder().nombre("España").build());
+        }
+
+        if(!enfermedadRepository.existsByNombreIgnoreCase("Codiv-19")){
+            this.enfermedadRepository.save(Enfermedad.builder().nombre("Codiv-19").enfermedadBase(false).build());
+
+        }
+        if(!enfermedadRepository.existsByNombreIgnoreCase("Asma")){
+            this.enfermedadRepository.save(Enfermedad.builder().nombre("Asma").enfermedadBase(true).build());
+
+        }
+        if(!enfermedadRepository.existsByNombreIgnoreCase("Dengue")){
+            this.enfermedadRepository.save(Enfermedad.builder().nombre("Dengue").enfermedadBase(false).build());
+
+        }
+        if(!enfermedadRepository.existsByNombreIgnoreCase("Influenza")){
+            this.enfermedadRepository.save(Enfermedad.builder().nombre("Influenza").enfermedadBase(false).build());
+        }
+
+        if(!enfermedadRepository.existsByNombreIgnoreCase("Hipertensión")){
+            this.enfermedadRepository.save(Enfermedad.builder().nombre("Hipertensión").enfermedadBase(true).build());
+        }
+        if(!enfermedadRepository.existsByNombreIgnoreCase("VIH")){
+            this.enfermedadRepository.save(Enfermedad.builder().nombre("VIH").enfermedadBase(true).build());
+        }
+        if(!enfermedadRepository.existsByNombreIgnoreCase("Cáncer")){
+            this.enfermedadRepository.save(Enfermedad.builder().nombre("Cáncer").enfermedadBase(true).build());
+        }
+        if(!enfermedadRepository.existsByNombreIgnoreCase("Diabetes")){
+            this.enfermedadRepository.save(Enfermedad.builder().nombre("Diabetes").enfermedadBase(true).build());
+        }
+
     }
 
 
