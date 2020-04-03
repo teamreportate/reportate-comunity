@@ -19,21 +19,13 @@ import java.io.Serializable;
 public class CentroSaludUsuarioDto implements Serializable {
     private Long id;
     private String nombre;
-    private Double latitud;
-    private Double longitud;
-    private String direccion;
-    private String zona;
-    private String ciudad;
     private Boolean asignado;
+    private Long municipioId;
 
     public CentroSaludUsuarioDto(CentroSalud centroSalud){
         this.id = centroSalud.getId();
         this.nombre = centroSalud.getNombre();
-        this.latitud = centroSalud.getLatitud();
-        this.longitud = centroSalud.getLongitud();
-        this.direccion = centroSalud.getDireccion();
-        this.zona = centroSalud.getZona();
-        this.ciudad = centroSalud.getCiudad();
         this.asignado =(centroSalud.getCentroSaludUsuarios() != null && !centroSalud.getCentroSaludUsuarios().isEmpty());
+        this.municipioId = centroSalud.getMunicipio().getId();
     }
 }

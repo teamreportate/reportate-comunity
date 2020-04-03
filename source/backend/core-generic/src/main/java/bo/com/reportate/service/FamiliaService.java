@@ -1,10 +1,9 @@
 package bo.com.reportate.service;
 
 import bo.com.reportate.model.Familia;
-import bo.com.reportate.model.dto.FamiliaMovilResponseDto;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.security.Principal;
+import bo.com.reportate.model.dto.response.FamiliaMovilResponseDto;
+import bo.com.reportate.model.dto.response.FamiliaResponse;
+import org.springframework.security.core.Authentication;
 
 /**
  * @Created by :MC4
@@ -17,5 +16,8 @@ import java.security.Principal;
  */
 public interface FamiliaService {
     void save(Familia familia);
-    FamiliaMovilResponseDto save(UserDetails user, Long departamentoId, Long municipioId, String nombre, String telefono, String direccion, Double latitud, Double longitud, String ciudad, String zona);
+    FamiliaMovilResponseDto save(Authentication user, Long departamentoId, Long municipioId, String nombre, String telefono, String direccion, Double latitud, Double longitud, String ciudad, String zona);
+    FamiliaMovilResponseDto update(Long departamentoId, Long municipioId, Long familiaId, String nombre, String telefono, String direccion, String ciudad, String zona);
+    void delete(Long familiaId);
+    FamiliaResponse getInfo(Authentication authentication);
 }
