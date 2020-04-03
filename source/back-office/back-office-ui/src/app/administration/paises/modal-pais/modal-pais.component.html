@@ -5,7 +5,7 @@
       <div fxLayout="row wrap" [formGroup]="this.form">
         <div fxFlex="100">
           <mat-form-field>
-            <input maxlength="100" matInput placeholder="Nombre del país" formControlName="nombre">
+            <input maxlength="100" matInput placeholder="Nombre del País" formControlName="nombre">
             <mat-hint align="end">
               {{this.form.get('nombre').value? this.form.get('nombre').value.length:0}} / 100
             </mat-hint>

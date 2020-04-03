@@ -24,5 +24,6 @@ export class Constants {
   static LOGIN_PATH = '/authentication/login';
   static paisApi = 'api/pais';
   static sintomasApi = 'api/sintoma';
+  static enfermedadApi = 'api/enfermedades';
   static departmentApi = 'api/departamentos';
 }

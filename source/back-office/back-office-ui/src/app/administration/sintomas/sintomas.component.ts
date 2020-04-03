@@ -86,7 +86,7 @@ export class SintomasComponent extends ClicComponent implements OnInit {
         !filterValue;
     });
   }
-  onChangePaisState(row: any) {
+  onChangeState(row: any) {
     const target = row.estado === MuState.ACTIVO ? MuState.INACTIVO : MuState.ACTIVO;
     const textContent: String = `Confirmar para cambiar el estado del Síntoma: ${row.nombre}, de ${row.estado} -> ${target}`;
     this.dialog.open(ConfirmDialogComponent, this.confirmConfig({ textContent, title: 'Cambiar Estado del Síntoma' }))
