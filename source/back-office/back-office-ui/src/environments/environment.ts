@@ -9,7 +9,7 @@ export const environment = {
     loginDialogWidth: 'WD'
   },
   services: {
-     baseUri : 'https://dev.mc4.com.bo:9443/',
+     baseUri : 'https://192.168.0.12:9443/',
      baseUriFact : 'https://localhost:9443/facturacion-core/',
   }
 };
