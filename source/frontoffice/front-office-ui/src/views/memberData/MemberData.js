@@ -29,15 +29,7 @@ export default ({newMember}) => {
 		}
 		return fields;
 	};
-	const handleNextClick   = () => {
-		if (newMember) {
-			if (sex === 'hombre')
-				history.push("/external-contact");
-			else if (sex === 'mujer')
-				history.push("/gestation");
-		} else
-			history.push("/dashboard");
-	};
+
 	const handleReportClick = () => {
 		history.push("/daily-data");
 	};

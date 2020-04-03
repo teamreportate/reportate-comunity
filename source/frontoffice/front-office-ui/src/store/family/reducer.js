@@ -19,7 +19,7 @@ const initialState   = {
 	fetched     : false,
 	toUpdate    : {}
 };
-const countryReducer = (state = initialState, action) => {
+const familyReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case FAMILY_SET_DATA: {
 			const newState = {
@@ -29,14 +29,15 @@ const countryReducer = (state = initialState, action) => {
 				address     : action.data.direccion,
 				zone        : action.data.zona,
 				city        : action.data.ciudad,
-				department  : {
-					id  : action.data.departamento.id,
-					name: action.data.departamento.nombre
-				},
-				municipality: {
+				department  : action.data.departamento ? {
+						id  : action.data.departamento.id,
+						name: action.data.departamento.nombre
+					}
+																							 : {},
+				municipality: action.municipio ? {
 					id  : action.data.municipio.id,
 					name: action.data.municipio.nombre
-				},
+				} : {},
 				members     : [],
 				fetched     : true,
 				toUpdate    : {}
@@ -117,4 +118,4 @@ const countryReducer = (state = initialState, action) => {
 			return state;
 	}
 };
-export default countryReducer;
+export default familyReducer;

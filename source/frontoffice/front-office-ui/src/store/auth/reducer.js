@@ -4,7 +4,7 @@ const initialState   = {
 	user: {
 		username: '',
 		token   : '',
-		loged   : false,
+		logged   : false,
 	}
 };
 const countryReducer = (state = initialState, action) => {
