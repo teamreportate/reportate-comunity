@@ -1,6 +1,7 @@
 package bo.com.reportate.service;
 
 import bo.com.reportate.model.Enfermedad;
+import bo.com.reportate.model.dto.EnfermedadDto;
 import bo.com.reportate.model.dto.response.EnfermedadResponse;
 
 import java.util.List;
@@ -16,4 +17,10 @@ import java.util.List;
  */
 public interface EnfermedadService {
     List<EnfermedadResponse> list();
+
+    List<EnfermedadDto> listAll();
+    Enfermedad save(EnfermedadDto enfermedadDto);
+    Enfermedad findById(Long enfermedadId);
+    Enfermedad update(Long id, EnfermedadDto enfermedadDto);
+    boolean cambiarEstado(Long id);
 }
