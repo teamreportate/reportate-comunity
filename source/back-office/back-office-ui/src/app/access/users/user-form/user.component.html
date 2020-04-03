@@ -127,7 +127,8 @@
                     <mat-label>Filtrar por departamento</mat-label>
                     <mat-select required aria-placeholder="seleccionar" [(ngModel)]="selectedDepartment"
                       (ngModelChange)="filterMunicipalities(selectedDepartment)">
-                      <mat-option [value]="item.id" *ngFor="let item of departments;">{{item.nombre}}</mat-option>
+                      <mat-option [value]="selectedDepartment">Ninguno</mat-option>
+                      <mat-option [value]="item.id" *ngFor="let item of filteredDepartments;">{{item.nombre}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -139,7 +140,7 @@
               </div>
               <hr>
               <div fxLayout="row wrap">
-                <div fxFlex="25" *ngFor="let item of municipalities; let i = index;">
+                <div fxFlex="25" *ngFor="let item of filteredMunicipalities; let i = index;">
                   <mat-checkbox class="example-margin" [(ngModel)]="item.asignado">{{item.nombre}}</mat-checkbox>
                 </div>
               </div>
@@ -154,16 +155,18 @@
                     <mat-label>Filtrar por departamento</mat-label>
                     <mat-select required aria-placeholder="seleccionar" [(ngModel)]="selectedDepartment"
                       (ngModelChange)="filterMunicipalities(selectedDepartment)">
-                      <mat-option [value]="item.id" *ngFor="let item of departments;">{{item.nombre}}</mat-option>
+                      <mat-option [value]="selectedDepartment">Ninguno</mat-option>
+                      <mat-option [value]="item.id" *ngFor="let item of filteredDepartments;">{{item.nombre}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
                 <div fxFlex="25">
                   <mat-form-field>
                     <mat-label>Filtrar por municipio</mat-label>
-                    <mat-select required aria-placeholder="seleccionar" [(ngModel)]="selectedSaludCentre"
-                      (ngModelChange)="filterSaludCetres(selectedSaludCentre)">
-                      <mat-option [value]="item.id" *ngFor="let item of municipalities;">{{item.nombre}}
+                    <mat-select required aria-placeholder="seleccionar" [(ngModel)]="selectedMunicipaly"
+                      (ngModelChange)="filterSaludCetres(selectedMunicipaly)">
+                      <mat-option [value]="selectedMunicipaly">Ninguno</mat-option>
+                      <mat-option [value]="item.id" *ngFor="let item of filteredMunicipalities;">{{item.nombre}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -176,7 +179,7 @@
               </div>
               <hr>
               <div fxLayout="row wrap">
-                <div fxFlex="25" *ngFor="let item of saludCentres; let i = index;">
+                <div fxFlex="25" *ngFor="let item of filteredSaludCentres; let i = index;">
                   <mat-checkbox class="example-margin" [(ngModel)]="item.asignado">{{item.nombre}}</mat-checkbox>
                 </div>
               </div>
@@ -185,10 +188,10 @@
         </mat-tab-group>
       </div>
       <div class="card" fxLayoutAlign="end center" fxLayoutGap="5px">
-        <button mat-stroked-button color="warn" type="button" [disabled]="this.load"
+        <button mat-stroked-button color="warn" type="button" [disabled]="load"
           (click)="this.cancel()">Cancelar</button>
-        <button mat-flat-button color="accent" type="button" [disabled]="this.load"
-          (click)="this.createUser()">Guardar</button>
+        <button mat-flat-button color="accent" type="button" [disabled]="load"
+          (click)="save()" >Guardar</button>
       </div>
     </div>
   </div>
@@ -196,3 +199,5 @@
 <ng-template #customNotification let-notificationData="notification">
   <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
 </ng-template>
+
+
