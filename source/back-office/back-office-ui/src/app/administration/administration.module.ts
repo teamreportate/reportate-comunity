@@ -19,9 +19,12 @@ import { DepartamentosComponent } from './departamentos/departamentos.component'
 import { ModalPaisComponent } from './paises/modal-pais/modal-pais.component';
 import { ModalSintomaComponent } from './sintomas/modal-sintoma/modal-sintoma.component';
 import { ModalEnfermedadComponent } from './enfermedades/modal-enfermedad/modal-enfermedad.component';
+import { ModalDepartamentoComponent } from './departamentos/modal-departamento/modal-departamento.component';
+import { ModalMunicipioComponent } from './municipios/modal-municipio/modal-municipio.component';
+import { ModalCentroComponent } from './centros/modal-centro/modal-centro.component';
 
 @NgModule({
-  declarations: [PaisesComponent, MunicipiosComponent, CentrosComponent, SintomasComponent, EnfermedadesComponent, DepartamentosComponent, ModalPaisComponent, ModalSintomaComponent, ModalEnfermedadComponent],
+  declarations: [PaisesComponent, MunicipiosComponent, CentrosComponent, SintomasComponent, EnfermedadesComponent, DepartamentosComponent, ModalPaisComponent, ModalSintomaComponent, ModalEnfermedadComponent, ModalDepartamentoComponent, ModalMunicipioComponent, ModalCentroComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(AdministrationRoute),
@@ -52,6 +55,6 @@ import { ModalEnfermedadComponent } from './enfermedades/modal-enfermedad/modal-
     CommonsModule
   ],
   providers: [AdministrationService],
-  entryComponents: [ModalPaisComponent, ModalSintomaComponent, ModalEnfermedadComponent]
+  entryComponents: [ModalPaisComponent, ModalSintomaComponent, ModalEnfermedadComponent, ModalDepartamentoComponent, ModalMunicipioComponent, ModalCentroComponent]
 })
 export class AdministrationModule { }
