@@ -1,7 +1,17 @@
 /target/
+src/main/webapp/assets
+src/main/webapp/*.js
+src/main/webapp/*.txt
+src/main/webapp/*.woff
+src/main/webapp/*.svg
+src/main/webapp/*.eot
+src/main/webapp/*.ttf
+src/main/webapp/*.ico
+src/main/webapp/*.woff2
+src/main/webapp/*.html
+src/main/webapp/*.css
+
 !.mvn/wrapper/maven-wrapper.jar
-a/*
-!b/
 
 ### STS ###
 .apt_generated
@@ -13,12 +23,11 @@ a/*
 .sts4-cache
 
 # IDEA metadata and output dirs
-*.iml
+!*.iml
 *.ipr
 *.iws
 .idea
 out
-!back-office.iml
 
 # Eclipse
 .classpath
@@ -39,13 +48,12 @@ javadoc/
 *.class
 *.jbd
 
-
 # Generales
 *~
 build
 build.sh
 derby.log
-˜!.DS_Store
+.DS_Store
 .gradle
 *.java.hsp
 jmx.log
@@ -67,5 +75,4 @@ tmlog*
 
 # logs de SQL
 classes/
-!resource/application.properties
-!.DS_Store
+!clic_backoffice.iml
