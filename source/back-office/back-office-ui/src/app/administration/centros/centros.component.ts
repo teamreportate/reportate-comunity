@@ -30,6 +30,8 @@ export class CentrosComponent extends ClicComponent implements OnInit {
   public centroList: Centro[] = [];
   public selectDepa: any;
   private tmp: Centro[];
+  selectMuni: any;
+  
 
   constructor(private administrationService: AdministrationService, private dialog: MatDialog,
     private changeDetector: ChangeDetectorRef, private media: MediaMatcher,
@@ -96,7 +98,7 @@ export class CentrosComponent extends ClicComponent implements OnInit {
   }
 
   selectMunicipio(muni: any) {
-    console.log(muni)
+    console.log(muni);
     this.municipio = muni;
 
     this.obtenerCentros(muni);
