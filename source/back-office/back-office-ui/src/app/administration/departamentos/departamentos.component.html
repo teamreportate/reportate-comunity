@@ -1,3 +1,54 @@
-<p>
-  departamentos works!
-</p>
+<clic-page [title]="'Listado de Departamentos'" (reloadEmitter)="this.ngOnInit()">
+    <div fxLayout="row wrap">
+        <div [fxFlex]="this.flex" fxLayoutAlign="start center" class="h-padding-5">
+            <button mat-raised-button class="btn-full" color="accent" (click)="this.openDialog(null)">Nuevo Departamento</button>
+        </div>
+        <div [fxFlex]="this.flex===100?100:100-this.flex" fxLayoutAlign="center center" class="h-padding-5">
+            <mat-form-field>
+                <input matInput placeholder='Buscar...' (keyup)="this.onFilter($event.target.value)" maxlength="30" />
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div fxLayout="row wrap" class="h-padding-5">
+        <div fxFlex="100">
+            <ngx-datatable #table class="material" [messages]="this.tableMessages()" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]='10' [rows]="this.userList" [scrollbarH]="this.scrollH">
+
+                <ngx-datatable-column name="Acciones" [minWidth]="200" [maxWidth]="240" [draggable]="false" [resizeable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <button mat-icon-button matTooltip="Actualizar Departamento" (click)="this.openDialog(row)"><mat-icon fxLayoutAlign="start start" color="accent">edit</mat-icon></button>
+                        <button mat-icon-button (click)="this.onChangeState(row)"><mat-icon fxLayoutAlign="start start" color="accent" matTooltip="Eliminar Departamento">close</mat-icon></button>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Nombre" [draggable]="false" [resizeable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
+                        {{row.nombre}}
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Latitud" [draggable]="false" [resizeable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
+                        {{row.latitud}}
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Longitud" [draggable]="false" [resizeable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
+                        {{row.longitud}}
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Coordenada" [draggable]="false" [resizeable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
+                        <a target="_blank" href="https://maps.google.com/?q={{row.latitud}},{{row.longitud}}">Ver ubicación</a>
+                    </ng-template>
+                </ngx-datatable-column>
+
+            </ngx-datatable>
+        </div>
+    </div>
+</clic-page>
+<ng-template #customNotification let-notificationData="notification">
+    <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

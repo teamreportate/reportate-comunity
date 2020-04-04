@@ -1,0 +1,41 @@
+<mat-card>
+    <mat-card-header class="bg-primary-theme text-white">
+        <mat-card-title>{{form.controls['id'].value?"Actualizar Departamento":"Registro de Departamento"}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div fxLayout="row wrap" [formGroup]="this.form">
+            <div fxFlex="100">
+                <mat-form-field>
+                    <input maxlength="100" matInput placeholder="Nombre del departamento" formControlName="nombre">
+                    <mat-hint align="end">
+                        {{this.form.get('nombre').value? this.form.get('nombre').value.length:0}} / 100
+                    </mat-hint>
+                    <mat-error *ngIf="this.form.get('nombre').hasError('required') && this.form.get('nombre').touched" class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
+                    <mat-error *ngIf="this.form.get('nombre').hasError('maxlength') && this.form.get('nombre').touched" class="text-danger font-11">Sólo se permite <strong>100 caracteres</strong>.</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="100">
+                <mat-form-field>
+                    <input matInput placeholder="Latitud" formControlName="latitud" pattern="^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,10})?))$">
+                    <mat-error *ngIf="this.form.get('latitud').errors?.pattern && this.form.get('latitud').touched" class="text-danger font-11">Sólo se permiten 2 dígitos númericos enteros y 10 decimales.</mat-error>
+                    <mat-error *ngIf="this.form.get('latitud').hasError('required') && this.form.get('latitud').touched" class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="100">
+                <mat-form-field>
+                    <input matInput placeholder="longitud" formControlName="longitud" pattern="^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,10})?))$">
+                    <mat-error *ngIf="this.form.get('longitud').errors?.pattern && this.form.get('longitud').touched" class="text-danger font-11">Sólo se permiten 2 dígitos númericos enteros y 10 decimales.</mat-error>
+                    <mat-error *ngIf="this.form.get('longitud').hasError('required') && this.form.get('longitud').touched" class="text-danger font-11">Sólo se permite <strong>100 caracteres</strong>.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-card-actions fxLayoutAlign="end center" fxLayoutGap="5px">
+            <button mat-stroked-button color="warn" type="button" (click)="this.cancel()">Cancelar</button>
+            <button mat-flat-button color="accent" type="button" [disabled]="!this.form.valid" (click)="this.save()">Guardar</button>
+        </mat-card-actions>
+    </mat-card-content>
+</mat-card>
+<ng-template #customNotification let-notificationData="notification">
+    <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

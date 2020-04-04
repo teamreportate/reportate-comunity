@@ -22,4 +22,8 @@ export class Constants {
   static jobApi = 'scheduler/';
   static alarmApi = 'api/alarmas';
   static LOGIN_PATH = '/authentication/login';
+  static departamentosApi = 'api/departamentos';
+  static municipiosApi = 'api/municipios';
+  static centrosApi = 'api/centros-de-salud';
+  
 }
