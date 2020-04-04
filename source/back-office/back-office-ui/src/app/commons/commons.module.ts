@@ -64,7 +64,7 @@ import {LoginCuisComponent} from './dialogs/login-cuis.component';
     ValidarSinEspaciosDirective,
     HistoryDetailComponent,
     LoginComponent,
-    LoginCuisComponent
+    LoginCuisComponent,
   ],
   imports: [
     CommonModule,

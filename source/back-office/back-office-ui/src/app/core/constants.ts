@@ -26,6 +26,10 @@ export class Constants {
   static enfermedadApi = 'api/enfermedades';
   static departmentApi = 'api/departamentos';
   static diagnosticoApi = 'api/diagnosticos';
+  static userApi = 'api/usuarios';
+  static departamentosApi = 'api/departamentos';
+  static municipiosApi = 'api/municipios';
+  static centrosApi = 'api/centros-de-salud';
 
 // CLASIFICACION ENFERMEDAD
   static CLASIFICACION_ENFERMEDAD = [{key: 'SOSPECHOSO', value: 'SOSPECHOSO'}, {key: 'NEGATIVO', value: 'NEGATIVO'}, {
@@ -33,6 +37,6 @@ export class Constants {
     value: 'CONFIRMADO'
 
   }];
-  static userApi = 'api/usuarios';
+  
 }
 
