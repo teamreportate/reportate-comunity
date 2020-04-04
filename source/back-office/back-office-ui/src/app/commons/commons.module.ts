@@ -40,6 +40,7 @@ import {HistoryDetailComponent} from './job/history-detail.component';
 import {CommonService} from './common.service';
 import {LoginComponent} from './dialogs/login.component';
 import {LoginCuisComponent} from './dialogs/login-cuis.component';
+import { CronMakerDialogComponent } from './cron-maker-dialog.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import {LoginCuisComponent} from './dialogs/login-cuis.component';
     HistoryDetailComponent,
     LoginComponent,
     LoginCuisComponent,
+    CronMakerDialogComponent,
   ],
   imports: [
     CommonModule,
