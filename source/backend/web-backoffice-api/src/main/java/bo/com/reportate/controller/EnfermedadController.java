@@ -51,6 +51,20 @@ public class EnfermedadController {
         }
     }
 
+    @RequestMapping(value = "/filtro", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Listar enfermedades", description = "Listar enfermedades", tags = { "enfermedades" })
+    public ResponseEntity<List<EnfermedadResponse>> listaEnfermedadesParaFiltro() {
+        try {
+            return ok(this.enfermedadService.listNoBase());
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al listar las enfermedades: Causa. {}",e.getMessage());
+            return CustomErrorType.badRequest("Listar Enfermedades", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al listar  enfermedades:",e);
+            return CustomErrorType.serverError("Listar Enfermedades", "Se genero un error al listar enfermedades");
+        }
+    }
+
     @RequestMapping(value = "/{enfermedadId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Enfermedad> getById(@PathVariable("enfermedadId") Long enfermedadId) {
         try {
@@ -65,12 +79,12 @@ public class EnfermedadController {
     }
 
     @RequestMapping( method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Enfermedad> saveMunicipio(@RequestBody EnfermedadDto enfermedadDto) {
+    public ResponseEntity<Enfermedad> save(@RequestBody EnfermedadDto enfermedadDto) {
         try {
             return ok(this.enfermedadService.save(enfermedadDto));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al guardar la enfermedad: {}. Causa. {}",enfermedadDto.getNombre(),e.getMessage());
-            return CustomErrorType.badRequest("Guardar enfermedad", "Ocurrió un error al guardar la enfermedad: "+enfermedadDto.getNombre());
+            return CustomErrorType.badRequest("Guardar enfermedad", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al guardar la enfermedad : {}",enfermedadDto.getNombre(),e);
             return CustomErrorType.serverError("Guardar enfermedad", "Ocurrió un error al guardar la enfermedad: "+enfermedadDto.getNombre());
@@ -78,12 +92,12 @@ public class EnfermedadController {
     }
 
     @RequestMapping(value = "/{enfermedadId}",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Enfermedad> updateMunicipio(@PathVariable("enfermedadId")Long enfermedadId, @RequestBody EnfermedadDto enfermedadDto) {
+    public ResponseEntity<Enfermedad> update(@PathVariable("enfermedadId")Long enfermedadId, @RequestBody EnfermedadDto enfermedadDto) {
         try {
             return ok(this.enfermedadService.update(enfermedadId, enfermedadDto));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al modificar la enfermedad: {}. Causa. {}",enfermedadId,e.getMessage());
-            return CustomErrorType.badRequest("Modificar síntoma", "Ocurrió un error al modificar la enfermedad: "+enfermedadId);
+            return CustomErrorType.badRequest("Modificar síntoma", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al modificar el sintoma : {}",enfermedadId,e);
             return CustomErrorType.serverError("Modificar enfermedad", "Ocurrió un error al modificar la enfermedad: "+enfermedadId);

@@ -46,12 +46,12 @@ public class PaisController {
     }
 
     @RequestMapping( method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Pais> saveMunicipio(@RequestBody PaisDto paisDto) {
+    public ResponseEntity<Pais> save(@RequestBody PaisDto paisDto) {
         try {
             return ok(this.paisService.save(paisDto));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al guardar el pais: {}. Causa. {}",paisDto.getNombre(),e.getMessage());
-            return CustomErrorType.badRequest("Guardar país", "Ocurrió un error al guardar el país: "+paisDto.getNombre());
+            return CustomErrorType.badRequest("Guardar país", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al guardar el pais : {}",paisDto.getNombre(),e);
             return CustomErrorType.serverError("Guardar país", "Ocurrió un error al guardar el país: "+paisDto.getNombre());
@@ -59,12 +59,12 @@ public class PaisController {
     }
 
     @RequestMapping(value = "/{paisId}",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Pais> updateMunicipio(@PathVariable("paisId")Long paisId, @RequestBody PaisDto paisDto) {
+    public ResponseEntity<Pais> update(@PathVariable("paisId")Long paisId, @RequestBody PaisDto paisDto) {
         try {
             return ok(this.paisService.update(paisId, paisDto));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al modificar el país: {}. Causa. {}",paisId,e.getMessage());
-            return CustomErrorType.badRequest("Modificar país", "Ocurrió un error al modificar el país: "+paisId);
+            return CustomErrorType.badRequest("Modificar país", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al modificar el país : {}",paisId,e);
             return CustomErrorType.serverError("Modificar país", "Ocurrió un error al modificar el país: "+paisId);

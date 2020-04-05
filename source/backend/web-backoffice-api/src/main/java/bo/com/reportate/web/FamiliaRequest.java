@@ -35,5 +35,9 @@ public class FamiliaRequest implements Serializable {
     private String ciudad;
     @NotNull
     private Long departamentoId;
+    @NotNull
     private Long municipioId;
+    @NotNull
+    private Long centroSaludId;
+
 }

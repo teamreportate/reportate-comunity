@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static org.springframework.http.ResponseEntity.*;
@@ -90,33 +89,6 @@ public class RecursoController {
         }
     }
 
-    /**
-     * Metodo que permite registar un nuevo recurso
-     * @param recurso
-     * @param request
-     * @return
-     */
-    @PostMapping()
-    public ResponseEntity crear(@RequestBody MuRecurso recurso, HttpServletRequest request) {
-        try{
-            Long id=recursoService.crear(recurso);
-            return created(
-                    ServletUriComponentsBuilder
-                            .fromContextPath(request)
-                            .path("/recursos/obtener/{id}")
-                            .buildAndExpand(id)
-                            .toUri())
-                    .build();
-        }
-        catch (OperationException e){
-            log.error("Error al crear Recurso: {}", e.getMessage());
-            return CustomErrorType.badRequest(FormatUtil.MSG_TITLE_ERROR, e.getMessage());
-        }
-        catch (Exception e){
-            log.error("Error no controlado al crear Recurso.", e);
-            return CustomErrorType.badRequest(FormatUtil.MSG_TITLE_ERROR, FormatUtil.defaultError());
-        }
-    }
 
     /**
      * Metodo que permite actualizarGrupo un recurso

@@ -31,10 +31,10 @@
         <div fxFlex="100">
             <ngx-datatable #table class="material" [messages]="this.tableMessages()" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]='10' [rows]="this.centroList" [scrollbarH]="this.scrollH">
 
-                <ngx-datatable-column name="Acciones" [minWidth]="200" [maxWidth]="240" [draggable]="false" [resizeable]="false">
+                <ngx-datatable-column name="Acciones" [minWidth]="100" [maxWidth]="200" [draggable]="false" [resizeable]="false">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                         <button mat-icon-button matTooltip="Actualizar Centro de Salud" (click)="this.openDialog(row)"><mat-icon fxLayoutAlign="start start" color="accent">edit</mat-icon></button>
-                        <button mat-icon-button (click)="this.onChangeState(row)"><mat-icon fxLayoutAlign="start start" color="accent" matTooltip="Eliminar Centro de Salud">close</mat-icon></button>
+                        <button mat-icon-button (click)="this.onChangeState(row)"><mat-icon fxLayoutAlign="start start" color="accent" matTooltip="Eliminar">delete</mat-icon></button>
                     </ng-template>
                 </ngx-datatable-column>
 

@@ -66,7 +66,7 @@ export class DepartamentosComponent extends ClicComponent implements OnInit {
 
   onChangeState(row: any) {
     const textContent: String = `Confirma eliminar el Departamento: ${row.nombre}`;
-    this.dialog.open(ConfirmDialogComponent, this.confirmConfig({ textContent, title: 'Eliminar departamento' }))
+    this.dialog.open(ConfirmDialogComponent, this.confirmConfig({ textContent, title: 'Eliminar Departamento' }))
       .afterClosed()
       .subscribe(confirm => {
         if (confirm) {

@@ -27,7 +27,7 @@
   </dependencies>
 
   <build>
-    <finalName>clic</finalName>
+    <finalName>bo-reportate</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

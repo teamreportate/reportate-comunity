@@ -84,8 +84,8 @@ export class PaisesComponent extends ClicComponent implements OnInit  {
   }
   onChangePaisState(row: any) {
     const target = row.estado === MuState.ACTIVO ? MuState.INACTIVO : MuState.ACTIVO;
-    const textContent: String = `Confirmar para cambiar el estado del País: ${row.nombre}, de ${row.estado} -> ${target}`;
-    this.dialog.open(ConfirmDialogComponent, this.confirmConfig({textContent, title: 'Cambiar Estado del País'}))
+    const textContent: String = `Confirma eliminar el País: ${row.nombre}`;
+    this.dialog.open(ConfirmDialogComponent, this.confirmConfig({textContent, title: 'Eliminar País'}))
       .afterClosed()
       .subscribe(confirm => {
         if (confirm) {
@@ -94,7 +94,7 @@ export class PaisesComponent extends ClicComponent implements OnInit  {
             this.blockUI.stop();
             this.ngOnInit();
             // tslint:disable-next-line:max-line-length
-            const notif = {error: {title: `${row.estado === MuState.ACTIVO ? 'Inhabilitar País' : 'Habilitar País'}`, detail: `${row.estado === MuState.ACTIVO ? 'País inhabilitado satisfactoriamente.' : 'País habilitado satisfactoriamente.'}`}};
+            const notif = {error: {title: 'Eliminar País', detail: 'País eliminado satisfactoriamente.'}};
             this.notifierError(notif, 'info');
           }, error => {
             this.blockUI.stop();

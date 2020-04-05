@@ -8,6 +8,7 @@ import bo.com.reportate.model.dto.PacienteDto;
 import bo.com.reportate.model.dto.request.EnfermedadRequest;
 import bo.com.reportate.model.dto.request.PaisRequest;
 import bo.com.reportate.model.dto.request.SintomaRequest;
+import bo.com.reportate.model.dto.response.FichaEpidemiologicaResponse;
 import bo.com.reportate.model.enums.GeneroEnum;
 import org.springframework.security.core.Authentication;
 
@@ -26,5 +27,5 @@ public interface PacienteService {
     PacienteDto save(Authentication userDetails, String nombre, Integer edad, GeneroEnum genero, Boolean gestacion, Integer tiempoGestacion );
     PacienteDto update(Authentication userDetails,Long id, String nombre, Integer edad, GeneroEnum genero, Boolean gestacion, Integer tiempoGestacion );
     String controlDiario(Long pacienteId, List<EnfermedadRequest> enfermedadesBase, List<PaisRequest> paisesVisitados, List<SintomaRequest> sintomas);
-
+    FichaEpidemiologicaResponse getFichaEpidemiologica(Long pacienteId);
 }

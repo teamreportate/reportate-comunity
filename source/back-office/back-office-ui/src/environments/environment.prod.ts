@@ -5,7 +5,7 @@ export const environment = {
     loginDialogWidth: 'WD'
   },
   services: {
-    baseUri : 'http://localhost:8080/',
+    baseUri : 'https://dev.mc4.com.bo:10581/back-office/',
     baseUriFact : 'http://localhost:8080/facturacion-core/',
   }
 };
