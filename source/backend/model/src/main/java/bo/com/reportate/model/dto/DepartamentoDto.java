@@ -37,7 +37,11 @@ public class DepartamentoDto implements Serializable {
         this.longitud = departamento.getLongitud();
         this.estado = departamento.getEstado();
 
-        departamento.getMunicipios().forEach( municipio -> municipios.add(new MunicipioDto(municipio)) );
+        departamento.getMunicipios().forEach( municipio -> {
+            if(municipio.getEstado().equals(EstadoEnum.ACTIVO)) {
+                municipios.add(new MunicipioDto(municipio));
+            }
+        });
 
     }
     public DepartamentoDto(Long id, String nombre){

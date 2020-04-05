@@ -18,7 +18,7 @@ import java.util.List;
 public interface EnfermedadService {
     List<EnfermedadResponse> list();
 
-    List<EnfermedadDto> listAll();
+    List<EnfermedadDto> listActivos();
     Enfermedad save(EnfermedadDto enfermedadDto);
     Enfermedad findById(Long enfermedadId);
     Enfermedad update(Long id, EnfermedadDto enfermedadDto);

@@ -75,9 +75,9 @@ public class PaisController {
     public ResponseEntity<List<PaisDto>> listar() {
         try {
             return ok(this.paisService.listAll());
-        }catch (NotDataFoundException e){
-            log.error("Se genero un error al obtener los países.",e.getMessage());
-            return CustomErrorType.badRequest("Obtener país", "Ocurrió un error al obtener los países");
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al obtener los países. Causa {}",e.getMessage());
+            return CustomErrorType.badRequest("Obtener país", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al obtener los países.",e.getMessage());
             return CustomErrorType.serverError("Obtener país", "Ocurrió un error al obtener los países");

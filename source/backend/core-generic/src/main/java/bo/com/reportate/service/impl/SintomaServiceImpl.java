@@ -32,14 +32,7 @@ public class SintomaServiceImpl implements SintomaService {
 
     @Override
     public List<SintomaDto> listAll() {
-        List<SintomaDto> sintomasDtos = new ArrayList<>();
-        List<Sintoma> sintomas = this.sintomaRepository.listAll();
-
-        for (Sintoma sintoma: sintomas) {
-            SintomaDto sintomaDto = new SintomaDto(sintoma);
-            sintomasDtos.add(sintomaDto);
-        }
-        return sintomasDtos;
+        return this.sintomaRepository.findByEstadoOrderByNombreDesc(EstadoEnum.ACTIVO);
     }
 
     @Override
@@ -47,11 +40,9 @@ public class SintomaServiceImpl implements SintomaService {
         ValidationUtil.throwExceptionIfInvalidText("nombre",sintomaDto.getNombre(),true,100);
         ValidationUtil.throwExceptionIfInvalidText("pregunta",sintomaDto.getPregunta(),true,500);
         ValidationUtil.throwExceptionIfInvalidText("ayuda",sintomaDto.getAyuda(),false,500);
-
-        // TODO: VALIDAR NOMBRE DEL SINTOMA
-//        if(municipioRepository.existsByNombreIgnoreCaseAndDepartamento(municipio.getNombre(), municipio.getDepartamento())){
-//            throw new OperationException("Ya existe un municipio con el nombre: "+municipio.getNombre());
-//        }
+        if(this.sintomaRepository.existsByNombreIgnoreCaseAndEstado(sintomaDto.getNombre(), EstadoEnum.ACTIVO)){
+            throw new OperationException("Ya existe un síntoma con el nombre de "+sintomaDto.getNombre());
+        }
         Sintoma sintoma = new Sintoma();
         sintoma.setNombre(sintomaDto.getNombre());
         sintoma.setPregunta(sintomaDto.getPregunta());
@@ -70,10 +61,9 @@ public class SintomaServiceImpl implements SintomaService {
         ValidationUtil.throwExceptionIfInvalidText("nombre",sintomaDto.getNombre(),true,100);
         ValidationUtil.throwExceptionIfInvalidText("pregunta",sintomaDto.getPregunta(),true,500);
         ValidationUtil.throwExceptionIfInvalidText("ayuda",sintomaDto.getAyuda(),false,500);
-        // TODO: VALIDAR NOMBRE SINTOMA
-//        if(municipioRepository.existsByIdIsNotAndNombreIgnoreCase(municipioId, nombre)){
-//            throw new OperationException("Ya existe un municipio con el nombre: "+nombre);
-//        }
+        if(this.sintomaRepository.existsByIdNotAndNombreIgnoreCaseAndEstado(id,sintomaDto.getNombre(), EstadoEnum.ACTIVO)){
+            throw new OperationException("Ya existe un síntoma con el nombre "+sintomaDto.getNombre());
+        }
         Sintoma sintoma = this.sintomaRepository.findById(id).orElseThrow(()-> new NotDataFoundException("No se encontró ningún síntoma con ID: "+id));
         sintoma.setNombre(sintomaDto.getNombre());
         sintoma.setPregunta(sintomaDto.getPregunta());
@@ -89,7 +79,7 @@ public class SintomaServiceImpl implements SintomaService {
         if (sintoma == null) {
             throw new OperationException(FormatUtil.noRegistrado("Síntoma", id));
         }
-        Log.info("Persistiendo el objeto");
+
         EstadoEnum estado = sintoma.getEstado() == EstadoEnum.ACTIVO ? EstadoEnum.INACTIVO : EstadoEnum.ACTIVO;
         sintoma.setEstado(estado);
 

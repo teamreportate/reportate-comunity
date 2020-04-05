@@ -34,23 +34,12 @@ public class PaisServiceImpl implements PaisService {
     @Override
     @Transactional(readOnly = true)
     public List<PaisDto> listAll() {
-        List<PaisDto> paisesDto = new ArrayList<>();
-        List<Pais> paises = this.paisRepository.listAllActivos();
-
-        for (Pais pais: paises) {
-            PaisDto paisDto = new PaisDto(pais);
-            paisesDto.add(paisDto);
-        }
-        return paisesDto;
+        return this.paisRepository.findByEstadoOrderByNombreAsc(EstadoEnum.ACTIVO);
     }
 
     @Override
     public Pais save(PaisDto paisDto) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",paisDto.getNombre(),true,100);
-        // TODO: VALIDAR NOMBRE DEL PAIS
-//        if(municipioRepository.existsByNombreIgnoreCaseAndDepartamento(municipio.getNombre(), municipio.getDepartamento())){
-//            throw new OperationException("Ya existe un municipio con el nombre: "+municipio.getNombre());
-//        }
         Pais pais = new Pais();
         pais.setNombre(paisDto.getNombre());
         return paisRepository.save(pais);
