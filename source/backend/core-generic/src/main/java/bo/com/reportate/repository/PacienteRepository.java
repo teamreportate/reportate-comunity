@@ -28,6 +28,7 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
     List<PacienteDto> findByFamiliaAndIdNotAndEstado(Familia familia, Long pacienteId, EstadoEnum  estado);
     @Query("SELECT new bo.com.reportate.model.dto.PacienteDto(p) " +
             "FROM Paciente  p INNER JOIN p.familia f " +
-            "WHERE f =:familia AND p.id<>:pacienteId AND f.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
+            "WHERE f =:familia AND p.id<>:pacienteId AND p.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<PacienteDto> listarPacienteByFamilia(@Param("familia") Familia familia, @Param("pacienteId") Long pacienteId);
 }
+s

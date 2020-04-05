@@ -23,6 +23,6 @@ import java.util.List;
 public interface ControlDiarioPaisRepository extends JpaRepository<ControlDiarioPais, Long> {
     @Query("SELECT new bo.com.reportate.model.dto.PaisVisitadoDto(cdp) " +
             "FROM ControlDiarioPais cdp INNER JOIN cdp.controlDiario cd "+
-            "WHERE cd.paciente=:paciente " )
+            "WHERE cd.paciente=:paciente AND cd.paciente.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO" )
     List<PaisVisitadoDto> listarPaisesVisitados(@Param("paciente") Paciente paciente);
 }

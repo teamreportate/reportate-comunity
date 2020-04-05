@@ -161,6 +161,7 @@ public class PacienteServiceImpl implements PacienteService {
         fichaEpidemiologicaResponse.setCiudad(paciente.getFamilia().getCiudad());
         fichaEpidemiologicaResponse.setZona(paciente.getFamilia().getZona());
         fichaEpidemiologicaResponse.setDireccion(paciente.getFamilia().getDireccion());
+        fichaEpidemiologicaResponse.setTelefono(paciente.getFamilia().getTelefono());
         fichaEpidemiologicaResponse.setUbicacion("https://maps.google.com/?q="+paciente.getFamilia().getLatitud()+","+paciente.getFamilia().getLongitud());
         try {
             log.info("iniciando busqueda de paises visitados");
@@ -176,13 +177,12 @@ public class PacienteServiceImpl implements PacienteService {
             fichaEpidemiologicaResponse.setDiagnosticos(diagnosticos);
 
             log.info("obteniendo contactos");
-            //List<PacienteDto> contactos = this.pacienteRepository.findByFamiliaAndIdNotAndEstado(paciente.getFamilia(), paciente.getId(), EstadoEnum.ACTIVO);
             List<PacienteDto> contactos = this.pacienteRepository.listarPacienteByFamilia(paciente.getFamilia(), paciente.getId());
-
             fichaEpidemiologicaResponse.setContactos(contactos);
-        }catch (Exception e){
-            log.info("busquedas finalizada con errores {}",e.getMessage());
 
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new OperationException("busqueda finalizada con errores");
         }
         log.info("busquedas finalizadas");
         return  fichaEpidemiologicaResponse;
