@@ -27,6 +27,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -189,6 +190,7 @@ public class PacienteServiceImpl implements PacienteService {
         return enfermedades.get(0).getMensajeDiagnostico();
     }
 
+    @Transactional(readOnly = true)
     public FichaEpidemiologicaResponse getFichaEpidemiologica(Long pacienteId){
         FichaEpidemiologicaResponse fichaEpidemiologicaResponse = new FichaEpidemiologicaResponse();
         log.info("iniciando busqueda del paciente");
@@ -221,7 +223,7 @@ public class PacienteServiceImpl implements PacienteService {
 
         }catch (Exception e){
             log.error(e.getMessage());
-            throw new OperationException("busqueda finalizada con errores");
+            throw new OperationException("Búusqueda finalizada con errores");
         }
         log.info("busquedas finalizadas");
         return  fichaEpidemiologicaResponse;

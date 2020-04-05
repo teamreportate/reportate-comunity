@@ -22,6 +22,7 @@ import java.util.Date;
 @Getter @Setter @NoArgsConstructor @Data
 public class DiagnosticoResponseDto implements Serializable {
     private Long id;
+    private Long pacienteId;
     private Date fechaRegistro;
     private String nombrePaciente;
     private String telefono;
@@ -38,6 +39,7 @@ public class DiagnosticoResponseDto implements Serializable {
 
     public DiagnosticoResponseDto(Diagnostico diagnostico){
         this.id = diagnostico.getId();
+        this.pacienteId = diagnostico.getControlDiario().getPaciente().getId();
         this.fechaRegistro = diagnostico.getCreatedDate();
         this.nombrePaciente = diagnostico.getControlDiario().getPaciente().getNombre();
         this.telefono = diagnostico.getControlDiario().getPaciente().getFamilia().getTelefono();
