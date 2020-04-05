@@ -107,20 +107,6 @@ public class MunicipioCotroller {
         }
     }
 
-    @RequestMapping(value = "/{municipioId}/inactivar",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Inactivar Municipio", description = "Metodo para inactiva el municipio", tags = { "municipio" })
-    public ResponseEntity inactivar(@PathVariable("municipioId")Long municipioId) {
-        try {
-            this.municipioService.eliminar(municipioId);
-            return ok().build();
-        }catch (NotDataFoundException | OperationException e){
-            log.error("Se genero un error al inactivar el municipio: {}. Causa. {}",municipioId,e.getMessage());
-            return CustomErrorType.badRequest("Inactivar Municipio", e.getMessage());
-        }catch (Exception e){
-            log.error("Se genero un error al inactivar el municipio : {}",municipioId,e);
-            return CustomErrorType.serverError("Inactivar Municipio", "Ocurrió un error al inactivar el municipio: "+municipioId);
-        }
-    }
 
     @RequestMapping(value = "/{municipioId}/centros-de-salud",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CentroSaludDto>> listarCentrosSalud(@PathVariable("municipioId")Long municipioId) {

@@ -23,7 +23,6 @@ import java.util.List;
 public interface DepartamentoService {
     Departamento findById(Long  departamentoId);
     List<DepartamentoDto> findAllConMunicipio();
-    List<Departamento> listarDepartamento();
     Departamento save(Departamento departamento);
     Departamento save(String nombre, Double latitud, Double longitud);
     Departamento update(Long departamentoId, String nombre, Double latitud, Double longitud);

@@ -43,10 +43,6 @@ public class DepartamentoServiceImpl implements DepartamentoService {
         return departamentoRepository.cargarConMunicipio();
     }
 
-    @Override
-    public List<Departamento> listarDepartamento() {
-        return departamentoRepository.listar();
-    }
 
     @Override
     public Departamento save(Departamento departamento) {

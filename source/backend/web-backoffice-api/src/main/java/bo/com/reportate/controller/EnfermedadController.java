@@ -4,11 +4,9 @@ import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.Enfermedad;
 import bo.com.reportate.model.dto.EnfermedadDto;
-import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
 import bo.com.reportate.model.dto.response.EnfermedadResponse;
 import bo.com.reportate.service.EnfermedadService;
 import bo.com.reportate.util.CustomErrorType;
-import bo.com.reportate.utils.DateUtil;
 import bo.com.reportate.utils.FormatUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -95,7 +93,7 @@ public class EnfermedadController {
     @RequestMapping(value ="/all" ,method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<EnfermedadDto>> listar() {
         try {
-            return ok(this.enfermedadService.listAll());
+            return ok(this.enfermedadService.listActivos());
         }catch (NotDataFoundException e){
             log.error("Se genero un error al obtener la enfermedad.",e.getMessage());
             return CustomErrorType.badRequest("Obtener enfermedad", "Ocurrió un error al obtener las enfermedades");

@@ -51,7 +51,7 @@ public class DepartamentoCotroller {
      * @return
      */
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Listar los departamentos con sus municipios para el móvil", description = "Listar los departamentos con sus municipios", tags = { "departamento" })
+    @Operation(summary = "Listar los departamentos con sus municipios", description = "Listar los departamentos con sus municipios", tags = { "departamento" })
     public ResponseEntity<List<DepartamentoDto>> listaDepartamentosActivos() {
         try {
             return ok(this.departamentoService.findAllConMunicipio());
@@ -61,16 +61,7 @@ public class DepartamentoCotroller {
         }
     }
 
-    @RequestMapping(value = "/listar", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Listar los departamentos para ABM", description = "Listar los departamentos con sus municipios", tags = { "departamento" })
-    public ResponseEntity<List<Departamento>> listar() {
-        try {
-            return ok(this.departamentoService.listarDepartamento());
-        }catch (Exception e){
-            log.error("Se genero un error al listar los departamentos",e);
-            return CustomErrorType.serverError("Listar Departamentos", "Ocurrió un error al listar los departamentos");
-        }
-    }
+
 
     @RequestMapping(value = "/{departamentoId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Departamento> getById(@PathVariable("departamentoId") Long departamentoId) {
