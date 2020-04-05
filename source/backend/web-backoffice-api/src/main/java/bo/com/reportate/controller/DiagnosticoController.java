@@ -3,6 +3,7 @@ package bo.com.reportate.controller;
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
+import bo.com.reportate.model.dto.response.NivelValoracionDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.service.DiagnosticoService;
 import bo.com.reportate.util.CustomErrorType;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -96,6 +98,23 @@ public class DiagnosticoController {
         }catch (Exception e){
             log.error("Se genero un error al contabilizar los diagnosticos:",e);
             return CustomErrorType.serverError("Contabilizar Diagnosticos", "Se genero un error al contabilizar los diagnosticos");
+        }
+    }
+    @RequestMapping(value = "/listar_by_valoracion",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Agrupar los diagnosticos por valoración", description = "Agrupar los diagnosticos por valoración", tags = { "grupos de diagnosticos por valoración" })
+    public ResponseEntity<List<NivelValoracionDto>> listarByNivelValoracion(
+    		@Parameter(description = "Fecha inicio para el filtro", required = true)
+            @RequestParam("from") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_TIME) Date from,
+            @Parameter(description = "Fecha fin para el filtro", required = true)
+            @RequestParam("to") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_TIME) Date to) {
+        try {
+            return ok(this.diagnosticoService.listarByNivelValoracion(from, to));
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al agrupar los diagnosticos: Causa. {}",e.getMessage());
+            return CustomErrorType.badRequest("Agrupar Diagnosticos", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al agrupar los diagnosticos:",e);
+            return CustomErrorType.serverError("Agrupar Diagnosticos", "Se genero un error al agrupar los diagnosticos");
         }
     }
 }

@@ -5,6 +5,7 @@ import bo.com.reportate.model.Diagnostico;
 import bo.com.reportate.model.Enfermedad;
 import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
+import bo.com.reportate.model.dto.response.NivelValoracionDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
 
@@ -55,4 +56,15 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
             @Param("genero")GeneroEnum genero,
             @Param("edadInicial")Integer edadInicial,
             @Param("edadFinal")Integer edadFinal);
+    
+    @Query("SELECT new bo.com.reportate.model.dto.response.NivelValoracionDto(cast(t.createdDate as date) as registrado,"
+    		+ " (select count(d1) from Diagnostico d1 where d1.resultadoValoracion >= 6 AND d1.resultadoValoracion <= 12 and cast(d1.createdDate as date) = cast(t.createdDate as date)) as alto, "
+    		+ " (select count(d2) from Diagnostico d2 where d2.resultadoValoracion >= 3 AND d2.resultadoValoracion <= 5 and cast(d2.createdDate as date) = cast(t.createdDate as date)) as medio, "
+    		+ " (select count(d3) from Diagnostico d3 where d3.resultadoValoracion >= 0 AND d3.resultadoValoracion <= 2 and cast(d3.createdDate as date) = cast(t.createdDate as date)) as bajo) "
+    		+ " FROM Diagnostico t WHERE t.createdDate BETWEEN :fechaInicio AND :fechaFin"
+    		+ " GROUP BY t.createdDate"
+    		+ " ORDER BY t.createdDate")
+    List<NivelValoracionDto> listarByNivelValoracion(
+    		@Param("fechaInicio") Date from,
+            @Param("fechaFin") Date to);
 }

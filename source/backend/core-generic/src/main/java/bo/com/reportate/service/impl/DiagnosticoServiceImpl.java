@@ -5,6 +5,7 @@ import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.Enfermedad;
 import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
+import bo.com.reportate.model.dto.response.NivelValoracionDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
@@ -59,4 +60,11 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
         GeneroEnum generoEnum= genero.trim().isEmpty()?null:GeneroEnum.valueOf(genero);
         return diagnosticoRepository.countDiagnosticoByResultadoValoracion(valoracionInicio, valoracionFin, departamento, municipio,generoEnum,edadInicial,edadFinal);
     }
+
+	@Override
+	public List<NivelValoracionDto> listarByNivelValoracion(Date from, Date to) {
+		return diagnosticoRepository.listarByNivelValoracion(from,to);
+	}
+    
+    
 }
