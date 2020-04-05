@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+    <filter>
+        <filter-name>CacheFilter</filter-name>
+        <filter-class>security.CacheFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CacheFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+    </filter-mapping>
+
+    <!-- ERROR AND EXPIRATION -->
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/index.html</location>
+    </error-page>
+    <error-page>
+        <error-code>400</error-code>
+        <location>/index.html</location>
+    </error-page>
+    <error-page>
+        <error-code>401</error-code>
+        <location>/index.html</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/index.html</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/index.html</location>
+    </error-page>
+    <error-page>
+        <error-code>405</error-code>
+        <location>/index.html</location>
+    </error-page>
+    <error-page>
+        <error-code>414</error-code>
+        <location>/index.html</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/index.html</location>
+    </error-page>
+    <error-page>
+        <error-code>501</error-code>
+        <location>/index.html</location>
+    </error-page>
+    <error-page>
+        <error-code>502</error-code>
+        <location>/index.html</location>
+    </error-page>
+    <error-page>
+        <error-code>503</error-code>
+        <location>/index.html</location>
+    </error-page>
+    <error-page>
+        <error-code>504</error-code>
+        <location>/index.html</location>
+    </error-page>
+    <error-page>
+        <error-code>505</error-code>
+        <location>/index.html</location>
+    </error-page>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>all</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+</web-app>

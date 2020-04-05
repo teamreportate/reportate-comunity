@@ -38,7 +38,7 @@ public class SintomaController {
             return ok(this.sintomaService.findById(sintomaId));
         }catch (NotDataFoundException e){
             log.error("Se genero un error al obtener el sintoma con ID: {}. Causa. {}",sintomaId,e.getMessage());
-            return CustomErrorType.badRequest("Obtener síntoma", "Ocurrió un error al obtener el síntoma con ID: "+sintomaId);
+            return CustomErrorType.badRequest("Obtener síntoma", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al obtener el sintoma con ID: {}",sintomaId,e);
             return CustomErrorType.serverError("Obtener síntoma", "Ocurrió un error al obtener el síntoma con ID: "+sintomaId);
@@ -51,7 +51,7 @@ public class SintomaController {
             return ok(this.sintomaService.save(sintomaDto));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al guardar el sintoma: {}. Causa. {}",sintomaDto.getNombre(),e.getMessage());
-            return CustomErrorType.badRequest("Guardar síntoma", "Ocurrió un error al guardar el síntoma: "+sintomaDto.getNombre());
+            return CustomErrorType.badRequest("Guardar síntoma", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al guardar el pais : {}",sintomaDto.getNombre(),e);
             return CustomErrorType.serverError("Guardar síntoma", "Ocurrió un error al guardar el síntoma: "+sintomaDto.getNombre());
@@ -64,7 +64,7 @@ public class SintomaController {
             return ok(this.sintomaService.update(sintomaId, sintomaDto));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al modificar el sintoma: {}. Causa. {}",sintomaId,e.getMessage());
-            return CustomErrorType.badRequest("Modificar síntoma", "Ocurrió un error al modificar el síntoma: "+sintomaId);
+            return CustomErrorType.badRequest("Modificar síntoma", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al modificar el sintoma : {}",sintomaId,e);
             return CustomErrorType.serverError("Modificar síntoma", "Ocurrió un error al modificar el síntoma: "+sintomaId);
@@ -75,11 +75,11 @@ public class SintomaController {
     public ResponseEntity<List<SintomaDto>> listar() {
         try {
             return ok(this.sintomaService.listAll());
-        }catch (NotDataFoundException e){
-            log.error("Se genero un error al obtener los sintomas.",e.getMessage());
-            return CustomErrorType.badRequest("Obtener síntomas", "Ocurrió un error al obtener los síntomas");
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al obtener los sintomas. Causa {}",e.getMessage());
+            return CustomErrorType.badRequest("Obtener síntomas", e.getMessage());
         }catch (Exception e){
-            log.error("Se genero un error al obtener los sintomas.",e.getMessage());
+            log.error("Se genero un error al obtener los sintomas.",e);
             return CustomErrorType.serverError("Obtener síntomas", "Ocurrió un error al obtener los síntomas");
         }
     }

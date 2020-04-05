@@ -51,7 +51,7 @@ public class MunicipioCotroller {
             return ok(this.municipioService.findById(municipioId));
         }catch (NotDataFoundException e){
             log.error("Se genero un error al obtener el municipio con ID: {}. Causa. {}",municipioId,e.getMessage());
-            return CustomErrorType.badRequest("Obtener Municipio", "Ocurrió un error al obtener el municipio con ID: "+municipioId);
+            return CustomErrorType.badRequest("Obtener Municipio",e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al obtener el municipio con ID: {}",municipioId,e);
             return CustomErrorType.serverError("Obtener Municipio", "Ocurrió un error al obtener el municipio con ID: "+municipioId);
@@ -67,14 +67,14 @@ public class MunicipioCotroller {
             return ok(this.municipioService.save(municipioDto.getDepartamentoId(), municipioDto.getNombre(), municipioDto.getLatitud(), municipioDto.getLongitud()));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al guardar el municipio: {}. Causa. {}",municipioDto.getNombre(),e.getMessage());
-            return CustomErrorType.badRequest("Guardar Municipio", "Ocurrió un error al guardar el municipio: "+municipioDto.getNombre());
+            return CustomErrorType.badRequest("Guardar Municipio", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al guardar el municipio : {}",municipioDto.getNombre(),e);
             return CustomErrorType.serverError("Guardar Municipio", "Ocurrió un error al guardar el municipio: "+municipioDto.getNombre());
         }
     }
 
-    @RequestMapping(value = "/{municipioId}",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{municipioId}",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Actualizar Municipio", description = "Metodo para actualizar el municipio", tags = { "municipio" })
     public ResponseEntity<Municipio> updateMunicipio(
             @Parameter(description = "Identificador de municipio a modificar", required = true)
@@ -85,7 +85,7 @@ public class MunicipioCotroller {
             return ok(this.municipioService.update(municipioId, municipioRequest.getNombre(), municipioRequest.getLatitud(), municipioRequest.getLongitud()));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al modificar el municipio: {}. Causa. {}",municipioId,e.getMessage());
-            return CustomErrorType.badRequest("Modificar Municipio", "Ocurrió un error al modificar el municipio: "+municipioId);
+            return CustomErrorType.badRequest("Modificar Municipio", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al modificar el municipio : {}",municipioId,e);
             return CustomErrorType.serverError("Modificar Municipio", "Ocurrió un error al modificar el municipio: "+municipioId);
@@ -100,20 +100,21 @@ public class MunicipioCotroller {
             return ok().build();
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al elimianr el municipio: {}. Causa. {}",municipioId,e.getMessage());
-            return CustomErrorType.badRequest("Eliminar Municipio", "Ocurrió un error al eliminar el municipio: "+municipioId);
+            return CustomErrorType.badRequest("Eliminar Municipio", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al eliminar el municipio : {}",municipioId,e);
             return CustomErrorType.serverError("Eliminar Municipio", "Ocurrió un error al eliminar el municipio: "+municipioId);
         }
     }
 
+
     @RequestMapping(value = "/{municipioId}/centros-de-salud",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<CentroSaludDto>> listarMunicipios(@PathVariable("municipioId")Long municipioId) {
+    public ResponseEntity<List<CentroSaludDto>> listarCentrosSalud(@PathVariable("municipioId")Long municipioId) {
         try {
             return ok(this.centroSaludService.findByMunicipio(municipioId));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al listar los centros de salud del municipio: {}. Causa. {}",municipioId,e.getMessage());
-            return CustomErrorType.badRequest("Listar Centros de Salud", "Ocurrió un error al listar los centros de salud del municipio: "+municipioId);
+            return CustomErrorType.badRequest("Listar Centros de Salud", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al listar centros de salud del municipio : {}",municipioId,e);
             return CustomErrorType.serverError("Listar Centros de Salud", "OOcurrió un error al listar los centros de salud del municipio "+municipioId);

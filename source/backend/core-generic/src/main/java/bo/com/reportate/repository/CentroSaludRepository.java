@@ -3,6 +3,7 @@ package bo.com.reportate.repository;
 import bo.com.reportate.model.CentroSalud;
 import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.dto.CentroSaludDto;
+import bo.com.reportate.model.enums.EstadoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,7 +21,7 @@ import java.util.List;
  * @Copyright :MC4
  */
 public interface CentroSaludRepository extends JpaRepository<CentroSalud, Long> {
-    List<CentroSaludDto> findByMunicipioIdOrderByIdDesc(Long idMunicipio);
+    List<CentroSaludDto> findByMunicipioIdAndEstadoOrderByIdDesc(Long idMunicipio, EstadoEnum estadoEnum);
     boolean existsByMunicipioAndNombreIgnoreCase(Municipio municipio, String nombre);
 
     boolean existsByIdIsNotAndNombreIgnoreCase(Long municipioId, String nombre);

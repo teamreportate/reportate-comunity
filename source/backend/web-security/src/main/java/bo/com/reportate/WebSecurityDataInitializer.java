@@ -277,7 +277,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
 
 //
         Sintoma tos = null;
-        if(!sintomaRepository.existsByNombreIgnoreCase("Tos")){
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Tos", EstadoEnum.ACTIVO)){
             tos = Sintoma.builder()
                     .nombre("Tos")
                     .controlDiario(true)
@@ -287,7 +287,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         }
 
         Sintoma fiebre = null;
-        if(!sintomaRepository.existsByNombreIgnoreCase("Fiebre mayor a 38")){
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Fiebre mayor a 38", EstadoEnum.ACTIVO)){
             fiebre = Sintoma.builder()
                     .nombre("Fiebre mayor a 38")
                     .controlDiario(true)
@@ -297,7 +297,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         }
 
         Sintoma disnea = null;
-        if(!sintomaRepository.existsByNombreIgnoreCase("Disnea")){
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Disnea", EstadoEnum.ACTIVO)){
             disnea = Sintoma.builder()
                     .nombre("Disnea")
                     .controlDiario(true)
@@ -306,7 +306,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
             sintomaRepository.save(disnea);
         }
         Sintoma dolorGarganta = null;
-        if(!sintomaRepository.existsByNombreIgnoreCase("Dolor de garganta")){
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Dolor de garganta", EstadoEnum.ACTIVO)){
             dolorGarganta = Sintoma.builder()
                     .nombre("Dolor de garganta")
                     .controlDiario(true)
@@ -315,7 +315,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
             sintomaRepository.save(dolorGarganta);
         }
         Sintoma dolorCabeza = null;
-        if(!sintomaRepository.existsByNombreIgnoreCase("Dolor de cabeza")){
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Dolor de cabeza", EstadoEnum.ACTIVO)){
             dolorCabeza = Sintoma.builder()
                     .nombre("Dolor de cabeza")
                     .controlDiario(true)
@@ -325,7 +325,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         }
 
         Sintoma dolorMuscular = null;
-        if(!sintomaRepository.existsByNombreIgnoreCase("Dolor muscular")){
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Dolor muscular", EstadoEnum.ACTIVO)){
             dolorMuscular = Sintoma.builder()
                     .nombre("Dolor muscular")
                     .controlDiario(true)
@@ -334,7 +334,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
             sintomaRepository.save(dolorMuscular);
         }
         Sintoma fatiga = null;
-        if(!sintomaRepository.existsByNombreIgnoreCase("Fatiga")){
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Fatiga",EstadoEnum.ACTIVO)){
             fatiga = Sintoma.builder()
                     .nombre("Fatiga")
                     .controlDiario(true)
@@ -344,7 +344,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         }
 
         Sintoma escalofrio = null;
-        if(!sintomaRepository.existsByNombreIgnoreCase("Escalofrio")){
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Escalofrio", EstadoEnum.ACTIVO)){
             escalofrio = Sintoma.builder()
                     .nombre("Escalofrio")
                     .controlDiario(true)
@@ -354,7 +354,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         }
 
         Sintoma diarrea = null;
-        if(!sintomaRepository.existsByNombreIgnoreCase("Diarrea")){
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Diarrea", EstadoEnum.ACTIVO)){
             diarrea = Sintoma.builder()
                     .nombre("Diarrea")
                     .controlDiario(true)
@@ -364,7 +364,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         }
 
         Sintoma contacto = null;
-        if(!sintomaRepository.existsByNombreIgnoreCase("Contacto covid-19")){
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Contacto covid-19", EstadoEnum.ACTIVO)){
             contacto = Sintoma.builder()
                     .nombre("Contacto covid-19")
                     .controlDiario(true)

@@ -43,6 +43,7 @@ public class DepartamentoServiceImpl implements DepartamentoService {
         return departamentoRepository.cargarConMunicipio();
     }
 
+
     @Override
     public Departamento save(Departamento departamento) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",departamento.getNombre(),true,100);

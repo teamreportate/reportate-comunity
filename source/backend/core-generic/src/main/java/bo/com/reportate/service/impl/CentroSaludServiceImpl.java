@@ -7,6 +7,7 @@ import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.dto.CentroSaludDto;
 import bo.com.reportate.model.dto.CentroSaludUsuarioDto;
+import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.repository.CentroSaludRepository;
 import bo.com.reportate.repository.CentroSaludUsuarioRepository;
 import bo.com.reportate.repository.MunicipioRepository;
@@ -46,7 +47,7 @@ public class CentroSaludServiceImpl implements CentroSaludService {
 
     @Override
     public List<CentroSaludDto> findByMunicipio(Long idMunicipio) {
-        return centroSaludRepository.findByMunicipioIdOrderByIdDesc(idMunicipio);
+        return centroSaludRepository.findByMunicipioIdAndEstadoOrderByIdDesc(idMunicipio, EstadoEnum.ACTIVO);
     }
 
     @Override

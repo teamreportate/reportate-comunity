@@ -46,9 +46,13 @@ public class DepartamentoCotroller {
     @Autowired
     private MunicipioService municipioService;
 
+    /**
+     * Método solo para la aplicación movil, y lista solo los activos
+     * @return
+     */
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Listar los departamentos con sus municipios", description = "Listar los departamentos con sus municipios", tags = { "departamento" })
-    public ResponseEntity<List<DepartamentoDto>> listAll() {
+    public ResponseEntity<List<DepartamentoDto>> listaDepartamentosActivos() {
         try {
             return ok(this.departamentoService.findAllConMunicipio());
         }catch (Exception e){
@@ -57,13 +61,15 @@ public class DepartamentoCotroller {
         }
     }
 
+
+
     @RequestMapping(value = "/{departamentoId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Departamento> getById(@PathVariable("departamentoId") Long departamentoId) {
         try {
             return ok(this.departamentoService.findById(departamentoId));
-        }catch (NotDataFoundException e){
+        }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al obtener el departamento con ID: {}. Causa. {}",departamentoId,e.getMessage());
-            return CustomErrorType.badRequest("Obtener Departamento", "Ocurrió un error al obtener el departamento con ID: "+departamentoId);
+            return CustomErrorType.badRequest("Obtener Departamento", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al obtener el departamento con ID: {}",departamentoId,e);
             return CustomErrorType.serverError("Obtener Departamento", "Ocurrió un error al obtener el departamento con ID: "+departamentoId);
@@ -76,14 +82,14 @@ public class DepartamentoCotroller {
             return ok(this.departamentoService.save(departamentoDto.getNombre(), departamentoDto.getLatitud(), departamentoDto.getLongitud()));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al guardar el departamento: {}. Causa. {}",departamentoDto.getNombre(),e.getMessage());
-            return CustomErrorType.badRequest("Guardar Departamento", "Ocurrió un error al guardar el departamento: "+departamentoDto.getNombre());
+            return CustomErrorType.badRequest("Guardar Departamento", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al guardar el departamento : {}",departamentoDto.getNombre(),e);
             return CustomErrorType.serverError("Guardar Departamento", "Ocurrió un error al guardar el departamento: "+departamentoDto.getNombre());
         }
     }
 
-    @RequestMapping(value = "/{departamentoId}",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{departamentoId}",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Actualizar un departamento", description = "Método para actualizar un departamento", tags = { "departamento" })
     public ResponseEntity updateDepartamento(
             @Parameter(description = "Identificador de Departamento", required = true)
@@ -94,7 +100,7 @@ public class DepartamentoCotroller {
             return ok(this.departamentoService.update(departamentoId, departamentoDto.getNombre(), departamentoDto.getLatitud(), departamentoDto.getLongitud()));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al modificar el departamento: {}. Causa. {}",departamentoId,e.getMessage());
-            return CustomErrorType.badRequest("Modificar Departamento", "Ocurrió un error al modificar el departamento: "+departamentoId);
+            return CustomErrorType.badRequest("Modificar Departamento", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al modificar el departamento : {}",departamentoId,e);
             return CustomErrorType.serverError("Modificar Departamento", "Ocurrió un error al modificar el departamento: "+departamentoId);
@@ -108,7 +114,7 @@ public class DepartamentoCotroller {
             return ok().build();
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al elimianr el departamento: {}. Causa. {}",departamentoId,e.getMessage());
-            return CustomErrorType.badRequest("Eliminar Departamento", "Ocurrió un error al eliminar el departamento: "+departamentoId);
+            return CustomErrorType.badRequest("Eliminar Departamento", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al eliminar el departamento : {}",departamentoId,e);
             return CustomErrorType.serverError("Eliminar Departamento", "Ocurrió un error al eliminar el departamento: "+departamentoId);
@@ -121,7 +127,7 @@ public class DepartamentoCotroller {
             return ok(this.municipioService.findByDepartamento(departamentoId));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al listar municipios: {}. Causa. {}",departamentoId,e.getMessage());
-            return CustomErrorType.badRequest("Listar Municipios", "Ocurrió un error al listar municipios: "+departamentoId);
+            return CustomErrorType.badRequest("Listar Municipios", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al listar municipios : {}",departamentoId,e);
             return CustomErrorType.serverError("Listar Municipios", "Ocurrió un error al listar municipios: "+departamentoId);
