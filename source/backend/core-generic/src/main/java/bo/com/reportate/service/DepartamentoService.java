@@ -7,6 +7,7 @@ import bo.com.reportate.model.dto.DepartamentoDto;
 import bo.com.reportate.model.dto.DepartamentoUsuarioDto;
 import bo.com.reportate.model.dto.request.DepartamentoRequest;
 import bo.com.reportate.model.dto.response.DepartamentoResponse;
+import bo.com.reportate.model.dto.response.ObjetoResponseDto;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;
@@ -28,7 +29,6 @@ public interface DepartamentoService {
     Departamento update(Long departamentoId, String nombre, Double latitud, Double longitud);
     void eliminar(Long departamentoId);
     List<DepartamentoUsuarioDto> listarDepartamentosAsignados(String username);
-    List<DepartamentoUsuarioDto> listarDepartamentosAsignados(Long userId);
-
     List<DepartamentoUsuarioDto> listarAsignados(Authentication userDetails);
+    ObjetoResponseDto listarDepartamentoMunicipioCentroSalud();
 }

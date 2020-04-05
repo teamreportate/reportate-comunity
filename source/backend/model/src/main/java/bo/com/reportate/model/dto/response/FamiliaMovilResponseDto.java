@@ -1,6 +1,7 @@
 package bo.com.reportate.model.dto.response;
 
 import bo.com.reportate.model.Familia;
+import bo.com.reportate.model.dto.CentroSaludDto;
 import bo.com.reportate.model.dto.DepartamentoDto;
 import bo.com.reportate.model.dto.MunicipioDto;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class FamiliaMovilResponseDto implements Serializable {
     private String ciudad;
     private DepartamentoDto departamento;
     private MunicipioDto municipio;
+    private CentroSaludDto centroSalud;
 
     public FamiliaMovilResponseDto(Familia familia){
         this.id = familia.getId();
@@ -42,6 +44,10 @@ public class FamiliaMovilResponseDto implements Serializable {
         this.municipio = new MunicipioDto();
         if(familia.getMunicipio() != null){
             BeanUtils.copyProperties(familia.getMunicipio(),this.municipio);
+        }
+        this.centroSalud = new CentroSaludDto();
+        if(familia.getCentroSalud() != null){
+            BeanUtils.copyProperties(familia.getCentroSalud(),this.centroSalud);
         }
 
     }

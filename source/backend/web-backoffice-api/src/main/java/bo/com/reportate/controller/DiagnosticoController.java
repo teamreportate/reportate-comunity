@@ -18,6 +18,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -43,6 +45,7 @@ public class DiagnosticoController {
     @RequestMapping(value = "/listar-filtro/{page}/{size}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Listar los diagnosticos", description = "Listar los diagnosticos", tags = { "diagnostico" })
     public ResponseEntity<Page<DiagnosticoResponseDto>> controlDiario(
+            @AuthenticationPrincipal Authentication authentication,
             @Parameter(description = "Indice de página", required = true)
             @PathVariable("page") Integer page,
             @Parameter(description = "Tamaño de página", required = true)
@@ -53,13 +56,20 @@ public class DiagnosticoController {
             @RequestParam("to") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_PARAM_URL) Date to,
             @Parameter(description = "Identificador de Departamento", required = true)
             @RequestParam("departamentoId") Long departamentoId,
+            @Parameter(description = "Identificador de Municipio", required = true)
+            @RequestParam("municipioID") Long municipioId,
+            @Parameter(description = "Identificador de Centro Salud", required = true)
+            @RequestParam("centroSaludId") Long centroSaludId,
+            @Parameter(description = "Nombre de paciente", required = true)
+            @RequestParam("nombrePaciente") String nombrePaciente,
             @Parameter(description = "Clasificacion de diagnostico", required = true)
             @RequestParam("clasificacion")EstadoDiagnosticoEnum clasificacion,
             @Parameter(description = "Identificador de Enfermedad", required = true)
             @RequestParam("enfermedadId") Long enfermedadId) {
         try {
             Pageable pageable = PageRequest.of(page, size);
-            return ok(this.diagnosticoService.listarDiagnostico(DateUtil.formatToStart(from), DateUtil.formatToEnd(to), departamentoId, clasificacion, enfermedadId, pageable));
+            return ok(this.diagnosticoService.listarDiagnostico(authentication, DateUtil.formatToStart(from), DateUtil.formatToEnd(to),
+                    departamentoId, municipioId, centroSaludId, nombrePaciente, clasificacion, enfermedadId, pageable));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al listar los diagnosticos: Causa. {}",e.getMessage());
             return CustomErrorType.badRequest("Listar Diagnostico", e.getMessage());

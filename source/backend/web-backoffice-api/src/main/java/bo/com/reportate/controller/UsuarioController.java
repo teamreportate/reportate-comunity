@@ -28,7 +28,6 @@ import static org.springframework.http.ResponseEntity.ok;
 @Slf4j
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
-
     @Autowired private UsuarioService usuarioService;
     @Autowired private TokenService tokenService;
     @Autowired private JwtTokenProvider jwtTokenProvider;

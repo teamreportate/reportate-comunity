@@ -40,4 +40,8 @@ public class CentroSaludDto implements Serializable {
         this.longitud = centroSalud.getLongitud();
         this.latitud = centroSalud.getLatitud();
     }
+    public CentroSaludDto(Long id, String nombre){
+        this.id = id;
+        this.nombre = nombre;
+    }
 }

@@ -165,7 +165,6 @@ public class PacienteServiceImpl implements PacienteService {
                 if(resultadoPeso.compareTo(new BigDecimal("5")) > 0){
                     List<MuUsuario> medicos = this.usuarioRepository.obtenerMedicoPordepartamento(controlDiario.getPaciente().getFamilia().getDepartamento());
                     for (MuUsuario medico: medicos) {
-//                        notificacionService.notificacionSospechoso(medico.getEmail(), , );
                         notificacionService.notificacionSospechosoSintomas("Dr. "+ medico.getNombre(), medico.getEmail(),"Caso sospechoso " + enfermedad.getNombre(),"Existe un nuevo caso sospechoso de " + enfermedad.getNombre() + " con una valoración de " + resultadoPeso.toPlainString() , sintomasMail);
                         log.info("Enviando notificacion");
                     }
@@ -174,6 +173,9 @@ public class PacienteServiceImpl implements PacienteService {
                         .controlDiario(controlDiario)
                         .enfermedad(enfermedad)
                         .resultadoValoracion(resultadoPeso)
+                        .departamento(paciente.getFamilia().getDepartamento())
+                        .municipio(paciente.getFamilia().getMunicipio())
+                        .centroSalud(paciente.getFamilia().getCentroSalud())
                         .estadoDiagnostico(EstadoDiagnosticoEnum.SOSPECHOSO).build());
             }
         }
