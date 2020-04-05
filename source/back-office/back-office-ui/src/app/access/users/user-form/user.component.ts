@@ -79,9 +79,7 @@ export class UserComponent extends ClicComponent implements OnInit {
         this.getUserById(this.userId);
       } else {
         this.title = 'Nuevo usuario';
-        this.getDepartments();
-        this.getMunicipalities();
-        this.getSaludCentres();
+        this.getSetting();
       }
     });
   }
@@ -103,6 +101,18 @@ export class UserComponent extends ClicComponent implements OnInit {
       centroSaluds: new FormControl(null)
     }, {
       validators: passwordMatchValidator
+    });
+  }
+
+  getSetting() {
+    this.accessService.requestCompleteDepartmentsList().subscribe(response => {
+      this.departments = response.body.departamentos;
+      this.municipalities = response.body.municipios;
+      this.saludCentres = response.body.centrosSalud;
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
     });
   }
 
@@ -140,36 +150,6 @@ export class UserComponent extends ClicComponent implements OnInit {
       this.filterAssignedDepartments();
       this.filterMunicipalities();
 
-      this.blockUI.stop();
-    }, error => {
-      this.blockUI.stop();
-      if (error) this.notifierError(error);
-    });
-  }
-
-  getMunicipalities() {
-    this.accessService.requestAsignedMunicipalitiesList().subscribe(response => {
-      this.municipalities = response.body;
-      this.blockUI.stop();
-    }, error => {
-      this.blockUI.stop();
-      if (error) this.notifierError(error);
-    });
-  }
-
-  getSaludCentres() {
-    this.accessService.requestAsignedSaludCentreList().subscribe(response => {
-      this.saludCentres = response.body;
-      this.blockUI.stop();
-    }, error => {
-      this.blockUI.stop();
-      if (error) this.notifierError(error);
-    });
-  }
-
-  getDepartments() {
-    this.accessService.requestAsignedDepartmentsList().subscribe(response => {
-      this.departments = response.body;
       this.blockUI.stop();
     }, error => {
       this.blockUI.stop();
@@ -306,6 +286,8 @@ export class UserComponent extends ClicComponent implements OnInit {
       elem.asignado = iAsigned;
     });
   }
+
+
 
   /* --- */
 
