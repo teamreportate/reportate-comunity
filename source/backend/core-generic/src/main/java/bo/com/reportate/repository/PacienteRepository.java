@@ -31,4 +31,3 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
             "WHERE f =:familia AND p.id<>:pacienteId AND p.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<PacienteDto> listarPacienteByFamilia(@Param("familia") Familia familia, @Param("pacienteId") Long pacienteId);
 }
-s

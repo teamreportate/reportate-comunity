@@ -11,7 +11,7 @@
     <artifactId>web-backoffice-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <!--<packaging>war</packaging> -->
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>web-backoffice-api</name>
     <description>Módulo web para API de Backoffice </description>
 
@@ -45,12 +45,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <!--Quitar para desplegar con Spring Boot-->
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.springframework.boot</groupId>-->
-<!--                    <artifactId>spring-boot-starter-tomcat</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--TEST-->
         <dependency>
