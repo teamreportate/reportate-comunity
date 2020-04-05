@@ -5,6 +5,7 @@ import bo.com.reportate.model.DepartamentoUsuario;
 import bo.com.reportate.model.MuUsuario;
 import bo.com.reportate.model.dto.DepartamentoDto;
 import bo.com.reportate.model.dto.DepartamentoUsuarioDto;
+import bo.com.reportate.model.dto.request.DepartamentoRequest;
 import bo.com.reportate.model.dto.response.DepartamentoResponse;
 import org.springframework.security.core.Authentication;
 
@@ -22,6 +23,7 @@ import java.util.List;
 public interface DepartamentoService {
     Departamento findById(Long  departamentoId);
     List<DepartamentoDto> findAllConMunicipio();
+    List<Departamento> listarDepartamento();
     Departamento save(Departamento departamento);
     Departamento save(String nombre, Double latitud, Double longitud);
     Departamento update(Long departamentoId, String nombre, Double latitud, Double longitud);

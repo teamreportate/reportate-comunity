@@ -74,7 +74,7 @@ export class AdministrationService {
   }
 
   requestUpdateMunicipio(id: number, object: any): Observable<any> {
-    return this.http.post<any>( Constantes.baseUri + Constants.municipiosApi + '/' + id, JSON.stringify(object));
+    return this.http.put<any>( Constantes.baseUri + Constants.municipiosApi + '/' + id, JSON.stringify(object));
   }
 
   requestSaveMunicipio(object: any): Observable<any> {

@@ -88,7 +88,7 @@
                             <outputDirectory>${project.basedir}/src/main/webapp/</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${project.basedir}/../front-office-ui/dist/</directory>
+                                    <directory>${project.basedir}/../front-office-ui/build/</directory>
                                 </resource>
                             </resources>
                         </configuration>

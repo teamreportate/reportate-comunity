@@ -44,6 +44,11 @@ public class DepartamentoServiceImpl implements DepartamentoService {
     }
 
     @Override
+    public List<Departamento> listarDepartamento() {
+        return departamentoRepository.listar();
+    }
+
+    @Override
     public Departamento save(Departamento departamento) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",departamento.getNombre(),true,100);
         if(departamentoRepository.existsByNombreIgnoreCase(departamento.getNombre())){

@@ -66,7 +66,7 @@ public class CentroSaludCotroller {
         }
     }
 
-    @RequestMapping(value = "/{centroSaludId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{centroSaludId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Actualizar Centro de Salud", description = "Metodo para actualizar centro de salud", tags = { "cento de salud" })
     public ResponseEntity<CentroSalud> updateCentroSalud(
             @Parameter(description = "Identificador del centro de salud", required = true)
@@ -94,7 +94,7 @@ public class CentroSaludCotroller {
             return ok().build();
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al elimianr el centro de salud: {}. Causa. {}",centroSaludId,e.getMessage());
-            return CustomErrorType.badRequest("Eliminar Municipio", "Ocurrió un error al eliminar el centro de salud: "+centroSaludId);
+            return CustomErrorType.badRequest("Eliminar Municipio", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al eliminar el centro de salud : {}",centroSaludId,e);
             return CustomErrorType.serverError("Eliminar Municipio", "Ocurrió un error al eliminar el centro de salud: "+centroSaludId);
