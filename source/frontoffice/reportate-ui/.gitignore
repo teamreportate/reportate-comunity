@@ -1,5 +1,6 @@
 /target/
 src/main/webapp/assets
+src/main/webapp/static
 src/main/webapp/*.js
 src/main/webapp/*.txt
 src/main/webapp/*.woff
@@ -10,6 +11,8 @@ src/main/webapp/*.ico
 src/main/webapp/*.woff2
 src/main/webapp/*.html
 src/main/webapp/*.css
+src/main/webapp/*.png
+src/main/webapp/*.json
 
 !.mvn/wrapper/maven-wrapper.jar
 
