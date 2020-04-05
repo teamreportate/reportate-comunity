@@ -34,4 +34,6 @@ public interface PaisRepository extends JpaRepository<Pais, Long> {
     List<PaisResponse> listarPaises();
 
     boolean existsByNombreIgnoreCase(String nombre);
+    boolean existsByNombreIgnoreCaseAndEstado(String nombre, EstadoEnum estadoEnum);
+    boolean existsByIdNotAndNombreIgnoreCaseAndEstado(Long id, String nombre, EstadoEnum estadoEnum);
 }

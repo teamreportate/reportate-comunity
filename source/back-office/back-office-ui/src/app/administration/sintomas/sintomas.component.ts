@@ -88,8 +88,8 @@ export class SintomasComponent extends ClicComponent implements OnInit {
   }
   onChangeState(row: any) {
     const target = row.estado === MuState.ACTIVO ? MuState.INACTIVO : MuState.ACTIVO;
-    const textContent: String = `Confirmar para cambiar el estado del Síntoma: ${row.nombre}, de ${row.estado} -> ${target}`;
-    this.dialog.open(ConfirmDialogComponent, this.confirmConfig({ textContent, title: 'Cambiar Estado del Síntoma' }))
+    const textContent: String = `Confirma eliminar el Síntoma: ${row.nombre}`;
+    this.dialog.open(ConfirmDialogComponent, this.confirmConfig({ textContent, title: 'Eliminar Síntoma' }))
       .afterClosed()
       .subscribe(confirm => {
         if (confirm) {
@@ -98,7 +98,7 @@ export class SintomasComponent extends ClicComponent implements OnInit {
             this.blockUI.stop();
             this.ngOnInit();
             // tslint:disable-next-line:max-line-length
-            const notif = { error: { title: `${row.estado === MuState.ACTIVO ? 'Inhabilitar Síntoma' : 'Habilitar Síntoma'}`, detail: `${row.estado === MuState.ACTIVO ? 'Síntoma inhabilitado satisfactoriamente.' : 'Síntoma habilitado satisfactoriamente.'}` } };
+            const notif = { error: { title: 'Eliminar Síntoma', detail: 'Síntoma eliminado satisfactoriamente.' } };
             this.notifierError(notif, 'info');
           }, error => {
             this.blockUI.stop();

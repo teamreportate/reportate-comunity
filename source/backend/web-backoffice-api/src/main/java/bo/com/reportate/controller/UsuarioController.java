@@ -19,8 +19,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +28,6 @@ import static org.springframework.http.ResponseEntity.ok;
 @Slf4j
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
-
     @Autowired private UsuarioService usuarioService;
     @Autowired private TokenService tokenService;
     @Autowired private JwtTokenProvider jwtTokenProvider;

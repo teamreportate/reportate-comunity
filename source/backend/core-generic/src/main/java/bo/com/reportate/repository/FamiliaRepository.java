@@ -3,12 +3,17 @@ package bo.com.reportate.repository;
 import bo.com.reportate.model.ControlDiarioEnfermedad;
 import bo.com.reportate.model.Familia;
 import bo.com.reportate.model.MuUsuario;
+import bo.com.reportate.model.Paciente;
+import bo.com.reportate.model.dto.PacienteDto;
+import bo.com.reportate.model.dto.response.FamiliaResponse;
 import bo.com.reportate.model.enums.EstadoEnum;
+import groovy.time.BaseDuration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,4 +34,9 @@ public interface FamiliaRepository extends JpaRepository<Familia, Long> {
     @Query(" UPDATE Familia f set f.estado= bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE f.id=:familiaId")
     void eliminarFamilia(@Param("familiaId") Long familiaId);
 
+    @Query("SELECT  p "+
+            "FROM Paciente p INNER join p.familia f "+
+            "WHERE  p <>:paciente " +
+            "AND f=:familia")
+    List<PacienteDto> listarFamiliaByPaciente(@Param("paciente") Paciente paciente, @Param("familia") Familia familia);
 }

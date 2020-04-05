@@ -10,5 +10,5 @@ package bo.com.reportate.model.enums;
  * @Copyright :MC4
  */
 public enum EstadoDiagnosticoEnum {
-    SOSPECHOSO, NEGATIVO, CONFIRMADO;
+    TODOS, SOSPECHOSO, NEGATIVO, CONFIRMADO;
 }

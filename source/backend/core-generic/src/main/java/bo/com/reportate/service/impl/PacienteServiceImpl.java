@@ -4,9 +4,15 @@ import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.*;
 import bo.com.reportate.model.dto.PacienteDto;
+import bo.com.reportate.model.dto.PaisDto;
+import bo.com.reportate.model.dto.PaisVisitadoDto;
 import bo.com.reportate.model.dto.request.EnfermedadRequest;
 import bo.com.reportate.model.dto.request.PaisRequest;
 import bo.com.reportate.model.dto.request.SintomaRequest;
+import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
+import bo.com.reportate.model.dto.response.EnfermedadResponse;
+import bo.com.reportate.model.dto.response.FamiliaResponse;
+import bo.com.reportate.model.dto.response.FichaEpidemiologicaResponse;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
@@ -21,6 +27,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -165,7 +172,6 @@ public class PacienteServiceImpl implements PacienteService {
                 if(resultadoPeso.compareTo(new BigDecimal("5")) > 0){
                     List<MuUsuario> medicos = this.usuarioRepository.obtenerMedicoPordepartamento(controlDiario.getPaciente().getFamilia().getDepartamento());
                     for (MuUsuario medico: medicos) {
-//                        notificacionService.notificacionSospechoso(medico.getEmail(), , );
                         notificacionService.notificacionSospechosoSintomas("Dr. "+ medico.getNombre(), medico.getEmail(),"Caso sospechoso " + enfermedad.getNombre(),"Existe un nuevo caso sospechoso de " + enfermedad.getNombre() + " con una valoración de " + resultadoPeso.toPlainString() , sintomasMail);
                         log.info("Enviando notificacion");
                     }
@@ -174,10 +180,52 @@ public class PacienteServiceImpl implements PacienteService {
                         .controlDiario(controlDiario)
                         .enfermedad(enfermedad)
                         .resultadoValoracion(resultadoPeso)
+                        .departamento(paciente.getFamilia().getDepartamento())
+                        .municipio(paciente.getFamilia().getMunicipio())
+                        .centroSalud(paciente.getFamilia().getCentroSalud())
                         .estadoDiagnostico(EstadoDiagnosticoEnum.SOSPECHOSO).build());
             }
         }
         log.info("Se registro los sintomas correctamente");
         return enfermedades.get(0).getMensajeDiagnostico();
+    }
+
+    @Transactional(readOnly = true)
+    public FichaEpidemiologicaResponse getFichaEpidemiologica(Long pacienteId){
+        FichaEpidemiologicaResponse fichaEpidemiologicaResponse = new FichaEpidemiologicaResponse();
+        log.info("iniciando busqueda del paciente");
+        Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId, EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No existe ningún paciente registrado con el id: "+pacienteId));
+        BeanUtils.copyProperties(paciente,fichaEpidemiologicaResponse);
+
+        fichaEpidemiologicaResponse.setDepartamento(paciente.getFamilia().getDepartamento().getNombre());
+        fichaEpidemiologicaResponse.setMunicipio(paciente.getFamilia().getMunicipio().getNombre());
+        fichaEpidemiologicaResponse.setCiudad(paciente.getFamilia().getCiudad());
+        fichaEpidemiologicaResponse.setZona(paciente.getFamilia().getZona());
+        fichaEpidemiologicaResponse.setDireccion(paciente.getFamilia().getDireccion());
+        fichaEpidemiologicaResponse.setTelefono(paciente.getFamilia().getTelefono());
+        fichaEpidemiologicaResponse.setUbicacion("https://maps.google.com/?q="+paciente.getFamilia().getLatitud()+","+paciente.getFamilia().getLongitud());
+        try {
+            log.info("iniciando busqueda de paises visitados");
+            List<PaisVisitadoDto> paisesViajados = this.controlDiarioPaisRepository.listarPaisesVisitados(paciente);
+            fichaEpidemiologicaResponse.setPaisesVisitados(paisesViajados);
+
+            log.info("obteniendo enfermedades base");
+            List<EnfermedadResponse> enfermedadesBase = this.controlDiarioEnfermedadRepository.listarEnfermedadesByPaciente(paciente);
+            fichaEpidemiologicaResponse.setEnfermedadesBase(enfermedadesBase);
+
+            log.info("obteniendo diagnosticos");
+            List<DiagnosticoResponseDto> diagnosticos = this.diagnosticoRepository.listarDiagnosticoByPaciente(paciente);
+            fichaEpidemiologicaResponse.setDiagnosticos(diagnosticos);
+
+            log.info("obteniendo contactos");
+            List<PacienteDto> contactos = this.pacienteRepository.listarPacienteByFamilia(paciente.getFamilia(), paciente.getId());
+            fichaEpidemiologicaResponse.setContactos(contactos);
+
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new OperationException("Búusqueda finalizada con errores");
+        }
+        log.info("busquedas finalizadas");
+        return  fichaEpidemiologicaResponse;
     }
 }

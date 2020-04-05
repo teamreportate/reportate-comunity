@@ -2,19 +2,14 @@ package bo.com.reportate.service.impl;
 
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
-import bo.com.reportate.model.Departamento;
-import bo.com.reportate.model.Familia;
-import bo.com.reportate.model.MuUsuario;
-import bo.com.reportate.model.Municipio;
+import bo.com.reportate.model.*;
+import bo.com.reportate.model.dto.CentroSaludDto;
 import bo.com.reportate.model.dto.DepartamentoDto;
 import bo.com.reportate.model.dto.response.FamiliaMovilResponseDto;
 import bo.com.reportate.model.dto.MunicipioDto;
 import bo.com.reportate.model.dto.response.FamiliaResponse;
 import bo.com.reportate.model.enums.EstadoEnum;
-import bo.com.reportate.repository.DepartamentoRepository;
-import bo.com.reportate.repository.FamiliaRepository;
-import bo.com.reportate.repository.MunicipioRepository;
-import bo.com.reportate.repository.UsuarioRepository;
+import bo.com.reportate.repository.*;
 import bo.com.reportate.service.FamiliaService;
 import bo.com.reportate.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +35,7 @@ public class FamiliaServiceImpl implements FamiliaService {
     @Autowired private MunicipioRepository municipioRepository;
     @Autowired private UsuarioRepository usuarioRepository;
     @Autowired private DepartamentoRepository departamentoRepository;
+    @Autowired private CentroSaludRepository centroSaludRepository;
 
     @Override
     public void save(Familia familia) {
@@ -47,17 +43,25 @@ public class FamiliaServiceImpl implements FamiliaService {
     }
 
     @Override
-    public FamiliaMovilResponseDto save(Authentication  authentication, Long departamentoId, Long municipioId, String nombre, String telefono, String direccion, Double latitud, Double longitud, String ciudad, String zona) {
+    public FamiliaMovilResponseDto save(Authentication  authentication, Long departamentoId, Long municipioId, String nombre, String telefono, String direccion, Double latitud, Double longitud, String ciudad, String zona, Long centroSaludId) {
+        ValidationUtil.throwExceptionIfInvalidNumber("departamento",departamentoId,true,-1L);
+        ValidationUtil.throwExceptionIfInvalidNumber("municipio",municipioId,true,-1L);
+        ValidationUtil.throwExceptionIfInvalidNumber("centro de salud",centroSaludId,true,-1L);
         ValidationUtil.throwExceptionIfInvalidText("nombre",nombre, true,100);
         ValidationUtil.throwExceptionIfInvalidText("teléfono",telefono,true,8);
         ValidationUtil.throwExceptionIfInvalidText("dirección",direccion,true,200);
         ValidationUtil.throwExceptionIfInvalidText("zona",ciudad,true,100);
         ValidationUtil.throwExceptionIfInvalidText("ciudad",ciudad,false,100);
         MuUsuario user = (MuUsuario) authentication.getPrincipal();
-        Departamento departamento = this.departamentoRepository.findById(departamentoId).orElseThrow(()->new NotDataFoundException("No se encontró ningún departamento con id: "+departamentoId));
+        Departamento departamento = this.departamentoRepository.findById(departamentoId).orElseThrow(()->new NotDataFoundException("No se encontró el departamento seleccionado"));
         Municipio municipio = null;
-        if(municipioId > 0) {
-            municipio = this.municipioRepository.findById(municipioId).orElseThrow(() -> new NotDataFoundException("No se encontró ningún municipio con id: " + municipioId));
+        if(municipioId > 0L) {
+            municipio = this.municipioRepository.findById(municipioId).orElseThrow(() -> new NotDataFoundException("No se encontró el municipio seleccionado: " ));
+        }
+
+        CentroSalud centroSalud = null;
+        if(centroSaludId > 0L){
+            centroSalud = this.centroSaludRepository.findById(centroSaludId).orElseThrow(()->new OperationException("No se encontró el centro de  salud seleccionado"));
         }
         MuUsuario usuario = this.usuarioRepository.findByEstadoAndUsername(EstadoEnum.ACTIVO, user.getUsername()).orElseThrow(()->new NotDataFoundException("No se encontró ningún usuario logueado"));
 
@@ -69,6 +73,7 @@ public class FamiliaServiceImpl implements FamiliaService {
         familia.setCiudad(ciudad);
         familia.setDepartamento(departamento);
         familia.setMunicipio(municipio);
+        familia.setCentroSalud(centroSalud);
         familia.setLatitud(latitud);
         familia.setUsuario(usuario);
         familia.setLongitud(longitud);
@@ -83,6 +88,9 @@ public class FamiliaServiceImpl implements FamiliaService {
         responseDto.setCiudad(familia.getCiudad());
         if(municipio!=null) {
             responseDto.setMunicipio(new MunicipioDto(municipio.getId(), municipio.getNombre()));
+        }
+        if(centroSalud != null){
+            responseDto.setCentroSalud(new CentroSaludDto(centroSalud.getId(),centroSalud.getNombre()));
         }
         responseDto.setDepartamento(new DepartamentoDto(departamento.getId(), departamento.getNombre()));
         return responseDto;

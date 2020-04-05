@@ -57,6 +57,11 @@ public class Familia extends AbstractAuditableEntity{
     private Municipio municipio;
 
     @JsonIgnore
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_CENTRO_SALUD", referencedColumnName = "ID")
+    private CentroSalud centroSalud;
+
+    @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID")
     private MuUsuario usuario;

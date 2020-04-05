@@ -7,6 +7,7 @@ import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.dto.DepartamentoDto;
 import bo.com.reportate.model.dto.DepartamentoUsuarioDto;
 import bo.com.reportate.model.dto.MunicipioDto;
+import bo.com.reportate.model.dto.response.ObjetoResponseDto;
 import bo.com.reportate.service.DepartamentoService;
 import bo.com.reportate.service.MunicipioService;
 import bo.com.reportate.util.CustomErrorType;
@@ -138,6 +139,19 @@ public class DepartamentoCotroller {
     public ResponseEntity<List<DepartamentoUsuarioDto>> listarDepartamentos(@AuthenticationPrincipal Authentication userDetails) {
         try {
             return ok(this.departamentoService.listarAsignados(userDetails));
+        } catch (NotDataFoundException e) {
+            log.error("Ocurrio un problema al recuperar lista de departamentos");
+            return CustomErrorType.badRequest("Obtener Departamentos", e.getMessage());
+        } catch (Exception e) {
+            log.error("Ocurrio un error al recuperar lista de departamentos", e);
+            return CustomErrorType.serverError("Obtener Departamentos", "Ocurrió un error interno");
+        }
+    }
+
+    @RequestMapping(value = "/departamento-municipio-centro-salud", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    public ResponseEntity<ObjetoResponseDto> listarDepartamentoMunicipioCentroSalud() {
+        try {
+            return ok(this.departamentoService.listarDepartamentoMunicipioCentroSalud());
         } catch (NotDataFoundException e) {
             log.error("Ocurrio un problema al recuperar lista de departamentos");
             return CustomErrorType.badRequest("Obtener Departamentos", e.getMessage());
