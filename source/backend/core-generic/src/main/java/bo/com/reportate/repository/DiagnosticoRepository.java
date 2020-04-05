@@ -1,5 +1,9 @@
 package bo.com.reportate.repository;
 
+import bo.com.reportate.model.Departamento;
+import bo.com.reportate.model.Diagnostico;
+import bo.com.reportate.model.Enfermedad;
+import bo.com.reportate.model.Paciente;
 import bo.com.reportate.model.*;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
@@ -38,8 +42,12 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
             @Param("municipios") List<Municipio> municipios,
             @Param("centrosSalud") List<CentroSalud> centrosSalud,
             @Param("diagnosticos") List<EstadoDiagnosticoEnum> diagnosticos,
-             @Param("enfermedades") List<Enfermedad> enfermedades,
-             @Param("nombre") String nombre,
-             Pageable pageable);
+            @Param("enfermedades") List<Enfermedad> enfermedades,
+            @Param("nombre") String nombre,
+            Pageable pageable);
 
+    @Query("SELECT new bo.com.reportate.model.dto.response.DiagnosticoResponseDto(d) "+
+            "FROM Diagnostico d INNER  JOIN  d.controlDiario cd "+
+            "WHERE cd.paciente=:paciente")
+    List<DiagnosticoResponseDto> listarDiagnosticoByPaciente(@Param("paciente") Paciente paciente);
 }

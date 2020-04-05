@@ -2,6 +2,7 @@ package bo.com.reportate.service.impl;
 
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
+
 import bo.com.reportate.model.Pais;
 import bo.com.reportate.model.dto.PaisDto;
 import bo.com.reportate.model.enums.EstadoEnum;
@@ -9,7 +10,7 @@ import bo.com.reportate.repository.PaisRepository;
 import bo.com.reportate.service.PaisService;
 import bo.com.reportate.util.ValidationUtil;
 import bo.com.reportate.utils.FormatUtil;
-import org.jfree.util.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,7 @@ import java.util.List;
  * @Copyright :MC4
  */
 @Service
+@Slf4j
 public class PaisServiceImpl implements PaisService {
     @Autowired
     private PaisRepository paisRepository;
@@ -69,12 +71,12 @@ public class PaisServiceImpl implements PaisService {
 
     @Override
     public boolean cambiarEstado(Long id) {
-        Log.info("Validaciones");
+        log.info("Validaciones");
         Pais pais = paisRepository.getOne(id);
         if (pais == null) {
             throw new OperationException(FormatUtil.noRegistrado("País", id));
         }
-        Log.info("Persistiendo el objeto");
+        log.info("Persistiendo el objeto");
         EstadoEnum estado = pais.getEstado() == EstadoEnum.ACTIVO ? EstadoEnum.INACTIVO : EstadoEnum.ACTIVO;
         pais.setEstado(estado);
 
