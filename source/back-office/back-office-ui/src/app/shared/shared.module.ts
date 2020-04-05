@@ -3,17 +3,20 @@ import {NgModule} from '@angular/core';
 import {MenuItems} from './menu-items/menu-items';
 import {AccordionAnchorDirective, AccordionDirective, AccordionLinkDirective} from './accordion';
 import {ResourceService} from '../core/services/util-services/resource.service';
+import { ListFilterPipe } from '../commons/pipes/list-filter.pipe';
 
 @NgModule({
   declarations: [
     AccordionAnchorDirective,
     AccordionLinkDirective,
-    AccordionDirective
+    AccordionDirective,
+    ListFilterPipe
   ],
   exports: [
     AccordionAnchorDirective,
     AccordionLinkDirective,
-    AccordionDirective
+    AccordionDirective,
+    ListFilterPipe
   ],
   providers: [MenuItems, ResourceService]
 })
