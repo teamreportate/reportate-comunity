@@ -52,6 +52,9 @@ public class EnfermedadServiceImpl implements EnfermedadService {
     public Enfermedad save(EnfermedadDto enfermedadDto) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",enfermedadDto.getNombre(),true,100);
         ValidationUtil.throwExceptionIfInvalidText("diagnostico",enfermedadDto.getMensajeDiagnostico(),false,4000);
+        if(this.enfermedadRepository.existsByNombreIgnoreCaseAndEstado(enfermedadDto.getNombre(), EstadoEnum.ACTIVO)){
+            throw new OperationException("Ya existe una enfermedad con el nombre de "+enfermedadDto.getNombre());
+        }
         Enfermedad enfermedad = new Enfermedad();
         enfermedad.setNombre(enfermedadDto.getNombre());
         enfermedad.setEnfermedadBase(enfermedadDto.getEnfermedadBase());
@@ -68,6 +71,9 @@ public class EnfermedadServiceImpl implements EnfermedadService {
     public Enfermedad update(Long id, EnfermedadDto enfermedadDto) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",enfermedadDto.getNombre(),true,100);
         ValidationUtil.throwExceptionIfInvalidText("diagnostico",enfermedadDto.getMensajeDiagnostico(),false,4000);
+        if(this.enfermedadRepository.existsByIdNotAndNombreIgnoreCaseAndEstado(id,enfermedadDto.getNombre(), EstadoEnum.ACTIVO)){
+            throw new OperationException("Ya existe una enfermedad con el nombre "+enfermedadDto.getNombre());
+        }
         Enfermedad enfermedad = this.enfermedadRepository.findById(id).orElseThrow(()-> new NotDataFoundException("No se encontró ningún enfermedad con ID: "+id));
         enfermedad.setNombre(enfermedadDto.getNombre());
         enfermedad.setEnfermedadBase(enfermedadDto.getEnfermedadBase());
