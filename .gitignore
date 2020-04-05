@@ -66,5 +66,5 @@ tmlog*
 
 # logs de SQL
 classes/
-!resource/application.properties
-!.DS_Store
+resource/application.properties
+.DS_Store
