@@ -60,6 +60,8 @@ import {TokenUserDialogComponent} from './users/components/token-user-dialog.com
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { UserComponent } from './users/user-form/user.component';
 
+import { SharedModule } from './../shared/shared.module';
+
 @NgModule({
   declarations: [
     UsersComponent,
@@ -108,7 +110,8 @@ import { UserComponent } from './users/user-form/user.component';
     MatMenuModule,
     DragDropModule,
     RouterModule.forChild(AccessRouting),
-    CommonsModule
+    CommonsModule,
+    SharedModule
   ],
   providers: [AccessService, UserService, GroupService, RoleService, ResourceService],
   entryComponents: [
