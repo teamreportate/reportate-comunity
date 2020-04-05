@@ -105,9 +105,9 @@ public class DiagnosticoController {
     @Operation(summary = "Agrupar los diagnosticos por valoración", description = "Agrupar los diagnosticos por valoración", tags = { "grupos de diagnosticos por valoración" })
     public ResponseEntity<NivelValoracionListDto> listarByNivelValoracion(
     		@Parameter(description = "Fecha inicio para el filtro", required = true)
-            @RequestParam("from") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_TIME) Date from,
+            @RequestParam("from") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_PARAM_URL) Date from,
             @Parameter(description = "Fecha fin para el filtro", required = true)
-            @RequestParam("to") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_TIME) Date to) {
+            @RequestParam("to") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_PARAM_URL) Date to) {
         try {
             return ok(new NivelValoracionListDto(this.diagnosticoService.listarByNivelValoracion(from, to)));
         }catch (NotDataFoundException | OperationException e){

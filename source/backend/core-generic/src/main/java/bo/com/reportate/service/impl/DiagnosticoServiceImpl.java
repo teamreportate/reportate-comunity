@@ -15,6 +15,8 @@ import bo.com.reportate.repository.DiagnosticoRepository;
 import bo.com.reportate.repository.EnfermedadRepository;
 import bo.com.reportate.repository.MunicipioRepository;
 import bo.com.reportate.service.DiagnosticoService;
+import bo.com.reportate.utils.DateUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -63,7 +65,7 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
 
 	@Override
 	public List<NivelValoracionDto> listarByNivelValoracion(Date from, Date to) {
-		return diagnosticoRepository.listarByNivelValoracion(from,to);
+		return diagnosticoRepository.listarByNivelValoracion(DateUtil.formatToStart(from),DateUtil.formatToEnd(to));
 	}
     
     
