@@ -79,7 +79,7 @@ public class SintomaController {
             log.error("Se genero un error al obtener los sintomas. Causa {}",e.getMessage());
             return CustomErrorType.badRequest("Obtener síntomas", e.getMessage());
         }catch (Exception e){
-            log.error("Se genero un error al obtener los sintomas.",e.getMessage());
+            log.error("Se genero un error al obtener los sintomas.",e);
             return CustomErrorType.serverError("Obtener síntomas", "Ocurrió un error al obtener los síntomas");
         }
     }
