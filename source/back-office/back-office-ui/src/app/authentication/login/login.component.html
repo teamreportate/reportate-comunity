@@ -1,4 +1,4 @@
-<div fxShow.sm="true" fxShow.gt-sm="false" class="login-register" style="background-image:url(assets/images/background/login-back.png);">
+<div fxShow.sm="true" fxShow.gt-sm="false" class="login-register" style="background-image:url(assets/images/background/logo.png);">
     <div class="login-register-box">
         <app-form-login (submitted)="onLogin($event)"></app-form-login>
     </div>
@@ -9,7 +9,7 @@
     <app-form-login [isLoad]="this.isLoad" [error]="this.error" (submitted)="onLogin($event)"></app-form-login>
   </div>
   <div fxFlex="50" class="login-register v-align">
-    <img src="assets/images/background/login-back.png" alt="X" width="75%">
+    <img src="assets/images/background/logo.png" alt="X" width="75%">
   </div>
 </div>
 <ng-template #customNotification let-notificationData="notification">
