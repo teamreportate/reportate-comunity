@@ -4,6 +4,7 @@ import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
 import bo.com.reportate.model.dto.response.NivelValoracionDto;
+import bo.com.reportate.model.dto.response.NivelValoracionListDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.service.DiagnosticoService;
 import bo.com.reportate.util.CustomErrorType;
@@ -102,13 +103,13 @@ public class DiagnosticoController {
     }
     @RequestMapping(value = "/listar_by_valoracion",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Agrupar los diagnosticos por valoración", description = "Agrupar los diagnosticos por valoración", tags = { "grupos de diagnosticos por valoración" })
-    public ResponseEntity<List<NivelValoracionDto>> listarByNivelValoracion(
+    public ResponseEntity<NivelValoracionListDto> listarByNivelValoracion(
     		@Parameter(description = "Fecha inicio para el filtro", required = true)
             @RequestParam("from") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_TIME) Date from,
             @Parameter(description = "Fecha fin para el filtro", required = true)
             @RequestParam("to") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_TIME) Date to) {
         try {
-            return ok(this.diagnosticoService.listarByNivelValoracion(from, to));
+            return ok(new NivelValoracionListDto(this.diagnosticoService.listarByNivelValoracion(from, to)));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al agrupar los diagnosticos: Causa. {}",e.getMessage());
             return CustomErrorType.badRequest("Agrupar Diagnosticos", e.getMessage());
