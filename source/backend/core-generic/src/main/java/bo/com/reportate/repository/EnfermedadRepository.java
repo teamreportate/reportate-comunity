@@ -33,6 +33,8 @@ public interface EnfermedadRepository extends JpaRepository<Enfermedad, Long> {
     List<EnfermedadResponse> listarEnfermedadesBaseActivos();
 
     boolean existsByNombreIgnoreCase(String nombre);
+    boolean existsByNombreIgnoreCaseAndEstado(String nombre, EstadoEnum estadoEnum);
+    boolean existsByIdNotAndNombreIgnoreCaseAndEstado(Long id, String nombre, EstadoEnum estadoEnum);
 
     Optional<Enfermedad> findByNombreAndEstado(String nombre, EstadoEnum estadoEnum);
 

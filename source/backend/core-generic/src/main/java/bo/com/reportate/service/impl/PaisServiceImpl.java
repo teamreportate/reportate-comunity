@@ -40,6 +40,9 @@ public class PaisServiceImpl implements PaisService {
     @Override
     public Pais save(PaisDto paisDto) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",paisDto.getNombre(),true,100);
+        if(this.paisRepository.existsByNombreIgnoreCaseAndEstado(paisDto.getNombre(), EstadoEnum.ACTIVO)){
+            throw new OperationException("Ya existe un país con el nombre de "+paisDto.getNombre());
+        }
         Pais pais = new Pais();
         pais.setNombre(paisDto.getNombre());
         return paisRepository.save(pais);
@@ -53,10 +56,11 @@ public class PaisServiceImpl implements PaisService {
     @Override
     public Pais update(Long id, PaisDto paisDto) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",paisDto.getNombre(),true,100);
-        // TODO: VALIDAR NOMBRE PAIS
-//        if(municipioRepository.existsByIdIsNotAndNombreIgnoreCase(municipioId, nombre)){
-//            throw new OperationException("Ya existe un municipio con el nombre: "+nombre);
-//        }
+
+        if(this.paisRepository.existsByIdNotAndNombreIgnoreCaseAndEstado(id,paisDto.getNombre(), EstadoEnum.ACTIVO)){
+            throw new OperationException("Ya existe un país con el nombre "+paisDto.getNombre());
+        }
+
         Pais pais = this.paisRepository.findById(id).orElseThrow(()-> new NotDataFoundException("No se encontró ningún Pais con ID: "+id));
         pais.setNombre(paisDto.getNombre());
 

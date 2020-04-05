@@ -46,7 +46,7 @@ public class SintomaController {
     }
 
     @RequestMapping( method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Sintoma> saveMunicipio(@RequestBody SintomaDto sintomaDto) {
+    public ResponseEntity<Sintoma> save(@RequestBody SintomaDto sintomaDto) {
         try {
             return ok(this.sintomaService.save(sintomaDto));
         }catch (NotDataFoundException | OperationException e){
@@ -59,7 +59,7 @@ public class SintomaController {
     }
 
     @RequestMapping(value = "/{sintomaId}",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Sintoma> updateMunicipio(@PathVariable("sintomaId")Long sintomaId, @RequestBody SintomaDto sintomaDto) {
+    public ResponseEntity<Sintoma> update(@PathVariable("sintomaId")Long sintomaId, @RequestBody SintomaDto sintomaDto) {
         try {
             return ok(this.sintomaService.update(sintomaId, sintomaDto));
         }catch (NotDataFoundException | OperationException e){

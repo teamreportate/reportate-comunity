@@ -24,7 +24,7 @@
                 <ngx-datatable-column name="Acciones" [minWidth]="200" [maxWidth]="240" [draggable]="false" [resizeable]="false">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                         <button mat-icon-button matTooltip="Actualizar Municipio" (click)="this.openDialog(row)"><mat-icon fxLayoutAlign="start start" color="accent">edit</mat-icon></button>
-                        <button mat-icon-button (click)="this.onChangeState(row)"><mat-icon fxLayoutAlign="start start" color="accent" matTooltip="Eliminar Municipio">close</mat-icon></button>
+                        <button mat-icon-button (click)="this.onChangeState(row)"><mat-icon fxLayoutAlign="start start" color="accent" matTooltip="Eliminar">delete</mat-icon></button>
                     </ng-template>
                 </ngx-datatable-column>
 
