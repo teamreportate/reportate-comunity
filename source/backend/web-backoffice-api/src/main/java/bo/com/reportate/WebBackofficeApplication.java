@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -27,8 +28,8 @@ import java.util.TimeZone;
 @EntityScan(basePackages = {"bo.com.reportate.model"})
 @SpringBootApplication(scanBasePackages = {"bo.com.reportate.service", "bo.com.reportate","bo.com.reportate.jwt"})
 @EnableAsync(proxyTargetClass = true)
-public class WebBackofficeApplication  implements CommandLineRunner {
-//public class WebBackofficeApplication  extends SpringBootServletInitializer implements CommandLineRunner {
+//public class WebBackofficeApplication  implements CommandLineRunner {
+public class WebBackofficeApplication  extends SpringBootServletInitializer implements CommandLineRunner {
 
     @Autowired
     EmailService emailService;
