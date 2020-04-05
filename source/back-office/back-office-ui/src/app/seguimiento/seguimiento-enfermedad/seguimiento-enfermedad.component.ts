@@ -12,6 +12,8 @@ import {DepartamentoService} from '../../core/services/http-services/departament
 import {Enfermedad} from '../../core/models/enfermedad';
 import {Departamento} from '../../core/models/departamento';
 import {Constants} from '../../core/constants';
+import { Municipio } from 'src/app/core/models/dto/Municipio';
+import { Centro } from 'src/app/core/models/dto/Centro';
 
 
 @Component({
@@ -21,27 +23,37 @@ import {Constants} from '../../core/constants';
   providers: [SeguimientoEnfermedadService, EnfermedadService, DepartamentoService]
 })
 export class SeguimientoEnfermedadComponent extends ClicComponent implements OnInit {
+
+  // tslint:disable-next-line:max-line-length
+  constructor(private seguimientoEnfermedadService: SeguimientoEnfermedadService,
+    private enfermedadService: EnfermedadService,
+    private formBuilder: FormBuilder, public changeDetector: ChangeDetectorRef, public media: MediaMatcher,
+              private notifier: NotifierService) {
+    super();
+    this.clasificacionList = Constants.CLASIFICACION_ENFERMEDAD;
+    moment.locale('es-BO');
+  }
   @BlockUI() blockUI: NgBlockUI;
   public render: boolean;
-  public enfermedadList: Enfermedad[];
-  public departamentoList: Departamento[];
-  public clasificacionList: any[];
+  public enfermedadList: Enfermedad[] = [];
+  public departamentoList: Departamento[] = [];
+  public municipioList: Municipio[] = [];
+  public centroList: Centro[] = [];
+  public clasificacionList: any[] = [];
   public form: FormGroup;
   private enfermedadId;
   private departamentoId;
   private clasificacion;
+
+  tempMunicipio: Municipio[] = [];
+  tempCentro: Centro[] = [];
 
   private startDate: any;
   private endDate: any;
   private message: string;
   public today: any;
 
-  constructor(private seguimientoEnfermedadService: SeguimientoEnfermedadService, private enfermedadService: EnfermedadService, private departamentoService: DepartamentoService, private formBuilder: FormBuilder, public changeDetector: ChangeDetectorRef, public media: MediaMatcher,
-              private notifier: NotifierService) {
-    super();
-    this.clasificacionList = Constants.CLASIFICACION_ENFERMEDAD;
-    moment.locale('es-BO');
-  }
+  public filterFlex;
 
   ngOnInit() {
     this.initialListener(this.changeDetector, this.media);
@@ -52,17 +64,15 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
     this.enfermedadService.getEnfermedades().subscribe(response => {
       this.enfermedadList = response.body;
     });
-    this.departamentoService.getDepartamentosAsignados().subscribe(response => {
-      this.departamentoList = response.body;
-    });
+    this.getListForSelect();
   }
 
 
   onSearch() {
-    if (this.form.valid) {
+    if (!this.form.valid) {
       this.updateDate();
       if (this.endDate.isBefore(this.startDate)) {
-        const notif = {error: {title: 'Filtrar Bitácora', detail: 'La fecha final no puede ser menor que la fecha inicial'}};
+        const notif = {error: {title: 'Filtrado de Diagnóstico', detail: 'La fecha final no puede ser menor que la fecha inicial'}};
         this.notifierError(notif, 'warning');
         return;
       }
@@ -71,6 +81,23 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
     }
   }
 
+  selectMunicipio(object: Departamento) {
+    this.tempMunicipio = [];
+    this.tempCentro = [];
+    this.tempMunicipio = this.municipioList.filter((dto: Municipio) => dto.departamentoId === object.id);
+  }
+  selectCentro(object: Municipio) {
+    this.tempCentro = [];
+    this.tempCentro = this.centroList.filter((dto: Centro) => dto.municipioId === object.id);
+  }
+
+  private getListForSelect() {
+    this.seguimientoEnfermedadService.getListDepartamentoMunicipioCentros().subscribe(response => {
+      this.departamentoList = response.body.departamentos;
+      this.municipioList = response.body.municipios;
+      this.centroList = response.body.centrosSalud;
+    });
+  }
   private initialForm(): FormGroup {
     this.startDate = moment().subtract(30, 'days');
     this.endDate = moment();
@@ -78,7 +105,10 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
     return this.formBuilder.group({
       enfermedadId: new FormControl('', Validators.compose([Validators.required])),
       departamentoId: new FormControl('', Validators.compose([Validators.required])),
+      municipioID: new FormControl('', Validators.compose([Validators.required])),
+      centroSaludId: new FormControl('', Validators.compose([Validators.required])),
       clasificacion: new FormControl('', Validators.compose([Validators.required])),
+      nombrePaciente: new FormControl('', Validators.compose([Validators.required])),
       from: new FormControl(this.startDate.toDate(), Validators.compose([Validators.required])),
       to: new FormControl(this.endDate.toDate(), Validators.compose([Validators.required])),
     });
@@ -87,6 +117,7 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
   setPage(pageInfo: any) {
     this.pageControl.number = pageInfo.offset;
     this.blockUI.start('Recuperando lista de bitacora...');
+    // tslint:disable-next-line:max-line-length
     this.seguimientoEnfermedadService.filterSeguimientoEnfermedad(this.enfermedadId, this.clasificacion, this.departamentoId, this.startDate.format('DD/MM/YYYY'), this.endDate.format('DD/MM/YYYY'), this.pageControl.number, this.pageControl.size).subscribe(response => {
       this.pageControl = response.body;
       this.render = true;
@@ -118,8 +149,6 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
       this.notifier.show(customOptions);
     }
   }
-
-  public filterFlex;
 
   onXsScreen() {
     this.filterFlex = 100;
@@ -155,6 +184,7 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
     // const myHeight = 900;
     // const left = (screen.width - myWidth) / 2;
     // const top = (screen.height - myHeight) / 4;
+    // tslint:disable-next-line:max-line-length
     window.open(myURL, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no');
   }
 
