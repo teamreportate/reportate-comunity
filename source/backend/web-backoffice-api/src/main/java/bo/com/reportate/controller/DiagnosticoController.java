@@ -16,10 +16,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -66,6 +68,34 @@ public class DiagnosticoController {
         }catch (Exception e){
             log.error("Se genero un error al listar los diagnosticos:",e);
             return CustomErrorType.serverError("Listar Diagnostico", "Se genero un error al listar los diagnosticos");
+        }
+    }
+    
+    @RequestMapping(value = "/count_diagnostico_by_valoracion",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Contabilizar los diagnosticos por valoración", description = "Contabilizar los diagnosticos por valoración", tags = { "cantidad diagnosticos por valoración" })
+    public ResponseEntity<Integer> countDiagnosticoByValoracion(
+            @Parameter(description = "Valoración inicial para el filtro", required = true)
+            @RequestParam("from") Long from,
+            @Parameter(description = "Valoración final para el filtro", required = true)
+            @RequestParam("to") Long to,
+            @Parameter(description = "Identificador de Departamento", required = true)
+            @RequestParam("departamentoId") Long departamentoId,
+            @Parameter(description = "Identificador de Municipio", required = true)
+            @RequestParam("municipioId") Long municipioId,
+            @Parameter(description = "Genero", required = false)
+            @RequestParam("genero") String genero,
+            @Parameter(description = "Edad inicial para el filtro", required = false)
+            @RequestParam("edadInicial") Integer edadInicial,
+            @Parameter(description = "Edad final para el filtro", required = false)
+            @RequestParam("edadFinal") Integer edadFinal) {
+        try {
+            return ok(this.diagnosticoService.countDiagnosticoByResultadoValoracion(BigDecimal.valueOf(from), BigDecimal.valueOf(to), departamentoId, municipioId,genero,edadInicial,edadFinal));
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al contabilizar los diagnosticos: Causa. {}",e.getMessage());
+            return CustomErrorType.badRequest("Contabilizar Diagnosticos", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al contabilizar los diagnosticos:",e);
+            return CustomErrorType.serverError("Contabilizar Diagnosticos", "Se genero un error al contabilizar los diagnosticos");
         }
     }
 }
