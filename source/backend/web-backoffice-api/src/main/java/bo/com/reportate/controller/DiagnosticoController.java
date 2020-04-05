@@ -74,7 +74,7 @@ public class DiagnosticoController {
         }
     }
     
-    @RequestMapping(value = "/count_diagnostico_by_valoracion",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/count-diagnostico-by-valoracion",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Contabilizar los diagnosticos por valoración", description = "Contabilizar los diagnosticos por valoración", tags = { "cantidad diagnosticos por valoración" })
     public ResponseEntity<Integer> countDiagnosticoByValoracion(
             @Parameter(description = "Valoración inicial para el filtro", required = true)
@@ -101,7 +101,7 @@ public class DiagnosticoController {
             return CustomErrorType.serverError("Contabilizar Diagnosticos", "Se genero un error al contabilizar los diagnosticos");
         }
     }
-    @RequestMapping(value = "/listar_by_valoracion",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/listar-by-valoracion",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Agrupar los diagnosticos por valoración", description = "Agrupar los diagnosticos por valoración", tags = { "grupos de diagnosticos por valoración" })
     public ResponseEntity<NivelValoracionListDto> listarByNivelValoracion(
     		@Parameter(description = "Fecha inicio para el filtro", required = true)
