@@ -10,7 +10,7 @@ import bo.com.reportate.repository.PaisRepository;
 import bo.com.reportate.service.PaisService;
 import bo.com.reportate.util.ValidationUtil;
 import bo.com.reportate.utils.FormatUtil;
-import org.jfree.util.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +28,7 @@ import java.util.List;
  * @Copyright :MC4
  */
 @Service
+@Slf4j
 public class PaisServiceImpl implements PaisService {
     @Autowired
     private PaisRepository paisRepository;
@@ -35,23 +36,15 @@ public class PaisServiceImpl implements PaisService {
     @Override
     @Transactional(readOnly = true)
     public List<PaisDto> listAll() {
-        List<PaisDto> paisesDto = new ArrayList<>();
-        List<Pais> paises = this.paisRepository.listAllActivos();
-
-        for (Pais pais: paises) {
-            PaisDto paisDto = new PaisDto(pais);
-            paisesDto.add(paisDto);
-        }
-        return paisesDto;
+        return this.paisRepository.findByEstadoOrderByNombreAsc(EstadoEnum.ACTIVO);
     }
 
     @Override
     public Pais save(PaisDto paisDto) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",paisDto.getNombre(),true,100);
-        // TODO: VALIDAR NOMBRE DEL PAIS
-//        if(municipioRepository.existsByNombreIgnoreCaseAndDepartamento(municipio.getNombre(), municipio.getDepartamento())){
-//            throw new OperationException("Ya existe un municipio con el nombre: "+municipio.getNombre());
-//        }
+        if(this.paisRepository.existsByNombreIgnoreCaseAndEstado(paisDto.getNombre(), EstadoEnum.ACTIVO)){
+            throw new OperationException("Ya existe un país con el nombre de "+paisDto.getNombre());
+        }
         Pais pais = new Pais();
         pais.setNombre(paisDto.getNombre());
         return paisRepository.save(pais);
@@ -65,10 +58,11 @@ public class PaisServiceImpl implements PaisService {
     @Override
     public Pais update(Long id, PaisDto paisDto) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",paisDto.getNombre(),true,100);
-        // TODO: VALIDAR NOMBRE PAIS
-//        if(municipioRepository.existsByIdIsNotAndNombreIgnoreCase(municipioId, nombre)){
-//            throw new OperationException("Ya existe un municipio con el nombre: "+nombre);
-//        }
+
+        if(this.paisRepository.existsByIdNotAndNombreIgnoreCaseAndEstado(id,paisDto.getNombre(), EstadoEnum.ACTIVO)){
+            throw new OperationException("Ya existe un país con el nombre "+paisDto.getNombre());
+        }
+
         Pais pais = this.paisRepository.findById(id).orElseThrow(()-> new NotDataFoundException("No se encontró ningún Pais con ID: "+id));
         pais.setNombre(paisDto.getNombre());
 
@@ -77,12 +71,12 @@ public class PaisServiceImpl implements PaisService {
 
     @Override
     public boolean cambiarEstado(Long id) {
-        Log.info("Validaciones");
+        log.info("Validaciones");
         Pais pais = paisRepository.getOne(id);
         if (pais == null) {
             throw new OperationException(FormatUtil.noRegistrado("País", id));
         }
-        Log.info("Persistiendo el objeto");
+        log.info("Persistiendo el objeto");
         EstadoEnum estado = pais.getEstado() == EstadoEnum.ACTIVO ? EstadoEnum.INACTIVO : EstadoEnum.ACTIVO;
         pais.setEstado(estado);
 

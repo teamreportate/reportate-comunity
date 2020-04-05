@@ -4,13 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>bo.com.mc4.clic</groupId>
-		<artifactId>sfe_backoffice</artifactId>
+		<groupId>bo.com.reportate.backoffice</groupId>
+		<artifactId>back-office</artifactId>
 		<version>1.0</version>
 	</parent>
 	<artifactId>back-office-ui</artifactId>
 	<name>back-office-ui</name>
-  <description>Codigo fuente Angular 7 - Aplicacion Clic BackOffice</description>
+  <description>Codigo fuente Angular 8 - Aplicacion Clic BackOffice</description>
 
 	<build>
 		<plugins>

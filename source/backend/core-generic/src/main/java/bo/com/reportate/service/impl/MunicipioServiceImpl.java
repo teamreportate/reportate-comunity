@@ -6,6 +6,7 @@ import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.dto.MunicipioDto;
 import bo.com.reportate.model.dto.MunicipioUsuarioDto;
+import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.repository.DepartamentoRepository;
 import bo.com.reportate.repository.MunicipioRepository;
 import bo.com.reportate.repository.MunicipioUsuarioRepository;
@@ -13,8 +14,11 @@ import bo.com.reportate.service.MunicipioService;
 import bo.com.reportate.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,10 +32,8 @@ import java.util.List;
  */
 @Service
 public class MunicipioServiceImpl implements MunicipioService {
-    @Autowired
-    private MunicipioRepository municipioRepository;
-    @Autowired
-    private DepartamentoRepository departamentoRepository;
+    @Autowired private MunicipioRepository municipioRepository;
+    @Autowired private DepartamentoRepository departamentoRepository;
     @Autowired private MunicipioUsuarioRepository municipioUsuarioRepository;
 
     @Override
@@ -43,7 +45,7 @@ public class MunicipioServiceImpl implements MunicipioService {
     @Override
     @Transactional(readOnly = true)
     public List<MunicipioDto> findByDepartamento(Long idDepartamento) {
-        return municipioRepository.findByDepartamentoIdOrderByNombreAsc(idDepartamento);
+        return municipioRepository.findByEstadoInAndDepartamentoIdOrderByNombreAsc(Arrays.asList(EstadoEnum.ACTIVO, EstadoEnum.INACTIVO), idDepartamento);
     }
 
     @Override
@@ -90,5 +92,17 @@ public class MunicipioServiceImpl implements MunicipioService {
         municipio.setLongitud(longitud);
         return this.municipioRepository.save(municipio);
 
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void eliminar(Long municipioId) {
+        this.municipioRepository.eliminar(municipioId);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void inactivar(Long municipioId) {
+        this.municipioRepository.inactivar(municipioId);
     }
 }

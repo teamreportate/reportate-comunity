@@ -1,0 +1,81 @@
+/target/
+src/main/webapp/assets
+src/main/webapp/static
+src/main/webapp/*.js
+src/main/webapp/*.txt
+src/main/webapp/*.woff
+src/main/webapp/*.svg
+src/main/webapp/*.eot
+src/main/webapp/*.ttf
+src/main/webapp/*.ico
+src/main/webapp/*.woff2
+src/main/webapp/*.html
+src/main/webapp/*.css
+src/main/webapp/*.png
+src/main/webapp/*.json
+
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# IDEA metadata and output dirs
+!*.iml
+*.ipr
+*.iws
+.idea
+out
+
+# Eclipse
+.classpath
+.factorypath
+.project
+.settings
+
+# NetBeans
+nbactions.xml
+nb-configuration.xml
+profiles.xml
+
+# Jdeveloper
+.data/
+temp/
+deploy/
+javadoc/
+*.class
+*.jbd
+
+# Generales
+*~
+build
+build.sh
+derby.log
+.DS_Store
+.gradle
+*.java.hsp
+jmx.log
+jxl.log
+run.sh
+*.sonarj
+*.sw*
+
+# Maven
+target
+*.releaseBackup
+
+#Java errors
+hs_err_*.log
+
+# Atomikos
+*.epoch
+tmlog*
+
+# logs de SQL
+classes/
+!clic_backoffice.iml

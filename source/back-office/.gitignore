@@ -13,11 +13,12 @@ a/*
 .sts4-cache
 
 # IDEA metadata and output dirs
-!*.iml
+*.iml
 *.ipr
 *.iws
 .idea
 out
+!back-office.iml
 
 # Eclipse
 .classpath

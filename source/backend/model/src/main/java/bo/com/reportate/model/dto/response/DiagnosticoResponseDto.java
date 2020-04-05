@@ -46,7 +46,7 @@ public class DiagnosticoResponseDto implements Serializable {
         this.ciudad = diagnostico.getControlDiario().getPaciente().getFamilia().getCiudad();
         this.urlCoordenada = "https://maps.google.com/?q="+diagnostico.getControlDiario().getPaciente().getFamilia().getLatitud()+","+diagnostico.getControlDiario().getPaciente().getFamilia().getLongitud();
         if(telefono.length() == 8){
-            this.urlWhatsApp =  "https://api.whatsapp.com/send?phone="+this.telefono+"&text=Buenos días.";
+            this.urlWhatsApp =  "https://api.whatsapp.com/send?phone=+591 "+this.telefono+"&text=Buenos días "+diagnostico.getControlDiario().getPaciente().getNombre()+". Usted ha registrado síntomas, ....";
         }
         this.departamento = diagnostico.getControlDiario().getPaciente().getFamilia().getDepartamento().getNombre();
         if(diagnostico.getControlDiario().getPaciente().getFamilia().getMunicipio() != null){

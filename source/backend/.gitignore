@@ -12,8 +12,10 @@ a/*
 .springBeans
 .sts4-cache
 
+!logs/*
+*.log
 # IDEA metadata and output dirs
-!*.iml
+*.iml
 *.ipr
 *.iws
 .idea

@@ -19,8 +19,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +28,6 @@ import static org.springframework.http.ResponseEntity.ok;
 @Slf4j
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
-
     @Autowired private UsuarioService usuarioService;
     @Autowired private TokenService tokenService;
     @Autowired private JwtTokenProvider jwtTokenProvider;
@@ -83,6 +80,25 @@ public class UsuarioController {
             return ok(this.usuarioService.actualizarUsuario(usuario, id));
         } catch (OperationException | NotDataFoundException e) {
             log.error("Error al actualizar usuario: {}. Causa: [{}]",usuario.getUsername(),  e.getMessage());
+            return CustomErrorType.badRequest("Actualizar Usuario", e.getMessage());
+        } catch (Exception e) {
+            log.error("Error no controlado al actualizar usuario", e);
+            return CustomErrorType.serverError("Actualizar Usuario", "Ocurrió un error interno al actualizar el usuario.");
+        }
+    }
+
+    /**
+     * Permite actualizarGrupo los atributos de un usuario
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/{usuarioId}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UsuarioDto> findById(@PathVariable("usuarioId") Long id) {
+        try {
+            return ok(this.usuarioService.findById( id));
+        } catch (OperationException | NotDataFoundException e) {
+            log.error("Error al actualizar usuario:  Causa: [{}]", e.getMessage());
             return CustomErrorType.badRequest("Actualizar Usuario", e.getMessage());
         } catch (Exception e) {
             log.error("Error no controlado al actualizar usuario", e);

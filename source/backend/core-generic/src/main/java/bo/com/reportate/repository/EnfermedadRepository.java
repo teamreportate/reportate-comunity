@@ -1,6 +1,7 @@
 package bo.com.reportate.repository;
 
 import bo.com.reportate.model.Enfermedad;
+import bo.com.reportate.model.dto.EnfermedadDto;
 import bo.com.reportate.model.dto.response.EnfermedadResponse;
 import bo.com.reportate.model.enums.EstadoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,11 +24,24 @@ public interface EnfermedadRepository extends JpaRepository<Enfermedad, Long> {
     @Query("SELECT new bo.com.reportate.model.dto.response.EnfermedadResponse(e) From Enfermedad e WHERE e.estado =bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<EnfermedadResponse> listarEnfermedadesActivos();
 
+    List<EnfermedadResponse> findByEnfermedadBaseFalseAndEstadoOrderByNombreAsc(EstadoEnum estadoEnum);
+    List<EnfermedadDto> findByEstadoOrderByNombreAsc(EstadoEnum estadoEnum);
+
+    @Query("SELECT new bo.com.reportate.model.dto.response.EnfermedadResponse(e) " +
+            "From Enfermedad e " +
+            "WHERE e.estado =bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND e.enfermedadBase = true")
+    List<EnfermedadResponse> listarEnfermedadesBaseActivos();
+
     boolean existsByNombreIgnoreCase(String nombre);
+    boolean existsByNombreIgnoreCaseAndEstado(String nombre, EstadoEnum estadoEnum);
+    boolean existsByIdNotAndNombreIgnoreCaseAndEstado(Long id, String nombre, EstadoEnum estadoEnum);
 
     Optional<Enfermedad> findByNombreAndEstado(String nombre, EstadoEnum estadoEnum);
 
     @Query(" SELECT e FROM Enfermedad e" +
             " order by e.id desc")
     List<Enfermedad> listAll();
+
+    List<Enfermedad> findByEnfermedadBaseFalseAndEstado(EstadoEnum estadoEnum);
 }

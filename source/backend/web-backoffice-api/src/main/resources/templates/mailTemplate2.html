@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:remove="all">Sospecha de COVID-19</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <p th:text="${paciente}" >
+        </p>
+        <span th:text="${mensaje}"></span>
+        <p>Presenta las siguientes sintomas:</p>
+        <ul th:remove="all-but-first">
+            <li th:each="sintoma : ${sintomas}"
+                th:text="${sintoma}">Reading</li>
+            <li>Writing</li>
+            <li>Bowling</li>
+        </ul>
+        <p>
+            <img src="../editablehtml/images/thymeleaf-banner.png" th:src="|cid:${imageResourceName}|" />
+        </p>
+
+    </body>
+</html>

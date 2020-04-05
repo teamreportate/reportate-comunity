@@ -19,7 +19,7 @@ export class DepartamentoService {
   constructor(private httpClient: HttpClient) {}
 
   getDepartamentosAsignados(): Observable<HttpResponse<any>> {
-    this.endPoint = Constantes.baseUri + Constants.departmentApi;
+    this.endPoint = Constantes.baseUri + Constants.departmentApi + '/asignados';
     return this.httpClient.get<HttpResponse<any>>(this.endPoint, {observe: 'response'});
   }
 

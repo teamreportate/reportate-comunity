@@ -57,6 +57,8 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
     PaisRepository paisRepository;
     @Autowired
     EnfermedadRepository enfermedadRepository;
+    @Autowired
+    MatrizDiagnosticoRepository matrizDiagnosticoRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -137,7 +139,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         recHijo("Departamentos", "administracion", "Gestión de Departamentos", "departamentos", 6, "code", rolAdmin);
 
         recPadre("Seguimiento", "Interfaz para seguimiento de diagnosticos", "seguimiento", 1, "menu", rolAdmin);
-        recHijo("Diagnostico", "Seguimiento", "Interfaz para seguimiento de interfaces", "diagnostico", 1, "code", rolAdmin);
+        recHijo("Diagnostico", "seguimiento", "Interfaz para seguimiento de interfaces", "diagnostico", 1, "code", rolAdmin);
         log.info("************************* Fin de cargar permisos por defecto *************************");
     }
 
@@ -164,9 +166,9 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         this.paramService.saveParametro(parametro);
         parametro = new MuParametro(null, Constants.Parameters.MAIL_PROTOCOL, "Protocolo del servidor de correo electronico.", "smtp", null, null, null, ParamTipoDato.CADENA, false,null, mailParams);
         this.paramService.saveParametro(parametro);
-        parametro = new MuParametro(null, Constants.Parameters.MAIL_USERNAME, "Usuario de la cuenta de correo electronico.", "reportate@gmail.com", null, null, null, ParamTipoDato.CADENA, false,null, mailParams);
+        parametro = new MuParametro(null, Constants.Parameters.MAIL_USERNAME, "Usuario de la cuenta de correo electronico.", "soporteclic32@gmail.com", null, null, null, ParamTipoDato.CADENA, false,null, mailParams);
         this.paramService.saveParametro(parametro);
-        parametro = new MuParametro(null, Constants.Parameters.MAIL_PASS, "Contraseña de la cuenta de correo electronico.", Crypt.getInstance().crypt("Password"), null, null, null, ParamTipoDato.CADENA, true,null, mailParams);
+        parametro = new MuParametro(null, Constants.Parameters.MAIL_PASS, "Contraseña de la cuenta de correo electronico.", Crypt.getInstance().crypt("Dinamicina01"), null, null, null, ParamTipoDato.CADENA, true,null, mailParams);
         this.paramService.saveParametro(parametro);
         parametro = new MuParametro(null, Constants.Parameters.MAIL_FROM, "Dirección de correo electronico desde la que se va a enviar los correos.", "no-reply@mc4.com.bo", null, null, null, ParamTipoDato.CADENA, false,null, mailParams);
         this.paramService.saveParametro(parametro);
@@ -273,29 +275,104 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
             }
         }
 
-        if(!sintomaRepository.existsByNombreIgnoreCase("Tos frecuente")){
-            sintomaRepository.save(Sintoma.builder()
-                    .nombre("Tos frecuente")
+//
+        Sintoma tos = null;
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Tos", EstadoEnum.ACTIVO)){
+            tos = Sintoma.builder()
+                    .nombre("Tos")
                     .controlDiario(true)
                     .pregunta("Usted tiene tos frecuente?")
-                    .ayuda("Debe contar la cantidad de veces que tuese en un minuto").build());
+                    .ayuda("Debe contar la cantidad de veces que tuese en un minuto").build();
+            sintomaRepository.save(tos);
         }
 
-        if(!sintomaRepository.existsByNombreIgnoreCase("Fiebre mayor a 38")){
-            sintomaRepository.save(Sintoma.builder()
+        Sintoma fiebre = null;
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Fiebre mayor a 38", EstadoEnum.ACTIVO)){
+            fiebre = Sintoma.builder()
                     .nombre("Fiebre mayor a 38")
                     .controlDiario(true)
                     .pregunta("Usted presenta fiebre mayor a 38 grados?")
-                    .ayuda("Por favor midase la temperatura y registre el valor obtenido").build());
+                    .ayuda("Por favor midase la temperatura y registre el valor obtenido").build();
+            sintomaRepository.save(fiebre);
         }
 
-        if(!sintomaRepository.existsByNombreIgnoreCase("Disnea")){
-            sintomaRepository.save(Sintoma.builder()
-                    .nombre("disnea")
+        Sintoma disnea = null;
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Disnea", EstadoEnum.ACTIVO)){
+            disnea = Sintoma.builder()
+                    .nombre("Disnea")
                     .controlDiario(true)
-                    .pregunta("Siente que le falta la resperacion?")
-                    .ayuda("Cuente hasta 10 y verifique si le falta la respiración").build());
+                    .pregunta("Tiene dificultad para respirar?")
+                    .ayuda("Cuente hasta 10 y verifique si le falta la respiración").build();
+            sintomaRepository.save(disnea);
         }
+        Sintoma dolorGarganta = null;
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Dolor de garganta", EstadoEnum.ACTIVO)){
+            dolorGarganta = Sintoma.builder()
+                    .nombre("Dolor de garganta")
+                    .controlDiario(true)
+                    .pregunta("Presenta dolor de garganta?")
+                    .build();
+            sintomaRepository.save(dolorGarganta);
+        }
+        Sintoma dolorCabeza = null;
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Dolor de cabeza", EstadoEnum.ACTIVO)){
+            dolorCabeza = Sintoma.builder()
+                    .nombre("Dolor de cabeza")
+                    .controlDiario(true)
+                    .pregunta("Presenta dolor de cabeza?")
+                    .build();
+            sintomaRepository.save(dolorCabeza);
+        }
+
+        Sintoma dolorMuscular = null;
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Dolor muscular", EstadoEnum.ACTIVO)){
+            dolorMuscular = Sintoma.builder()
+                    .nombre("Dolor muscular")
+                    .controlDiario(true)
+                    .pregunta("Presenta dolor de cabeza?")
+                    .build();
+            sintomaRepository.save(dolorMuscular);
+        }
+        Sintoma fatiga = null;
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Fatiga",EstadoEnum.ACTIVO)){
+            fatiga = Sintoma.builder()
+                    .nombre("Fatiga")
+                    .controlDiario(true)
+                    .pregunta("Presenta fatiga?")
+                    .build();
+            sintomaRepository.save(fatiga);
+        }
+
+        Sintoma escalofrio = null;
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Escalofrio", EstadoEnum.ACTIVO)){
+            escalofrio = Sintoma.builder()
+                    .nombre("Escalofrio")
+                    .controlDiario(true)
+                    .pregunta("Presenta escalorfios?")
+                    .build();
+            sintomaRepository.save(escalofrio);
+        }
+
+        Sintoma diarrea = null;
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Diarrea", EstadoEnum.ACTIVO)){
+            diarrea = Sintoma.builder()
+                    .nombre("Diarrea")
+                    .controlDiario(true)
+                    .pregunta("Está con diarrea?")
+                    .build();
+            sintomaRepository.save(diarrea);
+        }
+
+        Sintoma contacto = null;
+        if(!sintomaRepository.existsByNombreIgnoreCaseAndEstado("Contacto covid-19", EstadoEnum.ACTIVO)){
+            contacto = Sintoma.builder()
+                    .nombre("Contacto covid-19")
+                    .controlDiario(true)
+                    .pregunta("Ha esta en contacto con alguna persona diagnosticada con covid-19?")
+                    .build();
+            sintomaRepository.save(contacto);
+        }
+
 
         if(!paisRepository.existsByNombreIgnoreCase("China")){
             paisRepository.save(Pais.builder().nombre("China").build());
@@ -308,16 +385,20 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
             paisRepository.save(Pais.builder().nombre("España").build());
         }
 
+        Enfermedad codiv_19 = null;
         if(!enfermedadRepository.existsByNombreIgnoreCase("Codiv-19")){
-            this.enfermedadRepository.save(Enfermedad.builder().nombre("Codiv-19").enfermedadBase(false).build());
-
+            codiv_19 = Enfermedad.builder().nombre("Codiv-19").enfermedadBase(false).build();
+            this.enfermedadRepository.save(codiv_19);
         }
+
         if(!enfermedadRepository.existsByNombreIgnoreCase("Asma")){
             this.enfermedadRepository.save(Enfermedad.builder().nombre("Asma").enfermedadBase(true).build());
 
         }
+        Enfermedad dengue;
         if(!enfermedadRepository.existsByNombreIgnoreCase("Dengue")){
-            this.enfermedadRepository.save(Enfermedad.builder().nombre("Dengue").enfermedadBase(false).build());
+            dengue = Enfermedad.builder().nombre("Dengue").enfermedadBase(false).build();
+            this.enfermedadRepository.save(dengue);
 
         }
         if(!enfermedadRepository.existsByNombreIgnoreCase("Influenza")){
@@ -335,6 +416,19 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         }
         if(!enfermedadRepository.existsByNombreIgnoreCase("Diabetes")){
             this.enfermedadRepository.save(Enfermedad.builder().nombre("Diabetes").enfermedadBase(true).build());
+        }
+
+        if(matrizDiagnosticoRepository.findAll().isEmpty()){
+            this.matrizDiagnosticoRepository.save(MatrizDiagnostico.builder().enfermedad(codiv_19).sintoma(tos).peso(new BigDecimal("1")).build());
+            this.matrizDiagnosticoRepository.save(MatrizDiagnostico.builder().enfermedad(codiv_19).sintoma(escalofrio).peso(new BigDecimal("1")).build());
+            this.matrizDiagnosticoRepository.save(MatrizDiagnostico.builder().enfermedad(codiv_19).sintoma(diarrea).peso(new BigDecimal("1")).build());
+            this.matrizDiagnosticoRepository.save(MatrizDiagnostico.builder().enfermedad(codiv_19).sintoma(dolorGarganta).peso(new BigDecimal("1")).build());
+            this.matrizDiagnosticoRepository.save(MatrizDiagnostico.builder().enfermedad(codiv_19).sintoma(dolorMuscular).peso(new BigDecimal("1")).build());
+            this.matrizDiagnosticoRepository.save(MatrizDiagnostico.builder().enfermedad(codiv_19).sintoma(dolorCabeza).peso(new BigDecimal("1")).build());
+            this.matrizDiagnosticoRepository.save(MatrizDiagnostico.builder().enfermedad(codiv_19).sintoma(fiebre).peso(new BigDecimal("1")).build());
+            this.matrizDiagnosticoRepository.save(MatrizDiagnostico.builder().enfermedad(codiv_19).sintoma(disnea).peso(new BigDecimal("2")).build());
+            this.matrizDiagnosticoRepository.save(MatrizDiagnostico.builder().enfermedad(codiv_19).sintoma(fatiga).peso(new BigDecimal("2")).build());
+            this.matrizDiagnosticoRepository.save(MatrizDiagnostico.builder().enfermedad(codiv_19).sintoma(contacto).peso(new BigDecimal("3")).build());
         }
 
     }

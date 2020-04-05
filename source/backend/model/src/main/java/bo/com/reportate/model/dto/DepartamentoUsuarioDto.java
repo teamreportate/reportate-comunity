@@ -2,6 +2,7 @@ package bo.com.reportate.model.dto;
 
 import bo.com.reportate.model.Departamento;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -18,7 +19,7 @@ import java.util.List;
  * @Copyright :MC4
  */
 @Getter
-@Setter
+@Setter @NoArgsConstructor
 public class DepartamentoUsuarioDto implements Serializable {
     private Long id;
     private String nombre;
@@ -29,4 +30,9 @@ public class DepartamentoUsuarioDto implements Serializable {
         this.asignado = (departamento.getDepartamentoUsuarios() != null && !departamento.getDepartamentoUsuarios().isEmpty());
     }
 
+    public DepartamentoUsuarioDto(Long id, String nombre, Boolean asignado) {
+        this.id = id;
+        this.nombre = nombre;
+        this.asignado = asignado;
+    }
 }

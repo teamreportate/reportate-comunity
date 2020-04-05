@@ -8,6 +8,7 @@ import bo.com.reportate.model.dto.DepartamentoUsuarioDto;
 import bo.com.reportate.model.dto.MunicipioUsuarioDto;
 import bo.com.reportate.model.enums.EstadoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -32,6 +33,13 @@ public interface CentroSaludUsuarioRepository extends JpaRepository<CentroSaludU
             "AND u.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<CentroSaludUsuarioDto> listarCentrosSaludAsignados(@Param("username") String username);
 
+    @Query("SELECT new bo.com.reportate.model.dto.CentroSaludUsuarioDto(du.centroSalud.id, du.centroSalud.nombre, true, du.centroSalud.municipio.id) " +
+            "FROM CentroSaludUsuario du INNER JOIN du.muUsuario u " +
+            "WHERE u.id =:userId " +
+            "AND du.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND u.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
+    List<CentroSaludUsuarioDto> listarCentrosSaludAsignados(@Param("userId") Long userId);
+
 
     @Query("SELECT new bo.com.reportate.model.dto.CentroSaludUsuarioDto(d) " +
             "from CentroSalud d " +
@@ -43,7 +51,17 @@ public interface CentroSaludUsuarioRepository extends JpaRepository<CentroSaludU
             "AND d.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<CentroSaludUsuarioDto> listarCentrosSaludNoAsignados(@Param("username") String username);
 
+    @Query("SELECT new bo.com.reportate.model.dto.CentroSaludUsuarioDto(d.id, d.nombre, false, d.municipio.id) " +
+            "from CentroSalud d " +
+            "WHERE d NOT IN" +
+            "   (SELECT du.centroSalud FROM CentroSaludUsuario du INNER JOIN du.muUsuario u " +
+            "   WHERE u.id=:userId AND du.estado =bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "   AND u.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO" +
+            "   ) " +
+            "AND d.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
+    List<CentroSaludUsuarioDto> listarCentrosSaludNoAsignados(@Param("userId") Long userId);
 
+    @Modifying
     @Query(" UPDATE CentroSaludUsuario du SET du.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE du.muUsuario =:usuario AND du.centroSalud.id NOT IN(:centros)")
     void eliminaCentrosNoAsignados(@Param("usuario") MuUsuario muUsuario, @Param("centros") List<Long> centrosIds);
 }

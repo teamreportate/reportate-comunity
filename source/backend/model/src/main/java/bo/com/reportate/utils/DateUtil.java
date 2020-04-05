@@ -21,7 +21,7 @@ public class DateUtil {
     public static final String FORMAT_DATE_TIME = "dd/MM/yyyy HH:mm:ss";
     public static final String FORMAT_DATE = "dd/MM/yyyy";
     public static final String FORMAT_TIME = "HH:mm:ss";
-    public static final String FORMAT_DATE_PARAM_URL = "dd-MM-yyyy";
+    public static final String FORMAT_DATE_PARAM_URL = "dd/MM/yyyy";
 
     public static final String FORMAT_YYYYMMDDHHmmss = "yyyy-MM-dd HH:mm:ss";
 

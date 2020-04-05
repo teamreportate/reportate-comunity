@@ -1,5 +1,6 @@
 package bo.com.reportate.repository;
 
+import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.MuAlarma;
 import bo.com.reportate.model.MuGrupo;
 import bo.com.reportate.model.MuUsuario;
@@ -25,6 +26,11 @@ public interface UsuarioRepository extends JpaRepository<MuUsuario, Long> {
     void modifyPassword(@Param("userName") String userName
             ,@Param("password") String password);
 
+    @Query("SELECT new bo.com.reportate.model.dto.UsuarioDto(u) FROM MuUsuario  u " +
+            "WHERE u.id =:id " +
+            "AND u.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND u.estadoUsuario=bo.com.reportate.model.enums.UserStatusEnum.ACTIVO")
+    Optional<UsuarioDto> obtenerUsuarioPorId(@Param("id") Long id);
 
     List<UsuarioDto> findAllByEstadoOrderByNombreAsc(EstadoEnum estadoEnum);
 
@@ -72,5 +78,15 @@ public interface UsuarioRepository extends JpaRepository<MuUsuario, Long> {
             "WHERE u.estadoUsuario = bo.com.reportate.model.enums.UserStatusEnum.ACTIVO " +
             "AND u.id = :usuarioId")
     Optional<MuUsuario> findActiveById(@Param("usuarioId") Long usuarioId);
+
+
+    @Query(" SELECT m FROM DepartamentoUsuario du INNER JOIN du.muUsuario m INNER JOIN du.departamento d " +
+            "WHERE m.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND m.estadoUsuario = bo.com.reportate.model.enums.UserStatusEnum.ACTIVO " +
+            "AND m.tipoUsuario = bo.com.reportate.model.enums.TipoUsuarioEnum.MEDICO " +
+            "AND du.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND d.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND d=:departamento")
+    List<MuUsuario> obtenerMedicoPordepartamento(@Param("departamento")Departamento departamento);
 
 }

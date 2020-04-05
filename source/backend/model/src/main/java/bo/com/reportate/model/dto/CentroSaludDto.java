@@ -1,6 +1,7 @@
 package bo.com.reportate.model.dto;
 
 import bo.com.reportate.model.CentroSalud;
+import bo.com.reportate.model.enums.EstadoEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,10 @@ public class CentroSaludDto implements Serializable {
     private String direccion;
     private String zona;
     private String ciudad;
-    private Long municipioId;
+    private Double latitud;
+    private Double longitud;
+    private EstadoEnum estado;
+
 
     public CentroSaludDto(CentroSalud centroSalud){
         this.id = centroSalud.getId();
@@ -32,6 +36,12 @@ public class CentroSaludDto implements Serializable {
         this.direccion = centroSalud.getDireccion();
         this.zona = centroSalud.getZona();
         this.ciudad = centroSalud.getCiudad();
-        this.municipioId = centroSalud.getMunicipio().getId();
+        this.estado = centroSalud.getEstado();
+        this.longitud = centroSalud.getLongitud();
+        this.latitud = centroSalud.getLatitud();
+    }
+    public CentroSaludDto(Long id, String nombre){
+        this.id = id;
+        this.nombre = nombre;
     }
 }

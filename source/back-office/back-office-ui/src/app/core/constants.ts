@@ -32,11 +32,12 @@ export class Constants {
   static centrosApi = 'api/centros-de-salud';
 
 // CLASIFICACION ENFERMEDAD
-  static CLASIFICACION_ENFERMEDAD = [{key: 'SOSPECHOSO', value: 'SOSPECHOSO'}, {key: 'NEGATIVO', value: 'NEGATIVO'}, {
+  static CLASIFICACION_ENFERMEDAD = [{key: 'SOSPECHOSO', value: 'SOSPECHOSO'},
+    {key: 'NEGATIVO', value: 'NEGATIVO'}, {
     key: 'CONFIRMADO',
     value: 'CONFIRMADO'
 
   }];
-  
+
 }
 

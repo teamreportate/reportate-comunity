@@ -58,4 +58,19 @@ public class Diagnostico extends AbstractAuditableEntity{
     @JoinColumn(name = "ID_ENFERMEDAD", referencedColumnName = "ID")
     private Enfermedad enfermedad;
 
+    @JsonIgnore
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_DEPARTAMENTO", referencedColumnName = "ID")
+    private Departamento departamento;
+
+    @JsonIgnore
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_MUNICIPIO", referencedColumnName = "ID")
+    private Municipio municipio;
+
+    @JsonIgnore
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_CENTRO_SALUD", referencedColumnName = "ID")
+    private CentroSalud centroSalud;
+
 }

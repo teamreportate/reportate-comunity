@@ -7,6 +7,7 @@ import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.dto.CentroSaludDto;
 import bo.com.reportate.model.dto.CentroSaludUsuarioDto;
+import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.repository.CentroSaludRepository;
 import bo.com.reportate.repository.CentroSaludUsuarioRepository;
 import bo.com.reportate.repository.MunicipioRepository;
@@ -14,6 +15,7 @@ import bo.com.reportate.service.CentroSaludService;
 import bo.com.reportate.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -45,7 +47,7 @@ public class CentroSaludServiceImpl implements CentroSaludService {
 
     @Override
     public List<CentroSaludDto> findByMunicipio(Long idMunicipio) {
-        return centroSaludRepository.findByMunicipioIdOrderByIdDesc(idMunicipio);
+        return centroSaludRepository.findByMunicipioIdAndEstadoOrderByIdDesc(idMunicipio, EstadoEnum.ACTIVO);
     }
 
     @Override
@@ -99,6 +101,12 @@ public class CentroSaludServiceImpl implements CentroSaludService {
         centroSalud.setLatitud(latitud);
         centroSalud.setLongitud(longitud);
         return this.centroSaludRepository.save(centroSalud);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void eliminar(Long centroSaludId) {
+        this.centroSaludRepository.eliminar(centroSaludId);
     }
 
 }

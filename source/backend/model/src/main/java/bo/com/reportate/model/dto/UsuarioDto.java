@@ -36,9 +36,9 @@ public class UsuarioDto  implements Serializable {
     private TipoUsuarioEnum tipoUsuario;
 
     private List<GrupoDto> grupos = new ArrayList<>();
-    private List<DepartamentoRequest> departamentos = new ArrayList<>();
-    private List<MunicipioRequest> municipios = new ArrayList<>();
-    private List<CentroSaludRequest> centroSaluds = new ArrayList<>();
+    private List<DepartamentoUsuarioDto> departamentos = new ArrayList<>();
+    private List<MunicipioUsuarioDto> municipios = new ArrayList<>();
+    private List<CentroSaludUsuarioDto> centroSaluds = new ArrayList<>();
 
     public UsuarioDto(MuUsuario userx){
         this.id= userx.getId();
@@ -49,7 +49,7 @@ public class UsuarioDto  implements Serializable {
         this.estadoUsuario = userx.getEstadoUsuario();
         this.estado = userx.getEstado();
         this.passwordGenerado = userx.getPasswordGenerado();
-        this.token = userx.getToken();
+//        this.token = userx.getToken();
         this.tipoUsuario = userx.getTipoUsuario();
     }
 

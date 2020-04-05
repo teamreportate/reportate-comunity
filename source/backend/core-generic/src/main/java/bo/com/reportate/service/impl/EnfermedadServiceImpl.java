@@ -13,6 +13,7 @@ import bo.com.reportate.utils.FormatUtil;
 import org.jfree.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,25 +38,23 @@ public class EnfermedadServiceImpl implements EnfermedadService {
     }
 
     @Override
-    public List<EnfermedadDto> listAll() {
-        List<EnfermedadDto> enfermedadDtos = new ArrayList<>();
-        List<Enfermedad> enfermedades = this.enfermedadRepository.listAll();
+    public List<EnfermedadResponse> listNoBase() {
+        return this.enfermedadRepository.findByEnfermedadBaseFalseAndEstadoOrderByNombreAsc(EstadoEnum.ACTIVO);
+    }
 
-        for (Enfermedad pais: enfermedades) {
-            EnfermedadDto paisDto = new EnfermedadDto(pais);
-            enfermedadDtos.add(paisDto);
-        }
-        return enfermedadDtos;
+    @Override
+    @Transactional(readOnly = true)
+    public List<EnfermedadDto> listActivos() {
+        return this.enfermedadRepository.findByEstadoOrderByNombreAsc(EstadoEnum.ACTIVO);
     }
 
     @Override
     public Enfermedad save(EnfermedadDto enfermedadDto) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",enfermedadDto.getNombre(),true,100);
         ValidationUtil.throwExceptionIfInvalidText("diagnostico",enfermedadDto.getMensajeDiagnostico(),false,4000);
-        // TODO: VALIDAR NOMBRE DEL ENFERMEDAD
-//        if(municipioRepository.existsByNombreIgnoreCaseAndDepartamento(municipio.getNombre(), municipio.getDepartamento())){
-//            throw new OperationException("Ya existe un municipio con el nombre: "+municipio.getNombre());
-//        }
+        if(this.enfermedadRepository.existsByNombreIgnoreCaseAndEstado(enfermedadDto.getNombre(), EstadoEnum.ACTIVO)){
+            throw new OperationException("Ya existe una enfermedad con el nombre de "+enfermedadDto.getNombre());
+        }
         Enfermedad enfermedad = new Enfermedad();
         enfermedad.setNombre(enfermedadDto.getNombre());
         enfermedad.setEnfermedadBase(enfermedadDto.getEnfermedadBase());
@@ -72,10 +71,9 @@ public class EnfermedadServiceImpl implements EnfermedadService {
     public Enfermedad update(Long id, EnfermedadDto enfermedadDto) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",enfermedadDto.getNombre(),true,100);
         ValidationUtil.throwExceptionIfInvalidText("diagnostico",enfermedadDto.getMensajeDiagnostico(),false,4000);
-        // TODO: VALIDAR NOMBRE ENFERMEDAD
-//        if(municipioRepository.existsByIdIsNotAndNombreIgnoreCase(municipioId, nombre)){
-//            throw new OperationException("Ya existe un municipio con el nombre: "+nombre);
-//        }
+        if(this.enfermedadRepository.existsByIdNotAndNombreIgnoreCaseAndEstado(id,enfermedadDto.getNombre(), EstadoEnum.ACTIVO)){
+            throw new OperationException("Ya existe una enfermedad con el nombre "+enfermedadDto.getNombre());
+        }
         Enfermedad enfermedad = this.enfermedadRepository.findById(id).orElseThrow(()-> new NotDataFoundException("No se encontró ningún enfermedad con ID: "+id));
         enfermedad.setNombre(enfermedadDto.getNombre());
         enfermedad.setEnfermedadBase(enfermedadDto.getEnfermedadBase());

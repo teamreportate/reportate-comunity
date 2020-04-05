@@ -1,5 +1,7 @@
 package bo.com.reportate.service;
 
+import java.util.List;
+
 /**
  * MC4 SRL
  * Santa Cruz - Bolivia
@@ -9,4 +11,7 @@ package bo.com.reportate.service;
  * author:  fmontero
  **/
 public interface NotificacionService {
+    void notificacionSospechoso(String to, String asunto, String mensaje);
+    void notificacionSospechosoSintomas(String paciente,String to, String asunto, String mensaje, List<String> sintomas);
+
 }

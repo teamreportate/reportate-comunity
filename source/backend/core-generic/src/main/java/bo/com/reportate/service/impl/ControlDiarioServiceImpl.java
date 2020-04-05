@@ -31,7 +31,7 @@ public class ControlDiarioServiceImpl implements ControlDiarioService {
         ControlDiarioFullResponse response = new ControlDiarioFullResponse();
         response.setSintomas(sintomaRepository.findByEstadoAndControlDiarioTrue());
         response.setPaises(paisRepository.listarPaises());
-        response.setEnfermedadesBase(enfermedadRepository.listarEnfermedadesActivos());
+        response.setEnfermedadesBase(enfermedadRepository.listarEnfermedadesBaseActivos());
         return response;
     }
 

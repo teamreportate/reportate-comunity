@@ -34,6 +34,9 @@ import {dateFormatProvider} from './core/providers/date-format.provider';
 import {BlockUIModule} from 'ng-block-ui';
 import {NotifierModule, NotifierOptions} from 'angular-notifier';
 import {AUTH_DATA} from '../environments/environment';
+import { DynamicDirective } from './core/dinamyc.directive';
+import { WserviceCardComponent } from './core/components/wservice-card.component';
+import { FormatoFechaPipe } from './core/pipes/formato-fecha.pipe';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -96,6 +99,9 @@ const customNotifierOptions: NotifierOptions = {
     AppHeaderComponent,
     SpinnerComponent,
     AppSidebarComponent,
+    DynamicDirective,
+    WserviceCardComponent,
+    FormatoFechaPipe
   ],
   imports: [
     BrowserModule, // cualquier importacion de Modulos de angular.material.io hacerlos debajo de BrowserModule

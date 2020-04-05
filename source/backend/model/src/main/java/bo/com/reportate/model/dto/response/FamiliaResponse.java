@@ -34,6 +34,7 @@ public class FamiliaResponse implements Serializable {
     private MunicipioResponse municipio;
     private List<PacienteResponse> pacientes = new ArrayList<>();
 
+
     public FamiliaResponse(Familia familia){
         this.id = familia.getId();
         this.nombre = familia.getNombre();
@@ -48,9 +49,12 @@ public class FamiliaResponse implements Serializable {
             BeanUtils.copyProperties(familia.getMunicipio(),this.municipio);
         }
         if(familia.getPacientes() != null && !familia.getPacientes().isEmpty()){
-            familia.getPacientes().forEach(paciente -> pacientes.add(new PacienteResponse(paciente.getId(),
-                    paciente.getNombre(), paciente.getEdad(), paciente.getGenero(), paciente.getGestacion(),
-                    paciente.getTiempoGestacion())));
+            familia.getPacientes().forEach(paciente -> {
+                assert paciente.getControlDiarios() != null;
+                pacientes.add(new PacienteResponse(paciente.getId(),
+                        paciente.getNombre(), paciente.getEdad(), paciente.getGenero(), paciente.getGestacion(),
+                        paciente.getTiempoGestacion(), (paciente.getControlDiarios() != null && !paciente.getControlDiarios().isEmpty())));
+            });
         }
 
     }

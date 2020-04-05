@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+    <groupId>bo.com.reportate.backoffice</groupId>
+	<artifactId>back-office</artifactId>
+	<version>1.0</version>
+	<packaging>pom</packaging>
+	<name>back-offic</name>
+	<description>Aplicacion web backoffice de SFE</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+		<!--Jenkins-->
+		<jboss-home>/opt/jboss-eap.7.2</jboss-home>
+		<jboss-hostname>https://10.0.6.10</jboss-hostname>
+		<jboss-port>8443</jboss-port>
+		<jboss-username>admin</jboss-username>
+		<jboss-password>Abc123**</jboss-password>
+	</properties>
+
+    <modules>
+		<module>back-office-ui</module>
+		<module>reportate-ui</module>
+    </modules>
+
+</project>

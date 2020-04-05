@@ -2,6 +2,7 @@
   "name": "reportate",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/fo-reportate-ui/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -10,6 +11,7 @@
     "axios": "^0.19.2",
     "babel-plugin-import": "^1.13.0",
     "customize-cra": "^0.9.1",
+    "history": "^4.10.1",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "node-sass": "^4.13.1",

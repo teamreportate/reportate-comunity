@@ -48,7 +48,7 @@ public class FamiliaController {
         try {
             FamiliaMovilResponseDto responseDto = this.familiaService.save(userDetails,familiaRequest.getDepartamentoId(), familiaRequest.getMunicipioId(),familiaRequest.getNombre(),
                     familiaRequest.getTelefono(),familiaRequest.getDireccion(),familiaRequest.getLatitud(),
-                    familiaRequest.getLongitud(),familiaRequest.getCiudad(),familiaRequest.getZona());
+                    familiaRequest.getLongitud(),familiaRequest.getCiudad(),familiaRequest.getZona(), familiaRequest.getCentroSaludId());
             log.info("Se registro de manera correcta la familia: {}",familiaRequest.getNombre());
             logService.info(Process.REGISTRO_FAMILIA,"Se registro de manera correcta la familia: {}",familiaRequest.getNombre());
             return ok(responseDto);

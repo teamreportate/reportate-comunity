@@ -6,8 +6,11 @@ import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.MuUsuario;
 import bo.com.reportate.model.dto.DepartamentoDto;
 import bo.com.reportate.model.dto.DepartamentoUsuarioDto;
+import bo.com.reportate.model.dto.response.ObjetoResponseDto;
+import bo.com.reportate.repository.CentroSaludRepository;
 import bo.com.reportate.repository.DepartamentoRepository;
 import bo.com.reportate.repository.DepartamentoUsuarioRepository;
+import bo.com.reportate.repository.MunicipioRepository;
 import bo.com.reportate.service.DepartamentoService;
 import bo.com.reportate.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,8 @@ import java.util.List;
 public class DepartamentoServiceImpl implements DepartamentoService {
     @Autowired private DepartamentoRepository departamentoRepository;
     @Autowired private DepartamentoUsuarioRepository departamentoUsuarioRepository;
+    @Autowired private MunicipioRepository municipioRepository;
+    @Autowired private CentroSaludRepository centroSaludRepository;
 
     @Override
     public Departamento findById(Long departamentoId) {
@@ -42,6 +47,7 @@ public class DepartamentoServiceImpl implements DepartamentoService {
     public List<DepartamentoDto> findAllConMunicipio() {
         return departamentoRepository.cargarConMunicipio();
     }
+
 
     @Override
     public Departamento save(Departamento departamento) {
@@ -89,7 +95,16 @@ public class DepartamentoServiceImpl implements DepartamentoService {
 
     @Override
     public List<DepartamentoUsuarioDto> listarAsignados(Authentication userDetails) {
-        MuUsuario usuario = (MuUsuario) userDetails;
-        return departamentoUsuarioRepository.listarAsignados(usuario);
+        MuUsuario user = (MuUsuario) userDetails.getPrincipal();
+        return departamentoUsuarioRepository.listarAsignados(user);
+    }
+
+    @Override
+    public ObjetoResponseDto listarDepartamentoMunicipioCentroSalud() {
+        ObjetoResponseDto response = new ObjetoResponseDto();
+        response.setDepartamentos(this.departamentoRepository.listarDepartamento());
+        response.setMunicipios(this.municipioRepository.listaMunicipios());
+        response.setCentrosSalud(this.centroSaludRepository.listaCentrosSalud());
+        return response;
     }
 }

@@ -2,6 +2,7 @@ package bo.com.reportate.model.dto;
 
 import bo.com.reportate.model.Municipio;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -15,7 +16,7 @@ import java.io.Serializable;
  * @Package :bo.com.reportate.model
  * @Copyright :MC4
  */
-@Setter @Getter
+@Setter @Getter @NoArgsConstructor
 public class MunicipioUsuarioDto implements Serializable {
     private Long id;
     private String nombre;

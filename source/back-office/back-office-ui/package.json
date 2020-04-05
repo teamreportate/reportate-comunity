@@ -7,7 +7,7 @@
         "start": "ng serve -o",
         "install-dependences": "npm install",
         "install-dev-dependences": "npm install --save-dev",
-        "build-production": "ng build --prod --base-href=/clic/",
+        "build-production": "ng build --prod --base-href=/bo-reportate/",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e"

@@ -7,6 +7,7 @@ import bo.com.reportate.model.dto.DepartamentoUsuarioDto;
 import bo.com.reportate.model.dto.MunicipioUsuarioDto;
 import bo.com.reportate.model.enums.EstadoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -30,6 +31,13 @@ public interface MunicipioUsuarioRepository extends JpaRepository<MunicipioUsuar
             "AND u.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<MunicipioUsuarioDto> listarMunicipiosAsignados(@Param("username") String username);
 
+    @Query("SELECT new bo.com.reportate.model.dto.MunicipioUsuarioDto(mu.municipio.id, mu.municipio.nombre, true, mu.municipio.departamento.id) " +
+            "from MunicipioUsuario mu left join mu.muUsuario u " +
+            "where u.id =:userId " +
+            "AND mu.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND u.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
+    List<MunicipioUsuarioDto> listarMunicipiosAsignados(@Param("userId") Long userId);
+
     @Query("SELECT new bo.com.reportate.model.dto.MunicipioUsuarioDto(mu) " +
             "from Municipio mu WHERE mu NOT IN (SELECT mud FROM MunicipioUsuario mud INNER JOIN mud.muUsuario u " +
             " WHERE u.username =:username " +
@@ -37,6 +45,14 @@ public interface MunicipioUsuarioRepository extends JpaRepository<MunicipioUsuar
             " AND mud.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO) AND mu.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<MunicipioUsuarioDto> listarMunicipiosNoAsignados(@Param("username") String username);
 
+    @Query("SELECT new bo.com.reportate.model.dto.MunicipioUsuarioDto(mu.id, mu.nombre, false , mu.departamento.id) " +
+            "from Municipio mu WHERE mu NOT IN (SELECT mud FROM MunicipioUsuario mud INNER JOIN mud.muUsuario u " +
+            " WHERE u.id =:userId " +
+            " AND u.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            " AND mud.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO) AND mu.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
+    List<MunicipioUsuarioDto> listarMunicipiosNoAsignados(@Param("userId") Long userId);
+
+    @Modifying
     @Query(" UPDATE MunicipioUsuario du SET du.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE du.muUsuario =:usuario AND du.municipio.id NOT IN(:municipios)")
     void eliminaMunicipiosNoAsignados(@Param("usuario") MuUsuario muUsuario, @Param("municipios") List<Long> municipiosIds);
 }
