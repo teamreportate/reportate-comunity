@@ -51,6 +51,20 @@ public class EnfermedadController {
         }
     }
 
+    @RequestMapping(value = "/filtro", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Listar enfermedades", description = "Listar enfermedades", tags = { "enfermedades" })
+    public ResponseEntity<List<EnfermedadResponse>> listaEnfermedadesParaFiltro() {
+        try {
+            return ok(this.enfermedadService.listNoBase());
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al listar las enfermedades: Causa. {}",e.getMessage());
+            return CustomErrorType.badRequest("Listar Enfermedades", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al listar  enfermedades:",e);
+            return CustomErrorType.serverError("Listar Enfermedades", "Se genero un error al listar enfermedades");
+        }
+    }
+
     @RequestMapping(value = "/{enfermedadId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Enfermedad> getById(@PathVariable("enfermedadId") Long enfermedadId) {
         try {

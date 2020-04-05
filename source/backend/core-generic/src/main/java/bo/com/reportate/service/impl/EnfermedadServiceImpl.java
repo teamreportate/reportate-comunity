@@ -38,6 +38,11 @@ public class EnfermedadServiceImpl implements EnfermedadService {
     }
 
     @Override
+    public List<EnfermedadResponse> listNoBase() {
+        return this.enfermedadRepository.findByEnfermedadBaseFalseAndEstadoOrderByNombreAsc(EstadoEnum.ACTIVO);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<EnfermedadDto> listActivos() {
         return this.enfermedadRepository.findByEstadoOrderByNombreAsc(EstadoEnum.ACTIVO);

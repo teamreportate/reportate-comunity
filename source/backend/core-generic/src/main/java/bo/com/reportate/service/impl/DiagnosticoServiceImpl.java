@@ -39,6 +39,7 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
     @Override
     @Transactional(readOnly = true)
     public Page<DiagnosticoResponseDto> listarDiagnostico(Date from, Date to, Long departamentoId, EstadoDiagnosticoEnum estadoDiagnostico, Long enfermedadId, Pageable pageable) {
+
         Departamento departamento = this.departamentoRepository.findByIdAndEstado(departamentoId, EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontró el departamento seleccionado"));
         Enfermedad enfermedad = this.enfermedadRepository.findByIdAndEstado(enfermedadId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontró la enfermedad seleccionado"));
 

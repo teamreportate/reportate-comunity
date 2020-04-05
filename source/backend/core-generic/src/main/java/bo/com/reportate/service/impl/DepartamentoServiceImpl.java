@@ -97,7 +97,7 @@ public class DepartamentoServiceImpl implements DepartamentoService {
 
     @Override
     public List<DepartamentoUsuarioDto> listarAsignados(Authentication userDetails) {
-        MuUsuario usuario = (MuUsuario) userDetails;
-        return departamentoUsuarioRepository.listarAsignados(usuario);
+        MuUsuario user = (MuUsuario) userDetails.getPrincipal();
+        return departamentoUsuarioRepository.listarAsignados(user);
     }
 }

@@ -23,7 +23,7 @@ public interface EnfermedadRepository extends JpaRepository<Enfermedad, Long> {
     Optional<Enfermedad> findByIdAndEstado(Long id, EstadoEnum activo);
     @Query("SELECT new bo.com.reportate.model.dto.response.EnfermedadResponse(e) From Enfermedad e WHERE e.estado =bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<EnfermedadResponse> listarEnfermedadesActivos();
-
+    List<EnfermedadResponse> findByEnfermedadBaseFalseAndEstadoOrderByNombreAsc(EstadoEnum estadoEnum);
     List<EnfermedadDto> findByEstadoOrderByNombreAsc(EstadoEnum estadoEnum);
 
     @Query("SELECT new bo.com.reportate.model.dto.response.EnfermedadResponse(e) " +
