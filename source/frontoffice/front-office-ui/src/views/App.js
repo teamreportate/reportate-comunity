@@ -18,8 +18,13 @@ import Register from "./register/Register";
 import EmailLogin from "./register/Login";
 import DailyData from "./memberData/DailyData";
 import {useSelector} from "react-redux";
+// import {createBrowserHistory} from 'history';
 
 const {Content, Footer} = Layout;
+
+// export const history = createBrowserHistory({
+// 	basename: process.env.PUBLIC_URL
+// });
 
 function App() {
 	const user = useSelector(store => store.auth.user);
@@ -72,7 +77,7 @@ function App() {
 						 md={{span: 12, offset: 6}}
 						 lg={{span: 10, offset: 7}}
 						 xl={{span: 8, offset: 8}}>
-					<Router>
+					<Router basename={process.env.PUBLIC_URL}>
 						<Switch>
 							<Route exact path="/">
 								<Initialize/>
