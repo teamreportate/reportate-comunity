@@ -93,7 +93,7 @@
           <div fxFlex="23">
             <mat-form-field>
               <mat-label>Asignar Grupos</mat-label>
-              <mat-select formControlName="grupos" multiple>
+              <mat-select formControlName="grupos" multiple [ngModel]="selected" (ngModelChange)="selected" >
                 <mat-option *ngFor="let group of groups" [value]="group">{{group.nombre}}</mat-option>
               </mat-select>
             </mat-form-field>
