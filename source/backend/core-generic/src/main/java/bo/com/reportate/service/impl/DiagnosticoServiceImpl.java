@@ -93,17 +93,17 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
     
     @Override
     @Transactional(readOnly = true)
-    public Integer countDiagnosticoByResultadoValoracion(BigDecimal valoracionInicio, BigDecimal valoracionFin, Long departamentoId,Long municipioId,
+    public Integer cantidadDiagnosticoPorResultadoValoracion(BigDecimal valoracionInicio, BigDecimal valoracionFin, Long departamentoId,Long municipioId,
     		String genero, Integer edadInicial, Integer edadFinal){
         Departamento departamento = departamentoId!=null?this.departamentoRepository.findByIdAndEstado(departamentoId, EstadoEnum.ACTIVO).orElse(null):null;
         Municipio municipio = municipioId!=null?this.municipioRepository.findById(municipioId).orElse(null):null;
         GeneroEnum generoEnum= genero.trim().isEmpty()?null:GeneroEnum.valueOf(genero);
-        return diagnosticoRepository.countDiagnosticoByResultadoValoracion(valoracionInicio, valoracionFin, departamento, municipio,generoEnum,edadInicial,edadFinal);
+        return diagnosticoRepository.cantidadDiagnosticoPorResultadoValoracion(valoracionInicio, valoracionFin, departamento, municipio,generoEnum,edadInicial,edadFinal);
     }
 
 	@Override
-	public List<NivelValoracionDto> listarByNivelValoracion(Date from, Date to) {
-		return diagnosticoRepository.listarByNivelValoracion(DateUtil.formatToStart(from),DateUtil.formatToEnd(to));
+	public List<NivelValoracionDto> listarPorNivelValoracion(Date from, Date to) {
+		return diagnosticoRepository.listarPorNivelValoracion(DateUtil.formatToStart(from),DateUtil.formatToEnd(to));
 	}
     
     
