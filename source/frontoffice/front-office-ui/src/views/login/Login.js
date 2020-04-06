@@ -49,7 +49,6 @@ export default () => {
 				});
 			},
 			(data) => {
-				alert(data.detail);
 				dispatch(appConfigSetMessage({text: data.detail}));
 			});
 	};
@@ -69,7 +68,12 @@ export default () => {
 				>
 					<Form.Item label="Nombre de usuario"
 										 name="username"
-										 rules={[{required: true, message: 'Ingresa nombre de usuario'}]}>
+										 rules={[
+											 {
+												 required: true, message: 'Ingresa nombre de usuario',
+												 
+											 }
+										 ]}>
 						<Input placeholder="Introduce en nombre de usuario"/>
 					</Form.Item>
 					<Form.Item label="Contraseña"
@@ -80,7 +84,7 @@ export default () => {
 					<Form.Item>
 						<div style={{display: "flex", flexDirection: "row"}}>
 							<Button type="primary" htmlType="submit"
-											style={{width: '100%'}}>Iniciar</Button>
+											style={{width: '100%'}}>Iniciar sesión</Button>
 						</div>
 					</Form.Item>
 				</Form>
