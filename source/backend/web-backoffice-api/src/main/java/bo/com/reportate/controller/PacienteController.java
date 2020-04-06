@@ -50,7 +50,7 @@ public class PacienteController {
             @Parameter(description = "Objeto paciente para registrar", required = true)
             @RequestBody PacienteRequest pacienteRequest) {
         try {
-            PacienteDto responseDto = this.pacienteService.save(userDetails,pacienteRequest.getNombre(), pacienteRequest.getEdad(),pacienteRequest.getGenero(), pacienteRequest.getGestacion(), pacienteRequest.getTiempoGestacion());
+            PacienteDto responseDto = this.pacienteService.save(userDetails,pacienteRequest.getNombre(), pacienteRequest.getEdad(),pacienteRequest.getGenero(), pacienteRequest.getGestacion(), pacienteRequest.getTiempoGestacion(), pacienteRequest.getOcupacion());
             log.info("Se registro de manera correcta al paciente: {}",pacienteRequest.getNombre());
             logService.info(Process.REGISTRO_FAMILIA,"Se registro de manera correcta el paciente: {}",pacienteRequest.getNombre());
             return ok(responseDto);

@@ -21,7 +21,7 @@ import java.util.List;
  * @Copyright :MC4
  */
 public interface DiagnosticoService {
-    Integer countDiagnosticoByResultadoValoracion(BigDecimal valoracionInicio, BigDecimal valoracionFin, Long departamentoId,Long municipioId,String genero, Integer edadInicial, Integer edadFinal);
-    List<NivelValoracionDto> listarByNivelValoracion(Date from,Date to);
+    Integer cantidadDiagnosticoPorResultadoValoracion(BigDecimal valoracionInicio, BigDecimal valoracionFin, Long departamentoId,Long municipioId,String genero, Integer edadInicial, Integer edadFinal);
+    List<NivelValoracionDto> listarPorNivelValoracion(Date from,Date to);
     Page<DiagnosticoResponseDto> listarDiagnostico(Authentication authentication, Date from, Date to, Long departamentoId, Long municipioId, Long centroSaludId, String nomprePaciente, EstadoDiagnosticoEnum estadoDiagnostico, Long enfermedadId, Pageable pageable);
 }

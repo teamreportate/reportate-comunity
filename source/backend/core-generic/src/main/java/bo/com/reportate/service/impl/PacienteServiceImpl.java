@@ -63,10 +63,11 @@ public class PacienteServiceImpl implements PacienteService {
     @Autowired private UsuarioRepository usuarioRepository;
 
     @Override
-    public PacienteDto save(Authentication userDetails, String nombre, Integer edad, GeneroEnum genero, Boolean gestacion, Integer tiempoGestacion) {
+    public PacienteDto save(Authentication userDetails, String nombre, Integer edad, GeneroEnum genero, Boolean gestacion, Integer tiempoGestacion, String ocupacion) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",nombre, true,100);
         ValidationUtil.throwExceptionIfInvalidNumber("edad",edad,true,-1,120);
         ValidationUtil.throwExceptionIfInvalidNumber("tiempo de gestación",tiempoGestacion,false,-1,41);
+        ValidationUtil.throwExceptionIfInvalidText("ocupación",ocupacion,true,50);
         MuUsuario user = (MuUsuario) userDetails.getPrincipal();
         Familia familia = this.familiaRepository.findFirstByUsuarioIdAndEstadoOrderByIdDesc(user.getId(), EstadoEnum.ACTIVO).orElseThrow(()->new OperationException("No existe ningún registro de familia para el usuario"));
 
@@ -79,6 +80,7 @@ public class PacienteServiceImpl implements PacienteService {
                 .genero(genero)
                 .gestacion(gestacion)
                 .tiempoGestacion(tiempoGestacion)
+                .ocupacion(ocupacion)
                 .familia(familia)
                 .build();
         this.pacienteRepository.save(paciente);

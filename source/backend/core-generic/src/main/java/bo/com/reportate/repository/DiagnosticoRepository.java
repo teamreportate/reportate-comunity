@@ -40,7 +40,7 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
             " AND d.municipio in (:municipios) AND d.centroSalud IN (:centrosSalud)" +
             " AND d.estadoDiagnostico IN (:diagnosticos) " +
             " AND enf IN (:enfermedades) " +
-            " AND LOWER(p.nombre) LIKE :nombre ORDER BY d.id DESC")
+            " AND LOWER(p.nombre) LIKE %:nombre% ORDER BY d.id DESC")
     Page<DiagnosticoResponseDto> listarDiagnostico(
             @Param("fechaInicio") Date date,
             @Param("fechaFin") Date to,
@@ -50,6 +50,24 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
             @Param("diagnosticos") List<EstadoDiagnosticoEnum> diagnosticos,
             @Param("enfermedades") List<Enfermedad> enfermedades,
             @Param("nombre") String nombre,
+            Pageable pageable);
+
+    @Query("SELECT new bo.com.reportate.model.dto.response.DiagnosticoResponseDto(d) " +
+            "FROM Diagnostico d INNER JOIN d.enfermedad enf INNER JOIN d.controlDiario cd " +
+            "INNER JOIN cd.paciente p INNER JOIN p.familia f  " +
+            " WHERE d.createdDate BETWEEN :fechaInicio AND :fechaFin AND d.departamento IN (:departamentos) " +
+            " AND d.municipio in (:municipios) AND d.centroSalud IN (:centrosSalud)" +
+            " AND d.estadoDiagnostico IN (:diagnosticos) " +
+            " AND enf IN (:enfermedades) " +
+            "ORDER BY d.id DESC")
+    Page<DiagnosticoResponseDto> listarDiagnostico(
+            @Param("fechaInicio") Date date,
+            @Param("fechaFin") Date to,
+            @Param("departamentos") List<Departamento> departamentos,
+            @Param("municipios") List<Municipio> municipios,
+            @Param("centrosSalud") List<CentroSalud> centrosSalud,
+            @Param("diagnosticos") List<EstadoDiagnosticoEnum> diagnosticos,
+            @Param("enfermedades") List<Enfermedad> enfermedades,
             Pageable pageable);
 
     @Query("SELECT new bo.com.reportate.model.dto.response.DiagnosticoResponseDto(d) "+
@@ -66,7 +84,7 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
             + "(:genero IS NULL OR p.genero = :genero) AND "
             + "((:edadInicial IS NULL OR p.edad >= :edadInicial) AND (:edadFinal IS NULL OR p.edad <= :edadFinal)) AND "
             + "((:departamento IS NULL OR :departamento = dep) AND (:municipio IS NULL OR :municipio = mun))")
-    Integer countDiagnosticoByResultadoValoracion(
+    Integer cantidadDiagnosticoPorResultadoValoracion(
             @Param("valoracionInicio") BigDecimal valoracionInicio,
             @Param("valoracionFin") BigDecimal valoracionFin,
             @Param("departamento")Departamento departamento,
@@ -82,7 +100,7 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
             + " FROM Diagnostico t WHERE t.createdDate BETWEEN :fechaInicio AND :fechaFin"
             + " GROUP BY t.createdDate"
             + " ORDER BY t.createdDate")
-    List<NivelValoracionDto> listarByNivelValoracion(
+    List<NivelValoracionDto> listarPorNivelValoracion(
             @Param("fechaInicio") Date from,
             @Param("fechaFin") Date to);
 }

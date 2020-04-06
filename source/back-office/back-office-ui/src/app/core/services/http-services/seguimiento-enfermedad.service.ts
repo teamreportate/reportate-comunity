@@ -18,9 +18,15 @@ export class SeguimientoEnfermedadService {
   constructor(private httpClient: HttpClient) {
   }
 
-  filterSeguimientoEnfermedad(enfermedadId: string, clasificacion: string, departamentoId: string, initial: string, final: string, page: number, size: number): Observable<HttpResponse<any>> {
-    const url = Constantes.baseUri + Constants.diagnosticoApi +  `/listar-filtro/${page}/${size}?from=${initial}&to=${final}&departamentoId=${enfermedadId}&clasificacion=${clasificacion}&enfermedadId=${departamentoId}`;
+  // tslint:disable-next-line:max-line-length
+  filterSeguimientoEnfermedad(nombrePaciente: string, centroSaludId: number, municipioID: number, enfermedadId: number, clasificacion: string, departamentoId: number, initial: string, final: string, page: number, size: number): Observable<HttpResponse<any>> {
+    // tslint:disable-next-line:max-line-length
+    const url = Constantes.baseUri + Constants.diagnosticoApi + `/listar-filtro/${page}/${size}?from=${initial}&to=${final}&departamentoId=${departamentoId}&municipioID=${municipioID}&centroSaludId=${centroSaludId}&nombrePaciente=${nombrePaciente}&clasificacion=${clasificacion}&enfermedadId=${enfermedadId}`;
     return this.httpClient.get(url, {observe: 'response'});
   }
 
+  getListDepartamentoMunicipioCentros(): Observable<HttpResponse<any>> {
+    const url = Constantes.baseUri + Constants.listDiagnostico;
+    return this.httpClient.get<HttpResponse<any>>(url, {observe: 'response'});
+  }
 }

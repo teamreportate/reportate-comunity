@@ -84,9 +84,9 @@ public class DiagnosticoController {
         }
     }
     
-    @RequestMapping(value = "/count-diagnostico-by-valoracion",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/cantidad-diagnostico-por-valoracion",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Contabilizar los diagnosticos por valoración", description = "Contabilizar los diagnosticos por valoración", tags = { "cantidad diagnosticos por valoración" })
-    public ResponseEntity<Integer> countDiagnosticoByValoracion(
+    public ResponseEntity<Integer> cantidadDiagnosticoPorValoracion(
             @Parameter(description = "Valoración inicial para el filtro", required = true)
             @RequestParam("from") Long from,
             @Parameter(description = "Valoración final para el filtro", required = true)
@@ -102,7 +102,7 @@ public class DiagnosticoController {
             @Parameter(description = "Edad final para el filtro", required = false)
             @RequestParam("edadFinal") Integer edadFinal) {
         try {
-            return ok(this.diagnosticoService.countDiagnosticoByResultadoValoracion(BigDecimal.valueOf(from), BigDecimal.valueOf(to), departamentoId, municipioId,genero,edadInicial,edadFinal));
+            return ok(this.diagnosticoService.cantidadDiagnosticoPorResultadoValoracion(BigDecimal.valueOf(from), BigDecimal.valueOf(to), departamentoId, municipioId,genero,edadInicial,edadFinal));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al contabilizar los diagnosticos: Causa. {}",e.getMessage());
             return CustomErrorType.badRequest("Contabilizar Diagnosticos", e.getMessage());
@@ -111,15 +111,15 @@ public class DiagnosticoController {
             return CustomErrorType.serverError("Contabilizar Diagnosticos", "Se genero un error al contabilizar los diagnosticos");
         }
     }
-    @RequestMapping(value = "/listar-by-valoracion",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/listar-por-valoracion",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Agrupar los diagnosticos por valoración", description = "Agrupar los diagnosticos por valoración", tags = { "grupos de diagnosticos por valoración" })
-    public ResponseEntity<NivelValoracionListDto> listarByNivelValoracion(
+    public ResponseEntity<NivelValoracionListDto> listarPorNivelValoracion(
     		@Parameter(description = "Fecha inicio para el filtro", required = true)
             @RequestParam("from") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_PARAM_URL) Date from,
             @Parameter(description = "Fecha fin para el filtro", required = true)
             @RequestParam("to") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_PARAM_URL) Date to) {
         try {
-            return ok(new NivelValoracionListDto(this.diagnosticoService.listarByNivelValoracion(from, to)));
+            return ok(new NivelValoracionListDto(this.diagnosticoService.listarPorNivelValoracion(from, to)));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al agrupar los diagnosticos: Causa. {}",e.getMessage());
             return CustomErrorType.badRequest("Agrupar Diagnosticos", e.getMessage());
