@@ -39,7 +39,7 @@ export class UserComponent extends ClicComponent implements OnInit {
   userId: number;
 
   groups: AuthGroup[] = [];
-  selected: string[] = [];
+  selected = [];
 
   departments: Department[] = [];
   municipalities: Municipaly[] = [];
@@ -137,10 +137,6 @@ export class UserComponent extends ClicComponent implements OnInit {
       this.blockUI.stop();
       if (error) this.notifierError(error);
     });
-  }
-
-  view() {
-    console.log(this.selected);
   }
 
   getGroups() {
