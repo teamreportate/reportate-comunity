@@ -1,22 +1,13 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Button} from 'antd';
 
 import FamilyList from "./FamilyList";
 import {useHistory} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {appConfigSetMessage} from "../../store/appConfig/actions";
 import {FaHospitalAlt, FaNotesMedical, FaPhone} from "react-icons/fa";
-import Modal from "antd/es/modal";
 
 
 export default () => {
-	let history    = useHistory();
-	const dispatch = useDispatch();
-	
-	
-	useEffect(() => {
-		//TODO validate if login redirect to dashboard, else redirect to loginpage
-	}, []);
+	let history = useHistory();
 	
 	const goFaq = () => {
 		history.push('/faq');
@@ -26,61 +17,62 @@ export default () => {
 		<FamilyList/>
 		<hr/>
 		<div style={{display: 'flex'}}>
-			<Button size={'large'} type="default" className='options' style={styles.button}>
-				<FaHospitalAlt style={{height: 30, width: 30, margin: 5}}/>
-				Centros de atencion
+			<Button size={'large'} type="default" className='options'
+							style={{...styles.button, marginRight: 8, marginBottom: 8}}>
+				<FaHospitalAlt style={{height: 30, width: 30, margin: 5, color: '#A3BF49'}}/>
+				<span style={{color: '#A3BF49'}}>Centros de atención</span>
 			</Button>
-			<Button size={'large'} type="default" className='options' style={styles.button} onClick={goFaq}>
-				<FaNotesMedical style={{height: 30, width: 30, margin: 5}}/>
-				Recomendaciones
+			<Button size={'large'} type="default" className='options'
+							style={{...styles.button, marginLeft: 8, marginBottom: 8}}
+							onClick={goFaq}>
+				<FaNotesMedical style={{height: 30, width: 30, margin: 5, color: '#A3BF49'}}/>
+				<span style={{color: '#A3BF49'}}>Recomendaciones</span>
 			</Button>
 		</div>
 		
-		<div style={{display: 'flex',}}>
+		<div>
 			<Button size={'large'} type="primary"
 							className='phone'
-							style={styles.phone}
+							style={{...styles.phone}}
 							onClick={() => {
 								window.open("tel:800101104");
 							}}
 			>
-				<FaPhone/>
+				<FaPhone style={{margin: 5}}/>
 				<div>
 					<small>Ministerio de Salud</small>
 					<p style={{margin: 0}}>800-101104</p>
 				</div>
 			</Button>
-			
 			<Button size={'large'} type="primary"
 							className='phone'
-							style={styles.phone}
+							style={{...styles.phone}}
 							onClick={() => {
 								window.open("tel:800148139");
 							}}
 			>
-				<FaPhone/>
+				<FaPhone style={{margin: 5}}/>
 				<div>
 					<small>Gobernación de Santa Cruz</small>
 					<p style={{margin: 0}}>800-148139</p>
 				</div>
 			</Button>
 		</div>
-	
 	</div>;
 }
 
 const styles = {
 	phone : {
-		flex          : 1,
-		margin        : 8,
+		width         : '100%',
+		marginTop     : 8,
+		marginBottom  : 8,
 		display       : 'flex',
-		justifyContent: 'space-between',
+		justifyContent: 'left',
 		alignItems    : 'center',
-		textAlign     : 'right'
+		textAlign     : 'left'
 	},
 	button: {
 		flex         : 1,
-		margin       : 8,
 		display      : 'flex',
 		flexDirection: 'column',
 		alignItems   : 'center',
