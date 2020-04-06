@@ -212,6 +212,11 @@ export class AccessService {
     return this.http.get<HttpResponse<any>>(url, {observe: 'response'});
   }
 
+  requestCompleteDepartmentsList(): Observable<HttpResponse<any>> {
+    const url = Constantes.baseUri + Constants.departamentosApi + '/departamento-municipio-centro-salud';
+    return this.http.get<HttpResponse<any>>(url, {observe: 'response'});
+  }
+
   requestAsignedMunicipalitiesList(): Observable<HttpResponse<any>> {
     const url = Constantes.baseUri + Constants.userApi + '/municipios-asignados';
     return this.http.get<HttpResponse<any>>(url, {observe: 'response'});

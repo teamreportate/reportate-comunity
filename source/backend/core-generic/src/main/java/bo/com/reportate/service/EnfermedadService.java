@@ -18,6 +18,11 @@ import java.util.List;
 public interface EnfermedadService {
     List<EnfermedadResponse> list();
 
+    /**
+     * Lista de enfermedades que no son Base, para filtro de enfermedades
+     * @return
+     */
+    List<EnfermedadResponse> listNoBase();
     List<EnfermedadDto> listActivos();
     Enfermedad save(EnfermedadDto enfermedadDto);
     Enfermedad findById(Long enfermedadId);

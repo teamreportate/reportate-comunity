@@ -16,7 +16,7 @@ import org.springframework.security.core.Authentication;
  */
 public interface FamiliaService {
     void save(Familia familia);
-    FamiliaMovilResponseDto save(Authentication user, Long departamentoId, Long municipioId, String nombre, String telefono, String direccion, Double latitud, Double longitud, String ciudad, String zona);
+    FamiliaMovilResponseDto save(Authentication user, Long departamentoId, Long municipioId, String nombre, String telefono, String direccion, Double latitud, Double longitud, String ciudad, String zona, Long centroSaludId);
     FamiliaMovilResponseDto update(Long departamentoId, Long municipioId, Long familiaId, String nombre, String telefono, String direccion, String ciudad, String zona);
     void delete(Long familiaId);
     FamiliaResponse getInfo(Authentication authentication);

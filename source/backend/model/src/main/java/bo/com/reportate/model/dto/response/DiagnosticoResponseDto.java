@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -21,6 +22,7 @@ import java.util.Date;
 @Getter @Setter @NoArgsConstructor @Data
 public class DiagnosticoResponseDto implements Serializable {
     private Long id;
+    private Long pacienteId;
     private Date fechaRegistro;
     private String nombrePaciente;
     private String telefono;
@@ -32,9 +34,12 @@ public class DiagnosticoResponseDto implements Serializable {
     private String departamento;
     private String municipio;
     private String clasificacion;
+    private String enfermedad;
+    private BigDecimal valoracion;
 
     public DiagnosticoResponseDto(Diagnostico diagnostico){
         this.id = diagnostico.getId();
+        this.pacienteId = diagnostico.getControlDiario().getPaciente().getId();
         this.fechaRegistro = diagnostico.getCreatedDate();
         this.nombrePaciente = diagnostico.getControlDiario().getPaciente().getNombre();
         this.telefono = diagnostico.getControlDiario().getPaciente().getFamilia().getTelefono();
@@ -50,5 +55,8 @@ public class DiagnosticoResponseDto implements Serializable {
             this.municipio = diagnostico.getControlDiario().getPaciente().getFamilia().getMunicipio().getNombre();
         }
         this.clasificacion = diagnostico.getEstadoDiagnostico().name();
+
+        this.enfermedad=diagnostico.getEnfermedad().getNombre();
+        this.valoracion=diagnostico.getResultadoValoracion();
     }
 }

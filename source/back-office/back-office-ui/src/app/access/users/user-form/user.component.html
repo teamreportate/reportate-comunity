@@ -124,11 +124,10 @@
               <div fxLayout="row wrap" fxLayoutAlign="space-between">
                 <div fxFlex="25">
                   <mat-form-field>
-                    <mat-label>Filtrar por departamento</mat-label>
-                    <mat-select required aria-placeholder="seleccionar" [(ngModel)]="selectedDepartment"
-                      (ngModelChange)="filterMunicipalities(selectedDepartment)">
-                      <mat-option [value]="selectedDepartment">Ninguno</mat-option>
-                      <mat-option [value]="item.id" *ngFor="let item of filteredDepartments;">{{item.nombre}}</mat-option>
+                    <mat-label>Mostrar por departamento</mat-label>
+                    <mat-select required aria-placeholder="seleccionar" [(ngModel)]="selectedDepartment">
+                      <mat-option [value]="''">Todos</mat-option>
+                      <mat-option [value]="item.id" *ngFor="let item of enableDepartments;">{{item.nombre}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -140,7 +139,7 @@
               </div>
               <hr>
               <div fxLayout="row wrap">
-                <div fxFlex="25" *ngFor="let item of filteredMunicipalities; let i = index;">
+                <div fxFlex="25" *ngFor="let item of enableMunicipalities| filterBy:selectedDepartment:'departamentoId'; let i = index;">
                   <mat-checkbox class="example-margin" [(ngModel)]="item.asignado">{{item.nombre}}</mat-checkbox>
                 </div>
               </div>
@@ -152,21 +151,19 @@
               <div fxLayout="row wrap" fxLayoutAlign="space-between">
                 <div fxFlex="25">
                   <mat-form-field>
-                    <mat-label>Filtrar por departamento</mat-label>
-                    <mat-select required aria-placeholder="seleccionar" [(ngModel)]="selectedDepartment"
-                      (ngModelChange)="filterMunicipalities(selectedDepartment)">
-                      <mat-option [value]="selectedDepartment">Ninguno</mat-option>
-                      <mat-option [value]="item.id" *ngFor="let item of filteredDepartments;">{{item.nombre}}</mat-option>
+                    <mat-label>Mostrar por departamento</mat-label>
+                    <mat-select required aria-placeholder="seleccionar" [(ngModel)]="selectedDepartment">
+                      <mat-option [value]="''">Todos</mat-option>
+                      <mat-option [value]="item.id" *ngFor="let item of enableDepartments;">{{item.nombre}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
                 <div fxFlex="25">
                   <mat-form-field>
-                    <mat-label>Filtrar por municipio</mat-label>
-                    <mat-select required aria-placeholder="seleccionar" [(ngModel)]="selectedMunicipaly"
-                      (ngModelChange)="filterSaludCetres(selectedMunicipaly)">
-                      <mat-option [value]="selectedMunicipaly">Ninguno</mat-option>
-                      <mat-option [value]="item.id" *ngFor="let item of filteredMunicipalities;">{{item.nombre}}
+                    <mat-label>Mostrar por municipio</mat-label>
+                    <mat-select required aria-placeholder="seleccionar" [(ngModel)]="selectedMunicipaly">
+                      <mat-option [value]="''">Todos</mat-option>
+                      <mat-option [value]="item.id" *ngFor="let item of enableMunicipalities; ">{{item.nombre}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -179,7 +176,7 @@
               </div>
               <hr>
               <div fxLayout="row wrap">
-                <div fxFlex="25" *ngFor="let item of filteredSaludCentres; let i = index;">
+                <div fxFlex="25" *ngFor="let item of enableSaludCentres | filterBy:selectedMunicipaly:'municipioId'; let i = index;">
                   <mat-checkbox class="example-margin" [(ngModel)]="item.asignado">{{item.nombre}}</mat-checkbox>
                 </div>
               </div>

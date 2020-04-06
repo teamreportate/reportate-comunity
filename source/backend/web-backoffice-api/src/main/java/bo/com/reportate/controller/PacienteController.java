@@ -3,6 +3,8 @@ package bo.com.reportate.controller;
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.dto.PacienteDto;
+import bo.com.reportate.model.dto.response.FamiliaResponse;
+import bo.com.reportate.model.dto.response.FichaEpidemiologicaResponse;
 import bo.com.reportate.model.enums.Process;
 import bo.com.reportate.service.LogService;
 import bo.com.reportate.service.PacienteService;
@@ -104,6 +106,22 @@ public class PacienteController {
             log.error("Se genero un error al registrar el control diario del paciente : {}",pacienteId,e);
             logService.error(Process.REGISTRO_FAMILIA,"Se genero un error al registrar el control diario del paciente : {}",pacienteId);
             return CustomErrorType.serverError("Control Diario", "Se genero un error al registrar el control diario del paciente: " + pacienteId);
+        }
+    }
+
+    @RequestMapping(value = "/ficha-epidemiologica/{pacienteId}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Obtiene información  la ficha Epidemiologica del paciente", description = "Obtiene información  la ficha Epidemiologica del paciente segun pacienteId", tags = { "paciente" })
+    public ResponseEntity<FichaEpidemiologicaResponse> getFichaEpidemiologica(@PathVariable("pacienteId") Long pacienteId) {
+        try {
+            return ok(this.pacienteService.getFichaEpidemiologica(pacienteId));
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al obtener la ficha Epidemiologica. Causa. {} ",e.getMessage());
+            //logService.error(Process.REGISTRO_FAMILIA,"Se genero un error al obtener la ficha Epidemiologica . Causa. {}",e.getMessage());
+            return CustomErrorType.badRequest("Obtener Ficha Epidemiologica", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al obtener la familia del usuario",e);
+            //logService.error(Process.REGISTRO_FAMILIA,"Se genero un error al obtener la ficha Epidemiologica");
+            return CustomErrorType.serverError("Obtener Ficha Epidemiologica", "Se genero un error al obtener la ficha Epidemiologica");
         }
     }
 }
