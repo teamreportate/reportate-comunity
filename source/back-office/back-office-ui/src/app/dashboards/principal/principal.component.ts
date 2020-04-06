@@ -55,6 +55,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
       to: new FormControl(this.to, Validators.compose([Validators.required])),
     }, {
     });
+    this.getByValorationRequest();
   }
 
   getByValorationRequest() {
