@@ -169,6 +169,8 @@ export default ({newMember}) => {
 							onChange={(e) => {
 								if (form.getFieldValue('occupation') === 'otro') {
 									setOther(true);
+								} else {
+									setOther(false);
 								}
 								
 							}}
