@@ -108,7 +108,7 @@ export class RolesComponent extends ClicComponent implements OnInit {
   }
 
   configRole(role: AuthRole) {
-    localStorage.setItem('ROLE_ID', String(role.id));
+    sessionStorage.setItem('ROLE_ID', String(role.id));
     this.router.navigate(['accesos/roles/config']);
   }
 

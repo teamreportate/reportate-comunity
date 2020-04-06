@@ -36,12 +36,12 @@ export interface Menu {
 export class MenuItems {
   public items:Menu[] = [];
   constructor(private resourceService: ResourceService) {
-    const menu = JSON.parse(localStorage.getItem('objT'));
+    const menu = JSON.parse(sessionStorage.getItem('objT'));
     if (menu) this.items = this.resourceService.getMenu(menu);
   }
 
   menu(menu) {
-    localStorage.setItem('objT', JSON.stringify({menu}));
+    sessionStorage.setItem('objT', JSON.stringify({menu}));
     this.items = this.resourceService.getMenu({menu});
   }
 }

@@ -64,13 +64,13 @@ export class RoleUserGroupComponent extends ClicComponent implements OnInit, Aft
   }
 
   ngOnInit() {
-    this.roleId = localStorage.getItem('ROLE_ID');
+    this.roleId = sessionStorage.getItem('ROLE_ID');
     this.parents = [];
     this.listAdd = [];
     this.initialListener(this.changeDetector, this.media);
     this.selectedResourceList = this.selectedAddResourceList = [];
     this.asignedResource = true;
-    const roleId: string = localStorage.getItem('ROLE_ID');
+    const roleId: string = sessionStorage.getItem('ROLE_ID');
 
     this.accessService.requestRoleResources(roleId).subscribe(response => {
       this.asignedResourceList = this.asignedResourceTmp = response.body;
@@ -137,7 +137,7 @@ export class RoleUserGroupComponent extends ClicComponent implements OnInit, Aft
     else if (!busquedaAsignados && checked) this.listAdd.push({nuevo: true, id, asignacionId: item.id});
   }
   // onCheck({checked}, item) {
-  //   const roleId: string = localStorage.getItem('ROLE_ID');
+  //   const roleId: string = sessionStorage.getItem('ROLE_ID');
   //   const busqueda = this.listAdd.find(resource => resource.recursoId === item.id);
   //   if (busqueda) {
   //     const index2 = this.listAdd.indexOf(busqueda);
@@ -171,7 +171,7 @@ export class RoleUserGroupComponent extends ClicComponent implements OnInit, Aft
   }
 
   asignResources() {
-    const roleId: string = localStorage.getItem('ROLE_ID');
+    const roleId: string = sessionStorage.getItem('ROLE_ID');
     const callback = () => { return this.accessService.requestAddRoleResources(roleId, this.selectedAddResourceList); };
     const textContent = `Confirmar para agregar los recursos seleccionados al rol`;
     this.action = this.ADD_RES;
@@ -179,7 +179,7 @@ export class RoleUserGroupComponent extends ClicComponent implements OnInit, Aft
   }
 
   removeResources() {
-    const roleId: string = localStorage.getItem('ROLE_ID');
+    const roleId: string = sessionStorage.getItem('ROLE_ID');
     const callback = () => { return this.accessService.requestRemoveResourcesFromRole(roleId, this.selectedResourceList); };
     const textContent = `Confirmar para remover los recursos seleccionados del rol`;
     this.action = this.DEL_RES;

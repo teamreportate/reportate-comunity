@@ -26,11 +26,11 @@ export class AuthenticationService {
   }
 
   isLoggedIn() {
-   return !!localStorage.getItem(AUTH_DATA);
+   return !!sessionStorage.getItem(AUTH_DATA);
   }
 
   changePassword(data: any): Observable<HttpResponse<any>> {
-    const user = JSON.parse(localStorage.getItem(AUTH_DATA)).username;
+    const user = JSON.parse(sessionStorage.getItem(AUTH_DATA)).username;
     const url = Constantes.baseUri + 'auth/change-password';
     return this.httpClient.post<HttpResponse<any>>(url, JSON.stringify(data), { observe: 'response'});
   }

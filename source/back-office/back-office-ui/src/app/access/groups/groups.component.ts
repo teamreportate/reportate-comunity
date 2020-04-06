@@ -72,7 +72,7 @@ export class GroupsComponent extends ClicComponent implements OnInit {
   }
 
   configGroup(row: AuthGroup) {
-    localStorage.setItem('GROUP_ID', String(row.id));
+    sessionStorage.setItem('GROUP_ID', String(row.id));
     this.router.navigate(['accesos/groups/config']);
   }
 
@@ -100,7 +100,7 @@ export class GroupsComponent extends ClicComponent implements OnInit {
   }
 
   editGroup(row: AuthGroup) {
-    localStorage.setItem('GROUP_ID', String(row.id));
+    sessionStorage.setItem('GROUP_ID', String(row.id));
     const i = this.groupList.indexOf(row);
     this.matDialog.open(EditGroupDialogComponent, this.dialogConfig(row))
       .afterClosed()
