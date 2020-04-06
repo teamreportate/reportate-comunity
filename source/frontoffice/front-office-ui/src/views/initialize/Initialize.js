@@ -30,22 +30,6 @@ export default () => {
 		} else {
 			history.push('/login');
 		}
-		// ServiceAuth.loginEmail({
-		// 		username: 'admin',
-		// 		password: 'admin'
-		// 	},
-		// 	(result) => {
-		// 		// user valid
-		// 		localStorage.setItem('token', result.token);
-		// 		dispatch(authSetUser({...result, logged: true}));
-		// 		// getting family information
-		// 		ServiceFamily.getFamily(family => {
-		// 			dispatch(familySetData({
-		// 				...family,
-		// 				fetched: true
-		// 			}));
-		// 		});
-		// 	});
 	}, []);
 	
 	useEffect(() => {

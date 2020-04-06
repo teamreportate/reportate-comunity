@@ -60,7 +60,7 @@ export default () => {
 	
 	return (<div>
 			<div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
-				<img src={Icon} style={{height: 169, width: 120, margin: 'auto'}}/>
+				<img src={Icon} style={{height: 169, width: 120, margin: 'auto'}} alt="Reportate Logo"/>
 				<Form
 					form={form}
 					layout='vertical'
@@ -80,7 +80,7 @@ export default () => {
 					<Form.Item>
 						<div style={{display: "flex", flexDirection: "row"}}>
 							<Button type="primary" htmlType="submit"
-											style={{width: '100%', marginBottom: 8, marginLeft: 8}}>Guardar</Button>
+											style={{width: '100%'}}>Guardar</Button>
 						</div>
 					</Form.Item>
 				</Form>

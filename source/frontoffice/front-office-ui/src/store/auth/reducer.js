@@ -1,13 +1,13 @@
-import {AUTH_SET_USER} from "../actionTypes";
+import {AUTH_LOGOUT, AUTH_SET_USER} from "../actionTypes";
 
-const initialState   = {
+const initialState = {
 	user: {
 		username: '',
 		token   : '',
-		logged   : false,
+		logged  : false,
 	}
 };
-const countryReducer = (state = initialState, action) => {
+const authReducer  = (state = initialState, action) => {
 	switch (action.type) {
 		case AUTH_SET_USER: {
 			return {
@@ -15,8 +15,15 @@ const countryReducer = (state = initialState, action) => {
 				user: action.data,
 			};
 		}
+		case AUTH_LOGOUT: {
+			localStorage.clear();
+			return {
+				...initialState
+			};
+		}
 		default:
 			return state;
 	}
+	
 };
-export default countryReducer;
+export default authReducer;

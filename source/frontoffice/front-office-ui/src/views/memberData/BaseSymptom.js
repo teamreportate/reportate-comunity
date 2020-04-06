@@ -1,10 +1,9 @@
-import {Button, Checkbox, Form, Modal, Select} from "antd";
+import {Button, Checkbox, Form, Modal} from "antd";
 import React from "react";
 import {useHistory} from "react-router-dom";
 
 
-const {Option} = Select;
-export default ({newMember}) => {
+export default () => {
 	let history  = useHistory();
 	const [form] = Form.useForm();
 	

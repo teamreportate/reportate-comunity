@@ -61,15 +61,15 @@ const BaseData = () => {
 			const tempCountries  = [];
 			console.log(values);
 			if (values.sicknesses)
-				values.sicknesses.map(sickness => {
+				values.sicknesses.forEach(sickness => {
 					tempSicknesses.push({id: sickness, nombre: ""});
 				});
 			if (values.symptoms)
-				values.symptoms.map(symptom => {
+				values.symptoms.forEach(symptom => {
 					tempSymptoms.push({id: symptom, respuesta: true, observacion: ""});
 				});
 			if (values.countries)
-				values.countries.map(country => {
+				values.countries.forEach(country => {
 					tempCountries.push({id: country, nombre: ""});
 				});
 			
@@ -86,16 +86,6 @@ const BaseData = () => {
 	
 	const onFinishFailed = errorInfo => {
 		console.log('Failed:', errorInfo);
-	};
-	
-	const tagRender = (props) => {
-		console.log(props);
-		const {label, value, closable, onClose} = props;
-		return (
-			<Tag color={value} closable={closable} onClose={onClose} style={{marginRight: 3}}>
-				{label}
-			</Tag>
-		);
 	};
 	
 	return (

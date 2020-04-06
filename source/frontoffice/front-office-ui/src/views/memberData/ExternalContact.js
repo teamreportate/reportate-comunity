@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
-import {useSelector} from "react-redux";
 import {Button, DatePicker, Form, Radio, Select} from "antd";
 import {useHistory} from "react-router-dom";
-import list from "less/lib/less/functions/list";
 
 export default () => {
 	let history                 = useHistory();
@@ -14,9 +12,6 @@ export default () => {
 		history.push("/add-member");
 	}
 	
-	function handleNextClick() {
-		history.push("/add-member");
-	}
 	
 	function handleEditClick() {
 		history.push("/update-member");
@@ -27,8 +22,6 @@ export default () => {
 		{id: 2, name: "conocido", date: '2020-02-15', country: 'GE'},
 		{id: 3, name: "conocido", date: '2020-03-15', country: 'MX'},
 	];
-	
-	const members = useSelector(store => store.family.members);
 	
 	switch (display) {
 		case "list": {
@@ -136,6 +129,9 @@ export default () => {
 					</Form>
 				</div>
 			);
+		}
+		default: {
+			return null;
 		}
 	}
 	
