@@ -40,7 +40,7 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
     @Autowired private CentroSaludRepository centroSaludRepository;
     @Override
     @Transactional(readOnly = true)
-    public Page<DiagnosticoResponseDto> listarDiagnostico(
+    public Page<DiagnosticoResponseDto>     listarDiagnostico(
             Authentication authentication,
             Date from, Date to, Long departamentoId, Long municipioId, Long centroSaludId, String nomprePaciente,
             EstadoDiagnosticoEnum estadoDiagnostico, Long enfermedadId, Pageable pageable) {

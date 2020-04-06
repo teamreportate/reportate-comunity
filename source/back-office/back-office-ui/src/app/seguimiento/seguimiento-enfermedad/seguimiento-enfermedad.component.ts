@@ -43,6 +43,9 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
   public form: FormGroup;
   private enfermedadId;
   private departamentoId;
+  private municipioID;
+  private centroSaludId;
+  private nombrePaciente;
   private clasificacion;
 
   tempMunicipio: Municipio[] = [];
@@ -69,13 +72,13 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
 
 
   onSearch() {
-    if (!this.form.valid) {
-      this.updateDate();
+    if (this.form.valid) {
       if (this.endDate.isBefore(this.startDate)) {
         const notif = {error: {title: 'Filtrado de Diagnóstico', detail: 'La fecha final no puede ser menor que la fecha inicial'}};
         this.notifierError(notif, 'warning');
         return;
       }
+      this.updateDate();
       this.render = false;
       this.initializePage(20, true);
     }
@@ -84,10 +87,13 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
   selectMunicipio(object: Departamento) {
     this.tempMunicipio = [];
     this.tempCentro = [];
+    this.form.get('municipioID').setValue(0);
+    this.form.get('centroSaludId').setValue(0);
     this.tempMunicipio = this.municipioList.filter((dto: Municipio) => dto.departamentoId === object.id);
   }
   selectCentro(object: Municipio) {
     this.tempCentro = [];
+    this.form.get('centroSaludId').setValue(0);
     this.tempCentro = this.centroList.filter((dto: Centro) => dto.municipioId === object.id);
   }
 
@@ -99,16 +105,16 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
     });
   }
   private initialForm(): FormGroup {
-    this.startDate = moment().subtract(30, 'days');
-    this.endDate = moment();
+    this.startDate = moment().subtract(30, 'days').subtract(4, 'hour');
+    this.endDate = moment().subtract(4, 'hour');
     this.message = '';
     return this.formBuilder.group({
-      enfermedadId: new FormControl('', Validators.compose([Validators.required])),
-      departamentoId: new FormControl('', Validators.compose([Validators.required])),
-      municipioID: new FormControl('', Validators.compose([Validators.required])),
-      centroSaludId: new FormControl('', Validators.compose([Validators.required])),
-      clasificacion: new FormControl('', Validators.compose([Validators.required])),
-      nombrePaciente: new FormControl('', Validators.compose([Validators.required])),
+      enfermedadId: new FormControl(0, Validators.compose([Validators.required])),
+      departamentoId: new FormControl(0, Validators.compose([Validators.required])),
+      municipioID: new FormControl(0, Validators.compose([Validators.required])),
+      centroSaludId: new FormControl(0, Validators.compose([Validators.required])),
+      clasificacion: new FormControl('TODOS', Validators.compose([Validators.required])),
+      nombrePaciente: new FormControl(''),
       from: new FormControl(this.startDate.toDate(), Validators.compose([Validators.required])),
       to: new FormControl(this.endDate.toDate(), Validators.compose([Validators.required])),
     });
@@ -116,9 +122,9 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
 
   setPage(pageInfo: any) {
     this.pageControl.number = pageInfo.offset;
-    this.blockUI.start('Recuperando lista de bitacora...');
+    this.blockUI.start('Recuperando lista de diagnóstico...');
     // tslint:disable-next-line:max-line-length
-    this.seguimientoEnfermedadService.filterSeguimientoEnfermedad(this.enfermedadId, this.clasificacion, this.departamentoId, this.startDate.format('DD/MM/YYYY'), this.endDate.format('DD/MM/YYYY'), this.pageControl.number, this.pageControl.size).subscribe(response => {
+    this.seguimientoEnfermedadService.filterSeguimientoEnfermedad(this.nombrePaciente, this.centroSaludId, this.municipioID, this.enfermedadId, this.clasificacion, this.departamentoId, this.startDate.format('DD/MM/YYYY'), this.endDate.format('DD/MM/YYYY'), this.pageControl.number, this.pageControl.size).subscribe(response => {
       this.pageControl = response.body;
       this.render = true;
       this.blockUI.stop();
@@ -134,6 +140,9 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
     this.startDate = moment(moment.utc(this.form.get('from').value));
     this.endDate = moment(moment.utc(this.form.get('to').value));
     this.departamentoId = this.form.get('departamentoId').value;
+    this.municipioID = this.form.get('municipioID').value;
+    this.centroSaludId = this.form.get('centroSaludId').value;
+    this.nombrePaciente = this.form.get('nombrePaciente').value;
     this.enfermedadId = this.form.get('enfermedadId').value;
     this.clasificacion = this.form.get('clasificacion').value;
   }
