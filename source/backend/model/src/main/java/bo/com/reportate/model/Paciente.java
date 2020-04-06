@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,6 +43,14 @@ public class Paciente extends AbstractAuditableEntity{
     private Boolean gestacion = false;
     @Column(name = "TIEMPO_GESTACION")
     private Integer tiempoGestacion;// los tiempos se toma en cuenta en semanas.
+    @Column(name = "OCUPACION", length = 50)
+    private String ocupacion;
+    @Column(name = "ci", length = 20)
+    private String ci;
+    @Column(name = "FECHA_NACIMIENTO")
+    private Date fechaNacimiento;
+    @Column(name = "CODIGO_SEGURO", length = 30)
+    private String codigoSeguro;
 
     @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

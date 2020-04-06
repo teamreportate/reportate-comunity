@@ -24,4 +24,5 @@ public class PacienteRequest implements Serializable {
     private GeneroEnum genero;
     private Boolean gestacion = false;
     private Integer tiempoGestacion;// los tiempos se toma en cuenta en semanas.
+    private String ocupacion;
 }

@@ -13,13 +13,10 @@ package bo.com.reportate.model;
 public interface Constants {
 
     interface Domain{
-
+        String OCUPACIONES = "OCUPACIONES";
     }
 
     interface Parameters{
-        //Parametros de LDAP
-        String AD_DOMAIN = "AD_DOMAIN";
-        String AD_SECURITY_AUTHENTICATION = "AD_SECURITY_AUTHENTICATION";
 
         //CONFIGURACION DE CORREO
         String MAIL_SMTP_AUTH = "MAIL_SMTP_AUTH";

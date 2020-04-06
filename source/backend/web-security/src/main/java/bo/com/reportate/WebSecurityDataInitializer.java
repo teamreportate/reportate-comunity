@@ -184,30 +184,19 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         MuValorDominio valorDominio;
 
 //        Los parámetros estan clasificados por Grupos, cuando se agregue un parámetro se debe inidicar a que grupo pertenece
-//        MuDominio dominio = this.dominioRepository.findByCodigo(Constants.Domain.DEPARTAMENTOS).orElse(MuDominio.builder()
-//                .codigo(Constants.Domain.DEPARTAMENTOS)
-//                .descripcion("Departamentos de Bolivia")
-//                .build());
-//        this.dominioRepository.save(dominio);
-//
-//        valorDominio = MuValorDominio.builder().dominio(dominio).valor("LA PAZ").descripcion("Departamento de La Paz").build();
-//        this.dominioService.saveValorDominio(valorDominio);
-//        valorDominio = MuValorDominio.builder().dominio(dominio).valor("SANTA CRUZ").descripcion("Departamento de Santa Cruz").build();
-//        this.dominioService.saveValorDominio(valorDominio);
-//        valorDominio = MuValorDominio.builder().dominio(dominio).valor("COCHABAMBA").descripcion("Departamento de Cochabamba").build();
-//        this.dominioService.saveValorDominio(valorDominio);
-//        valorDominio = MuValorDominio.builder().dominio(dominio).valor("TARIJA").descripcion("Departamento de Tarija").build();
-//        this.dominioService.saveValorDominio(valorDominio);
-//        valorDominio = MuValorDominio.builder().dominio(dominio).valor("BENI").descripcion("Departamento de Beni").build();
-//        this.dominioService.saveValorDominio(valorDominio);
-//        valorDominio = MuValorDominio.builder().dominio(dominio).valor("PANDO").descripcion("Departamento de Pando").build();
-//        this.dominioService.saveValorDominio(valorDominio);
-//        valorDominio = MuValorDominio.builder().dominio(dominio).valor("ORURO").descripcion("Departamento de Oruro").build();
-//        this.dominioService.saveValorDominio(valorDominio);
-//        valorDominio = MuValorDominio.builder().dominio(dominio).valor("POTOSI").descripcion("Departamento de Potosi").build();
-//        this.dominioService.saveValorDominio(valorDominio);
-//        valorDominio = MuValorDominio.builder().dominio(dominio).valor("CHUQUISACA").descripcion("Departamento de Chuquisaca").build();
-//        this.dominioService.saveValorDominio(valorDominio);
+        MuDominio dominio = this.dominioRepository.findByCodigo(Constants.Domain.OCUPACIONES).orElse(MuDominio.builder()
+                .codigo(Constants.Domain.OCUPACIONES)
+                .descripcion("Ocupaciones de las personas")
+                .build());
+        this.dominioRepository.save(dominio);
+
+        valorDominio = MuValorDominio.builder().dominio(dominio).valor("Personal de Salud").descripcion("Personal de Salud").build();
+        this.dominioService.saveValorDominio(valorDominio);
+        valorDominio = MuValorDominio.builder().dominio(dominio).valor("Personal de Laboratorio").descripcion("Personal de Salud").build();
+        this.dominioService.saveValorDominio(valorDominio);
+        valorDominio = MuValorDominio.builder().dominio(dominio).valor("Ingeniero").descripcion("Ingeniero").build();
+        this.dominioService.saveValorDominio(valorDominio);
+
         
         log.info("************************* Fin Cargando dominios *************************");
     }

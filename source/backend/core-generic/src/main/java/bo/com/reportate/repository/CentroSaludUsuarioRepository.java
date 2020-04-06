@@ -3,6 +3,7 @@ package bo.com.reportate.repository;
 import bo.com.reportate.model.CentroSalud;
 import bo.com.reportate.model.CentroSaludUsuario;
 import bo.com.reportate.model.MuUsuario;
+import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.dto.CentroSaludUsuarioDto;
 import bo.com.reportate.model.dto.DepartamentoUsuarioDto;
 import bo.com.reportate.model.dto.MunicipioUsuarioDto;
@@ -32,6 +33,22 @@ public interface CentroSaludUsuarioRepository extends JpaRepository<CentroSaludU
             "AND du.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
             "AND u.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<CentroSaludUsuarioDto> listarCentrosSaludAsignados(@Param("username") String username);
+
+    @Query("SELECT new bo.com.reportate.model.dto.CentroSaludUsuarioDto(du.centroSalud.id,du.centroSalud.nombre, true, du.centroSalud.municipio.id) " +
+            "FROM CentroSaludUsuario du INNER JOIN du.muUsuario u " +
+            "WHERE u =:usuario " +
+            "AND du.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND u.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
+    List<CentroSaludUsuarioDto> listarCentrosSaludAsignados(@Param("usuario") MuUsuario muUsuario);
+
+    @Query("SELECT du.centroSalud " +
+            "FROM CentroSaludUsuario du INNER JOIN du.muUsuario u INNER JOIN du.centroSalud.municipio m " +
+            "WHERE u =:usuario " +
+            "AND du.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND u.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO" +
+            " AND m.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND m IN (:municipios)")
+    List<CentroSalud> listarCentrosSaludAsignados(@Param("usuario") MuUsuario muUsuario, @Param("municipios")List<Municipio> municipios);
 
     @Query("SELECT new bo.com.reportate.model.dto.CentroSaludUsuarioDto(du.centroSalud.id, du.centroSalud.nombre, true, du.centroSalud.municipio.id) " +
             "FROM CentroSaludUsuario du INNER JOIN du.muUsuario u " +

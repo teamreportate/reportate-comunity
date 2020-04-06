@@ -38,7 +38,7 @@ public interface DepartamentoUsuarioRepository extends JpaRepository<Departament
             "AND u.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<DepartamentoUsuarioDto> listarDepartamentoAsignados(@Param("userId") Long userId);
 
-    @Query("SELECT new bo.com.reportate.model.dto.DepartamentoUsuarioDto(du.departamento) " +
+    @Query("SELECT new bo.com.reportate.model.dto.DepartamentoUsuarioDto(du.departamento.id, du.departamento.nombre, true) " +
             "FROM DepartamentoUsuario du INNER JOIN du.muUsuario u " +
             "WHERE u=:usuario " +
             "AND du.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
