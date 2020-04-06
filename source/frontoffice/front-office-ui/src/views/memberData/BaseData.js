@@ -1,4 +1,4 @@
-import {Button, Checkbox, Form, Modal, Tabs} from "antd";
+import {Button, Checkbox, Form, Modal, Select, Tabs, Tag} from "antd";
 import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import ServiceAppConfig from "../../services/ServiceAppConfig";
@@ -7,12 +7,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {familySetFirstControl} from "../../store/family/actions";
 import {appConfigSetMessage} from "../../store/appConfig/actions";
 
+const {Option,} = Select;
 const {TabPane} = Tabs;
 
-export default () => {
-	const [step, setStep] = useState("1");
+const BaseData = () => {
+	const [step, setStep]             = useState("1");
 	const [sicknesses, setSicknesses] = useState([]);
 	const [symptoms, setSymptoms]     = useState([]);
+	const [countries, setCountries]   = useState([]);
 	let history                       = useHistory();
 	const [form]                      = Form.useForm();
 	const selectedUser                = useSelector(store => store.family.toUpdate);
@@ -22,6 +24,7 @@ export default () => {
 			console.log(result);
 			setSicknesses(result.enfermedadesBase);
 			setSymptoms(result.sintomas);
+			setCountries(result.paises);
 		}));
 	}, []);
 	
@@ -41,6 +44,8 @@ export default () => {
 	function handleBackClick() {
 		if (step === "2")
 			setStep("1");
+		else if (step === "3")
+			setStep("2");
 		else
 			history.push("/dashboard");
 	}
@@ -48,27 +53,49 @@ export default () => {
 	const onFinish = values => {
 		if (step === "1")
 			setStep("2");
+		else if (step === "2")
+			setStep("3");
 		else {
 			const tempSymptoms   = [];
 			const tempSicknesses = [];
+			const tempCountries  = [];
+			console.log(values);
+			if (values.sicknesses)
+				values.sicknesses.map(sickness => {
+					tempSicknesses.push({id: sickness, nombre: ""});
+				});
+			if (values.symptoms)
+				values.symptoms.map(symptom => {
+					tempSymptoms.push({id: symptom, respuesta: true, observacion: ""});
+				});
+			if (values.countries)
+				values.countries.map(country => {
+					tempCountries.push({id: country, nombre: ""});
+				});
 			
-			values.sicknesses.map(sickness => {
-				tempSicknesses.push({id: sickness, nombre: ""});
-			});
-			values.symptoms.map(symptom => {
-				tempSymptoms.push({id: symptom, respuesta: true, observacion: ""});
-			});
-			ServiceFamily.dailyControl(selectedUser.id, tempSicknesses, tempSymptoms, (result) => {
+			
+			ServiceFamily.dailyControl(selectedUser.id, tempSicknesses, tempSymptoms, tempCountries, (result) => {
 				dispatch(familySetFirstControl(selectedUser));
 				dispatch(appConfigSetMessage({text: result, type: "success"}));
 				history.push("/dashboard");
 			});
+			
 		}
 		
 	};
 	
 	const onFinishFailed = errorInfo => {
 		console.log('Failed:', errorInfo);
+	};
+	
+	const tagRender = (props) => {
+		console.log(props);
+		const {label, value, closable, onClose} = props;
+		return (
+			<Tag color={value} closable={closable} onClose={onClose} style={{marginRight: 3}}>
+				{label}
+			</Tag>
+		);
 	};
 	
 	return (
@@ -112,16 +139,43 @@ export default () => {
 														 padding       : 8
 													 }}>
 												<Checkbox value={symptom.id}>
-													{symptom.nombre}
+													{symptom.pregunta}
 												</Checkbox>
-												<Button type="primary" shape="circle" onClick={() => {
-													info(symptom.pregunta, symptom.ayuda);
-												}}>i</Button>
+												{
+													symptom.ayuda
+													? <Button type="primary" shape="circle" onClick={() => {
+														info(symptom.pregunta, symptom.ayuda);
+													}}>i</Button>
+													: null
+												}
+											
 											</div>
 										);
 									})
 								}
 							</Checkbox.Group>
+						</Form.Item>
+					</TabPane>
+					<TabPane tab="Viaje" key="3">
+						<p>¿Estuvo fuera del pais en el ultimo mes?</p>
+						<Form.Item name={'countries'}>
+							<Select
+								mode="multiple"
+								style={{width: '100%'}}
+								placeholder="Seleccione paises que visito"
+								onChange={(e) => {
+									console.log(e);
+								}}
+								optionLabelProp="label"
+							>
+								{
+									countries.map(country => {
+										return (
+											<Option key={country.id} value={country.id} label={country.nombre}>{country.nombre}</Option>
+										);
+									})
+								}
+							</Select>
 						</Form.Item>
 					</TabPane>
 				</Tabs>,
@@ -134,7 +188,7 @@ export default () => {
 					</div>
 				</Form.Item>
 			</Form>
-		
 		</div>
 	);
-}
+};
+export default BaseData;

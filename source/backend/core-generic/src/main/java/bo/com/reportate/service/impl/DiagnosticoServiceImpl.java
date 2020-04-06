@@ -3,11 +3,14 @@ package bo.com.reportate.service.impl;
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.model.*;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
+import bo.com.reportate.model.dto.response.NivelValoracionDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
+import bo.com.reportate.model.enums.GeneroEnum;
 import bo.com.reportate.repository.*;
 import bo.com.reportate.service.DiagnosticoService;
 import bo.com.reportate.util.ValidationUtil;
+import bo.com.reportate.utils.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -34,9 +38,9 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
     @Autowired
     private DiagnosticoRepository diagnosticoRepository;
     @Autowired private DepartamentoRepository departamentoRepository;
+    @Autowired private MunicipioRepository municipioRepository;
     @Autowired private EnfermedadRepository enfermedadRepository;
     @Autowired private DepartamentoUsuarioRepository departamentoUsuarioRepository;
-    @Autowired private MunicipioRepository municipioRepository;
     @Autowired private CentroSaludRepository centroSaludRepository;
     @Override
     @Transactional(readOnly = true)
@@ -86,4 +90,21 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
         nomprePaciente = "%"+nomprePaciente.trim()+"%";
         return diagnosticoRepository.listarDiagnostico(from, to,departamentos, municipios, centroSaluds,diagnosticoEnums,enfermedads, nomprePaciente.toLowerCase(), pageable );
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Integer cantidadDiagnosticoPorResultadoValoracion(BigDecimal valoracionInicio, BigDecimal valoracionFin, Long departamentoId,Long municipioId,
+    		String genero, Integer edadInicial, Integer edadFinal){
+        Departamento departamento = departamentoId!=null?this.departamentoRepository.findByIdAndEstado(departamentoId, EstadoEnum.ACTIVO).orElse(null):null;
+        Municipio municipio = municipioId!=null?this.municipioRepository.findById(municipioId).orElse(null):null;
+        GeneroEnum generoEnum= genero.trim().isEmpty()?null:GeneroEnum.valueOf(genero);
+        return diagnosticoRepository.cantidadDiagnosticoPorResultadoValoracion(valoracionInicio, valoracionFin, departamento, municipio,generoEnum,edadInicial,edadFinal);
+    }
+
+	@Override
+	public List<NivelValoracionDto> listarPorNivelValoracion(Date from, Date to) {
+		return diagnosticoRepository.listarPorNivelValoracion(DateUtil.formatToStart(from),DateUtil.formatToEnd(to));
+	}
+    
+    
 }

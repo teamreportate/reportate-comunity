@@ -1,17 +1,16 @@
 import React, {useEffect} from "react";
-import {Alert, Button} from 'antd';
-import Icon from 'antd/lib/icon';
+import {Button} from 'antd';
 
 import FamilyList from "./FamilyList";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {appConfigSetMessage} from "../../store/appConfig/actions";
 import {FaHospitalAlt, FaNotesMedical, FaPhone} from "react-icons/fa";
+import Modal from "antd/es/modal";
 
 
 export default () => {
 	let history    = useHistory();
-	const message  = useSelector(store => store.appConfig.message);
 	const dispatch = useDispatch();
 	
 	
@@ -24,16 +23,6 @@ export default () => {
 	};
 	
 	return <div>
-		{
-			message
-			?
-			<Alert message={message.text} type={message.type} showIcon style={{marginBottom: 16}} closable afterClose={() => {
-				dispatch(appConfigSetMessage(false));
-			}}/>
-			: null
-		}
-		
-		
 		<FamilyList/>
 		<hr/>
 		<div style={{display: 'flex'}}>
@@ -46,7 +35,6 @@ export default () => {
 				Recomendaciones
 			</Button>
 		</div>
-		<Icon type="star" theme="filled"/>
 		
 		<div style={{display: 'flex',}}>
 			<Button size={'large'} type="primary"

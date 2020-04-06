@@ -8,46 +8,38 @@ import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom
 import Initialize from "./initialize/Initialize";
 import FamilyData from "./familiyData/FamilyData";
 import MemberData from "./memberData/MemberData";
-import Gestation from "./memberData/Gestation";
 import ExternalContact from "./memberData/ExternalContact";
 import BaseData from "./memberData/BaseData";
 import BaseSymptom from "./memberData/BaseSymptom";
 import Report from "./report/Report";
 import Faq from "./faq/Faq";
-import Register from "./register/Register";
-import EmailLogin from "./register/Login";
 import DailyData from "./memberData/DailyData";
-import {useSelector} from "react-redux";
-// import {createBrowserHistory} from 'history';
+import {useDispatch, useSelector} from "react-redux";
+import Modal from "antd/es/modal";
+import {appConfigSetMessage} from "../store/appConfig/actions";
 
 const {Content, Footer} = Layout;
 
-// export const history = createBrowserHistory({
-// 	basename: process.env.PUBLIC_URL
-// });
-
 function App() {
-	const user = useSelector(store => store.auth.user);
-	// const dispatch              = useDispatch();
-	// const user                  = useSelector(store => store.auth);
-	// const [checked, setChecked] = useState(false);
-	// const [valid, setValid]     = useState(false);
+	const user     = useSelector(store => store.auth.user);
+	const message  = useSelector(store => store.appConfig.message);
+	const dispatch = useDispatch();
+	
 	useEffect(() => {
+		if (message)
+			Modal.info({
+				title  : 'info',
+				content: (
+					<div>
+						<p>{message.text}</p>
+					</div>
+				),
+				onOk() {
+					dispatch(appConfigSetMessage(false));
+				},
+			});
+	}, [message]);
 	
-	}, []);
-	
-	// let content = <p>cargando</p>;
-	//
-	// if (user)
-	// // user stored, verifying token
-	// 	if (checked && !valid) {
-	// 		content = <Login/>;
-	// 	} else {
-	// 		content = <Dashboard/>;
-	// 	}
-	// else
-	// // no user stored so go login
-	// 	content = <Login/>;
 	function PrivateRoute({children, ...rest}) {
 		return (
 			<Route
@@ -68,7 +60,6 @@ function App() {
 	}
 	
 	return (<Layout id='theme_bus'>
-		
 		<Navigation/>
 		<Content style={{marginTop: 100}}>
 			<Row>
@@ -97,9 +88,6 @@ function App() {
 							<PrivateRoute path="/update-member">
 								<MemberData newMember={false}/>
 							</PrivateRoute>
-							<PrivateRoute path="/gestation">
-								<Gestation/>
-							</PrivateRoute>
 							<PrivateRoute path="/external-contact">
 								<ExternalContact/>
 							</PrivateRoute>
@@ -114,12 +102,6 @@ function App() {
 							</PrivateRoute>
 							<PrivateRoute path="/faq">
 								<Faq/>
-							</PrivateRoute>
-							<PrivateRoute path="/register">
-								<Register/>
-							</PrivateRoute>
-							<PrivateRoute path="/email-login">
-								<EmailLogin/>
 							</PrivateRoute>
 							<PrivateRoute path="/daily-data">
 								<DailyData/>

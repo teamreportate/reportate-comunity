@@ -1,4 +1,4 @@
-import {Button, Checkbox, Form, Modal, Select, Tabs} from "antd";
+import {Button, Checkbox, Form, Modal} from "antd";
 import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import ServiceAppConfig from "../../services/ServiceAppConfig";
@@ -6,9 +6,7 @@ import ServiceFamily from "../../services/ServiceFamily";
 import {useDispatch, useSelector} from "react-redux";
 import {appConfigSetMessage} from "../../store/appConfig/actions";
 
-const {TabPane} = Tabs;
-const {Option}  = Select;
-export default ({newMember}) => {
+export default () => {
 	const [symptoms, setSymptoms] = useState([]);
 	let history                   = useHistory();
 	const dispatch                = useDispatch();
@@ -40,10 +38,11 @@ export default ({newMember}) => {
 	
 	const onFinish = values => {
 		const tempSymptoms = [];
-		values.symptoms.map(symptom => {
+		values.symptoms.forEach(symptom => {
 			tempSymptoms.push({id: symptom, respuesta: true, observacion: ""});
 		});
-		ServiceFamily.dailyControl(selectedUser.id, [], tempSymptoms, (result) => {
+		
+		ServiceFamily.dailyControl(selectedUser.id, [], tempSymptoms, [], (result) => {
 			console.log(result);
 			dispatch(appConfigSetMessage({text: result, type: "success"}));
 			history.push("/dashboard");
@@ -77,11 +76,16 @@ export default ({newMember}) => {
 												 padding       : 8
 											 }}>
 										<Checkbox value={symptom.id}>
-											{symptom.nombre}
+											{symptom.pregunta}
 										</Checkbox>
-										<Button type="primary" shape="circle" onClick={() => {
-											info(symptom.pregunta, symptom.ayuda);
-										}}>i</Button>
+										{
+											(symptom.ayuda)
+											? <Button type="primary" shape="circle" onClick={() => {
+												info(symptom.pregunta, symptom.ayuda);
+											}}>i</Button>
+											: null
+										}
+									
 									</div>
 								);
 							})
@@ -97,7 +101,6 @@ export default ({newMember}) => {
 					</div>
 				</Form.Item>
 			</Form>
-		
 		</div>
 	);
 }
