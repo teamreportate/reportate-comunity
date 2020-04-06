@@ -6,21 +6,20 @@ const SERVICE_FAMILY_CREATE_MEMBER = 'api/pacientes/';
 
 class ServiceFamily extends ServiceBase {
 	
-	getFamily = (onSuccess = false) => {
+	getFamily = (onSuccess = false, onFailure = false) => {
 		this.axios.get(this.getBaseService() + SERVICE_FAMILY_GET,
 			{headers: this.getHeaders()}
 		)
 				.then(result => {
 					if (onSuccess) {
-						console.log(result.data);
 						onSuccess(result.data);
 					}
 				})
-				.catch((error) => this.handleAxiosErrors(error));
+				.catch((error) => this.handleAxiosErrors(error, onFailure));
 		
 	};
 	
-	register = (family, onSuccess = false) => {
+	register = (family, onSuccess = false, onFailure = false) => {
 		this.axios.post(this.getBaseService() + SERVICE_FAMILY_CREATE,
 			{
 				nombre        : family.name,
@@ -32,6 +31,7 @@ class ServiceFamily extends ServiceBase {
 				ciudad        : family.city,
 				departamentoId: family.department,
 				municipioId   : family.municipality,
+				centroSaludId : family.healthCenter,
 				controlInicial: 'false',
 			}, {
 				headers: this.getHeaders()
@@ -42,10 +42,14 @@ class ServiceFamily extends ServiceBase {
 						}
 					}
 				)
-				.catch((error) => this.handleAxiosErrors(error));
+				.catch((error) => {
+					if (error.response && error.response.status === 400 && onFailure)
+						onFailure(error.response.data);
+					this.handleAxiosErrors(error);
+				});
 	};
 	
-	registerMember(member, onSuccess = false) {
+	registerMember(member, onSuccess = false, onFailure = false) {
 		this.axios.post(this.getBaseService() + SERVICE_FAMILY_CREATE_MEMBER,
 			{
 				id             : 0,
@@ -64,10 +68,14 @@ class ServiceFamily extends ServiceBase {
 						}
 					}
 				)
-				.catch((error) => this.handleAxiosErrors(error));
+				.catch((error) => {
+					if (error.response && error.response.status === 400 && onFailure)
+						onFailure(error.response.data);
+					this.handleAxiosErrors(error);
+				});
 	}
 	
-	updateMember(member, onSuccess = false) {
+	updateMember(member, onSuccess = false, onFailure = false) {
 		this.axios.put(this.getBaseService() + SERVICE_FAMILY_CREATE_MEMBER,
 			{
 				id             : member.id,
@@ -86,10 +94,14 @@ class ServiceFamily extends ServiceBase {
 						}
 					}
 				)
-				.catch((error) => this.handleAxiosErrors(error));
+				.catch((error) => {
+					if (error.response && error.response.status === 400 && onFailure)
+						onFailure(error.response.data);
+					this.handleAxiosErrors(error);
+				});
 	}
 	
-	dailyControl(userId, sicknesses, symptoms, onSuccess = false) {
+	dailyControl(userId, sicknesses, symptoms, countries, onSuccess = false) {
 		this.axios.post(this.getBaseService() + 'api/pacientes/' + userId + '/control-diario/',
 			{
 				enfermedadesBase: sicknesses,

@@ -1,9 +1,10 @@
 import {Button, Form, Input, InputNumber, Radio, Select} from "antd";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {useHistory} from "react-router-dom";
 import ServiceFamily from "../../services/ServiceFamily";
 import {useDispatch, useSelector} from "react-redux";
 import {familyAddMember, familyUpdateMember} from "../../store/family/actions";
+import {appConfigSetMessage} from "../../store/appConfig/actions";
 
 const {Option} = Select;
 export default ({newMember}) => {
@@ -19,7 +20,7 @@ export default ({newMember}) => {
 		history.push("/dashboard");
 	}
 	
-	const getDefaultFields  = () => {
+	const getDefaultFields = () => {
 		const fields = [];
 		for (const field in member) {
 			fields.push({
@@ -29,14 +30,10 @@ export default ({newMember}) => {
 		}
 		return fields;
 	};
-
+	
 	const handleReportClick = () => {
 		history.push("/daily-data");
 	};
-	
-	useEffect(() => {
-		console.log(form);
-	}, [form]);
 	
 	
 	const onFinish = values => {
@@ -46,13 +43,21 @@ export default ({newMember}) => {
 				(result) => {
 					dispatch(familyAddMember(result));
 					history.push("/dashboard");
+				},
+				(data) => {
+					dispatch(appConfigSetMessage({text: data.detail}));
 				});
+			
 		} else {
 			console.log("updating member");
 			ServiceFamily.updateMember({...values, id: member.id, firstControl: member.firstControl},
 				(result) => {
+					console.log(result);
 					dispatch(familyUpdateMember(result));
 					history.push("/dashboard");
+				},
+				(data) => {
+					dispatch(appConfigSetMessage({text: data.detail}));
 				});
 		}
 	};

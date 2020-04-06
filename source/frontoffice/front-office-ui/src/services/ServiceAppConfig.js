@@ -31,7 +31,7 @@ class ServiceAppConfig extends ServiceBase {
 				)
 				.catch((error) => this.handleAxiosErrors(error));
 	};
-	getSymptoms = (onSuccess = false) => {
+	getSymptoms = (onSuccess = false, onFailure = false) => {
 		this.axios.get(this.getBaseService() + SERVICE_APP_GET_DAILY_DATA,
 			{})
 				.then((result) => {
@@ -40,7 +40,9 @@ class ServiceAppConfig extends ServiceBase {
 						}
 					}
 				)
-				.catch((error) => this.handleAxiosErrors(error));
+				.catch((error) => {
+					this.handleAxiosErrors(error);
+				});
 	};
 	
 }

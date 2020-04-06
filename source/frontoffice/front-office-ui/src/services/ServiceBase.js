@@ -4,11 +4,11 @@ const BASE_SERVICE = 'https://dev.mc4.com.bo:9443/';
 
 class ServiceBase {
 	getBaseService = () => BASE_SERVICE;
-
+	
 	constructor() {
 		this.axios = axios.create({});
 	}
-
+	
 	getHeaders() {
 		let token   = localStorage.getItem('token');
 		let headers = {};
@@ -16,8 +16,8 @@ class ServiceBase {
 			headers = {Authorization: "Bearer " + token};
 		return headers;
 	}
-
-	handleAxiosErrors = error => {
+	
+	handleAxiosErrors = (error, callback = false) => {
 		// Error 😨
 		if (error.response) {
 			/*
@@ -28,6 +28,9 @@ class ServiceBase {
 			console.log(error.response.data);
 			console.log(error.response.status);
 			console.log(error.response.headers);
+			if (callback && error.response.status === 403) {
+				callback();
+			}
 		} else if (error.request) {
 			/*
 			 * The request was made but no response was received, `error.request`

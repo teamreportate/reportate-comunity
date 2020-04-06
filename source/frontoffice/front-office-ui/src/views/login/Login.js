@@ -9,6 +9,7 @@ import {authSetUser} from "../../store/auth/actions";
 import ServiceFamily from "../../services/ServiceFamily";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
+import {appConfigSetMessage} from "../../store/appConfig/actions";
 
 
 export default () => {
@@ -39,7 +40,6 @@ export default () => {
 			(result) => {
 				localStorage.setItem('token', result.token);
 				dispatch(authSetUser({...result, logged: true}));
-				// getting family information
 				ServiceFamily.getFamily(family => {
 					dispatch(familySetData({
 						...family,
@@ -47,6 +47,10 @@ export default () => {
 					}));
 					history.push("/dashboard");
 				});
+			},
+			(data) => {
+				alert(data.detail);
+				dispatch(appConfigSetMessage({text: data.detail}));
 			});
 	};
 	
@@ -56,7 +60,7 @@ export default () => {
 	
 	return (<div>
 			<div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
-				<img src={Icon} style={{height: 120, width: 120, margin: 'auto'}}/>
+				<img src={Icon} style={{height: 169, width: 120, margin: 'auto'}}/>
 				<Form
 					form={form}
 					layout='vertical'

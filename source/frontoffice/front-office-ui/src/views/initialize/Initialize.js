@@ -15,12 +15,18 @@ export default () => {
 		const token = localStorage.getItem('token');
 		if (token !== null && token !== undefined && token !== "") {
 			dispatch(authSetUser({token: token, logged: true}));
-			ServiceFamily.getFamily(family => {
-				dispatch(familySetData({
-					...family,
-					fetched: true
-				}));
-			});
+			ServiceFamily.getFamily(
+				family => {
+					dispatch(familySetData({
+						...family,
+						fetched: true
+					}));
+				},
+				() => {
+					console.log("no valid token");
+					history.push('/login');
+				}
+			);
 		} else {
 			history.push('/login');
 		}
