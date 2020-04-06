@@ -11,6 +11,7 @@ import bo.com.reportate.repository.*;
 import bo.com.reportate.service.DiagnosticoService;
 import bo.com.reportate.util.ValidationUtil;
 import bo.com.reportate.utils.DateUtil;
+import bo.com.reportate.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +42,8 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
     @Autowired private MunicipioRepository municipioRepository;
     @Autowired private EnfermedadRepository enfermedadRepository;
     @Autowired private DepartamentoUsuarioRepository departamentoUsuarioRepository;
+    @Autowired private MunicipioUsuarioRepository municipioUsuarioRepository;
+    @Autowired private CentroSaludUsuarioRepository centroSaludUsuarioRepository;
     @Autowired private CentroSaludRepository centroSaludRepository;
     @Override
     @Transactional(readOnly = true)
@@ -69,12 +72,12 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
             municipios.add(this.municipioRepository.findByIdAndEstado(municipioId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontro el municipio seleccionado")));
 
         }else{
-            municipios.addAll(this.municipioRepository.findByDepartamentoContainsAndEstado(departamentos, EstadoEnum.ACTIVO));
+            municipios.addAll(this.municipioUsuarioRepository.listarMunicipiosAsignados(usuario, departamentos));
         }
         if(centroSaludId > 0L){
             centroSaluds.add(this.centroSaludRepository.findByIdAndEstado(municipioId,EstadoEnum.ACTIVO).orElseThrow(()-> new NotDataFoundException("No se encontro el centro de salud seleccionad")));
         }else {
-            centroSaluds.addAll(this.centroSaludRepository.findByMunicipioContainsAndEstado(municipios,EstadoEnum.ACTIVO));
+            centroSaluds.addAll(this.centroSaludUsuarioRepository.listarCentrosSaludAsignados(usuario, municipios));
         }
         if(enfermedadId > 0L){
             enfermedads.add(this.enfermedadRepository.findByIdAndEstado(enfermedadId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontro la enfermedad seleccionada")));
@@ -87,8 +90,11 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
         }else{
             diagnosticoEnums.add(estadoDiagnostico);
         }
-        nomprePaciente = "%"+nomprePaciente.trim()+"%";
-        return diagnosticoRepository.listarDiagnostico(from, to,departamentos, municipios, centroSaluds,diagnosticoEnums,enfermedads, nomprePaciente.toLowerCase(), pageable );
+        if(!StringUtil.isEmptyOrNull(nomprePaciente)) {
+            return diagnosticoRepository.listarDiagnostico(from, to, departamentos, municipios, centroSaluds, diagnosticoEnums, enfermedads, nomprePaciente.toLowerCase(), pageable);
+        }else{
+            return diagnosticoRepository.listarDiagnostico(from, to, departamentos, municipios, centroSaluds, diagnosticoEnums, enfermedads, pageable);
+        }
     }
     
     @Override

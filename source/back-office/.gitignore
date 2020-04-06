@@ -18,7 +18,7 @@ a/*
 *.iws
 .idea
 out
-!back-office.iml
+*.iml
 
 # Eclipse
 .classpath

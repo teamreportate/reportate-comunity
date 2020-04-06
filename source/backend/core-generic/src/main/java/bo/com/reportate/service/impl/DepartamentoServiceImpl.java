@@ -7,10 +7,7 @@ import bo.com.reportate.model.MuUsuario;
 import bo.com.reportate.model.dto.DepartamentoDto;
 import bo.com.reportate.model.dto.DepartamentoUsuarioDto;
 import bo.com.reportate.model.dto.response.ObjetoResponseDto;
-import bo.com.reportate.repository.CentroSaludRepository;
-import bo.com.reportate.repository.DepartamentoRepository;
-import bo.com.reportate.repository.DepartamentoUsuarioRepository;
-import bo.com.reportate.repository.MunicipioRepository;
+import bo.com.reportate.repository.*;
 import bo.com.reportate.service.DepartamentoService;
 import bo.com.reportate.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +32,9 @@ public class DepartamentoServiceImpl implements DepartamentoService {
     @Autowired private DepartamentoRepository departamentoRepository;
     @Autowired private DepartamentoUsuarioRepository departamentoUsuarioRepository;
     @Autowired private MunicipioRepository municipioRepository;
+    @Autowired private MunicipioUsuarioRepository municipioUsuarioRepository;
     @Autowired private CentroSaludRepository centroSaludRepository;
+    @Autowired private CentroSaludUsuarioRepository centroSaludUsuarioRepository;
 
     @Override
     public Departamento findById(Long departamentoId) {
@@ -100,11 +99,23 @@ public class DepartamentoServiceImpl implements DepartamentoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ObjetoResponseDto listarDepartamentoMunicipioCentroSalud() {
         ObjetoResponseDto response = new ObjetoResponseDto();
         response.setDepartamentos(this.departamentoRepository.listarDepartamento());
         response.setMunicipios(this.municipioRepository.listaMunicipios());
         response.setCentrosSalud(this.centroSaludRepository.listaCentrosSalud());
+        return response;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ObjetoResponseDto listarDepartamentoMunicipioCentroSaludAsignados(Authentication userDetails) {
+        MuUsuario usuario = (MuUsuario)userDetails.getPrincipal();
+        ObjetoResponseDto response = new ObjetoResponseDto();
+        response.setDepartamentos(this.departamentoUsuarioRepository.listarAsignados(usuario));
+        response.setMunicipios(this.municipioUsuarioRepository.listarMunicipiosAsignados(usuario));
+        response.setCentrosSalud(this.centroSaludUsuarioRepository.listarCentrosSaludAsignados(usuario));
         return response;
     }
 }
