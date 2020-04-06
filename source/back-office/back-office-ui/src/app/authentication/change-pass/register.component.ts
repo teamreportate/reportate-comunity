@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private userService: AuthenticationService) {}
 
   ngOnInit() {
-    const user = JSON.parse(localStorage.getItem('data')).username;
+    const user = JSON.parse(sessionStorage.getItem('data')).username;
     this.form = this.fb.group({
       username: [
         user,

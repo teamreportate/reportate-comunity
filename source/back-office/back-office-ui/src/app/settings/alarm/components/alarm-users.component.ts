@@ -54,7 +54,7 @@ export class AlarmUsersComponent extends ClicComponent implements OnInit {
 
   ngOnInit() {
     this.initialListener(this.changeDetector, this.media);
-    this.currentAlarm = JSON.parse(localStorage.getItem(AlarmUsersComponent.ALARM_TO_USERS));
+    this.currentAlarm = JSON.parse(sessionStorage.getItem(AlarmUsersComponent.ALARM_TO_USERS));
     this.render = false;
     this.isAddUsers = false;
     this.btnText = this.isAddUsers ? 'Ver Usuarios' : 'Asignar';

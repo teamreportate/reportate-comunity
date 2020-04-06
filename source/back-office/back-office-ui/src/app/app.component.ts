@@ -14,7 +14,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit() {
     if (this.authService.isLoggedIn() && !this.helper.isTokenExpired()) {
-      const last = localStorage.getItem('LAST_URL');
+      const last = sessionStorage.getItem('LAST_URL');
       if (last) this.router.navigate([last]);
       else this.router.navigate(['/dashboards/principal']);
     } else this.router.navigate(['/authentication/login']);

@@ -34,7 +34,7 @@ export class MenuBuilderService {
       'GRUPOS': GroupsComponent,
       'ROLES': RolesComponent,
       'RECURSOS': ResourcesComponent,
-      
+
       // 'MODULO_ADMINISTRACION': null,
       // 'EMPRESAS': EnterpriseComponent,
       // 'SUCURSALES': BranchOfficeComponent,
@@ -53,13 +53,13 @@ export class MenuBuilderService {
       'DOMINIOS': DomainComponent,
       'ALARMAS': AlarmComponent,
       'ALARMA_USUARIOS': AlarmUsersComponent,
-      'ALARMA_EDIT': AlarmEditComponent,  
+      'ALARMA_EDIT': AlarmEditComponent,
     };
   }
 
   routesByModuleIdentifier(identifier: any): Routes {
     const routes: Route[] = [];
-    const menuDto: MenuDto = this.jwtHelperService.decodeToken(JSON.parse(localStorage.getItem('data')).token);
+    const menuDto: MenuDto = this.jwtHelperService.decodeToken(JSON.parse(sessionStorage.getItem('data')).token);
     const accessMenu: AuthResource = menuDto.menu.find((menu: AuthResource) => menu.componenteFront === identifier);
 
     if (accessMenu) {

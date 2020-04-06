@@ -39,7 +39,7 @@ export class UserTokenComponent extends ClicComponent implements OnInit {
   }
 
   ngOnInit() {
-    const userId: number = Number(localStorage.getItem(UserTokenComponent.USERID_TO_TOKENS));
+    const userId: number = Number(sessionStorage.getItem(UserTokenComponent.USERID_TO_TOKENS));
     this.initialListener(this.changeDetector, this.media);
     this.blockUI.start('Recuperando lista de token...');
     this.service.requestUserTokenList(userId).subscribe(response => {
@@ -49,7 +49,7 @@ export class UserTokenComponent extends ClicComponent implements OnInit {
   }
 
   newToken() {
-    const userId: number = Number(localStorage.getItem(UserTokenComponent.USERID_TO_TOKENS));
+    const userId: number = Number(sessionStorage.getItem(UserTokenComponent.USERID_TO_TOKENS));
     this.matDialog.open(TokenCreateComponent, this.confirmConfig({userId}))
       .afterClosed()
       .subscribe(created => {

@@ -32,7 +32,7 @@ export class SpinnerComponent implements OnDestroy {
         ) {
           // setTimeout(()=> {
             this.isSpinnerVisible = false;
-            localStorage.setItem('LAST_URL', event.url);
+            sessionStorage.setItem('LAST_URL', event.url);
           // }, 3000);
         }
       },
