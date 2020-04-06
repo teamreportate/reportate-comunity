@@ -28,6 +28,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {CommonsModule} from '../commons/commons.module';
 import {SeguimientoRoute} from './seguimiento.routes';
 import {SeguimientoEnfermedadComponent} from './seguimiento-enfermedad/seguimiento-enfermedad.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [SeguimientoEnfermedadComponent],
@@ -58,7 +59,8 @@ import {SeguimientoEnfermedadComponent} from './seguimiento-enfermedad/seguimien
     MatProgressSpinnerModule,
     MatMenuModule,
     DragDropModule,
-    CommonsModule
+    CommonsModule,
+    SharedModule
   ],
   providers: []
 })

@@ -66,7 +66,7 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
             + "(:genero IS NULL OR p.genero = :genero) AND "
             + "((:edadInicial IS NULL OR p.edad >= :edadInicial) AND (:edadFinal IS NULL OR p.edad <= :edadFinal)) AND "
             + "((:departamento IS NULL OR :departamento = dep) AND (:municipio IS NULL OR :municipio = mun))")
-    Integer countDiagnosticoByResultadoValoracion(
+    Integer cantidadDiagnosticoPorResultadoValoracion(
             @Param("valoracionInicio") BigDecimal valoracionInicio,
             @Param("valoracionFin") BigDecimal valoracionFin,
             @Param("departamento")Departamento departamento,
@@ -82,7 +82,7 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
             + " FROM Diagnostico t WHERE t.createdDate BETWEEN :fechaInicio AND :fechaFin"
             + " GROUP BY t.createdDate"
             + " ORDER BY t.createdDate")
-    List<NivelValoracionDto> listarByNivelValoracion(
+    List<NivelValoracionDto> listarPorNivelValoracion(
             @Param("fechaInicio") Date from,
             @Param("fechaFin") Date to);
 }
