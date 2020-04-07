@@ -1,6 +1,6 @@
 import ServiceBase from "./ServiceBase";
 
-const SERVICE_AUTH_SIGNIN = 'auth/signin/';
+const SERVICE_AUTH_SIGNIN = 'auth/signin';
 
 class ServiceAuth extends ServiceBase {
 	
