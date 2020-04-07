@@ -24,7 +24,9 @@ class ServiceAppConfig extends ServiceBase {
 	
 	getBaseData    = (onSuccess = false) => {
 		this.axios.get(this.getBaseService() + SERVICE_APP_GET_BASE_DATA,
-			{})
+			{
+				headers: this.getHeaders()
+			})
 				.then((result) => {
 						if (onSuccess) {
 							onSuccess(result.data);
@@ -35,7 +37,7 @@ class ServiceAppConfig extends ServiceBase {
 	};
 	getSymptoms    = (onSuccess = false, onFailure = false) => {
 		this.axios.get(this.getBaseService() + SERVICE_APP_GET_DAILY_DATA,
-			{})
+			{headers: this.getHeaders()})
 				.then((result) => {
 						if (onSuccess) {
 							onSuccess(result.data);
@@ -48,7 +50,7 @@ class ServiceAppConfig extends ServiceBase {
 	};
 	getOccupations = (onSuccess = false, onFailure = false) => {
 		this.axios.get(this.getBaseService() + SERVICE_APP_GET_OCCUPATIONS,
-			{})
+			{headers: this.getHeaders()})
 				.then((result) => {
 						if (onSuccess) {
 							onSuccess(result.data);

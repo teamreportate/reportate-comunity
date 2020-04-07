@@ -51,6 +51,8 @@ public class Paciente extends AbstractAuditableEntity{
     private Date fechaNacimiento;
     @Column(name = "CODIGO_SEGURO", length = 30)
     private String codigoSeguro;
+    @Column(name = "SEGURDO", length = 50)
+    private String seguro;
 
     @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

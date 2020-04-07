@@ -35,7 +35,7 @@ export default () => {
 				</Button>;
 			})}
 			<Button size={'large'} type="default" className='add' style={styles.buttons} onClick={handleClick}>
-				<FaRegPlusSquare style={{marginRight: 8}}/>adicionar miembro
+				<FaRegPlusSquare style={{marginRight: 8}}/>Adicionar miembro
 			</Button>
 		
 		</div>

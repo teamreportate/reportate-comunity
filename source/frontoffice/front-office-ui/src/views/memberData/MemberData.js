@@ -84,7 +84,9 @@ export default ({newMember}) => {
 			>
 				<Form.Item label="Nombre"
 									 name="name"
-									 rules={[{required: true, message: 'Ingresa el nombre de tu familiar'}]}>
+									 rules={[
+										 {required: true, message: 'Ingresa el nombre de tu familiar'},
+										 {max: 100, message: 'Nombre maximo 100 caracteres'},]}>
 					<Input placeholder="Introduce el nombre"/>
 				</Form.Item>
 				<Form.Item label="Edad"
@@ -169,6 +171,8 @@ export default ({newMember}) => {
 							onChange={(e) => {
 								if (form.getFieldValue('occupation') === 'otro') {
 									setOther(true);
+								} else {
+									setOther(false);
 								}
 								
 							}}
@@ -188,13 +192,11 @@ export default ({newMember}) => {
 					(other
 					 ? <Form.Item name="otherOccupation"
 												rules={[
-													{
-														required: true,
-														message : 'Ingresa una ocupacion'
-													}]}>
-						 <Input placeholder="Introduce tu ocupacion"/>
+													{required: true, message: 'Ingresa una ocupación'},
+													{max: 100, message: 'Ocupación maximo 100 caracteres'},]}>
+						 <Input placeholder="Introduce tu ocupación"/>
 					 </Form.Item>
-					 : form.getFieldValue('occupation'))
+					 : null)
 				}
 				
 				<Form.Item>

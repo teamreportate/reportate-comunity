@@ -17,7 +17,7 @@ public class PaisVisitadoDto implements Serializable {
     public PaisVisitadoDto(ControlDiarioPais controlDiarioPais){
         this.id=controlDiarioPais.getPais().getId();
         this.pais=controlDiarioPais.getPais().getNombre();
-        this.fecha=controlDiarioPais.getControlDiario().getCreatedDate();
-
+        this.fecha=controlDiarioPais.getFechaViaje();
+        this.ciudad=controlDiarioPais.getCiudades();
     }
 }
