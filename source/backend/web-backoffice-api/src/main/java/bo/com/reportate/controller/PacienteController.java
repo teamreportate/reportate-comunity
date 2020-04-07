@@ -70,13 +70,17 @@ public class PacienteController {
 
     @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Actualiza un registro de paciente", description = "Actualiza el registro de paciente para el usuario autentificado", tags = { "paciente" })
-    public ResponseEntity<PacienteDto> updateFamilia(
+    public ResponseEntity<PacienteDto> updatePaciente(
             @AuthenticationPrincipal Authentication userDetails,
             @Parameter(description = "Objeto paciente para actualizar", required = true)
             @RequestBody PacienteRequest pacienteRequest) {
         try {
-            PacienteDto responseDto = this.pacienteService.update(userDetails, pacienteRequest.getId(),
-                    pacienteRequest.getNombre(), pacienteRequest.getEdad(), pacienteRequest.getGenero(), pacienteRequest.getGestacion(), pacienteRequest.getTiempoGestacion());
+            PacienteDto responseDto = this.pacienteService.update(
+                    userDetails, pacienteRequest.getId(), pacienteRequest.getNombre(), pacienteRequest.getEdad(),
+                    pacienteRequest.getGenero(), pacienteRequest.getGestacion(), pacienteRequest.getTiempoGestacion(),
+                    pacienteRequest.getOcupacion(),pacienteRequest.getCi(),pacienteRequest.getFechaNacimiento(),
+                    pacienteRequest.getSeguro(), pacienteRequest.getCodigoSeguro());
+
             log.info("Se actualizo de manera correcta el registro del paciente: {}",pacienteRequest.getNombre());
             logService.info(Process.REGISTRO_FAMILIA,"Se actualizo de manera correcta el registro del paciente: {}",pacienteRequest.getNombre());
             return ok(responseDto);
@@ -140,11 +144,30 @@ public class PacienteController {
             return CustomErrorType.badRequest("Agregar Enfermedad Base", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al agregar enfermedad base",e);
-            return CustomErrorType.serverError("Agregar Enfermedad Base", "Se genero un error al obtener la ficha Epidemiologica");
+            return CustomErrorType.serverError("Agregar Enfermedad Base", "Se genero un error al agregar la enfermedad base");
         }
     }
 
-    @RequestMapping(value = "/{pacienteId}/{paisId}/agregar-pais",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{pacienteId}/{enfermedadId}/eliminar-enfermedad-base",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Eliminad Enfermedad Base", description = "Eliminar una enfermedad base para un paciente", tags = { "paciente" })
+    public ResponseEntity<EnfermedadResponse> eliminarEnfermedadBase(
+            @Parameter(description = "Identificador de paciente", required = true)
+            @PathVariable("pacienteId") Long pacienteId,
+            @Parameter(description = "Identificador de enfermedad", required = true)
+            @PathVariable("enfermedadId") Long enfermedadId) {
+        try {
+            this.pacienteService.eliminarEnfermedadBase(pacienteId, enfermedadId);
+            return ok().build();
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al eliminar enfermedad base. Causa. {} ",e.getMessage());
+            return CustomErrorType.badRequest("Eliminar Enfermedad Base", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al eliminar enfermedad base",e);
+            return CustomErrorType.serverError("Eliminar Enfermedad Base", "Se genero un error al eliminar la enfermedad base");
+        }
+    }
+
+    @RequestMapping(value = "/{pacienteId}/agregar-pais",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Agregar País viajado", description = "Agrega un país al que viajo el paciente", tags = { "paciente" })
     public ResponseEntity<PaisVisitadoDto> agregarPais(
             @Parameter(description = "Identificador de paciente", required = true)
@@ -162,5 +185,50 @@ public class PacienteController {
         }
     }
 
+    @RequestMapping(value = "/{pacienteId}/{paisId}/eliminar-pais-visitado",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Eliminad Enfermedad Base", description = "Eliminar una enfermedad base para un paciente", tags = { "paciente" })
+    public ResponseEntity<EnfermedadResponse> eliminarPais(
+            @Parameter(description = "Identificador de paciente", required = true)
+            @PathVariable("pacienteId") Long pacienteId,
+            @Parameter(description = "Identificador de pais", required = true)
+            @PathVariable("paisId") Long paisId) {
+        try {
+            this.pacienteService.eliminarPais(pacienteId, paisId);
+            return ok().build();
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al eliminar pais. Causa. {} ",e.getMessage());
+            return CustomErrorType.badRequest("Eliminar País", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al eliminar pais ",e);
+            return CustomErrorType.serverError("Eliminar País", "Se genero un error al eliminar país");
+        }
+    }
+
+    @RequestMapping(value = "/{pacienteId}/agregar-contacto", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Crea un registro de paciente a una familia", description = "Guarda un registro de paciente que pertenece a la familia del usuario autentificado", tags = { "paciente" })
+    public ResponseEntity<PacienteDto> agregarContacto(
+            @Parameter(description = "Identificador de paciente", required = true)
+            @PathVariable("pacienteId") Long pacienteId,
+            @Parameter(description = "Objeto paciente para registrar", required = true)
+            @RequestBody PacienteRequest pacienteRequest) {
+        try {
+            PacienteDto responseDto = this.pacienteService.agregarContacto(pacienteId,pacienteRequest.getNombre(),
+                    pacienteRequest.getEdad(),pacienteRequest.getGenero(), pacienteRequest.getGestacion(),
+                    pacienteRequest.getTiempoGestacion(), pacienteRequest.getOcupacion(),pacienteRequest.getCi(),
+                    pacienteRequest.getFechaNacimiento(),pacienteRequest.getSeguro(),pacienteRequest.getCodigoSeguro());
+
+            log.info("Se registro de manera correcta al paciente: {}",pacienteRequest.getNombre());
+            logService.info(Process.REGISTRO_FAMILIA,"Se registro de manera correcta el paciente: {}",pacienteRequest.getNombre());
+            return ok(responseDto);
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al guardar el paciente: {}. Causa. {}",pacienteRequest.getNombre(),e.getMessage());
+            logService.error(Process.REGISTRO_FAMILIA,"Se genero un error al guardar el paciente: {}. Causa. {}",pacienteRequest.getNombre(),e.getMessage());
+            return CustomErrorType.badRequest("Guardar Paciente", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al guardar el paciente : {}",pacienteRequest.getNombre(),e);
+            logService.error(Process.REGISTRO_FAMILIA,"Se genero un error al guardar el paciente : {}",pacienteRequest.getNombre());
+            return CustomErrorType.serverError("Guardar Paciente", "Ocurrió un error al guardar el paciente: "+pacienteRequest.getNombre());
+        }
+    }
 
 }

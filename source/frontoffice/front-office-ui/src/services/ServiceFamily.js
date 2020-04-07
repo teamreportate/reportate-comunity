@@ -107,7 +107,7 @@ class ServiceFamily extends ServiceBase {
 			{
 				enfermedadesBase: sicknesses,
 				sintomas        : symptoms
-			})
+			}, {headers: this.getHeaders()})
 				.then((result) => {
 						if (onSuccess) {
 							onSuccess(result.data);

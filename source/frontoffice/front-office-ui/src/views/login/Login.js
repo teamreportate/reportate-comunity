@@ -10,6 +10,7 @@ import ServiceFamily from "../../services/ServiceFamily";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {appConfigSetMessage} from "../../store/appConfig/actions";
+import {FaFacebookF} from "react-icons/fa";
 
 
 export default () => {
@@ -35,8 +36,25 @@ export default () => {
 	}, [user, family]);
 	
 	
-	const onFinish = values => {
+	const onFinish      = values => {
 		ServiceAuth.loginEmail(values,
+			(result) => {
+				localStorage.setItem('token', result.token);
+				dispatch(authSetUser({...result, logged: true}));
+				ServiceFamily.getFamily(family => {
+					dispatch(familySetData({
+						...family,
+						fetched: true
+					}));
+					history.push("/dashboard");
+				});
+			},
+			(data) => {
+				dispatch(appConfigSetMessage({text: data.detail}));
+			});
+	};
+	const loginFacebook = (user) => {
+		ServiceAuth.loginFacebook(user,
 			(result) => {
 				localStorage.setItem('token', result.token);
 				dispatch(authSetUser({...result, logged: true}));
@@ -71,7 +89,7 @@ export default () => {
 										 rules={[
 											 {
 												 required: true, message: 'Ingresa nombre de usuario',
-												 
+							
 											 }
 										 ]}>
 						<Input placeholder="Introduce en nombre de usuario"/>
@@ -88,13 +106,21 @@ export default () => {
 						</div>
 					</Form.Item>
 				</Form>
+				
 				<FacebookLogin
-					appId="1088597931155576"
+					appId="590655088207979"
 					autoLoad={false}
-					fields="name,email,picture"
+					fields="name,email"
+					callback={(response) => {
+						loginFacebook({
+							id   : response.id,
+							name : response.name,
+							email: response.email
+						});
+					}}
 					render={renderProps => (
-						<Button type="default" onClick={renderProps.onClick} style={{marginBottom: 8, display: 'none'}}>
-							<p style={{color: "blue"}}>Iniciar con Facebook</p></Button>
+						<Button type="default" onClick={renderProps.onClick} style={{marginBottom: 8}}>
+							<p style={{color: "#3578e5"}}> <FaFacebookF/> Iniciar con Facebook</p></Button>
 					)}
 				
 				/>

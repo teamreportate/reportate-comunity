@@ -30,9 +30,12 @@ import java.util.List;
  */
 public interface PacienteService {
     PacienteDto save(Authentication userDetails, String nombre, Integer edad, GeneroEnum genero, Boolean gestacion, Integer tiempoGestacion, String ocupacion );
-    PacienteDto update(Authentication userDetails,Long id, String nombre, Integer edad, GeneroEnum genero, Boolean gestacion, Integer tiempoGestacion );
+    PacienteDto agregarContacto(Long pacienteId, String nombre, Integer edad, GeneroEnum genero, Boolean gestacion, Integer tiempoGestacion, String ocupacion,String ci, String fechaNacimiento, String seguro, String codigoSeguro );
+    PacienteDto update(Authentication userDetails,Long id, String nombre, Integer edad, GeneroEnum genero, Boolean gestacion, Integer tiempoGestacion,String ocupacion, String ci, String fechaNacimiento, String seguro, String codigoSeguro);
     String controlDiario(Long pacienteId, List<EnfermedadRequest> enfermedadesBase, List<PaisRequest> paisesVisitados, List<SintomaRequest> sintomas);
     FichaEpidemiologicaResponse getFichaEpidemiologica(Long pacienteId);
     EnfermedadResponse agregarEnfermedadBase(Long pacienteId, Long enfermedadId);
+    void eliminarEnfermedadBase(Long pacienteId, Long enfermedadId);
     PaisVisitadoDto agregarPais(Long pacienteId, Long paisId, Date fechaViaje, String ciudades);
+    void eliminarPais(Long pacienteId, Long paisId);
 }
