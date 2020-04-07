@@ -46,11 +46,16 @@ export class LoginComponent extends ClicComponent implements OnInit {
     this.authService.requestStorageLogin(credentials).subscribe(response => {
       sessionStorage.clear();
       sessionStorage.setItem(AUTH_DATA, JSON.stringify(response.body));
+      const token = this.jwtHelper.decodeToken(response.body.token);
        // this.router.navigate(['/access/groups']);
       this.service.requestUsernMenu(credentials.username).subscribe(responsemenu => {
         this.menuitem.menu(responsemenu.body);
         // sessionStorage.setItem('objT', JSON.stringify(responsemenu.body));
-        this.router.navigate(['/dashboards/principal']);
+        if (token.tipoUsuario === 'MEDICO') {
+          this.router.navigate(['/seguimiento/diagnostico']);
+        } else {
+          this.router.navigate(['/dashboards/principal']);
+        }
         this.isLoad = false;
         this.error = null;
       }, error => {

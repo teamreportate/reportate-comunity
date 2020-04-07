@@ -65,18 +65,24 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
 
 
     @Query("SELECT count(1) " +
-            "FROM Diagnostico d INNER JOIN d.enfermedad enf INNER JOIN d.controlDiario cd " +
-            "INNER JOIN cd.paciente p INNER JOIN p.familia f INNER JOIN f.departamento dep INNER JOIN f.municipio mun " +
-            "WHERE d.resultadoValoracion >= :valoracionInicio AND d.resultadoValoracion <= :valoracionFin AND "
-            + "(:genero IS NULL OR p.genero = :genero) AND "
+            "FROM Diagnostico d INNER JOIN d.enfermedad enf INNER JOIN d.controlDiario cd INNER JOIN cd.paciente p " +
+            "WHERE (:valoracionInicio IS NULL OR d.resultadoValoracion >= :valoracionInicio) AND (:valoracionFin IS NULL OR d.resultadoValoracion <= :valoracionFin) AND "
+            + "p.genero IN :generos AND "
             + "((:edadInicial IS NULL OR p.edad >= :edadInicial) AND (:edadFinal IS NULL OR p.edad <= :edadFinal)) AND "
-            + "((:departamento IS NULL OR :departamento = dep) AND (:municipio IS NULL OR :municipio = mun))")
-    Integer cantidadDiagnosticoPorResultadoValoracion(
+            + "d.departamento IN (:departamentos) AND "
+            + "d.municipio in (:municipios) AND "
+            + "d.centroSalud IN (:centrosSalud) AND "
+            + "d.estadoDiagnostico IN (:diagnosticos) AND "
+            + "enf IN (:enfermedades)")
+    Integer cantidadDiagnosticoPorFiltros(
             @Param("valoracionInicio") BigDecimal valoracionInicio,
             @Param("valoracionFin") BigDecimal valoracionFin,
-            @Param("departamento")Departamento departamento,
-            @Param("municipio")Municipio municipio,
-            @Param("genero")GeneroEnum genero,
+            @Param("departamentos") List<Departamento> departamentos,
+            @Param("municipios") List<Municipio> municipios,
+            @Param("centrosSalud") List<CentroSalud> centrosSalud,
+            @Param("diagnosticos") List<EstadoDiagnosticoEnum> diagnosticos,
+            @Param("enfermedades") List<Enfermedad> enfermedades,
+            @Param("generos")List<GeneroEnum> generos,
             @Param("edadInicial")Integer edadInicial,
             @Param("edadFinal")Integer edadFinal);
 
