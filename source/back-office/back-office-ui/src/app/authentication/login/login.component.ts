@@ -44,12 +44,12 @@ export class LoginComponent extends ClicComponent implements OnInit {
     this.isLoad = true;
     this.error = null;
     this.authService.requestStorageLogin(credentials).subscribe(response => {
-      localStorage.clear();
-      localStorage.setItem(AUTH_DATA, JSON.stringify(response.body));
+      sessionStorage.clear();
+      sessionStorage.setItem(AUTH_DATA, JSON.stringify(response.body));
        // this.router.navigate(['/access/groups']);
       this.service.requestUsernMenu(credentials.username).subscribe(responsemenu => {
         this.menuitem.menu(responsemenu.body);
-        // localStorage.setItem('objT', JSON.stringify(responsemenu.body));
+        // sessionStorage.setItem('objT', JSON.stringify(responsemenu.body));
         this.router.navigate(['/dashboards/principal']);
         this.isLoad = false;
         this.error = null;

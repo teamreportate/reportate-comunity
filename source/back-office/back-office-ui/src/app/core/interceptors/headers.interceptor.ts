@@ -27,7 +27,7 @@ export class HeadersInterceptor implements HttpInterceptor{
 
   authorization(request: HttpRequest<any>): HttpRequest<any> {
     if (request.url === Constantes.baseUri + 'auth/signin') return request;
-    const auth: Authentication = JSON.parse(localStorage.getItem(AUTH_DATA));
+    const auth: Authentication = JSON.parse(sessionStorage.getItem(AUTH_DATA));
     if (auth) {
       request = request.clone({
         setHeaders: {

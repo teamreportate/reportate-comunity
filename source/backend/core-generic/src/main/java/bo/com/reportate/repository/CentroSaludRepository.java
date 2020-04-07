@@ -36,5 +36,5 @@ public interface CentroSaludRepository extends JpaRepository<CentroSalud, Long> 
     List<CentroSaludUsuarioDto> listaCentrosSalud();
 
     Optional<CentroSalud> findByIdAndEstado(Long id, EstadoEnum estadoEnum);
-    List<CentroSalud> findByMunicipioContainsAndEstado(List<Municipio> municipios, EstadoEnum estadoEnum);
+    List<CentroSalud> findByMunicipioInAndEstado(List<Municipio> municipios, EstadoEnum estadoEnum);
 }

@@ -37,9 +37,9 @@ export class RequestResponseListComponent extends ClicComponent implements OnIni
 
   ngOnInit() {
     this.initialListener(this.changeDetector, this.media);
-    this.requestResponseList = JSON.parse(localStorage.getItem(RequestResponseListComponent.REQUEST_RESPONSE_LIST_TO_VIEW));
-    this.entity = JSON.parse(localStorage.getItem(RequestResponseListComponent.REQUEST_RESPONSE_ENTITY_TO_VIEW));
-    this.type = Number(localStorage.getItem(RequestResponseListComponent.REQUEST_RESPONSE_ENTITY_TYPE_TO_VIEW));
+    this.requestResponseList = JSON.parse(sessionStorage.getItem(RequestResponseListComponent.REQUEST_RESPONSE_LIST_TO_VIEW));
+    this.entity = JSON.parse(sessionStorage.getItem(RequestResponseListComponent.REQUEST_RESPONSE_ENTITY_TO_VIEW));
+    this.type = Number(sessionStorage.getItem(RequestResponseListComponent.REQUEST_RESPONSE_ENTITY_TYPE_TO_VIEW));
   }
 
   xmlDownload(event: MouseEvent, item: any) {

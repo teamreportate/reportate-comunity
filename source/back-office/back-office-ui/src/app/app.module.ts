@@ -44,7 +44,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   wheelPropagation: true
 };
 export function tokenGetter() {
-  const data = JSON.parse(localStorage.getItem(AUTH_DATA));
+  const data = JSON.parse(sessionStorage.getItem(AUTH_DATA));
   if (data) return data.token;
   return null;
 }

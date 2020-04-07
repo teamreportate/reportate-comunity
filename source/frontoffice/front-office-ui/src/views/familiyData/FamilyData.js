@@ -11,7 +11,8 @@ import {appConfigSetMessage} from "../../store/appConfig/actions";
 const {Option} = Select;
 
 const FamilyData = (props) => {
-	let history                               = useHistory();
+	let history = useHistory();
+	
 	const [departments, setDepartments]       = useState([]);
 	const [municipalities, setMunicipalities] = useState([]);
 	const [healthCenters, setHealthCenters]   = useState([]);
@@ -83,7 +84,9 @@ const FamilyData = (props) => {
 			>
 				<Form.Item label="Nombre"
 									 name="name"
-									 rules={[{required: true, message: 'Ingresa el nombre de tu familia'}]}
+									 rules={[
+										 {required: true, message: 'Ingresa el nombre de tu familia'},
+										 {max: 100, message: 'Nombre maximo 100 caracteres'},]}
 				>
 					<Input placeholder="Introduce en nombre de tu familia"/>
 				</Form.Item>
@@ -99,19 +102,25 @@ const FamilyData = (props) => {
 				</Form.Item>
 				<Form.Item label="Dirección"
 									 name="address"
-									 rules={[{required: true, message: 'Ingresa la dirección'}]}
+									 rules={[
+										 {required: true, message: 'Ingresa la dirección'},
+										 {max: 200, message: 'Telefono maximo 200 caracteres'},]}
 				>
 					<Input placeholder="ej. calle nro 10"/>
 				</Form.Item>
 				<Form.Item label="Zona"
 									 name="zone"
-									 rules={[{required: true, message: 'Ingresa la zona donde vivies'}]}
+									 rules={[
+										 {required: true, message: 'Ingresa la zona donde vivies'},
+										 {max: 100, message: 'Zona maximo 100 caracteres'},
+									 ]}
 				>
 					<Input placeholder="ej. centro"/>
 				</Form.Item>
+				
 				<Form.Item label="Departamento"
 									 name="department"
-									 rules={[{required: true, message: 'Ingresa el departamento donde te encuentras'}]}
+									 rules={[{required: true, message: 'Selecciona el departamento donde te encuentras'}]}
 				>
 					<Select
 						showSearch
@@ -130,9 +139,10 @@ const FamilyData = (props) => {
 						}
 					</Select>
 				</Form.Item>
+				
 				<Form.Item label="Municipio"
 									 name="municipality"
-									 rules={[{required: true, message: 'Ingresa el municipio donde te encuentras'}]}>
+									 rules={[{required: true, message: 'Selecciona el municipio donde te encuentras'}]}>
 					<Select
 						showSearch
 						placeholder="Seleccione el municipio"
@@ -151,7 +161,7 @@ const FamilyData = (props) => {
 				</Form.Item>
 				<Form.Item label="Centro de salud"
 									 name="healthCenter"
-									 rules={[{required: true, message: 'Ingresa el centro de salud'}]}
+									 rules={[{required: true, message: 'Selecciona el centro de salud'}]}
 				>
 					<Select
 						showSearch
@@ -172,7 +182,9 @@ const FamilyData = (props) => {
 				<Form.Item
 					label="Ciudad"
 					name="city"
-					rules={[{required: true, message: 'Ingresa tu ciudad'}]}
+					rules={[
+						{required: true, message: 'Ingresa tu ciudad'},
+						{max: 100, message: 'Ciudad maximo 100 caracteres'},]}
 				>
 					<Input placeholder="escriba su ciudad"/>
 				</Form.Item>

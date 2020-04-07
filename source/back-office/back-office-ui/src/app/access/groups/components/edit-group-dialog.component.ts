@@ -95,7 +95,7 @@ export class EditGroupDialogComponent extends ClicComponent implements OnInit {
       roles: new FormControl(null)
     });
 
-    const groupId: string = localStorage.getItem('GROUP_ID');
+    const groupId: string = sessionStorage.getItem('GROUP_ID');
     this.accessService.requestGroupRoles(groupId).subscribe(response => {
       this.asignedRolList = response.body;
       this.render = true;

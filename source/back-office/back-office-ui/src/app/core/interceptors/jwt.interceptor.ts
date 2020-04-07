@@ -17,7 +17,7 @@ export class JwtInterceptor implements HttpInterceptor {
     //     });
     //   }
     // });
-  //   const auth = JSON.parse(localStorage.getItem('auth'));
+  //   const auth = JSON.parse(sessionStorage.getItem('auth'));
   //   if (auth) {
   //     request = request.clone({
   //       setHeaders: {

@@ -58,6 +58,7 @@ class ServiceFamily extends ServiceBase {
 				genero         : member.sex,
 				gestacion      : member.gestation,
 				tiempoGestacion: member.gestationTime,
+				ocupacion      : member.occupation === 'otro' ? member.otherOccupation : member.occupation,
 				
 			}, {
 				headers: this.getHeaders()
@@ -106,7 +107,7 @@ class ServiceFamily extends ServiceBase {
 			{
 				enfermedadesBase: sicknesses,
 				sintomas        : symptoms
-			})
+			}, {headers: this.getHeaders()})
 				.then((result) => {
 						if (onSuccess) {
 							onSuccess(result.data);

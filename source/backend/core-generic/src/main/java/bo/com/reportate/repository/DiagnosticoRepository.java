@@ -7,6 +7,7 @@ import bo.com.reportate.model.Enfermedad;
 import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.Paciente;
 import bo.com.reportate.model.*;
+import bo.com.reportate.model.dto.DiagnosticoDto;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
 import bo.com.reportate.model.dto.response.NivelValoracionDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
@@ -40,7 +41,7 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
             " AND d.municipio in (:municipios) AND d.centroSalud IN (:centrosSalud)" +
             " AND d.estadoDiagnostico IN (:diagnosticos) " +
             " AND enf IN (:enfermedades) " +
-            " AND LOWER(p.nombre) LIKE :nombre ORDER BY d.id DESC")
+            " AND LOWER(p.nombre) LIKE %:nombre% ORDER BY d.id DESC")
     Page<DiagnosticoResponseDto> listarDiagnostico(
             @Param("fechaInicio") Date date,
             @Param("fechaFin") Date to,
@@ -52,10 +53,14 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
             @Param("nombre") String nombre,
             Pageable pageable);
 
-    @Query("SELECT new bo.com.reportate.model.dto.response.DiagnosticoResponseDto(d) "+
+
+    @Query("SELECT  new bo.com.reportate.model.dto.DiagnosticoDto(d) "+
             "FROM Diagnostico d INNER  JOIN  d.controlDiario cd "+
-            "WHERE cd.paciente=:paciente")
-    List<DiagnosticoResponseDto> listarDiagnosticoByPaciente(@Param("paciente") Paciente paciente);
+            "WHERE cd.paciente =:paciente " +
+            "ORDER BY cd.createdDate DESC" )
+    List<DiagnosticoDto> listarDiagnosticoByPaciente(@Param("paciente") Paciente paciente, Pageable pageable);
+
+
 
 
 
@@ -85,4 +90,5 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
     List<NivelValoracionDto> listarPorNivelValoracion(
             @Param("fechaInicio") Date from,
             @Param("fechaFin") Date to);
+
 }

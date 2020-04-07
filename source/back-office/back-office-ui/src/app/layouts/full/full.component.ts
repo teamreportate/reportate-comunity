@@ -40,7 +40,7 @@ export class FullComponent extends ClicComponent implements OnInit, OnDestroy, A
     this.mobileQuery = this.media.matchMedia('(min-width: 1500px)');
     this._mobileQueryListener = () => this.changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-    const _data = JSON.parse(localStorage.getItem(AUTH_DATA));
+    const _data = JSON.parse(sessionStorage.getItem(AUTH_DATA));
     this.userName = _data && _data.username ? _data.username : '';
   }
 
@@ -57,7 +57,7 @@ export class FullComponent extends ClicComponent implements OnInit, OnDestroy, A
     .afterClosed()
     .subscribe(result => {
       if (result) {
-        localStorage.clear();
+        sessionStorage.clear();
         window.location.reload();
       }
     });
@@ -71,23 +71,23 @@ export class FullComponent extends ClicComponent implements OnInit, OnDestroy, A
   }
 
   onGtLgScreen() {
-    localStorage.setItem(LOGIN_DIALOG_WIDTH, JSON.stringify(this.confirmConfig(null)));
+    sessionStorage.setItem(LOGIN_DIALOG_WIDTH, JSON.stringify(this.confirmConfig(null)));
   }
 
   onLgScreen() {
-    localStorage.setItem(LOGIN_DIALOG_WIDTH, JSON.stringify(this.confirmConfig(null)));
+    sessionStorage.setItem(LOGIN_DIALOG_WIDTH, JSON.stringify(this.confirmConfig(null)));
   }
 
   onMdScreen() {
-    localStorage.setItem(LOGIN_DIALOG_WIDTH, JSON.stringify(this.confirmConfig(null)));
+    sessionStorage.setItem(LOGIN_DIALOG_WIDTH, JSON.stringify(this.confirmConfig(null)));
   }
 
   onSmScreen() {
-    localStorage.setItem(LOGIN_DIALOG_WIDTH, JSON.stringify(this.confirmConfig(null)));
+    sessionStorage.setItem(LOGIN_DIALOG_WIDTH, JSON.stringify(this.confirmConfig(null)));
   }
 
   onXsScreen() {
-    localStorage.setItem(LOGIN_DIALOG_WIDTH, JSON.stringify(this.confirmConfig(null)));
+    sessionStorage.setItem(LOGIN_DIALOG_WIDTH, JSON.stringify(this.confirmConfig(null)));
   }
 
   setPage(pageInfo: Page) {}

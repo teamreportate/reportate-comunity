@@ -29,11 +29,14 @@ public class ControlDiario extends AbstractAuditableEntity{
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CONTROL_DIARIO_ID_GENERATOR")
     @Column(name = "ID")
     private Long id;
-
+    @Column(name = "PRIMER_CONTROL")
+    private Boolean primerControl;
     @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PACIENTE", referencedColumnName = "ID")
     private Paciente paciente;
+
+
 
 
 }

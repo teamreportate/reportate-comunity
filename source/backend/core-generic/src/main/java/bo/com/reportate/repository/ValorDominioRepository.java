@@ -23,7 +23,6 @@ import java.util.Optional;
 public interface ValorDominioRepository extends JpaRepository<MuValorDominio, Long> {
 
    <T>List<T> findByDescripcionContainingOrValorContainingAllIgnoreCase(String descripcion,String valor, Class<T> tClass);
-
    @Query("    SELECT vd " +
            "   FROM MuValorDominio vd " +
            "   WHERE vd.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +

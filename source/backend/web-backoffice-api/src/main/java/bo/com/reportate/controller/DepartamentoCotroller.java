@@ -161,4 +161,17 @@ public class DepartamentoCotroller {
         }
     }
 
+    @RequestMapping(value = "/departamento-municipio-centro-salud-asignados", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    public ResponseEntity<ObjetoResponseDto> listarDepartamentoMunicipioCentroSaludAsignados(@AuthenticationPrincipal Authentication userDetails) {
+        try {
+            return ok(this.departamentoService.listarDepartamentoMunicipioCentroSaludAsignados(userDetails));
+        } catch (NotDataFoundException e) {
+            log.error("Ocurrio un problema al recuperar lista de departamentos");
+            return CustomErrorType.badRequest("Obtener Departamentos", e.getMessage());
+        } catch (Exception e) {
+            log.error("Ocurrio un error al recuperar lista de departamentos", e);
+            return CustomErrorType.serverError("Obtener Departamentos", "Ocurrió un error interno");
+        }
+    }
+
 }

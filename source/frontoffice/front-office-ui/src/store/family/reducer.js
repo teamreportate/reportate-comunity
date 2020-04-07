@@ -73,7 +73,7 @@ const familyReducer = (state = initialState, action) => {
 		}
 		case FAMILY_UPDATE_MEMBER: {
 			const newMembers = [];
-			state.members.map(member => {
+			state.members.forEach(member => {
 				console.log(member.id === action.data.id);
 				if (member.id === action.data.id) {
 					newMembers.push({
@@ -96,7 +96,7 @@ const familyReducer = (state = initialState, action) => {
 		}
 		case FAMILY_SET_FIRST_CONTROL: {
 			const newMembers = [];
-			state.members.map(member => {
+			state.members.forEach(member => {
 				console.log(member.id === action.data.id);
 				if (member.id === action.data.id) {
 					newMembers.push({...member, firstControl: true});

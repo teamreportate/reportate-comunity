@@ -85,7 +85,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
       legend: {},
       tooltip: {},
       dataset: {
-        dimensions: ['registrado', 'alto', 'medio', 'bajo'],
+        dimensions: ['registrado', 'Alto', 'Medio', 'Bajo'],
         source: data
       },
       xAxis: { type: 'category' },

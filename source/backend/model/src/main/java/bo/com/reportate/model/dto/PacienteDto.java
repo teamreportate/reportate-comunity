@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @Created by :MC4
@@ -26,11 +27,21 @@ public class PacienteDto implements Serializable {
     private GeneroEnum genero;
     private Boolean gestacion = false;
     private Integer tiempoGestacion;// los tiempos se toma en cuenta en semanas.
+    private String ocupacion;
+    private String ci;
+    private Date fechaNacimiento;
+    private String seguro;
+    private String codigoSeguro;
 
     public  PacienteDto(Paciente paciente){
         this.id=paciente.getId();
         this.nombre=paciente.getNombre();
         this.edad=paciente.getEdad();
         this.genero=paciente.getGenero();
+        this.ocupacion = paciente.getOcupacion();
+        this.ci = paciente.getCi();
+        this.fechaNacimiento = paciente.getFechaNacimiento();
+        this.seguro = paciente.getSeguro();
+        this.codigoSeguro = paciente.getCodigoSeguro();
     }
 }

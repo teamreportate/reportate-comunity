@@ -25,13 +25,7 @@ header.primary {
 }
 
 button {
-  border: none;
-  border-radius: 4px;
-  box-shadow: #00000024 0 3px 6px !important;
 
-  &:hover {
-    box-shadow: #00000018 0 3px 10px !important;
-  }
 }
 
 button.add {
@@ -58,9 +52,10 @@ button.danger {
 hr {
   clear: both;
   height: 3px;
-  background-color: #5879e9;
+  background-color: #A3BF49;
   width: 100%;
   margin: 16px 0;
+  border: none;
 }
 
 div.ant-col.ant-form-item-label {

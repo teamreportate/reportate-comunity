@@ -30,7 +30,7 @@ export class Constants {
   static departamentosApi = 'api/departamentos';
   static municipiosApi = 'api/municipios';
   static centrosApi = 'api/centros-de-salud';
-  static listDiagnostico = 'api/departamentos/departamento-municipio-centro-salud';
+  static listDiagnostico = 'api/departamentos/departamento-municipio-centro-salud-asignados';
 
 // CLASIFICACION ENFERMEDAD
   static CLASIFICACION_ENFERMEDAD = [{key: 'TODOS', value: 'Todos'}, {key: 'SOSPECHOSO', value: 'SOSPECHOSO'},

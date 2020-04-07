@@ -5,9 +5,6 @@ import {useHistory} from "react-router-dom";
 
 const {Panel} = Collapse;
 
-const text = `
-  instrucciones
-`;
 export default () => {
 	let history = useHistory();
 	// const data  = useSelector(store => store.faq.data);
