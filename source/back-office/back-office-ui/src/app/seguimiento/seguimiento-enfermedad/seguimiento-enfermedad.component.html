@@ -88,7 +88,7 @@
                      [columnMode]="'force'"
                      [headerHeight]="50"
                      [footerHeight]="50"
-                     [scrollbarH]="this.scrollH"
+                     [scrollbarH]="true"
                      [externalPaging]="true"
                      [rowHeight]="'auto'"
                      [count]="this.pageControl.totalElements"
@@ -175,9 +175,9 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="Confirmación" [draggable]="false" [resizeable]="false">
+        <ngx-datatable-column name="Enfermedad" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
-            {{''}}
+            {{row.enfermedad}}
           </ng-template>
         </ngx-datatable-column>
 

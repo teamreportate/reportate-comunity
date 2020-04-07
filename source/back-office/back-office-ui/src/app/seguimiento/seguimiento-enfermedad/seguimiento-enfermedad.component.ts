@@ -41,12 +41,12 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
   public centroList: Centro[] = [];
   public clasificacionList: any[] = [];
   public form: FormGroup;
-  private enfermedadId;
-  private departamentoId;
-  private municipioID;
-  private centroSaludId;
-  private nombrePaciente;
-  private clasificacion;
+  private enfermedadId = 0;
+  private departamentoId = 0;
+  private municipioID = 0;
+  private centroSaludId = 0;
+  private nombrePaciente = '';
+  private clasificacion = 'TODOS';
 
   tempMunicipio: Municipio[] = [];
   tempCentro: Centro[] = [];
@@ -63,24 +63,24 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
     this.form = this.initialForm();
     this.today = moment().toDate();
     this.render = false;
-    this.initializePage(15, false );
     this.enfermedadService.getEnfermedades().subscribe(response => {
       this.enfermedadList = response.body;
     });
     this.getListForSelect();
+    this.initializePage(10, true );
   }
 
 
   onSearch() {
     if (this.form.valid) {
       if (this.endDate.isBefore(this.startDate)) {
-        const notif = {error: {title: 'Filtrado de Diagnóstico', detail: 'La fecha final no puede ser menor que la fecha inicial'}};
+        const notif = {error: {title: 'Filtrado de Diagnósticos', detail: 'La fecha final no puede ser menor que la fecha inicial'}};
         this.notifierError(notif, 'warning');
         return;
       }
       this.updateDate();
       this.render = false;
-      this.initializePage(20, true);
+      this.initializePage(10, true);
     }
   }
 

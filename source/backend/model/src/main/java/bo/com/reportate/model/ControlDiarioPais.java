@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @Created by :MC4
@@ -30,7 +31,10 @@ public class ControlDiarioPais extends AbstractAuditableEntity{
     @Column(name = "ID")
     private Long id;
 
-
+    @Column(name = "FECHA_VIAJE")
+    private Date fechaViaje;
+    @Column(name = "CIUDAD", length = 500)
+    private String ciudades;
     @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PAIS", referencedColumnName = "ID")
