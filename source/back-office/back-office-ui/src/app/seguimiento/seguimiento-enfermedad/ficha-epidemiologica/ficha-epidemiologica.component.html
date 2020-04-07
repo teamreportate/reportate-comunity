@@ -1,0 +1,243 @@
+<clic-page [title]="'Datos del  cliente'" (reloadEmitter)="this.ngOnInit()">
+
+  <div [fxFlex]="this.flex===30?30:70-this.flex"  class="h-padding-5">
+    <mat-form-field>
+        <input matInput placeholder="Nombre *" [formControl]="this.form.controls['nombre']" maxlength="100">
+    </mat-form-field>
+  </div>
+  <div [fxFlex]="this.flex===30?30:70-this.flex"  class="h-padding-5">
+    <mat-form-field>
+      <input matInput placeholder="Edad *" [formControl]="this.form.controls['edad']" maxlength="100">
+    </mat-form-field>
+  </div>
+  <div [fxFlex]="this.flex===30?30:70-this.flex"  class="h-padding-5">
+    <mat-form-field>
+      <input matInput placeholder="Genero *" [formControl]="this.form.controls['genero']" maxlength="100">
+    </mat-form-field>
+  </div>
+  <div [fxFlex]="this.flex===30?30:70-this.flex" class="h-padding-5">
+    <mat-form-field>
+      <input matInput placeholder="Telefono *" [formControl]="this.form.controls['telefono']" maxlength="100">
+    </mat-form-field>
+  </div>
+  <div [fxFlex]="this.flex===30?30:70-this.flex"  class="h-padding-5">
+    <mat-form-field>
+      <input matInput placeholder="CI/PASAPORTE *" [formControl]="this.form.controls['cedulaIdentidad']" maxlength="100">
+    </mat-form-field>
+  </div>
+  <div [fxFlex]="this.flex===30?30:70-this.flex" class="h-padding-5">
+    <mat-form-field>
+      <input matInput placeholder="Departamento *" [formControl]="this.form.controls['departamento']" maxlength="100">
+    </mat-form-field>
+  </div>
+  <div [fxFlex]="this.flex===30?30:70-this.flex" class="h-padding-5">
+    <mat-form-field>
+      <input matInput placeholder="Municipio *" [formControl]="this.form.controls['municipio']" maxlength="100">
+    </mat-form-field>
+  </div>
+  <div [fxFlex]="this.flex===30?30:70-this.flex" class="h-padding-5">
+    <mat-form-field>
+      <input matInput placeholder="Ciudad *" [formControl]="this.form.controls['ciudad']" maxlength="100">
+    </mat-form-field>
+  </div>
+  <div [fxFlex]="this.flex===30?30:70-this.flex"  class="h-padding-5">
+    <mat-form-field>
+      <input matInput placeholder="Zona *" [formControl]="this.form.controls['zona']" maxlength="100">
+    </mat-form-field>
+  </div>
+  <div [fxFlex]="this.flex===30?30:70-this.flex" class="h-padding-5">
+    <mat-form-field>
+      <input matInput placeholder="Direccion *" [formControl]="this.form.controls['direccion']" maxlength="100">
+    </mat-form-field>
+  </div>
+  <div [fxFlex]="this.flex===30?30:70-this.flex"  class="h-padding-5">
+    <mat-form-field>
+      <input matInput placeholder="Ubicación *" [formControl]="this.form.controls['ubicacion']" maxlength="100">
+    </mat-form-field>
+  </div>
+
+
+    <div fxFlex="100" class="p-5">
+      <ngx-datatable #table class="material" [messages]="this.tableMessages()"
+                     [columnMode]="'force'"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     [scrollbarH]="this.scrollH"
+                     [externalPaging]="true"
+                     [rowHeight]="'auto'"
+                     [limit]="'5'"
+                     [rows]="this.listEnfermedadesBase">
+
+        <ngx-datatable-column name="Acciones" [maxWidth]="80" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div fxLayout="row" fxFlexAlign="start start">
+              <div fxFlex="100" fxFlexAlign="center top">
+                <button mat-icon-button matTooltip="Detalles">
+                  <mat-icon color="accent">delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Enfermedad" [maxWidth]="250" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.nombre}}
+          </ng-template>
+        </ngx-datatable-column>
+
+      </ngx-datatable>
+    </div>
+  <div fxLayout="row wrap">
+    <div fxFlex="100" class="p-5">
+      <ngx-datatable #table class="material" [messages]="this.tableMessages()"
+                     [columnMode]="'force'"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     [scrollbarH]="this.scrollH"
+                     [externalPaging]="true"
+                     [rowHeight]="'auto'"
+                     [limit]="'5'"
+                     [rows]="this.listPaisesVisitados">
+
+        <ngx-datatable-column name="Acciones" [maxWidth]="80" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div fxLayout="row" fxFlexAlign="start start">
+              <div fxFlex="100" fxFlexAlign="center top">
+                <button mat-icon-button matTooltip="Detalles">
+                  <mat-icon color="accent">info</mat-icon>
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Fecha" [maxWidth]="250" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.fecha | date: "dd/MM/yyyy H:mm"}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Pais" [maxWidth]="300" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.pais }}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Ciudad" [maxWidth]="300" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.ciudad }}
+          </ng-template>
+        </ngx-datatable-column>
+
+      </ngx-datatable>
+    </div>
+  </div>
+  <div fxLayout="row wrap">
+
+    <div fxFlex="100" class="p-5">
+      <ngx-datatable #table class="material" [messages]="this.tableMessages()"
+                     [columnMode]="'force'"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     [scrollbarH]="this.scrollH"
+                     [externalPaging]="true"
+                     [rowHeight]="'auto'"
+                     [limit]="'5'"
+                     [rows]="this.listDiagnosticos">
+
+        <ngx-datatable-column name="Acciones" [maxWidth]="80" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div fxLayout="row" fxFlexAlign="start start">
+              <div fxFlex="100" fxFlexAlign="center top">
+                <button mat-icon-button matTooltip="Detalles">
+                  <mat-icon color="accent">info</mat-icon>
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Fecha Registro" [maxWidth]="250" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.fechaRegistro | date: "dd/MM/yyyy H:mm"}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Enfermedad" [maxWidth]="300" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.enfermedad}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Clasificacion" [maxWidth]="300" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.clasificacion}}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Valoracion" [maxWidth]="300" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.valoracion}}
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+  <div fxLayout="row wrap">
+    <div fxFlex="100" class="h-padding-5">
+      <button mat-flat-button color="accent" (click)="this.onSearch()">Buscar</button>
+    </div>
+    <div fxFlex="100" class="p-5">
+      <ngx-datatable #table class="material" [messages]="this.tableMessages()"
+                     [columnMode]="'force'"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     [scrollbarH]="this.scrollH"
+                     [externalPaging]="true"
+                     [rowHeight]="'auto'"
+                     [limit]="'5'"
+                     [rows]="this.listContactos">
+
+        <ngx-datatable-column name="Acciones" [maxWidth]="80" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div fxLayout="row" fxFlexAlign="start start">
+              <div fxFlex="100" fxFlexAlign="center top">
+                <button mat-icon-button matTooltip="Detalles">
+                  <mat-icon color="accent">info</mat-icon>
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Nombre" [maxWidth]="250" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.nombre}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Fecha Contacto" [maxWidth]="250" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.fechaRegistro | date: "dd/MM/yyyy H:mm"}}
+          </ng-template>
+        </ngx-datatable-column>
+
+
+        <ngx-datatable-column name="Edad" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.edad}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Genero" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.genero}}
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</clic-page>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>

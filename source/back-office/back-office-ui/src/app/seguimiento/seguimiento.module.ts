@@ -29,9 +29,10 @@ import {CommonsModule} from '../commons/commons.module';
 import {SeguimientoRoute} from './seguimiento.routes';
 import {SeguimientoEnfermedadComponent} from './seguimiento-enfermedad/seguimiento-enfermedad.component';
 import { SharedModule } from '../shared/shared.module';
+import { FichaEpidemiologicaComponent } from './seguimiento-enfermedad/ficha-epidemiologica/ficha-epidemiologica.component';
 
 @NgModule({
-  declarations: [SeguimientoEnfermedadComponent],
+  declarations: [SeguimientoEnfermedadComponent, FichaEpidemiologicaComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(SeguimientoRoute),
