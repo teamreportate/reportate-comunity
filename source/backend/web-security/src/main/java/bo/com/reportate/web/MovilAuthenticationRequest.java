@@ -15,6 +15,6 @@ import java.io.Serializable;
 public class MovilAuthenticationRequest implements Serializable {
     private String remoteId;
     private String name;
-    private AuthTypeEnum fuente;
+    private AuthTypeEnum source;
     private String email;
 }

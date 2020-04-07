@@ -5,7 +5,9 @@ import bo.com.reportate.model.MuAlarma;
 import bo.com.reportate.model.MuGrupo;
 import bo.com.reportate.model.MuUsuario;
 import bo.com.reportate.model.dto.UsuarioDto;
+import bo.com.reportate.model.enums.AuthTypeEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
+import bo.com.reportate.model.enums.TipoUsuarioEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,7 +18,8 @@ import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<MuUsuario, Long> {
 
-    Optional<MuUsuario> findByUsernameIgnoreCase(String username);
+    Optional<MuUsuario> findByUsernameIgnoreCaseAndAuthType(String username, AuthTypeEnum authTypeEnum);
+    Optional<MuUsuario> findByUsernameIgnoreCaseAndTipoUsuarioAndAuthType(String username, TipoUsuarioEnum tipoUsuarioEnum, AuthTypeEnum authTypeEnum);
 
     Optional<MuUsuario> findByEstadoAndUsername(EstadoEnum estado, String username);
 

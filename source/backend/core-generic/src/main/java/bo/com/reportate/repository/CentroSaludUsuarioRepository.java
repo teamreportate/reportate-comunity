@@ -38,7 +38,8 @@ public interface CentroSaludUsuarioRepository extends JpaRepository<CentroSaludU
             "FROM CentroSaludUsuario du INNER JOIN du.muUsuario u " +
             "WHERE u =:usuario " +
             "AND du.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
-            "AND u.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
+            "AND u.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO" +
+            " AND du.centroSalud.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO ")
     List<CentroSaludUsuarioDto> listarCentrosSaludAsignados(@Param("usuario") MuUsuario muUsuario);
 
     @Query("SELECT du.centroSalud " +
