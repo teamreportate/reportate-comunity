@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, throwMatDialogContentAlreadyAttachedError } from '@angular/material';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -56,6 +56,10 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
     }, {
     });
     this.getByValorationRequest();
+
+    setTimeout(() => {
+      this.getByValorationRequest();
+    }, 500);
   }
 
   getByValorationRequest() {
