@@ -3,6 +3,8 @@ package bo.com.reportate.service;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
 import bo.com.reportate.model.dto.response.NivelValoracionDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
+import bo.com.reportate.model.enums.GeneroEnum;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -21,7 +23,7 @@ import java.util.List;
  * @Copyright :MC4
  */
 public interface DiagnosticoService {
-    Integer cantidadDiagnosticoPorResultadoValoracion(BigDecimal valoracionInicio, BigDecimal valoracionFin, Long departamentoId,Long municipioId,String genero, Integer edadInicial, Integer edadFinal);
+    Integer cantidadDiagnosticoPorFiltros(Authentication authentication,BigDecimal valoracionInicio, BigDecimal valoracionFin, Long departamentoId,Long municipioId, Long centroSaludId,GeneroEnum genero, Integer edadInicial, Integer edadFinal,EstadoDiagnosticoEnum estadoDiagnostico, Long enfermedadId);
     List<NivelValoracionDto> listarPorNivelValoracion(Date from,Date to);
     Page<DiagnosticoResponseDto> listarDiagnostico(Authentication authentication, Date from, Date to, Long departamentoId, Long municipioId, Long centroSaludId, String nomprePaciente, EstadoDiagnosticoEnum estadoDiagnostico, Long enfermedadId, Pageable pageable);
 }
