@@ -3,10 +3,13 @@ package bo.com.reportate.controller;
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
+import bo.com.reportate.model.dto.response.GraficoDto;
 import bo.com.reportate.model.dto.response.NivelValoracionDto;
 import bo.com.reportate.model.dto.response.NivelValoracionListDto;
+import bo.com.reportate.model.dto.response.TortaResponse;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.service.DiagnosticoService;
+import bo.com.reportate.service.ParamService;
 import bo.com.reportate.util.CustomErrorType;
 import bo.com.reportate.utils.DateUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,6 +49,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @Tag(name = "diagnostico", description = "API de diagnosticos")
 public class DiagnosticoController {
     @Autowired private DiagnosticoService diagnosticoService;
+    @Autowired private ParamService paramService;
 
     @RequestMapping(value = "/listar-filtro/{page}/{size}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Listar los diagnosticos", description = "Listar los diagnosticos", tags = { "diagnostico" })
@@ -83,26 +87,28 @@ public class DiagnosticoController {
             return CustomErrorType.serverError("Listar Diagnostico", "Se genero un error al listar los diagnosticos");
         }
     }
-    
-    @RequestMapping(value = "/cantidad-diagnostico-por-valoracion",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Contabilizar los diagnosticos por valoración", description = "Contabilizar los diagnosticos por valoración", tags = { "cantidad diagnosticos por valoración" })
-    public ResponseEntity<Integer> cantidadDiagnosticoPorValoracion(
-            @Parameter(description = "Valoración inicial para el filtro", required = true)
-            @RequestParam("from") Long from,
-            @Parameter(description = "Valoración final para el filtro", required = true)
-            @RequestParam("to") Long to,
-            @Parameter(description = "Identificador de Departamento", required = true)
-            @RequestParam("departamentoId") Long departamentoId,
+    @RequestMapping(value = "/tacometro-por-clasificacion",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Contabilizar los diagnosticos por clasificación", description = "Contabilizar los diagnosticos por clasificación", tags = { "cantidad diagnosticos por clasificación" })
+    public ResponseEntity<GraficoDto> cantidadDiagnosticoPorEstadoDiagnostico(
+    		@AuthenticationPrincipal Authentication authentication,
+    		@Parameter(description = "Identificador de Departamento", required = true)
+    		@RequestParam("departamentoId") Long departamentoId,
             @Parameter(description = "Identificador de Municipio", required = true)
             @RequestParam("municipioId") Long municipioId,
-            @Parameter(description = "Genero", required = false)
-            @RequestParam("genero") String genero,
-            @Parameter(description = "Edad inicial para el filtro", required = false)
-            @RequestParam("edadInicial") Integer edadInicial,
-            @Parameter(description = "Edad final para el filtro", required = false)
-            @RequestParam("edadFinal") Integer edadFinal) {
+            @Parameter(description = "Identificador de Centro Salud", required = true)
+            @RequestParam("centroSaludId") Long centroSaludId,
+            @Parameter(description = "Clasificacion de diagnostico", required = true)
+            @RequestParam("clasificacion")EstadoDiagnosticoEnum clasificacion){
         try {
-            return ok(this.diagnosticoService.cantidadDiagnosticoPorResultadoValoracion(BigDecimal.valueOf(from), BigDecimal.valueOf(to), departamentoId, municipioId,genero,edadInicial,edadFinal));
+        	//Authentication authentication,BigDecimal valoracionInicio, BigDecimal valoracionFin, Long departamentoId,Long municipioId, Long centroSaludId,
+    		//String genero, Integer edadInicial, Integer edadFinal,EstadoDiagnosticoEnum estadoDiagnostico, Long enfermedadId
+        	GraficoDto graficoDto = new GraficoDto();
+        	Integer cantidad =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication,null, null, departamentoId, municipioId,centroSaludId,null,
+            		null,null,clasificacion,0l);
+        	graficoDto.setCantidadGrafico(cantidad);
+        	graficoDto.setNombreGrafico(clasificacion.name());
+        	graficoDto.setCantidadMaximaGrafico(paramService.getInt("TACOMETRO_MAXIMO"));
+            return ok(graficoDto);
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al contabilizar los diagnosticos: Causa. {}",e.getMessage());
             return CustomErrorType.badRequest("Contabilizar Diagnosticos", e.getMessage());
