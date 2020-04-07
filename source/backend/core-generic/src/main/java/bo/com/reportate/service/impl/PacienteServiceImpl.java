@@ -3,16 +3,14 @@ package bo.com.reportate.service.impl;
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.*;
+import bo.com.reportate.model.dto.EnfermedadDto;
 import bo.com.reportate.model.dto.PacienteDto;
 import bo.com.reportate.model.dto.PaisDto;
 import bo.com.reportate.model.dto.PaisVisitadoDto;
 import bo.com.reportate.model.dto.request.EnfermedadRequest;
 import bo.com.reportate.model.dto.request.PaisRequest;
 import bo.com.reportate.model.dto.request.SintomaRequest;
-import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
-import bo.com.reportate.model.dto.response.EnfermedadResponse;
-import bo.com.reportate.model.dto.response.FamiliaResponse;
-import bo.com.reportate.model.dto.response.FichaEpidemiologicaResponse;
+import bo.com.reportate.model.dto.response.*;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
@@ -30,10 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @Created by :MC4
@@ -123,7 +118,13 @@ public class PacienteServiceImpl implements PacienteService {
         }
 
         Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No existe el paciente registrado"));
-        ControlDiario controlDiario = ControlDiario.builder().paciente(paciente).build();
+
+
+
+        ControlDiario controlDiario = ControlDiario.builder()
+                .paciente(paciente)
+                .primerControl(this.controlDiarioRepository.existsByPrimerControlTrueAndPaciente(paciente))
+                .build();
         this.controlDiarioRepository.save(controlDiario);
         log.info("Registrando sintomas..");
         List<Sintoma> sintomasRecibidos = new ArrayList<>();
@@ -229,5 +230,36 @@ public class PacienteServiceImpl implements PacienteService {
         }
         log.info("busquedas finalizadas");
         return  fichaEpidemiologicaResponse;
+    }
+
+    @Override
+    public EnfermedadResponse agregarEnfermedadBase(Long pacienteId, Long enfermedadId) {
+        Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontró el paciente"));
+        Enfermedad enfermedad = this.enfermedadRepository.findByIdAndEstado(enfermedadId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontró la enfermedad seleccionada"));
+        ControlDiario  controlDiario = this.controlDiarioRepository.findByPrimerControlTrueAndPacienteAndEstado(paciente, EstadoEnum.ACTIVO).orElseThrow(()->new OperationException("No se encontró el primer control del paciente"));
+        if(this.controlDiarioEnfermedadRepository.existsByControlDiarioAndEnfermedadAndEstado(controlDiario,enfermedad,EstadoEnum.ACTIVO)){
+            throw new OperationException("El paciente ya tiene agregado la enfermedad: "+enfermedad.getNombre());
+        }
+        this.controlDiarioEnfermedadRepository.save(ControlDiarioEnfermedad.builder().controlDiario(controlDiario).enfermedad(enfermedad).build());
+        return new EnfermedadResponse(enfermedad);
+    }
+
+    @Override
+    public PaisVisitadoDto agregarPais(Long pacienteId, Long paisId, Date fechaViaje, String ciudades) {
+        ValidationUtil.throwExceptionIfInvalidText("ciudad",ciudades,true,500);
+        Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontró el paciente"));
+        Pais pais = this.paisRepository.findByIdAndEstado(paisId, EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontro el país seleccionado"));
+        ControlDiario  controlDiario = this.controlDiarioRepository.findByPrimerControlTrueAndPacienteAndEstado(paciente, EstadoEnum.ACTIVO).orElseThrow(()->new OperationException("No se encontró el primer control del paciente"));
+        if(this.controlDiarioPaisRepository.existsByControlDiarioAndPaisAndEstado(controlDiario, pais, EstadoEnum.ACTIVO)){
+            throw new OperationException("El paciente ya tiene agregado el país: "+pais.getNombre());
+        }
+        ControlDiarioPais controlDiarioPais = ControlDiarioPais.builder()
+                .pais(pais)
+                .controlDiario(controlDiario)
+                .fechaViaje(fechaViaje)
+                .ciudades(ciudades)
+                .build();
+        this.controlDiarioPaisRepository.save(controlDiarioPais);
+        return new PaisVisitadoDto(controlDiarioPais);
     }
 }

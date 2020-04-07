@@ -3,6 +3,8 @@ package bo.com.reportate.controller;
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.dto.PacienteDto;
+import bo.com.reportate.model.dto.PaisVisitadoDto;
+import bo.com.reportate.model.dto.response.EnfermedadResponse;
 import bo.com.reportate.model.dto.response.FamiliaResponse;
 import bo.com.reportate.model.dto.response.FichaEpidemiologicaResponse;
 import bo.com.reportate.model.enums.Process;
@@ -11,6 +13,7 @@ import bo.com.reportate.service.PacienteService;
 import bo.com.reportate.util.CustomErrorType;
 import bo.com.reportate.web.ControlDiarioRequest;
 import bo.com.reportate.web.PacienteRequest;
+import bo.com.reportate.web.PaisViajeRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -45,7 +48,7 @@ public class PacienteController {
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Crea un registro de paciente a una familia", description = "Guarda un registro de paciente que pertenece a la familia del usuario autentificado", tags = { "paciente" })
-    public ResponseEntity<PacienteDto> saveFamilia(
+    public ResponseEntity<PacienteDto> savePaciente(
             @AuthenticationPrincipal Authentication userDetails,
             @Parameter(description = "Objeto paciente para registrar", required = true)
             @RequestBody PacienteRequest pacienteRequest) {
@@ -109,19 +112,55 @@ public class PacienteController {
         }
     }
 
-    @RequestMapping(value = "/ficha-epidemiologica/{pacienteId}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{pacienteId}/ficha-epidemiologica",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Obtiene información  la ficha Epidemiologica del paciente", description = "Obtiene información  la ficha Epidemiologica del paciente segun pacienteId", tags = { "paciente" })
     public ResponseEntity<FichaEpidemiologicaResponse> getFichaEpidemiologica(@PathVariable("pacienteId") Long pacienteId) {
         try {
             return ok(this.pacienteService.getFichaEpidemiologica(pacienteId));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al obtener la ficha Epidemiologica. Causa. {} ",e.getMessage());
-            //logService.error(Process.REGISTRO_FAMILIA,"Se genero un error al obtener la ficha Epidemiologica . Causa. {}",e.getMessage());
             return CustomErrorType.badRequest("Obtener Ficha Epidemiologica", e.getMessage());
         }catch (Exception e){
-            log.error("Se genero un error al obtener la familia del usuario",e);
-            //logService.error(Process.REGISTRO_FAMILIA,"Se genero un error al obtener la ficha Epidemiologica");
+            log.error("Se genero un error al obtener la ficha epidemiologica",e);
             return CustomErrorType.serverError("Obtener Ficha Epidemiologica", "Se genero un error al obtener la ficha Epidemiologica");
         }
     }
+
+    @RequestMapping(value = "/{pacienteId}/{enfermedadId}/agregar-enfermedad-base",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Agregar Enfermedad Base", description = "Agrega una enfermedad base para un paciente", tags = { "paciente" })
+    public ResponseEntity<EnfermedadResponse> agregarEnfermedadBase(
+            @Parameter(description = "Identificador de paciente", required = true)
+            @PathVariable("pacienteId") Long pacienteId,
+            @Parameter(description = "Identificador de enfermedad", required = true)
+            @PathVariable("enfermedadId") Long enfermedadId) {
+        try {
+            return ok(this.pacienteService.agregarEnfermedadBase(pacienteId, enfermedadId));
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al agregar enfermedad base. Causa. {} ",e.getMessage());
+            return CustomErrorType.badRequest("Agregar Enfermedad Base", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al agregar enfermedad base",e);
+            return CustomErrorType.serverError("Agregar Enfermedad Base", "Se genero un error al obtener la ficha Epidemiologica");
+        }
+    }
+
+    @RequestMapping(value = "/{pacienteId}/{paisId}/agregar-pais",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Agregar País viajado", description = "Agrega un país al que viajo el paciente", tags = { "paciente" })
+    public ResponseEntity<PaisVisitadoDto> agregarPais(
+            @Parameter(description = "Identificador de paciente", required = true)
+            @PathVariable("pacienteId") Long pacienteId,
+            @Parameter(description = "Identificador de País", required = true)
+            @RequestBody PaisViajeRequest pais) {
+        try {
+            return ok(this.pacienteService.agregarPais(pacienteId, pais.getPaisId(), pais.getFechaViaje(), pais.getCiudad()));
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al agregar un país. Causa. {} ",e.getMessage());
+            return CustomErrorType.badRequest("Agregar País", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error el país",e);
+            return CustomErrorType.serverError("Agregar País", "Se genero un error al agregar país");
+        }
+    }
+
+
 }

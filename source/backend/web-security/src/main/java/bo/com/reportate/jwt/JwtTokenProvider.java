@@ -51,7 +51,7 @@ public class JwtTokenProvider {
                 .setClaims(claims)//
                 .setIssuedAt(now)//
                 .setExpiration(validity)//
-                .signWith(SignatureAlgorithm.PS512, secretKey)//
+                .signWith(SignatureAlgorithm.HS512, secretKey)//
                 .compact();
         this.tokenService.registroToken(MuToken.builder().fechaInicio(now).fechaExpiracion(validity).token(token).idUsuario(usuario).indefinido(false).build());
         return token;

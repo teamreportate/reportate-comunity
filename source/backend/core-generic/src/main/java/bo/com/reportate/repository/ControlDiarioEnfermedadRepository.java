@@ -1,10 +1,8 @@
 package bo.com.reportate.repository;
 
-import bo.com.reportate.model.ControlDiario;
-import bo.com.reportate.model.ControlDiarioEnfermedad;
-import bo.com.reportate.model.ControlDiarioSintoma;
-import bo.com.reportate.model.Paciente;
+import bo.com.reportate.model.*;
 import bo.com.reportate.model.dto.response.EnfermedadResponse;
+import bo.com.reportate.model.enums.EstadoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,5 +26,7 @@ public interface ControlDiarioEnfermedadRepository extends JpaRepository<Control
             "   FROM ControlDiario cd INNER JOIN cd.paciente p " +
             "   WHERE p=:paciente AND p.estado =bo.com.reportate.model.enums.EstadoEnum.ACTIVO)")
     List<EnfermedadResponse> listarEnfermedadesByPaciente(@Param("paciente") Paciente paciente);
+
+    boolean existsByControlDiarioAndEnfermedadAndEstado(ControlDiario controlDiario, Enfermedad enfermedad, EstadoEnum estadoEnum);
 
 }
