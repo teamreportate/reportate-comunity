@@ -3,17 +3,22 @@ package bo.com.reportate.service.impl;
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.*;
+
 import bo.com.reportate.model.dto.DiagnosticoDto;
+
+
 import bo.com.reportate.model.dto.PacienteDto;
 
 import bo.com.reportate.model.dto.PaisVisitadoDto;
 import bo.com.reportate.model.dto.request.EnfermedadRequest;
 import bo.com.reportate.model.dto.request.PaisRequest;
 import bo.com.reportate.model.dto.request.SintomaRequest;
+
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
 import bo.com.reportate.model.dto.response.EnfermedadResponse;
 
 import bo.com.reportate.model.dto.response.FichaEpidemiologicaResponse;
+
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
@@ -23,6 +28,10 @@ import bo.com.reportate.service.NotificacionService;
 import bo.com.reportate.service.PacienteService;
 import bo.com.reportate.util.ValidationUtil;
 
+import bo.com.reportate.utils.BigDecimalUtil;
+import bo.com.reportate.utils.DateUtil;
+import bo.com.reportate.utils.StringUtil;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +39,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @Created by :MC4
@@ -66,10 +73,11 @@ public class PacienteServiceImpl implements PacienteService {
     @Autowired private UsuarioRepository usuarioRepository;
 
     @Override
-    public PacienteDto save(Authentication userDetails, String nombre, Integer edad, GeneroEnum genero, Boolean gestacion, Integer tiempoGestacion) {
+    public PacienteDto save(Authentication userDetails, String nombre, Integer edad, GeneroEnum genero, Boolean gestacion, Integer tiempoGestacion, String ocupacion) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",nombre, true,100);
         ValidationUtil.throwExceptionIfInvalidNumber("edad",edad,true,-1,120);
         ValidationUtil.throwExceptionIfInvalidNumber("tiempo de gestación",tiempoGestacion,false,-1,41);
+        ValidationUtil.throwExceptionIfInvalidText("ocupación",ocupacion,true,50);
         MuUsuario user = (MuUsuario) userDetails.getPrincipal();
         Familia familia = this.familiaRepository.findFirstByUsuarioIdAndEstadoOrderByIdDesc(user.getId(), EstadoEnum.ACTIVO).orElseThrow(()->new OperationException("No existe ningún registro de familia para el usuario"));
 
@@ -82,6 +90,7 @@ public class PacienteServiceImpl implements PacienteService {
                 .genero(genero)
                 .gestacion(gestacion)
                 .tiempoGestacion(tiempoGestacion)
+                .ocupacion(ocupacion)
                 .familia(familia)
                 .build();
         this.pacienteRepository.save(paciente);
@@ -91,11 +100,68 @@ public class PacienteServiceImpl implements PacienteService {
     }
 
     @Override
-    public PacienteDto update(Authentication userDetails,Long id, String nombre, Integer edad, GeneroEnum genero, Boolean gestacion, Integer tiempoGestacion) {
+    public PacienteDto agregarContacto(
+            Long pacienteId, String nombre, Integer edad, GeneroEnum genero, Boolean gestacion, Integer tiempoGestacion,
+            String ocupacion, String ci, String fechaNacimiento, String seguro, String codigoSeguro) {
+        ValidationUtil.throwExceptionIfInvalidText("nombre",nombre, true,100);
+        ValidationUtil.throwExceptionIfInvalidNumber("edad",edad,true,-1,120);
+        ValidationUtil.throwExceptionIfInvalidNumber("tiempo de gestación",tiempoGestacion,false,-1,41);
+        ValidationUtil.throwExceptionIfInvalidText("ocupación",ocupacion,true,50);
+        ValidationUtil.throwExceptionIfInvalidText("ci",ci,false,20);
+        ValidationUtil.throwExceptionIfInvalidText("fechaNamiento",fechaNacimiento,false,10);
+        Date fechNacimient = null;
+        if(StringUtil.isEmptyOrNull(fechaNacimiento)) {
+            fechNacimient = DateUtil.toDate(DateUtil.FORMAT_DATE, fechaNacimiento);
+            if (fechNacimient == null) {
+                throw new OperationException("No se logró convertir a formato dd/mm/yyyy la fecha: " + fechaNacimiento);
+            }
+        }
+        ValidationUtil.throwExceptionIfInvalidText("seguro", seguro, false,50);
+        ValidationUtil.throwExceptionIfInvalidText("codigoSeguro", codigoSeguro, false, 30);
+        Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontro el paciente"));
+
+
+        if(this.pacienteRepository.existsByFamiliaAndNombreIgnoreCaseAndEstado(paciente.getFamilia(), nombre,EstadoEnum.ACTIVO)){
+            throw new OperationException("Ya existe un miembro de tu familia con el nombre: "+nombre);
+        }
+        Paciente contacto = Paciente.builder()
+                .nombre(nombre)
+                .edad(edad)
+                .genero(genero)
+                .gestacion(gestacion)
+                .tiempoGestacion(tiempoGestacion)
+                .ocupacion(ocupacion)
+                .fechaNacimiento(fechNacimient)
+                .ci(ci)
+                .seguro(seguro)
+                .codigoSeguro(codigoSeguro)
+                .familia(paciente.getFamilia())
+                .build();
+        this.pacienteRepository.save(contacto);
+        PacienteDto pacienteDto = new PacienteDto();
+        BeanUtils.copyProperties(contacto,pacienteDto);
+        return pacienteDto;
+    }
+
+    @Override
+    public PacienteDto update(Authentication userDetails,Long id, String nombre, Integer edad, GeneroEnum genero, Boolean gestacion, Integer tiempoGestacion,String ocupacion, String ci, String fechaNacimiento, String seguro, String codigoSeguro) {
         ValidationUtil.throwExceptionIfInvalidNumber("pacienteId", id,true,0L);
         ValidationUtil.throwExceptionIfInvalidText("nombre",nombre, true,100);
         ValidationUtil.throwExceptionIfInvalidNumber("edad",edad,true,-1,120);
         ValidationUtil.throwExceptionIfInvalidNumber("tiempo de gestación",tiempoGestacion,false,-1,41);
+
+        ValidationUtil.throwExceptionIfInvalidText("ocupación",ocupacion,true,50);
+        ValidationUtil.throwExceptionIfInvalidText("ci",ci,false,20);
+        ValidationUtil.throwExceptionIfInvalidText("fechaNamiento",fechaNacimiento,false,10);
+        Date fechNacimient = null;
+        if(StringUtil.isEmptyOrNull(fechaNacimiento)) {
+            fechNacimient = DateUtil.toDate(DateUtil.FORMAT_DATE, fechaNacimiento);
+            if (fechNacimient == null) {
+                throw new OperationException("No se logró convertir a formato dd/mm/yyyy la fecha: " + fechaNacimiento);
+            }
+        }
+        ValidationUtil.throwExceptionIfInvalidText("seguro", seguro, false,50);
+        ValidationUtil.throwExceptionIfInvalidText("codigoSeguro", codigoSeguro, false, 30);
         MuUsuario user = (MuUsuario) userDetails.getPrincipal();
         Familia familia = this.familiaRepository.findFirstByUsuarioIdAndEstadoOrderByIdDesc(user.getId(), EstadoEnum.ACTIVO).orElseThrow(()->new OperationException("No existe ningún registro de familia para el usuario"));
 
@@ -108,6 +174,11 @@ public class PacienteServiceImpl implements PacienteService {
         paciente.setGenero(genero);
         paciente.setGestacion(gestacion);
         paciente.setTiempoGestacion(tiempoGestacion);
+        paciente.setOcupacion(ocupacion);
+        paciente.setCi(ci);
+        paciente.setFechaNacimiento(fechNacimient);
+        paciente.setSeguro(seguro);
+        paciente.setCodigoSeguro(codigoSeguro);
         this.pacienteRepository.save(paciente);
         PacienteDto pacienteDto = new PacienteDto();
         BeanUtils.copyProperties(paciente,pacienteDto);
@@ -124,7 +195,10 @@ public class PacienteServiceImpl implements PacienteService {
         }
 
         Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No existe el paciente registrado"));
-        ControlDiario controlDiario = ControlDiario.builder().paciente(paciente).build();
+        ControlDiario controlDiario = ControlDiario.builder()
+                .paciente(paciente)
+                .primerControl(this.controlDiarioRepository.existsByPrimerControlTrueAndPaciente(paciente))
+                .build();
         this.controlDiarioRepository.save(controlDiario);
         log.info("Registrando sintomas..");
         List<Sintoma> sintomasRecibidos = new ArrayList<>();
@@ -231,5 +305,53 @@ public class PacienteServiceImpl implements PacienteService {
         }
         log.info("busquedas finalizadas");
         return  fichaEpidemiologicaResponse;
+    }
+
+    @Override
+    public EnfermedadResponse agregarEnfermedadBase(Long pacienteId, Long enfermedadId) {
+        Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontró el paciente"));
+        Enfermedad enfermedad = this.enfermedadRepository.findByIdAndEstado(enfermedadId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontró la enfermedad seleccionada"));
+        ControlDiario  controlDiario = this.controlDiarioRepository.findByPrimerControlTrueAndPacienteAndEstado(paciente, EstadoEnum.ACTIVO).orElseThrow(()->new OperationException("No se encontró el primer control del paciente"));
+        if(this.controlDiarioEnfermedadRepository.existsByControlDiarioAndEnfermedadAndEstado(controlDiario,enfermedad,EstadoEnum.ACTIVO)){
+            throw new OperationException("El paciente ya tiene agregado la enfermedad: "+enfermedad.getNombre());
+        }
+        this.controlDiarioEnfermedadRepository.save(ControlDiarioEnfermedad.builder().controlDiario(controlDiario).enfermedad(enfermedad).build());
+        return new EnfermedadResponse(enfermedad);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void eliminarEnfermedadBase(Long pacienteId, Long enfermedadId) {
+        Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontró el paciente"));
+        Enfermedad enfermedad = this.enfermedadRepository.findByIdAndEstado(enfermedadId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontró la enfermedad seleccionada"));
+        ControlDiario  controlDiario = this.controlDiarioRepository.findByPrimerControlTrueAndPacienteAndEstado(paciente, EstadoEnum.ACTIVO).orElseThrow(()->new OperationException("No se encontró el primer control del paciente"));
+        this.controlDiarioEnfermedadRepository.eliminarEnfermeda(enfermedad,controlDiario);
+    }
+
+    @Override
+    public PaisVisitadoDto agregarPais(Long pacienteId, Long paisId, Date fechaViaje, String ciudades) {
+        ValidationUtil.throwExceptionIfInvalidText("ciudad",ciudades,true,500);
+        Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontró el paciente"));
+        Pais pais = this.paisRepository.findByIdAndEstado(paisId, EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontro el país seleccionado"));
+        ControlDiario  controlDiario = this.controlDiarioRepository.findByPrimerControlTrueAndPacienteAndEstado(paciente, EstadoEnum.ACTIVO).orElseThrow(()->new OperationException("No se encontró el primer control del paciente"));
+        if(this.controlDiarioPaisRepository.existsByControlDiarioAndPaisAndEstado(controlDiario, pais, EstadoEnum.ACTIVO)){
+            throw new OperationException("El paciente ya tiene agregado el país: "+pais.getNombre());
+        }
+        ControlDiarioPais controlDiarioPais = ControlDiarioPais.builder()
+                .pais(pais)
+                .controlDiario(controlDiario)
+                .fechaViaje(fechaViaje)
+                .ciudades(ciudades)
+                .build();
+        this.controlDiarioPaisRepository.save(controlDiarioPais);
+        return new PaisVisitadoDto(controlDiarioPais);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void eliminarPais(Long pacienteId, Long paisId) {
+        Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontró el paciente"));
+        Pais pais = this.paisRepository.findByIdAndEstado(paisId, EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontro el país seleccionado"));
+        ControlDiario  controlDiario = this.controlDiarioRepository.findByPrimerControlTrueAndPacienteAndEstado(paciente, EstadoEnum.ACTIVO).orElseThrow(()->new OperationException("No se encontró el primer control del paciente"));
+        this.controlDiarioPaisRepository.eliminarPais(pais,controlDiario);
     }
 }

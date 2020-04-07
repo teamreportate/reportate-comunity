@@ -69,12 +69,12 @@ export class LoginDialogComponent extends ClicComponent implements OnInit{
   }
 
   onConfirmDialog() {
-    const data = JSON.parse(localStorage.getItem(AUTH_DATA));
+    const data = JSON.parse(sessionStorage.getItem(AUTH_DATA));
     const body: Authentication = {username: data.username, password: this.inputControl.value, token: null, listaRecursos: null};
     this.loading = true;
     this.error = null;
     this.authService.requestStorageLogin(body).subscribe(response => {
-      localStorage.setItem(AUTH_DATA, JSON.stringify(response.body));
+      sessionStorage.setItem(AUTH_DATA, JSON.stringify(response.body));
       this.data.callback().subscribe(response => {
         this.loading = false;
         this.dialogRef.close(response.body);

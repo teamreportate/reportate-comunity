@@ -116,7 +116,7 @@ export class EditUserDialogComponent extends ClicComponent implements OnInit {
 
     this.form.get('username').disable();
 
-    const userId: string = localStorage.getItem('USER_ID');
+    const userId: string = sessionStorage.getItem('USER_ID');
     this.accessService.requestUserGroups(userId).subscribe(response => {
       this.asignedGroupList = response.body;
       this.render = true;

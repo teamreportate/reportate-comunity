@@ -27,7 +27,7 @@ public interface MunicipioRepository extends JpaRepository<Municipio, Long> {
     boolean existsByNombreIgnoreCaseAndDepartamento(String nombre, Departamento departamento);
 
     List<MunicipioDto> findByEstadoInAndDepartamentoIdOrderByNombreAsc(List<EstadoEnum> estadoEnums, Long id);
-    List<Municipio> findByDepartamentoContainsAndEstado(List<Departamento> departamento, EstadoEnum estadoEnum);
+    List<Municipio> findByDepartamentoInAndEstado(List<Departamento> departamento, EstadoEnum estadoEnum);
     Optional<Municipio> findByIdAndEstado(Long id, EstadoEnum estadoEnum);
     boolean existsByIdIsNotAndNombreIgnoreCase(Long municipioId, String nombre);
     @Modifying

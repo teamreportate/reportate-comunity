@@ -1,5 +1,45 @@
-<div class="content-body1">
+<div fxLayout="row" class="h-padding-5">
+  <div fxFlex="100">
+    <div class="card">
+      <div fxLayout="row wrap" fxLayoutAlign="space-around" [formGroup]="form">
+        <div fxFlex="100"><h4 class="text-center">Reporte de test realizados</h4></div>
+        <div fxFlex="23">
+          <mat-form-field>
+            <mat-label>Fecha inicio</mat-label>
+            <input matInput [matDatepicker]="f" [max]="to" formControlName="from">
+            <mat-datepicker-toggle matSuffix [for]="f"></mat-datepicker-toggle>
+            <mat-datepicker #f></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxFlex="23">
+          <mat-form-field>
+            <mat-label>Fecha fin</mat-label>
+            <input matInput [matDatepicker]="t" [min]="from" formControlName="to">
+            <mat-datepicker-toggle matSuffix [for]="t"></mat-datepicker-toggle>
+            <mat-datepicker #t></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxFlex="23">
+
+        </div>
+        <div fxFlex="23" class="text-right">
+          <button mat-flat-button color="accent" type="button"
+          (click)="getByValorationRequest()" >Mostrar</button>
+        </div>
+      </div>
+      <hr>
+      <div fxLayout="row wrap" fxLayoutAlign="space-around" *ngIf="data.length > 2">
+        <div fxFlex="100">
+          <div id="main" style="width: 100%; height:500px;"></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
 </div>
+
+
 <ng-template #customNotification let-notificationData="notification">
   <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
 </ng-template>

@@ -63,7 +63,7 @@ export class GroupUsersRoleComponent extends ClicComponent implements OnInit, Af
   }
 
   ngOnInit() {
-    this.groupId = localStorage.getItem('GROUP_ID');
+    this.groupId = sessionStorage.getItem('GROUP_ID');
     this.funcionSistemaOperativo();
     this.initialListener(this.changeDetector, this.media);
     this.tmpUsersAsign = [];
@@ -72,7 +72,7 @@ export class GroupUsersRoleComponent extends ClicComponent implements OnInit, Af
     this.asigned = true;
     this.nav = '';
     this.selectedUserList = this.selectedAddUserList = [];
-    const groupId: string = localStorage.getItem('GROUP_ID');
+    const groupId: string = sessionStorage.getItem('GROUP_ID');
 
     this.accessService.requestGroupUsers(groupId).subscribe(response => {
       this.asignedUserList = this.asignedTmp = response.body;
@@ -155,7 +155,7 @@ export class GroupUsersRoleComponent extends ClicComponent implements OnInit, Af
   }
 
   asignUsers() {
-    const userId: string = localStorage.getItem('GROUP_ID');
+    const userId: string = sessionStorage.getItem('GROUP_ID');
     const callback = () => { return this.accessService.requestAddGroupUsers(userId, this.selectedAddUserList); };
     const textContent = `Confirmar para agregar los usuarios seleccionados al grupo`;
     this.action = this.ADD_USER;
@@ -163,7 +163,7 @@ export class GroupUsersRoleComponent extends ClicComponent implements OnInit, Af
   }
 
   removeUsers() {
-    const userId: string = localStorage.getItem('GROUP_ID');
+    const userId: string = sessionStorage.getItem('GROUP_ID');
     const callback = () => { return this.accessService.requestRemoveUsersFromGroup(userId, this.selectedUserList); };
     const textContent = `Confirmar para remover los usuarios seleccionados del grupo`;
     this.action = this.DEL_USER;

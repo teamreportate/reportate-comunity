@@ -4,22 +4,32 @@ import {useHistory} from "react-router-dom";
 import ServiceFamily from "../../services/ServiceFamily";
 import {useDispatch, useSelector} from "react-redux";
 import {familyAddMember, familyUpdateMember} from "../../store/family/actions";
+import {appConfigSetMessage} from "../../store/appConfig/actions";
+import ServiceAppConfig from "../../services/ServiceAppConfig";
 
 const {Option} = Select;
 export default ({newMember}) => {
-	let history                     = useHistory();
-	const dispatch                  = useDispatch();
-	const [form]                    = Form.useForm();
-	const [sex, setSex]             = useState(null);
-	const [gestation, setGestation] = useState(false);
-	const member                    = useSelector(store => store.family.toUpdate);
+	let history                         = useHistory();
+	const [occupations, setOccupations] = useState([]);
+	const dispatch                      = useDispatch();
+	const [form]                        = Form.useForm();
+	const [sex, setSex]                 = useState(null);
+	const [gestation, setGestation]     = useState(false);
+	const [other, setOther]             = useState(false);
+	const member                        = useSelector(store => store.family.toUpdate);
 	
 	
 	function handleCancelClick() {
 		history.push("/dashboard");
 	}
 	
-	const getDefaultFields  = () => {
+	useEffect(() => {
+		ServiceAppConfig.getOccupations(result => {
+			setOccupations(result);
+		});
+	}, []);
+	
+	const getDefaultFields = () => {
 		const fields = [];
 		for (const field in member) {
 			fields.push({
@@ -29,30 +39,31 @@ export default ({newMember}) => {
 		}
 		return fields;
 	};
-
+	
 	const handleReportClick = () => {
 		history.push("/daily-data");
 	};
 	
-	useEffect(() => {
-		console.log(form);
-	}, [form]);
-	
 	
 	const onFinish = values => {
 		if (newMember) {
-			console.log("creating member");
 			ServiceFamily.registerMember(values,
 				(result) => {
 					dispatch(familyAddMember(result));
 					history.push("/dashboard");
+				},
+				(data) => {
+					dispatch(appConfigSetMessage({text: data.detail}));
 				});
+			
 		} else {
-			console.log("updating member");
 			ServiceFamily.updateMember({...values, id: member.id, firstControl: member.firstControl},
 				(result) => {
 					dispatch(familyUpdateMember(result));
 					history.push("/dashboard");
+				},
+				(data) => {
+					dispatch(appConfigSetMessage({text: data.detail}));
 				});
 		}
 	};
@@ -73,12 +84,14 @@ export default ({newMember}) => {
 			>
 				<Form.Item label="Nombre"
 									 name="name"
-									 rules={[{required: true, message: 'Ingresa el nombre de tu familiar'}]}>
-					<Input placeholder="Introduce en nombre de tu familia"/>
+									 rules={[
+										 {required: true, message: 'Ingresa el nombre de tu familiar'},
+										 {max: 100, message: 'Nombre maximo 100 caracteres'},]}>
+					<Input placeholder="Introduce el nombre"/>
 				</Form.Item>
 				<Form.Item label="Edad"
 									 name="age"
-									 rules={[{required: true, message: 'Ingresa la edad '}]}>
+									 rules={[{required: true, message: 'Ingresa la edad'}]}>
 					<InputNumber
 						style={{width: '100%'}}
 						defaultValue={20}
@@ -142,8 +155,52 @@ export default ({newMember}) => {
 				 </Form.Item>
 				}
 				
+				{
+					newMember
+					? <Form.Item label="Ocupación"
+											 name="occupation"
+											 rules={[{required: true, message: 'Selecciona tu ocupación'}]}
+					>
+						<Select
+							showSearch
+							placeholder="Seleccione una ocupación"
+							optionFilterProp="children"
+							filterOption={(input, option) =>
+								option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+							}
+							onChange={(e) => {
+								if (form.getFieldValue('occupation') === 'otro') {
+									setOther(true);
+								} else {
+									setOther(false);
+								}
+								
+							}}
+						>
+							{
+								occupations.map(occupation => {
+									return <Option key={occupation.id} value={occupation.valor}>{occupation.valor}</Option>;
+								})
+							}
+							<Option value="otro">Otro</Option>
+						</Select>
+					</Form.Item>
+					: null
+				}
+				
+				{
+					(other
+					 ? <Form.Item name="otherOccupation"
+												rules={[
+													{required: true, message: 'Ingresa una ocupación'},
+													{max: 100, message: 'Ocupación maximo 100 caracteres'},]}>
+						 <Input placeholder="Introduce tu ocupación"/>
+					 </Form.Item>
+					 : null)
+				}
+				
 				<Form.Item>
-					<div style={{display: "flex", flexDirection: "row"}}>
+					<div style={{display: "flex", flexDirection: "row", marginTop: 16}}>
 						<Button type="default" onClick={handleCancelClick}
 										style={{width: '100%', marginBottom: 8, marginRight: 8}}>Cancelar</Button>
 						<Button type="primary" htmlType="submit"
@@ -155,3 +212,11 @@ export default ({newMember}) => {
 		</div>
 	);
 }
+
+const styles = {
+	radio: {
+		display   : 'block',
+		height    : '30px',
+		lineHeight: '30px',
+	}
+};

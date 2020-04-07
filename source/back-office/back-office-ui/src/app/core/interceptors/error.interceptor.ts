@@ -50,7 +50,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   }
 
   loginTimeout() {
-    const config = JSON.parse(localStorage.getItem(LOGIN_DIALOG_WIDTH));
+    const config = JSON.parse(sessionStorage.getItem(LOGIN_DIALOG_WIDTH));
     this.matDialog.open(LoginComponent, config).afterClosed().subscribe((result) => {
       if (!result) this.router.navigate(['/authentication/login']);
     });

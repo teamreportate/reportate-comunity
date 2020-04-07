@@ -6,7 +6,7 @@ import {
 	FAMILY_UPDATE_MEMBER
 } from "../actionTypes";
 
-const initialState   = {
+const initialState  = {
 	id          : "",
 	name        : "",
 	phone       : "",
@@ -42,17 +42,18 @@ const familyReducer = (state = initialState, action) => {
 				fetched     : true,
 				toUpdate    : {}
 			};
-			action.data.pacientes.map(paciente => {
-				newState.members.push({
-					id           : paciente.id,
-					name         : paciente.nombre,
-					age          : paciente.edad,
-					sex          : paciente.genero,
-					gestation    : paciente.gestacion,
-					gestationTime: paciente.tiempoGestacion,
-					firstControl : paciente.controlInicial
+			if (action.data.pacientes)
+				action.data.pacientes.forEach(paciente => {
+					newState.members.push({
+						id           : paciente.id,
+						name         : paciente.nombre,
+						age          : paciente.edad,
+						sex          : paciente.genero,
+						gestation    : paciente.gestacion,
+						gestationTime: paciente.tiempoGestacion,
+						firstControl : paciente.controlInicial
+					});
 				});
-			});
 			return newState;
 		}
 		case FAMILY_ADD_MEMBER: {
@@ -72,7 +73,7 @@ const familyReducer = (state = initialState, action) => {
 		}
 		case FAMILY_UPDATE_MEMBER: {
 			const newMembers = [];
-			state.members.map(member => {
+			state.members.forEach(member => {
 				console.log(member.id === action.data.id);
 				if (member.id === action.data.id) {
 					newMembers.push({
@@ -82,7 +83,7 @@ const familyReducer = (state = initialState, action) => {
 						sex          : action.data.genero,
 						gestation    : action.data.gestacion,
 						gestationTime: action.data.tiempoGestacion,
-						firstControl : action.data.controlInicial
+						firstControl : true
 					});
 				} else
 					newMembers.push(member);
@@ -95,7 +96,7 @@ const familyReducer = (state = initialState, action) => {
 		}
 		case FAMILY_SET_FIRST_CONTROL: {
 			const newMembers = [];
-			state.members.map(member => {
+			state.members.forEach(member => {
 				console.log(member.id === action.data.id);
 				if (member.id === action.data.id) {
 					newMembers.push({...member, firstControl: true});

@@ -1,4 +1,5 @@
 export const AUTH_SET_USER             = "AUTH_SET_USER";
+export const AUTH_LOGOUT               = "AUTH_LOGOUT";
 export const FAMILY_SET_DATA           = "FAMILY_SET_DATA";
 export const FAMILY_ADD_MEMBER         = "FAMILY_ADD_MEMBER";
 export const FAMILY_UPDATE_MEMBER      = "FAMILY_UPDATE_MEMBER";

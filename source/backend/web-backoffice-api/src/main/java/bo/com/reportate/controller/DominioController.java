@@ -1,6 +1,7 @@
 package bo.com.reportate.controller;
 
 import bo.com.reportate.exception.OperationException;
+import bo.com.reportate.model.Constants;
 import bo.com.reportate.model.dto.DominioDto;
 import bo.com.reportate.model.dto.ValorDominioDto;
 import bo.com.reportate.service.DominioService;
@@ -69,13 +70,10 @@ public class DominioController {
     @Operation(summary = "Lista los valores de un dominio", description = "Lista llos valores de un dominio", tags = { "dominio" })
     public ResponseEntity<List<ValorDominioDto>> obtener(@Parameter(description = "codigo de dominio",required = true) @PathVariable("codigo") String codigo) {
         try {
-
             return ok(dominioService.findAllByCodigo(codigo));
-        }
-        catch (OperationException e){
+        } catch (OperationException e){
             return CustomErrorType.badRequest(FormatUtil.MSG_TITLE_ERROR, e.getMessage());
-        }
-        catch (Exception e){
+        } catch (Exception e){
             log.error(FormatUtil.MSG_TITLE_ERROR,e);
             return CustomErrorType.badRequest(FormatUtil.MSG_TITLE_ERROR, FormatUtil.defaultError());
         }
@@ -140,6 +138,23 @@ public class DominioController {
             return CustomErrorType.badRequest(FormatUtil.MSG_TITLE_ERROR, e.getMessage());
         }
         catch (Exception e){
+            log.error(FormatUtil.MSG_TITLE_ERROR,e);
+            return CustomErrorType.badRequest(FormatUtil.MSG_TITLE_ERROR, FormatUtil.defaultError());
+        }
+    }
+
+    /**
+     * Retorna un valor dominio segun el criterio de busqueda
+     * @return
+     */
+    @GetMapping("/dominio-ocupaciones")
+    @Operation(summary = "Lista las ocupaciones", description = "Lista llos valores del dominio OCUPACIONES", tags = { "dominio" })
+    public ResponseEntity<List<ValorDominioDto>> obtenerOcupaciones() {
+        try {
+            return ok(dominioService.findAllByCodigo(Constants.Domain.OCUPACIONES));
+        } catch (OperationException e){
+            return CustomErrorType.badRequest(FormatUtil.MSG_TITLE_ERROR, e.getMessage());
+        } catch (Exception e){
             log.error(FormatUtil.MSG_TITLE_ERROR,e);
             return CustomErrorType.badRequest(FormatUtil.MSG_TITLE_ERROR, FormatUtil.defaultError());
         }

@@ -67,7 +67,7 @@ export class UsersComponent extends ClicComponent implements OnInit {
   }
 
   editUser(user: AuthUser) {
-    localStorage.setItem('USER_ID', String(user.id));
+    sessionStorage.setItem('USER_ID', String(user.id));
     const i = this.userList.indexOf(user);
     this.matDialog.open(EditUserDialogComponent, this.dialogConfig(user))
       .afterClosed()
@@ -81,7 +81,7 @@ export class UsersComponent extends ClicComponent implements OnInit {
   }
 
   changePassword(user: AuthUser) {
-    localStorage.setItem('USER_ID', String(user.id));
+    sessionStorage.setItem('USER_ID', String(user.id));
     const i = this.userList.indexOf(user);
     this.matDialog.open(ChangePasswordDialogComponent, this.dialogConfig(user))
       .afterClosed()
@@ -115,7 +115,7 @@ export class UsersComponent extends ClicComponent implements OnInit {
   }
 
   toTokenLis(user: AuthUser) {
-    localStorage.setItem(UserTokenComponent.USERID_TO_TOKENS, String(user.id));
+    sessionStorage.setItem(UserTokenComponent.USERID_TO_TOKENS, String(user.id));
     this.router.navigate(['accesos/users/token']);
   }
 

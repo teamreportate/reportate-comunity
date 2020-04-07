@@ -5,52 +5,68 @@ import ServiceFamily from "../../services/ServiceFamily";
 import ServiceAppConfig from "../../services/ServiceAppConfig";
 import {useDispatch} from "react-redux";
 import {familySetData} from "../../store/family/actions";
+import {geolocated} from "react-geolocated";
+import {appConfigSetMessage} from "../../store/appConfig/actions";
 
 const {Option} = Select;
 
-export default () => {
-	let history                               = useHistory();
+const FamilyData = (props) => {
+	let history = useHistory();
+	
 	const [departments, setDepartments]       = useState([]);
 	const [municipalities, setMunicipalities] = useState([]);
+	const [healthCenters, setHealthCenters]   = useState([]);
+	const [coords, setCoords]                 = useState({latitude: 0, longitude: 0});
 	const dispatch                            = useDispatch();
-	const onSubmit                            = values => {
-		console.log(values);
-	};
+	const [values, setValues]                 = useState(null);
 	
 	const [form] = Form.useForm();
 	
 	useEffect(() => {
 		ServiceAppConfig.getDepartments((result) => {
 			setDepartments(result);
-			console.log(result);
 		});
 	}, []);
 	
-	const handleChange = (value) => {
-		console.log(departments);
+	useEffect(() => {
+		if (props.isGeolocationAvailable && props.isGeolocationEnabled && props.coords) {
+			setCoords({
+				latitude : props.coords.latitude,
+				longitude: props.coords.longitude,
+			});
+		}
+	}, [props.isGeolocationAvailable, props.isGeolocationEnabled, props.coords]);
+	
+	const handleDepartmentChange   = (value) => {
 		departments.forEach((department) => {
 			if (department.id === value) {
 				setMunicipalities([...department.municipios]);
+				form.setFieldsValue({'municipality': null});
+			}
+		});
+	};
+	const handleMunicipalityChange = (value) => {
+		municipalities.forEach((municipality) => {
+			if (municipality.id === value) {
+				setHealthCenters([...municipality.centroSaluds]);
+				form.setFieldsValue({'healthCenter': null});
 			}
 		});
 	};
 	
-	function handleClick() {
-		ServiceFamily.register({},
-			(result) => {
-				console.log(result);
-			});
-		//history.push("/dashboard");
-	}
-	
 	const onFinish = values => {
-		console.log('Success:', values);
-		ServiceFamily.register(values,
+		setValues(values);
+		ServiceFamily.register({...values, 'latitude': coords.latitude, 'longitude': coords.longitude},
 			(result) => {
 				dispatch(familySetData(result));
 				history.push("/dashboard");
+				return true;
+			},
+			(data) => {
+				dispatch(appConfigSetMessage({text: data.detail}));
+				form.setFieldsValue(values);
 			});
-		
+		return false;
 	};
 	
 	const onFinishFailed = errorInfo => {
@@ -68,24 +84,44 @@ export default () => {
 			>
 				<Form.Item label="Nombre"
 									 name="name"
-									 rules={[{required: true, message: 'Ingresa el nombre de tu familia'}]}
+									 rules={[
+										 {required: true, message: 'Ingresa el nombre de tu familia'},
+										 {max: 100, message: 'Nombre maximo 100 caracteres'},]}
 				>
 					<Input placeholder="Introduce en nombre de tu familia"/>
 				</Form.Item>
 				<Form.Item label="Teléfono"
 									 name="phone"
+									 rules={
+										 [
+											 {required: true, message: 'Ingresa el telefono'},
+											 {max: 8, message: 'Telefono maximo 8 caracteres'},]
+									 }
 				>
 					<Input placeholder="ej. 70000001"/>
 				</Form.Item>
-				<Form.Item label="Dirección" name="address">
-					<Input placeholder="ej. 70000001"/>
+				<Form.Item label="Dirección"
+									 name="address"
+									 rules={[
+										 {required: true, message: 'Ingresa la dirección'},
+										 {max: 200, message: 'Telefono maximo 200 caracteres'},]}
+				>
+					<Input placeholder="ej. calle nro 10"/>
 				</Form.Item>
-				<Form.Item label="Zona" name="zone">
+				<Form.Item label="Zona"
+									 name="zone"
+									 rules={[
+										 {required: true, message: 'Ingresa la zona donde vivies'},
+										 {max: 100, message: 'Zona maximo 100 caracteres'},
+									 ]}
+				>
 					<Input placeholder="ej. centro"/>
 				</Form.Item>
+				
 				<Form.Item label="Departamento"
 									 name="department"
-									 rules={[{required: true, message: 'Ingresa el departamento donde te encuentras'}]}>
+									 rules={[{required: true, message: 'Selecciona el departamento donde te encuentras'}]}
+				>
 					<Select
 						showSearch
 						placeholder="Seleccione un departamento"
@@ -93,7 +129,7 @@ export default () => {
 						filterOption={(input, option) =>
 							option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
 						}
-						onChange={handleChange}
+						onChange={handleDepartmentChange}
 					
 					>
 						{
@@ -103,7 +139,10 @@ export default () => {
 						}
 					</Select>
 				</Form.Item>
-				<Form.Item label="Municipio" name="municipality">
+				
+				<Form.Item label="Municipio"
+									 name="municipality"
+									 rules={[{required: true, message: 'Selecciona el municipio donde te encuentras'}]}>
 					<Select
 						showSearch
 						placeholder="Seleccione el municipio"
@@ -111,6 +150,7 @@ export default () => {
 						filterOption={(input, option) =>
 							option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
 						}
+						onChange={handleMunicipalityChange}
 					>
 						{
 							municipalities.map(municipality => {
@@ -119,7 +159,33 @@ export default () => {
 						}
 					</Select>
 				</Form.Item>
-				<Form.Item label="Ciudad" name="city">
+				<Form.Item label="Centro de salud"
+									 name="healthCenter"
+									 rules={[{required: true, message: 'Selecciona el centro de salud'}]}
+				>
+					<Select
+						showSearch
+						placeholder="Seleccione el centro de salud"
+						optionFilterProp="children"
+						filterOption={(input, option) =>
+							option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+						}
+					>
+						{
+							healthCenters.map(healthCenter => {
+								return <Option key={healthCenter.id} value={healthCenter.id}>{healthCenter.nombre}</Option>;
+							})
+						}
+					</Select>
+				</Form.Item>
+				
+				<Form.Item
+					label="Ciudad"
+					name="city"
+					rules={[
+						{required: true, message: 'Ingresa tu ciudad'},
+						{max: 100, message: 'Ciudad maximo 100 caracteres'},]}
+				>
 					<Input placeholder="escriba su ciudad"/>
 				</Form.Item>
 				<Form.Item>
@@ -128,4 +194,11 @@ export default () => {
 			</Form>
 		</div>
 	);
-}
+};
+
+export default geolocated({
+	positionOptions    : {
+		enableHighAccuracy: false,
+	},
+	userDecisionTimeout: 5000,
+})(FamilyData);

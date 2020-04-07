@@ -21,7 +21,7 @@ import {AUTH_DATA} from '../../../environments/environment';
                 <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
                     <div fxLayout="row wrap">
                         <div class="text-center" fxFlex="100">
-                            <img alt="homepage" src="assets/images/background/login-back.png" width="70%">
+                            <img alt="homepage" src="assets/images/background/logo.png" width="70%">
                         </div>
                     </div>
                     <br>
@@ -69,7 +69,7 @@ export class LoginComponent extends ClicComponent implements OnInit {
   }
 
   ngOnInit() {
-    const username = JSON.parse(localStorage.getItem(AUTH_DATA)).username;
+    const username = JSON.parse(sessionStorage.getItem(AUTH_DATA)).username;
     this.initialListener(this.changeDetector, this.media);
     this.notifierError({error: {title: 'Error Inesperado', detail: 'Tiempo de sesión finalizado.'}});
     this.isLoad = false;
@@ -82,8 +82,8 @@ export class LoginComponent extends ClicComponent implements OnInit {
   loginSubmit() {
     this.service.requestLogin(this.loginForm.value).subscribe(response => {
       this.isLoad = false;
-      localStorage.removeItem(AUTH_DATA);
-      localStorage.setItem(AUTH_DATA, JSON.stringify(response.body));
+      sessionStorage.removeItem(AUTH_DATA);
+      sessionStorage.setItem(AUTH_DATA, JSON.stringify(response.body));
       this.notifierError({error: {title: 'Iniciar sesión', detail: 'Se ha iniciado sesión correctamente.'}}, 'info');
       setTimeout(() => this.dialogRef.close(true), 200);
     }, error1 => {
@@ -93,7 +93,7 @@ export class LoginComponent extends ClicComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem(AUTH_DATA);
+    sessionStorage.removeItem(AUTH_DATA);
     this.dialogRef.close(false);
   }
 

@@ -81,7 +81,7 @@ export class UserGroupRoleComponent extends ClicComponent implements OnInit, Aft
     this.asigned = this.asignedRole = true;
     this.render = this.renderRole = false;
 
-    const userId: string = localStorage.getItem('USER_ID');
+    const userId: string = sessionStorage.getItem('USER_ID');
 
     this.accessService.requestUserGroups(userId).subscribe(response => {
       this.asignedGroupList = this.asignedTmp = response.body;
@@ -112,28 +112,28 @@ export class UserGroupRoleComponent extends ClicComponent implements OnInit, Aft
   }
 
   asignGroup() {
-    const userId: string = localStorage.getItem('USER_ID');
+    const userId: string = sessionStorage.getItem('USER_ID');
     const callback = () => { return this.accessService.requestAddUserGroups(userId, this.selectedAddGroupList); };
     const textContent = `Confirmar para agregar los grupos seleccionados al usuario`;
     this.loadRequest(callback, textContent);
   }
 
   removeGroups() {
-    const userId: string = localStorage.getItem('USER_ID');
+    const userId: string = sessionStorage.getItem('USER_ID');
     const callback = () => { return this.accessService.requestRemoveGroupFromUser(userId, this.selectedGroupList); };
     const textContent = `Confirmar para remover los grupos asignados(no asignados) al usuario`;
     this.loadRequest(callback, textContent);
   }
 
   asignRoles() {
-    const userId: string = localStorage.getItem('USER_ID');
+    const userId: string = sessionStorage.getItem('USER_ID');
     const callback = () => { return this.accessService.requestAddUserRoles(userId, this.selectedAddRolList); };
     const textContent = `Confirmar para agregar los grupos seleccionados al usuario`;
     this.loadRequest(callback, textContent);
   }
 
   removeRoles() {
-    const userId: string = localStorage.getItem('USER_ID');
+    const userId: string = sessionStorage.getItem('USER_ID');
     const callback = () => { return this.accessService.requestRemoveRolesFromUser(userId, this.selectedRolList); };
     const textContent = `Confirmar para remover los roles seleccionados del usuario`;
     this.loadRequest(callback, textContent);

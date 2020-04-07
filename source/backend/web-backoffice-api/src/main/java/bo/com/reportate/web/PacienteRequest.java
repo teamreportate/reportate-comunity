@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @Created by :MC4
@@ -24,4 +25,9 @@ public class PacienteRequest implements Serializable {
     private GeneroEnum genero;
     private Boolean gestacion = false;
     private Integer tiempoGestacion;// los tiempos se toma en cuenta en semanas.
+    private String ocupacion;
+    private String ci;
+    private String fechaNacimiento;
+    private String seguro;
+    private String codigoSeguro;
 }

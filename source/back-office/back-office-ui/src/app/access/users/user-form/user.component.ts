@@ -18,6 +18,7 @@ import { AuthGroup } from '../../../core/models/auth-group';
 import { CustomOptions } from 'src/app/core/models/dto/custom-options';
 
 import { Department, SaludCentre, Municipaly } from '../user.type';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-user',
@@ -38,6 +39,7 @@ export class UserComponent extends ClicComponent implements OnInit {
   userId: number;
 
   groups: AuthGroup[] = [];
+  selected = [];
 
   departments: Department[] = [];
   municipalities: Municipaly[] = [];
@@ -66,7 +68,6 @@ export class UserComponent extends ClicComponent implements OnInit {
 
   ngOnInit() {
     this.initialListener(this.changeDetector, this.media);
-    this.initForm();
     this.getGroups();
     this.initTypeAction();
   }
@@ -76,17 +77,17 @@ export class UserComponent extends ClicComponent implements OnInit {
       this.userId = params['id'];
       if (this.userId) {
         this.title = 'Editar usuario';
+        this.initFormToUpdate();
         this.getUserById(this.userId);
       } else {
         this.title = 'Nuevo usuario';
-        this.getDepartments();
-        this.getMunicipalities();
-        this.getSaludCentres();
+        this.initFormToCreate();
+        this.getSetting();
       }
     });
   }
 
-  initForm() {
+  initFormToCreate() {
     this.form = new FormGroup({
       nombre: new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(100), Validators.minLength(5)])),
       username: new FormControl(null, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_]*$'),
@@ -106,10 +107,59 @@ export class UserComponent extends ClicComponent implements OnInit {
     });
   }
 
+  initFormToUpdate() {
+    this.form = new FormGroup({
+      nombre: new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(100), Validators.minLength(5)])),
+      username: new FormControl(null, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_]*$'),
+      Validators.minLength(5), Validators.maxLength(50)])),
+      authType: new FormControl(null),
+      tipoUsuario: new FormControl(null, Validators.compose([Validators.required])),
+      password: new FormControl(null, Validators.compose([Validators.minLength(8), Validators.maxLength(20)])),
+      passwordConfirm: new FormControl(null, Validators.compose([Validators.minLength(8), Validators.maxLength(20)])),
+      email: new FormControl(null, Validators.compose([Validators.required,
+      Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])),
+      grupos: new FormControl(null),
+      departamentos: new FormControl(null),
+      municipios: new FormControl(null),
+      centroSaluds: new FormControl(null)
+    }, {
+      validators: passwordMatchValidator
+    });
+  }
+
+  getSetting() {
+    this.accessService.requestCompleteDepartmentsList().subscribe(response => {
+      this.departments = response.body.departamentos;
+      this.municipalities = response.body.municipios;
+      this.saludCentres = response.body.centrosSalud;
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
+    });
+  }
+
   getGroups() {
     this.blockUI.start('Recuperando lista de grupos');
     this.groupService.requestGroupList().subscribe(response => {
       this.groups = response.body;
+      if (this.userId > 0) {
+        this.getGroupsToUpdate();
+      }
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
+    });
+  }
+
+  getGroupsToUpdate() {
+    this.blockUI.start('Recuperando lista de grupos');
+    this.accessService.requestUserGroups(this.userId.toString()).subscribe(response => {
+      response.body.forEach(elemento => {
+        this.selected.push(elemento);
+      });
+
       this.blockUI.stop();
     }, error => {
       this.blockUI.stop();
@@ -140,36 +190,6 @@ export class UserComponent extends ClicComponent implements OnInit {
       this.filterAssignedDepartments();
       this.filterMunicipalities();
 
-      this.blockUI.stop();
-    }, error => {
-      this.blockUI.stop();
-      if (error) this.notifierError(error);
-    });
-  }
-
-  getMunicipalities() {
-    this.accessService.requestAsignedMunicipalitiesList().subscribe(response => {
-      this.municipalities = response.body;
-      this.blockUI.stop();
-    }, error => {
-      this.blockUI.stop();
-      if (error) this.notifierError(error);
-    });
-  }
-
-  getSaludCentres() {
-    this.accessService.requestAsignedSaludCentreList().subscribe(response => {
-      this.saludCentres = response.body;
-      this.blockUI.stop();
-    }, error => {
-      this.blockUI.stop();
-      if (error) this.notifierError(error);
-    });
-  }
-
-  getDepartments() {
-    this.accessService.requestAsignedDepartmentsList().subscribe(response => {
-      this.departments = response.body;
       this.blockUI.stop();
     }, error => {
       this.blockUI.stop();
@@ -306,6 +326,8 @@ export class UserComponent extends ClicComponent implements OnInit {
       elem.asignado = iAsigned;
     });
   }
+
+
 
   /* --- */
 

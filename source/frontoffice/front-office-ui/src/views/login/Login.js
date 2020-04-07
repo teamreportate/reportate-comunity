@@ -9,6 +9,7 @@ import {authSetUser} from "../../store/auth/actions";
 import ServiceFamily from "../../services/ServiceFamily";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
+import {appConfigSetMessage} from "../../store/appConfig/actions";
 
 
 export default () => {
@@ -39,7 +40,6 @@ export default () => {
 			(result) => {
 				localStorage.setItem('token', result.token);
 				dispatch(authSetUser({...result, logged: true}));
-				// getting family information
 				ServiceFamily.getFamily(family => {
 					dispatch(familySetData({
 						...family,
@@ -47,6 +47,9 @@ export default () => {
 					}));
 					history.push("/dashboard");
 				});
+			},
+			(data) => {
+				dispatch(appConfigSetMessage({text: data.detail}));
 			});
 	};
 	
@@ -56,7 +59,7 @@ export default () => {
 	
 	return (<div>
 			<div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
-				<img src={Icon} style={{height: 120, width: 120, margin: 'auto'}}/>
+				<img src={Icon} style={{height: 169, width: 120, margin: 'auto'}} alt="Reportate Logo"/>
 				<Form
 					form={form}
 					layout='vertical'
@@ -65,10 +68,15 @@ export default () => {
 				>
 					<Form.Item label="Nombre de usuario"
 										 name="username"
-										 rules={[{required: true, message: 'Ingresa nombre de usuario'}]}>
+										 rules={[
+											 {
+												 required: true, message: 'Ingresa nombre de usuario',
+												 
+											 }
+										 ]}>
 						<Input placeholder="Introduce en nombre de usuario"/>
 					</Form.Item>
-					<Form.Item label="Password"
+					<Form.Item label="Contraseña"
 										 name="password"
 										 rules={[{required: true, message: 'Ingresa tu password'}]}>
 						<Input.Password placeholder="Introduce tu password"/>
@@ -76,7 +84,7 @@ export default () => {
 					<Form.Item>
 						<div style={{display: "flex", flexDirection: "row"}}>
 							<Button type="primary" htmlType="submit"
-											style={{width: '100%', marginBottom: 8, marginLeft: 8}}>Guardar</Button>
+											style={{width: '100%'}}>Iniciar sesión</Button>
 						</div>
 					</Form.Item>
 				</Form>

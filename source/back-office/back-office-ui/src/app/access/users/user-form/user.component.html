@@ -93,12 +93,14 @@
           <div fxFlex="23">
             <mat-form-field>
               <mat-label>Asignar Grupos</mat-label>
-              <mat-select formControlName="grupos" multiple>
+              <mat-select formControlName="grupos" multiple [(ngModel)]="selected">
                 <mat-option *ngFor="let group of groups" [value]="group">{{group.nombre}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
-          <div fxFlex="23"></div>
+          <div fxFlex="23">
+            <!-- <pre>{{selected | json}}</pre> -->
+          </div>
         </div>
 
       </div>
@@ -126,7 +128,7 @@
                   <mat-form-field>
                     <mat-label>Mostrar por departamento</mat-label>
                     <mat-select required aria-placeholder="seleccionar" [(ngModel)]="selectedDepartment">
-                      <mat-option [value]="''">Ninguno</mat-option>
+                      <mat-option [value]="''">Todos</mat-option>
                       <mat-option [value]="item.id" *ngFor="let item of enableDepartments;">{{item.nombre}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -153,7 +155,7 @@
                   <mat-form-field>
                     <mat-label>Mostrar por departamento</mat-label>
                     <mat-select required aria-placeholder="seleccionar" [(ngModel)]="selectedDepartment">
-                      <mat-option [value]="''">Ninguno</mat-option>
+                      <mat-option [value]="''">Todos</mat-option>
                       <mat-option [value]="item.id" *ngFor="let item of enableDepartments;">{{item.nombre}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -162,7 +164,7 @@
                   <mat-form-field>
                     <mat-label>Mostrar por municipio</mat-label>
                     <mat-select required aria-placeholder="seleccionar" [(ngModel)]="selectedMunicipaly">
-                      <mat-option [value]="''">Ninguno</mat-option>
+                      <mat-option [value]="''">Todos</mat-option>
                       <mat-option [value]="item.id" *ngFor="let item of enableMunicipalities; ">{{item.nombre}}
                       </mat-option>
                     </mat-select>

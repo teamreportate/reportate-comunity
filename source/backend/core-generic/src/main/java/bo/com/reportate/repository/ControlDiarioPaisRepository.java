@@ -1,11 +1,11 @@
 package bo.com.reportate.repository;
 
-import bo.com.reportate.model.ControlDiario;
-import bo.com.reportate.model.ControlDiarioPais;
-import bo.com.reportate.model.Paciente;
+import bo.com.reportate.model.*;
 import bo.com.reportate.model.dto.PaisVisitadoDto;
+import bo.com.reportate.model.enums.EstadoEnum;
 import org.hibernate.validator.constraints.ParameterScriptAssert;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -25,4 +25,10 @@ public interface ControlDiarioPaisRepository extends JpaRepository<ControlDiario
             "FROM ControlDiarioPais cdp INNER JOIN cdp.controlDiario cd "+
             "WHERE cd.paciente=:paciente AND cd.paciente.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO" )
     List<PaisVisitadoDto> listarPaisesVisitados(@Param("paciente") Paciente paciente);
+    boolean existsByControlDiarioAndPaisAndEstado(ControlDiario controlDiario, Pais pais, EstadoEnum estadoEnum);
+
+    @Modifying
+    @Query( " UPDATE ControlDiarioPais  cdp " +
+            "SET cdp.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE cdp.pais =:pais AND cdp.controlDiario =:controlDiario ")
+    void eliminarPais(@Param("pais") Pais pais, @Param("controlDiario") ControlDiario controlDiario);
 }

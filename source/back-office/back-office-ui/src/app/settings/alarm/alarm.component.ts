@@ -50,7 +50,7 @@ export class AlarmComponent extends ClicComponent implements OnInit {
   }
 
   onAlarmEdit(alarm: any) {
-    localStorage.setItem(AlarmEditComponent.ALARM_TO_EDIT, JSON.stringify(alarm));
+    sessionStorage.setItem(AlarmEditComponent.ALARM_TO_EDIT, JSON.stringify(alarm));
     this.router.navigate(['configuracion/alarmEdit']);
   }
 
@@ -66,7 +66,7 @@ export class AlarmComponent extends ClicComponent implements OnInit {
   }
 
   onAlarmUsers(alarm: Alarm) {
-    localStorage.setItem(AlarmUsersComponent.ALARM_TO_USERS, JSON.stringify(alarm));
+    sessionStorage.setItem(AlarmUsersComponent.ALARM_TO_USERS, JSON.stringify(alarm));
     this.router.navigate(['configuracion/alarmUsers'])
   }
 

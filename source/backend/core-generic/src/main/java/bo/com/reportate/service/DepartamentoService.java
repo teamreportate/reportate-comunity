@@ -31,4 +31,5 @@ public interface DepartamentoService {
     List<DepartamentoUsuarioDto> listarDepartamentosAsignados(String username);
     List<DepartamentoUsuarioDto> listarAsignados(Authentication userDetails);
     ObjetoResponseDto listarDepartamentoMunicipioCentroSalud();
+    ObjetoResponseDto listarDepartamentoMunicipioCentroSaludAsignados(Authentication userDetails);
 }

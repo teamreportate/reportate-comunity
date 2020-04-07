@@ -4,18 +4,18 @@
 /*Material Theme Colors*/
 
 $custom: (
-  100:  #02adc6,
-  200: #02adc6,
+  100:  #4C9FDC,
+  200: #4C9FDC,
   //200: #5494D5,
-  300: #02adc6,
+  300: #4C9FDC,
   contrast: (
     100: $light-primary-text,
     200: $light-primary-text,
     300: $light-primary-text,
   )
 );
-$primary-theme:#02adc6;
-$accent-theme:#02adc6;
+$primary-theme:#4C9FDC;
+$accent-theme:#4C9FDC;
 $warn-theme:#EFEFEF;
 $success-theme: #4CAF50;
 $primary: mat-palette($custom, 100);
@@ -49,7 +49,7 @@ $font-16: 16px;
 
 $light-text: #a6b7bf;
 //$themecolor: #1e88e5;
-$themecolor: #02adc6;
+$themecolor: #4C9FDC;
 $themecolor-alt: #26c6da;
 $themecolor-dark: #028ee1;
 

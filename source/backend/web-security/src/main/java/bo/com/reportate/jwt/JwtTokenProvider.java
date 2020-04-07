@@ -23,11 +23,11 @@ import java.util.Date;
 @Slf4j
 @Component
 public class JwtTokenProvider {
-    @Value("${security.jwt.token.secret-key:changeit}")
-    private String secretKey = "changeit";
+    @Value("${security.jwt.token.secret-key}")
+    private String secretKey;
 
-    @Value("${security.jwt.token.expire-length:28800000}")
-    private long validityInMilliseconds = 28800000L ; // 8h
+    @Value("${security.jwt.token.expire-length}")
+    private long validityInMilliseconds; // 8h
     @Autowired
     private SecurityUserDetailsService securityUserDetailsService;
 
@@ -43,6 +43,7 @@ public class JwtTokenProvider {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("parametro", username);
         claims.put("cambiar-password",usuario.getPasswordGenerado());
+        claims.put("tipoUsuario",usuario.getTipoUsuario());
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
 
@@ -50,7 +51,7 @@ public class JwtTokenProvider {
                 .setClaims(claims)//
                 .setIssuedAt(now)//
                 .setExpiration(validity)//
-                .signWith(SignatureAlgorithm.HS256, secretKey)//
+                .signWith(SignatureAlgorithm.HS512, secretKey)//
                 .compact();
         this.tokenService.registroToken(MuToken.builder().fechaInicio(now).fechaExpiracion(validity).token(token).idUsuario(usuario).indefinido(false).build());
         return token;
@@ -62,7 +63,7 @@ public class JwtTokenProvider {
                 .setClaims(claims)
                 .setIssuedAt(fechaInicio)
                 .setExpiration(fechaExpiracion)
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
     }
 

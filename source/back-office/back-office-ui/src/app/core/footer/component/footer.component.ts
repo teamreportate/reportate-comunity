@@ -24,7 +24,7 @@ import { YEAR_CURRENT } from '../../constantes/fechaActual';
 <!--            <i class="fa fa-linkedin-square fa-lg "> </i>-->
 <!--          </a>-->
 <!--          <div style="margin: auto;" class="text-center text-footer"> © {{currentYear}} MC4. TODOS LOS DERECHOS RESERVADOS V.1.0.
-            <a href="http://mc4.com.bo/" target="_blank"><img src="assets/images/background/login-back.png" width="50" height="25"></a>
+            <a href="http://mc4.com.bo/" target="_blank"><img src="assets/images/background/logo.png" width="50" height="25"></a>
           </div> -->
         </div>
       </div>

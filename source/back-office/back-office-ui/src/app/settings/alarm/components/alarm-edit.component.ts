@@ -42,7 +42,7 @@ export class AlarmEditComponent extends ClicComponent implements OnInit {
 
   ngOnInit() {
     this.initialListener(this.changeDetector, this.media);
-    this.currentAlarm = JSON.parse(localStorage.getItem(AlarmEditComponent.ALARM_TO_EDIT));
+    this.currentAlarm = JSON.parse(sessionStorage.getItem(AlarmEditComponent.ALARM_TO_EDIT));
     this.isGeneric = this.currentAlarm.tipoAlarma === AlarmType.ERROR_GENERICO;
     this.parseLists();
     this.form = new FormGroup({
@@ -110,7 +110,7 @@ export class AlarmEditComponent extends ClicComponent implements OnInit {
       this.blockUI.start('Procesando solicitud...');
       this.alarmService.requestUpdateAlarm(String(this.currentAlarm.id), this.form.value).subscribe(response => {
         this.blockUI.stop();
-        localStorage.setItem(AlarmEditComponent.ALARM_TO_EDIT, JSON.stringify(response.body));
+        sessionStorage.setItem(AlarmEditComponent.ALARM_TO_EDIT, JSON.stringify(response.body));
         this.ngOnInit();
         const notif = {error: {title: 'Actualizar Alarma', detail: 'Se actualizaron los datos de la alarma correctamente.'}};
         this.notifierError(notif, 'info');
