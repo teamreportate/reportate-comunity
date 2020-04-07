@@ -2,7 +2,7 @@ import React from "react";
 import {Button, Layout, Menu, Popover} from 'antd';
 import {FaRegSun} from "react-icons/fa";
 import Icon from '../assets/icon-120.png';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {authLogout} from "../store/auth/actions";
 
 const {Header} = Layout;
@@ -10,6 +10,7 @@ const {Header} = Layout;
 export default () => {
 	// let history    = useHistory();
 	const dispatch = useDispatch();
+	const user     = useSelector(store => store.auth.user);
 	
 	const logout  = () => {
 		dispatch(authLogout());
@@ -28,15 +29,26 @@ export default () => {
 			width         : '100%',
 			display       : 'flex',
 			height        : 60,
-			justifyContent: 'space-between',
+			justifyContent: user.logged ? 'space-between' : 'center',
 			alignItems    : 'center',
 			
 		}}>
-			<img src={Icon} alt="Reportate Logo" style={{width: 40, height: 40}}/>
+			{
+				user.logged
+				? <img src={Icon} alt="Reportate Logo" style={{width: 40, height: 40}}/>
+				: null
+			}
+			
 			<h2 style={{margin: 0}}>Reportate</h2>
-			<Popover placement="bottomRight" content={content} trigger="click">
-				<Button type="link" size={'large'} style={{display: "flex"}}><FaRegSun/></Button>
-			</Popover>
+			
+			{
+				user.logged
+				? <Popover placement="bottomRight" content={content} trigger="click">
+					<Button type="link" size={'large'} style={{display: "flex"}}><FaRegSun/></Button>
+				</Popover>
+				: null
+			}
+		
 		</Header>
 	);
 }
