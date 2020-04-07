@@ -3,10 +3,8 @@ package bo.com.reportate.controller;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.jwt.JwtTokenProvider;
 import bo.com.reportate.model.MuUsuario;
-import bo.com.reportate.model.enums.AuthTypeEnum;
-import bo.com.reportate.model.enums.EstadoEnum;
+import bo.com.reportate.model.enums.*;
 import bo.com.reportate.model.enums.Process;
-import bo.com.reportate.model.enums.UserStatusEnum;
 import bo.com.reportate.repository.UsuarioRepository;
 import bo.com.reportate.service.LogService;
 import bo.com.reportate.service.TokenService;
@@ -15,6 +13,7 @@ import bo.com.reportate.util.CustomErrorType;
 import bo.com.reportate.utils.FormatUtil;
 import bo.com.reportate.web.AuthenticationRequest;
 import bo.com.reportate.web.ChangePasswordRequest;
+import bo.com.reportate.web.MovilAuthenticationRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +23,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -41,6 +41,7 @@ public class AuthController {
     @Autowired private UserService userService;
     @Autowired private TokenService tokenService;
     @Autowired private LogService logService;
+    @Autowired private PasswordEncoder passwordEncoder;
 
     @PostMapping("/signin")
     public ResponseEntity signin(@RequestBody AuthenticationRequest data) {
@@ -60,9 +61,9 @@ public class AuthController {
     }
 
     @PostMapping("/movil-signin")
-    public ResponseEntity movilSignin(@RequestBody AuthenticationRequest data) {
+    public ResponseEntity movilSignin(@RequestBody MovilAuthenticationRequest data) {
         try {
-            return ok(validateAuthData(data));
+            return ok(validateAuthDataUserMovil(data));
         }catch (OperationException e){
             return CustomErrorType.badRequest("Login", e.getMessage());
         }catch (BadCredentialsException e){
@@ -105,33 +106,62 @@ public class AuthController {
         String username = data.getUsername();
         MuUsuario authUsuario = null;
         try {
-            authUsuario = usuarioRepository.findByEstadoAndUsername(EstadoEnum.ACTIVO, data.getUsername()).orElseThrow(()->new BadCredentialsException("Username " + username + "no encontrado."));
+            authUsuario = usuarioRepository.findByUsernameIgnoreCase(data.getUsername()).orElseThrow(()->new BadCredentialsException("Username " + username + "no encontrado."));
         }catch (Exception e){
             log.error("No se encontro el usuario " + username + "Registrado en la Base de datos");
         }
 
         if(authUsuario == null) {
-            throw new OperationException("Cuenta bloqueada. Por favor comuníquese con el aministrador del sistema.");
-        }
-        else{
+            throw new OperationException("La cuenta no existe ó se encuetra bloqueada. Por favor comuníquese con el aministrador del sistema.");
+        } else{
             if( authUsuario.getEstadoUsuario() == UserStatusEnum.BLOQUEADO){
                 log.warn("[{}] Usuario bloqueado",data.getUsername());
                 throw new OperationException("Cuenta bloqueada. Por favor comuníquese con el aministrador del sistema.");
             }
         }
         if (authUsuario.getAuthType() == AuthTypeEnum.SISTEMA) {
-            return this.dbLogin(data, authUsuario);
+            return this.dbLogin(data.getUsername(),data.getPassword(), authUsuario);
+        }
+        throw new OperationException("Tipo de autenticación no válida");
+    }
+
+    private String validateAuthDataUserMovil(MovilAuthenticationRequest data) {
+        String username = data.getRemoteId();
+        MuUsuario authUsuario = null;
+        try {
+            authUsuario = usuarioRepository.findByUsernameIgnoreCase(username).orElseThrow(()->new BadCredentialsException("Username " + username + "no encontrado."));
+        }catch (Exception e){
+            log.error("No se encontro el usuario " + username + "Registrado en la Base de datos");
+        }
+
+        if(authUsuario == null) {
+           authUsuario = MuUsuario.builder()
+                   .authType(data.getFuente())
+                   .estadoUsuario(UserStatusEnum.ACTIVO)
+                   .tipoUsuario(TipoUsuarioEnum.PACIENTE)
+                   .nombre(data.getName())
+                   .password(this.passwordEncoder.encode(username))
+                   .email(data.getEmail()).build();
+           this.usuarioRepository.save(authUsuario);
+        } else{
+            if( authUsuario.getEstadoUsuario() == UserStatusEnum.BLOQUEADO){
+                log.warn("[{}] Usuario bloqueado",username);
+                throw new OperationException("Cuenta bloqueada. Por favor comuníquese con el aministrador del sistema.");
+            }
+        }
+        if (authUsuario.getAuthType() == AuthTypeEnum.SISTEMA) {
+            return this.dbLogin(data.getRemoteId(), data.getRemoteId(), authUsuario);
         }
         throw new OperationException("Tipo de autenticación no válida");
     }
 
 
 
-    private String dbLogin(AuthenticationRequest data, MuUsuario authUsuario) {
+    private String dbLogin(String username, String password, MuUsuario authUsuario) {
         try{
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(data.getUsername(), data.getPassword()));
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            return jwtTokenProvider.createToken(data.getUsername(), authUsuario);
+            return jwtTokenProvider.createToken(username, authUsuario);
         } catch (AuthenticationException e) {
             log.warn("Las credenciales son incorrectas del usuario: {} ", authUsuario.getUsername());
             throw new BadCredentialsException("Las credenciales son incorrectas.");
