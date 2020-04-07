@@ -5,6 +5,7 @@ import bo.com.reportate.model.Diagnostico;
 import bo.com.reportate.model.Enfermedad;
 import bo.com.reportate.model.Paciente;
 import bo.com.reportate.model.*;
+import bo.com.reportate.model.dto.DiagnosticoDto;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import org.springframework.data.domain.Page;
@@ -46,8 +47,10 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
             @Param("nombre") String nombre,
             Pageable pageable);
 
-    @Query("SELECT new bo.com.reportate.model.dto.response.DiagnosticoResponseDto(d) "+
+    @Query("SELECT  new bo.com.reportate.model.dto.DiagnosticoDto(d) "+
             "FROM Diagnostico d INNER  JOIN  d.controlDiario cd "+
-            "WHERE cd.paciente=:paciente")
-    List<DiagnosticoResponseDto> listarDiagnosticoByPaciente(@Param("paciente") Paciente paciente);
+            "WHERE cd.paciente =:paciente " +
+            "ORDER BY cd.createdDate DESC" )
+    List<DiagnosticoDto> listarDiagnosticoByPaciente(@Param("paciente") Paciente paciente, Pageable pageable);
+
 }

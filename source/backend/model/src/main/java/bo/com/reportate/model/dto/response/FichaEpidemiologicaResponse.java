@@ -1,6 +1,7 @@
 package bo.com.reportate.model.dto.response;
 
 import bo.com.reportate.model.Familia;
+import bo.com.reportate.model.dto.DiagnosticoDto;
 import bo.com.reportate.model.dto.PacienteDto;
 import bo.com.reportate.model.dto.PaisDto;
 import bo.com.reportate.model.dto.PaisVisitadoDto;
@@ -40,7 +41,7 @@ public class FichaEpidemiologicaResponse implements Serializable {
 
     private List<PaisVisitadoDto> paisesVisitados;
     private List<EnfermedadResponse> enfermedadesBase;
-    private List<DiagnosticoResponseDto> diagnosticos;
+    private List<DiagnosticoDto> diagnosticos;
     private List<PacienteDto> contactos;
 
 }

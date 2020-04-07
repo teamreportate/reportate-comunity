@@ -3,15 +3,16 @@ package bo.com.reportate.service.impl;
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.*;
+import bo.com.reportate.model.dto.DiagnosticoDto;
 import bo.com.reportate.model.dto.PacienteDto;
-import bo.com.reportate.model.dto.PaisDto;
+
 import bo.com.reportate.model.dto.PaisVisitadoDto;
 import bo.com.reportate.model.dto.request.EnfermedadRequest;
 import bo.com.reportate.model.dto.request.PaisRequest;
 import bo.com.reportate.model.dto.request.SintomaRequest;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
 import bo.com.reportate.model.dto.response.EnfermedadResponse;
-import bo.com.reportate.model.dto.response.FamiliaResponse;
+
 import bo.com.reportate.model.dto.response.FichaEpidemiologicaResponse;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
@@ -21,10 +22,12 @@ import bo.com.reportate.service.LogService;
 import bo.com.reportate.service.NotificacionService;
 import bo.com.reportate.service.PacienteService;
 import bo.com.reportate.util.ValidationUtil;
-import bo.com.reportate.utils.BigDecimalUtil;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -214,7 +217,8 @@ public class PacienteServiceImpl implements PacienteService {
             fichaEpidemiologicaResponse.setEnfermedadesBase(enfermedadesBase);
 
             log.info("obteniendo diagnosticos");
-            List<DiagnosticoResponseDto> diagnosticos = this.diagnosticoRepository.listarDiagnosticoByPaciente(paciente);
+            Pageable firstPage = PageRequest.of(0, 10);
+            List<DiagnosticoDto> diagnosticos = this.diagnosticoRepository.listarDiagnosticoByPaciente(paciente,firstPage);
             fichaEpidemiologicaResponse.setDiagnosticos(diagnosticos);
 
             log.info("obteniendo contactos");
@@ -222,8 +226,8 @@ public class PacienteServiceImpl implements PacienteService {
             fichaEpidemiologicaResponse.setContactos(contactos);
 
         }catch (Exception e){
-            log.error(e.getMessage());
-            throw new OperationException("Búusqueda finalizada con errores");
+            log.error( "Búsqueda finalizada con errores. Cause{}", e.getMessage());
+            throw new OperationException("Búsqueda finalizada con errores");
         }
         log.info("busquedas finalizadas");
         return  fichaEpidemiologicaResponse;
