@@ -46,7 +46,7 @@ export default () => {
 						...family,
 						fetched: true
 					}));
-					history.push("/dashboard");
+					history.push("/");
 				});
 			},
 			(data) => {
@@ -63,7 +63,7 @@ export default () => {
 						...family,
 						fetched: true
 					}));
-					history.push("/dashboard");
+					history.push("/");
 				});
 			},
 			(data) => {
@@ -120,7 +120,7 @@ export default () => {
 					}}
 					render={renderProps => (
 						<Button type="default" onClick={renderProps.onClick} style={{marginBottom: 8}}>
-							<p style={{color: "#3578e5"}}> <FaFacebookF/> Iniciar con Facebook</p></Button>
+							<p style={{color: "#3578e5"}}><FaFacebookF/> Iniciar con Facebook</p></Button>
 					)}
 				
 				/>
