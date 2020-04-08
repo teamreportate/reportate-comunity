@@ -16,7 +16,6 @@ class ServiceFamily extends ServiceBase {
 					}
 				})
 				.catch((error) => this.handleAxiosErrors(error, onFailure));
-		
 	};
 	
 	register = (family, onSuccess = false, onFailure = false) => {
