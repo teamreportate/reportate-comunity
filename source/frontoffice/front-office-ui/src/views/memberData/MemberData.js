@@ -74,7 +74,7 @@ export default ({newMember}) => {
 	
 	return (
 		<div>
-			<p>Introduce la informacion basica de tu familia</p>
+			<p>Ingresa la información básica del integrante de tú familia</p>
 			<Form
 				form={form}
 				layout='vertical'
@@ -85,9 +85,9 @@ export default ({newMember}) => {
 				<Form.Item label="Nombre"
 									 name="name"
 									 rules={[
-										 {required: true, message: 'Ingresa el nombre de tu familiar'},
-										 {max: 100, message: 'Nombre maximo 100 caracteres'},]}>
-					<Input placeholder="Introduce el nombre"/>
+										 {required: true, message: 'Ingresa el nombre del integrante de tú familia'},
+										 {max: 100, message: 'Nombre máximo 100 caracteres'},]}>
+					<Input placeholder="Ingrese el nombre y apellido"/>
 				</Form.Item>
 				<Form.Item label="Edad"
 									 name="age"
@@ -105,7 +105,7 @@ export default ({newMember}) => {
 									 rules={[{required: true, message: 'Ingresa el genero'}]}>
 					<Select
 						showSearch
-						placeholder="Seleccione un departamento"
+						placeholder="Seleccione una opción"
 						optionFilterProp="children"
 						filterOption={(input, option) =>
 							option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -120,7 +120,7 @@ export default ({newMember}) => {
 				</Form.Item>
 				{
 					sex === 'FEMENINO'
-					? <Form.Item label="Te encuentras en estado de gestacion?"
+					? <Form.Item label="Te encuentras en estado de gestación?"
 											 name="gestation">
 						<Radio.Group name="radiogroup" defaultValue={gestation} onChange={event => {
 							setGestation(event.target.value);

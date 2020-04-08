@@ -92,12 +92,12 @@ export default () => {
 							
 											 }
 										 ]}>
-						<Input placeholder="Introduce en nombre de usuario"/>
+						<Input placeholder="Ingresa en nombre de usuario"/>
 					</Form.Item>
 					<Form.Item label="Contraseña"
 										 name="password"
-										 rules={[{required: true, message: 'Ingresa tu password'}]}>
-						<Input.Password placeholder="Introduce tu password"/>
+										 rules={[{required: true, message: 'Ingresa tu contraseña'}]}>
+						<Input.Password placeholder="Ingresa tu contraseña"/>
 					</Form.Item>
 					<Form.Item>
 						<div style={{display: "flex", flexDirection: "row"}}>

@@ -53,7 +53,8 @@ public interface MunicipioUsuarioRepository extends JpaRepository<MunicipioUsuar
             "from MunicipioUsuario mu INNER JOIN mu.muUsuario u " +
             "where u.id =:userId " +
             "AND mu.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
-            "AND u.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
+            "AND u.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO" +
+            " AND mu.municipio.estado =bo.com.reportate.model.enums.EstadoEnum.ACTIVO ")
     List<MunicipioUsuarioDto> listarMunicipiosAsignados(@Param("userId") Long userId);
 
     @Query("SELECT new bo.com.reportate.model.dto.MunicipioUsuarioDto(mu) " +

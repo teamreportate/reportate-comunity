@@ -10,7 +10,7 @@ export const environment = {
   },
   services: {
      // baseUri : 'https://localhost:9443/',
-     baseUri : 'https://dev.mc4.com.bo:9443/',
+     baseUri : 'https://reportate.mc4.com.bo:8443/reportate-api/',
      baseUriFact : 'https://localhost:9443/facturacion-core/',
   }
 };
