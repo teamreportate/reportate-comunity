@@ -32,7 +32,7 @@ public class MunicipioDto implements Serializable {
         this.longitud = municipio.getLongitud();
         this.estado = municipio.getEstado();
         municipio.getCentroSaluds().forEach( centroSalud -> {
-            if(municipio.getEstado().equals(EstadoEnum.ACTIVO)) {
+            if(centroSalud.getEstado().equals(EstadoEnum.ACTIVO)) {
                 centroSaluds.add(new CentroSaludDto(centroSalud.getId(), centroSalud.getNombre()));
             }
         });

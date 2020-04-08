@@ -4,9 +4,7 @@ import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
 import bo.com.reportate.model.dto.response.GraficoDto;
-import bo.com.reportate.model.dto.response.NivelValoracionDto;
 import bo.com.reportate.model.dto.response.NivelValoracionListDto;
-import bo.com.reportate.model.dto.response.TortaResponse;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.service.DiagnosticoService;
 import bo.com.reportate.service.ParamService;
@@ -21,16 +19,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.NumberFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 import static org.springframework.http.ResponseEntity.ok;
 
