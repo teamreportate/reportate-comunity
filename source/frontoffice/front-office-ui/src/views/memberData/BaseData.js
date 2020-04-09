@@ -1,4 +1,4 @@
-import {Button, Checkbox, Form, Modal, Select, Tabs, Tag} from "antd";
+import {Button, Checkbox, Form, Modal, Select, Tabs} from "antd";
 import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import ServiceAppConfig from "../../services/ServiceAppConfig";
@@ -96,9 +96,9 @@ const BaseData = () => {
 				onFinish={onFinish}
 				onFinishFailed={onFinishFailed}
 			>
-				<Tabs activeKey={step}>
-					<TabPane tab="Enfermedades base" key="1">
-						<p>¿Padece de alguna de las siguientes emfermades?</p>
+				<Tabs activeKey={step} type="card">
+					<TabPane tab={step === "1" ? "Enfermedades de base" : "1"} key="1">
+						<p>¿Padece de alguna de las siguientes enfermedades?</p>
 						<Form.Item name={'sicknesses'}>
 							<Checkbox.Group>
 								{
@@ -113,7 +113,7 @@ const BaseData = () => {
 							</Checkbox.Group>
 						</Form.Item>
 					</TabPane>
-					<TabPane tab="Sintomas iniciales" key="2">
+					<TabPane tab={step === "2" ? "Síntomas iniciales" : "2"} key="2">
 						<p>Padece de alguna de las siguientes emfermades</p>
 						<Form.Item name={'symptoms'}>
 							<Checkbox.Group style={{width: '100%'}}>
@@ -126,7 +126,7 @@ const BaseData = () => {
 														 justifyContent: "space-between",
 														 width         : '100%',
 														 alignItems    : "center",
-														 padding       : 8
+														 padding       : 4
 													 }}>
 												<Checkbox value={symptom.id}>
 													{symptom.pregunta}
@@ -146,7 +146,7 @@ const BaseData = () => {
 							</Checkbox.Group>
 						</Form.Item>
 					</TabPane>
-					<TabPane tab="Viaje" key="3">
+					<TabPane tab={step === "3" ? "Viajes" : "3"} key="3">
 						<p>¿Estuvo fuera del pais en el ultimo mes?</p>
 						<Form.Item name={'countries'}>
 							<Select

@@ -10,7 +10,7 @@ import ServiceFamily from "../../services/ServiceFamily";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {appConfigSetMessage} from "../../store/appConfig/actions";
-import {FaFacebookF} from "react-icons/fa";
+import {FaFacebookF, FaGoogle} from "react-icons/fa";
 
 
 export default () => {
@@ -70,6 +70,24 @@ export default () => {
 				dispatch(appConfigSetMessage({text: data.detail}));
 			});
 	};
+	const loginGoogle   = (user) => {
+		ServiceAuth.loginGoogle(user,
+			(result) => {
+				localStorage.setItem('token', result.token);
+				dispatch(authSetUser({...result, logged: true}));
+				ServiceFamily.getFamily(family => {
+					dispatch(familySetData({
+						...family,
+						fetched: true
+					}));
+					history.push("/");
+				});
+			},
+			(data) => {
+				dispatch(appConfigSetMessage({text: data.detail}));
+			});
+	};
+	
 	
 	const onFinishFailed = errorInfo => {
 		console.log('Failed:', errorInfo);
@@ -125,24 +143,27 @@ export default () => {
 				
 				/>
 				<GoogleLogin
-					clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-					buttonText="Login"
-					onSuccess={() => {
-						console.log("success");
+					clientId="991838490391-29llvurok2ovuojbkk3eqj5o7tg62nd8.apps.googleusercontent.com"
+					onSuccess={(response) => {
+						console.log(response.profileObj);
+						loginGoogle({
+							id   : response.profileObj.googleId,
+							name : response.profileObj.name,
+							email: response.profileObj.email
+						});
 					}}
-					onFailure={() => {
-						console.log("fail");
+					onFailure={(e) => {
+						console.log("fail login google");
+						console.log(e);
 					}}
 					cookiePolicy={'single_host_origin'}
 					render={renderProps => (
-						<Button type="default" onClick={renderProps.onClick} style={{display: 'none'}}>
-							<p style={{color: "red"}}>Iniciar con Google</p>
+						<Button type="default" onClick={renderProps.onClick}>
+							<p style={{color: "#eb4135"}}><FaGoogle/> Iniciar con Google</p>
 						</Button>
 					)}
 				
 				/>
-			
-			
 			</div>
 		
 		</div>

@@ -100,23 +100,7 @@ const FamilyData = (props) => {
 				>
 					<Input placeholder="ej. 70000001"/>
 				</Form.Item>
-				<Form.Item label="Dirección de la familia"
-									 name="address"
-									 rules={[
-										 {required: true, message: 'Ingrese la dirección de la familia'},
-										 {max: 200, message: 'Direción máximo 200 caracteres'},]}
-				>
-					<Input placeholder="Ej. calle nro. 10"/>
-				</Form.Item>
-				<Form.Item label="Zona"
-									 name="zone"
-									 rules={[
-										 {required: true, message: 'Ingrese la zona donde vivies tu familia.'},
-										 {max: 100, message: 'Zona máximo 100 caracteres'},
-									 ]}
-				>
-					<Input placeholder="ej. centro"/>
-				</Form.Item>
+				
 				
 				<Form.Item label="Departamento"
 									 name="department"
@@ -140,7 +124,7 @@ const FamilyData = (props) => {
 					</Select>
 				</Form.Item>
 				
-				<Form.Item label="Municipio"
+				<Form.Item label="Municipio/Ciudad"
 									 name="municipality"
 									 rules={[{required: true, message: 'Selecciona el municipio donde vive tú familia'}]}>
 					<Select
@@ -158,6 +142,23 @@ const FamilyData = (props) => {
 							})
 						}
 					</Select>
+				</Form.Item>
+				<Form.Item label="Zona"
+									 name="zone"
+									 rules={[
+										 {required: true, message: 'Ingrese la zona donde vivies tu familia.'},
+										 {max: 100, message: 'Zona máximo 100 caracteres'},
+									 ]}
+				>
+					<Input placeholder="ej. centro"/>
+				</Form.Item>
+				<Form.Item label="Dirección de la familia"
+									 name="address"
+									 rules={[
+										 {required: true, message: 'Ingrese la dirección de la familia'},
+										 {max: 200, message: 'Direción máximo 200 caracteres'},]}
+				>
+					<Input placeholder="Ej. calle nro. 10"/>
 				</Form.Item>
 				<Form.Item label="Centro de salud más cercano"
 									 name="healthCenter"
@@ -177,16 +178,6 @@ const FamilyData = (props) => {
 							})
 						}
 					</Select>
-				</Form.Item>
-				
-				<Form.Item
-					label="Ciudad"
-					name="city"
-					rules={[
-						{required: true, message: 'Ingrese la ciudad donde vive tú familia'},
-						{max: 100, message: 'Ciudad maximo 100 caracteres'},]}
-				>
-					<Input placeholder="Ingrese la ciudad donde vive tú familia"/>
 				</Form.Item>
 				<Form.Item>
 					<Button type="primary" htmlType="submit">Continuar</Button>

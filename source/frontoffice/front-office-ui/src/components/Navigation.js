@@ -39,7 +39,7 @@ export default () => {
 				: null
 			}
 			
-			<h2 style={{margin: 0}}>Reportate</h2>
+			<h2 style={{margin: 0}}>Repórtate</h2>
 			
 			{
 				user.logged

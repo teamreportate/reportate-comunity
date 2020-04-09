@@ -3,7 +3,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {Button} from "antd";
 import {useHistory} from "react-router-dom";
 import {familySetUpdateMember} from "../../store/family/actions";
-import {FaRegPlusSquare, FaUserCircle} from "react-icons/fa";
+import {FaExclamationTriangle, FaRegPlusSquare, FaUserCircle} from "react-icons/fa";
+import 'animate.css/animate.min.css';
 
 export default () => {
 	let history    = useHistory();
@@ -26,13 +27,21 @@ export default () => {
 	return (
 		<div style={{display: 'flex', flexDirection: 'column'}}>
 			{members.map((item, index) => {
-				return <Button key={index} size={'large'} type="default" className='options'
-											 style={styles.buttons}
-											 onClick={() => {
-												 handleEditClick(item);
-											 }}>
-					<FaUserCircle style={{marginRight: 8}}/> {item.name}
-				</Button>;
+				return (
+					<Button key={index} size={'large'} type="default" className='options'
+									style={styles.buttons}
+									onClick={() => {
+										handleEditClick(item);
+									}}>
+						<div style={{display: "flex", alignItems: "center"}}><FaUserCircle style={{marginRight: 8}}/> {item.name}
+						</div>
+						{
+							!item.firstControl
+							? <FaExclamationTriangle className="animated infinite rubberBand delay-1s slow" style={styles.alert}/>
+							: null
+						}
+					</Button>
+				);
 			})}
 			<Button size={'large'} type="default" className='add' style={styles.buttons} onClick={handleClick}>
 				<FaRegPlusSquare style={{marginRight: 8}}/>Adicionar miembro
@@ -43,7 +52,8 @@ export default () => {
 	);
 }
 const styles = {
+	alert  : {color: "#4c9fdc"},
 	buttons: {
-		flex: 1, marginBottom: 8, display: "flex", alignItems: 'center', justifyContent: "left"
+		flex: 1, marginBottom: 8, display: "flex", alignItems: 'center', justifyContent: "space-between"
 	}
 };
