@@ -63,7 +63,7 @@ function App() {
 		<Navigation/>
 		<Content style={{marginTop: 100}}>
 			<Row>
-				<Col xs={{span: 20, offset: 2}}
+				<Col xs={{span: 22, offset: 1}}
 						 sm={{span: 18, offset: 3}}
 						 md={{span: 12, offset: 6}}
 						 lg={{span: 10, offset: 7}}
@@ -111,7 +111,14 @@ function App() {
 				</Col>
 			</Row>
 		</Content>
-		<Footer style={{textAlign: 'center'}}>©2020 All rights reserved</Footer>
+		<Footer style={{
+			textAlign : 'center',
+			background: '#a3bf48',
+			color     : '#fff',
+			padding   : '16px 20px'
+		}}>
+			©2020 All rights reserved
+		</Footer>
 		<style>{`
       .logo {
 				width: 120px;

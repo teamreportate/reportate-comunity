@@ -20,13 +20,13 @@ export default () => {
 			<Button size={'large'} type="default" className='options'
 							style={{...styles.button, marginRight: 8, marginBottom: 8}}>
 				<FaHospitalAlt style={{height: 30, width: 30, margin: 5, color: '#A3BF49'}}/>
-				<span style={{color: '#A3BF49'}}>Centros de atención</span>
+				<small style={{color: '#A3BF49'}}>Centros de atención</small>
 			</Button>
 			<Button size={'large'} type="default" className='options'
 							style={{...styles.button, marginLeft: 8, marginBottom: 8}}
 							onClick={goFaq}>
 				<FaNotesMedical style={{height: 30, width: 30, margin: 5, color: '#A3BF49'}}/>
-				<span style={{color: '#A3BF49'}}>Recomendaciones</span>
+				<small style={{color: '#A3BF49'}}>Recomendaciones</small>
 			</Button>
 		</div>
 		
@@ -38,7 +38,7 @@ export default () => {
 								window.open("tel:800101104");
 							}}
 			>
-				<FaPhone style={{margin: 5}}/>
+				<FaPhone style={{margin: 10}}/>
 				<div>
 					<small>Ministerio de Salud</small>
 					<p style={{margin: 0}}>800-101104</p>
@@ -51,7 +51,7 @@ export default () => {
 								window.open("tel:800148139");
 							}}
 			>
-				<FaPhone style={{margin: 5}}/>
+				<FaPhone style={{margin: 10}}/>
 				<div>
 					<small>Gobernación de Santa Cruz</small>
 					<p style={{margin: 0}}>800-148139</p>
