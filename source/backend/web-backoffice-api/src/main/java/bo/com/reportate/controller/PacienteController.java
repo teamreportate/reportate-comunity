@@ -19,6 +19,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -69,7 +70,7 @@ public class PacienteController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Actualiza un registro de paciente", description = "Actualiza el registro de paciente para el usuario autentificado", tags = { "paciente" })
+    @Operation(summary = "Actualiza un registro de paciente desde FrontOffice", description = "Actualiza el registro de paciente para el usuario autentificado", tags = { "paciente" })
     public ResponseEntity<PacienteDto> updatePaciente(
             @AuthenticationPrincipal Authentication userDetails,
             @Parameter(description = "Objeto paciente para actualizar", required = true)
@@ -77,6 +78,33 @@ public class PacienteController {
         try {
             PacienteDto responseDto = this.pacienteService.update(
                     userDetails, pacienteRequest.getId(), pacienteRequest.getNombre(), pacienteRequest.getEdad(),
+                    pacienteRequest.getGenero(), pacienteRequest.getGestacion(), pacienteRequest.getTiempoGestacion(),
+                    pacienteRequest.getOcupacion(),pacienteRequest.getCi(),pacienteRequest.getFechaNacimiento(),
+                    pacienteRequest.getSeguro(), pacienteRequest.getCodigoSeguro());
+
+            log.info("Se actualizo de manera correcta el registro del paciente: {}",pacienteRequest.getNombre());
+            logService.info(Process.REGISTRO_FAMILIA,"Se actualizo de manera correcta el registro del paciente: {}",pacienteRequest.getNombre());
+            return ok(responseDto);
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error actualizar el registro del paciente: {}. Causa. {}",pacienteRequest.getNombre(),e.getMessage());
+            logService.error(Process.REGISTRO_FAMILIA,"Se genero un error actualizar el registro del paciente: {}. Causa. {}",pacienteRequest.getNombre(),e.getMessage());
+            return CustomErrorType.badRequest("Actualizar Paciente", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al guardar la familia : {}",pacienteRequest.getNombre(),e);
+            logService.error(Process.REGISTRO_FAMILIA,"Se genero un error al actualizar el registro del paciete : {}",pacienteRequest.getNombre());
+            return CustomErrorType.serverError("Actualizar Paciente", "Se genero un error al actualizar el registro del paciete: "+pacienteRequest.getNombre());
+        }
+    }
+
+    @RequestMapping(value = "/{pacienteId}",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Actualiza un registro de paciente", description = "Actualiza el registro de paciente para el usuario autentificado", tags = { "paciente" })
+    public ResponseEntity<PacienteDto> updatePaciente(
+            @Parameter(description = "Identificador de Paciente", required = true)
+            @PathVariable("pacienteId") Long pacienteId,
+            @Parameter(description = "Objeto paciente para actualizar", required = true)
+            @RequestBody PacienteRequest pacienteRequest) {
+        try {
+            PacienteDto responseDto = this.pacienteService.update(pacienteId, pacienteRequest.getNombre(), pacienteRequest.getEdad(),
                     pacienteRequest.getGenero(), pacienteRequest.getGestacion(), pacienteRequest.getTiempoGestacion(),
                     pacienteRequest.getOcupacion(),pacienteRequest.getCi(),pacienteRequest.getFechaNacimiento(),
                     pacienteRequest.getSeguro(), pacienteRequest.getCodigoSeguro());

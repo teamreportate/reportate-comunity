@@ -186,6 +186,48 @@ public class PacienteServiceImpl implements PacienteService {
     }
 
     @Override
+    public PacienteDto update(Long id, String nombre, Integer edad, GeneroEnum genero, Boolean gestacion, Integer tiempoGestacion, String ocupacion, String ci, String fechaNacimiento, String seguro, String codigoSeguro) {
+        ValidationUtil.throwExceptionIfInvalidNumber("pacienteId", id,true,0L);
+        ValidationUtil.throwExceptionIfInvalidText("nombre",nombre, true,100);
+        ValidationUtil.throwExceptionIfInvalidNumber("edad",edad,true,-1,120);
+        ValidationUtil.throwExceptionIfInvalidNumber("tiempo de gestación",tiempoGestacion,false,-1,41);
+
+        ValidationUtil.throwExceptionIfInvalidText("ocupación",ocupacion,true,50);
+        ValidationUtil.throwExceptionIfInvalidText("ci",ci,false,20);
+        ValidationUtil.throwExceptionIfInvalidText("fechaNamiento",fechaNacimiento,false,10);
+        Date fechNacimient = null;
+        if(StringUtil.isEmptyOrNull(fechaNacimiento)) {
+            fechNacimient = DateUtil.toDate(DateUtil.FORMAT_DATE, fechaNacimiento);
+            if (fechNacimient == null) {
+                throw new OperationException("No se logró convertir a formato dd/mm/yyyy la fecha: " + fechaNacimiento);
+            }
+        }
+        ValidationUtil.throwExceptionIfInvalidText("seguro", seguro, false,50);
+        ValidationUtil.throwExceptionIfInvalidText("codigoSeguro", codigoSeguro, false, 30);
+
+        Familia familia = this.familiaRepository.getFamilia(id).orElseThrow(()->new OperationException("No existe ningún registro de familia para el usuario"));
+
+        if(this.pacienteRepository.existsByFamiliaAndIdNotAndNombreIgnoreCaseAndEstado(familia, id, nombre,EstadoEnum.ACTIVO)){
+            throw new OperationException("Ya existe un miembro de tu familia con el nombre: "+nombre);
+        }
+        Paciente paciente = this.pacienteRepository.findByIdAndEstado(id, EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No existe ningún paciente registrado con el id: "+id));
+        paciente.setNombre(nombre);
+        paciente.setEdad(edad);
+        paciente.setGenero(genero);
+        paciente.setGestacion(gestacion);
+        paciente.setTiempoGestacion(tiempoGestacion);
+        paciente.setOcupacion(ocupacion);
+        paciente.setCi(ci);
+        paciente.setFechaNacimiento(fechNacimient);
+        paciente.setSeguro(seguro);
+        paciente.setCodigoSeguro(codigoSeguro);
+        this.pacienteRepository.save(paciente);
+        PacienteDto pacienteDto = new PacienteDto();
+        BeanUtils.copyProperties(paciente,pacienteDto);
+        return pacienteDto;
+    }
+
+    @Override
     public String controlDiario(Long pacienteId, List<EnfermedadRequest> enfermedadesBase, List<PaisRequest> paisesVisitados, List<SintomaRequest> sintomas) {
         log.info("Inician el registro del control diario.");
         ValidationUtil.throwExceptionIfInvalidNumber("paciente",pacienteId,true,0L);
