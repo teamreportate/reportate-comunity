@@ -11,14 +11,15 @@ const {Option,} = Select;
 const {TabPane} = Tabs;
 
 const BaseData = () => {
-	const [step, setStep]             = useState("1");
-	const [sicknesses, setSicknesses] = useState([]);
-	const [symptoms, setSymptoms]     = useState([]);
-	const [countries, setCountries]   = useState([]);
-	let history                       = useHistory();
-	const [form]                      = Form.useForm();
-	const selectedUser                = useSelector(store => store.family.toUpdate);
-	const dispatch                    = useDispatch();
+	const [step, setStep]                 = useState("1");
+	const [sicknesses, setSicknesses]     = useState([]);
+	const [symptoms, setSymptoms]         = useState([]);
+	const [countries, setCountries]       = useState([]);
+	const [travelSwitch, setTravelSwitch] = useState(false);
+	let history                           = useHistory();
+	const [form]                          = Form.useForm();
+	const selectedUser                    = useSelector(store => store.family.toUpdate);
+	const dispatch                        = useDispatch();
 	useEffect(() => {
 		ServiceAppConfig.getBaseData((result => {
 			console.log(result);
@@ -148,27 +149,45 @@ const BaseData = () => {
 					</TabPane>
 					<TabPane tab={step === "3" ? "Viajes" : "3"} key="3">
 						<p>¿Estuvo fuera del pais en el ultimo mes?</p>
-						<Form.Item name={'countries'}>
+						<Form.Item name={'countriesSwitch'}>
 							<Select
-								mode="multiple"
 								style={{width: '100%'}}
 								placeholder="Seleccione paises que visito"
 								onChange={(e) => {
-									console.log(e);
+									setTravelSwitch(e);
 								}}
 								optionLabelProp="label"
 							>
-								{
-									countries.map(country => {
-										return (
-											<Option key={country.id} value={country.id} label={country.nombre}>{country.nombre}</Option>
-										);
-									})
-								}
+								<Option value={false} label={"No"}>No</Option>
+								<Option value={true} label={"Si"}>Si</Option>
 							</Select>
 						</Form.Item>
+						{
+							travelSwitch
+							? <Form.Item name={'countries'}>
+								<Select
+									mode="multiple"
+									style={{width: '100%'}}
+									placeholder="Seleccione paises que visito"
+									onChange={(e) => {
+										console.log(e);
+									}}
+									optionLabelProp="label"
+								>
+									{
+										countries.map(country => {
+											return (
+												<Option key={country.id} value={country.id} label={country.nombre}>{country.nombre}</Option>
+											);
+										})
+									}
+								</Select>
+							</Form.Item>
+							: null
+						}
+					
 					</TabPane>
-				</Tabs>,
+				</Tabs>
 				<Form.Item>
 					<div style={{display: "flex", flexDirection: "row"}}>
 						<Button type="default" onClick={handleBackClick}

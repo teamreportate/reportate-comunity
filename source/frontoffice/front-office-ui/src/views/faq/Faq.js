@@ -16,11 +16,14 @@ export default () => {
 		},
 		{
 			title  : "LIMPIEZA DE SUPERFICIES",
-			content: "Limpie regularmente con desinfectante las superficies como bancos de cocina y escritorios de trabajo ."
+			content: "Limpie regularmente con desinfectante las superficies como bancos de cocina y escritorios de trabajo."
 		},
 		{
 			title  : "INFORMARSE",
-			content: "Infórmese sobre el COVID-19 a través de fuentes confiables: su agencia de salud pública local o nacional, el sitio web de la OMS o su profesional sanitarios local. Todos deben conocer los síntomas: para la mayoría de las personas, comienza con fiebre y tos seca, no con secreción nasal. La mayoría de las personas tendrá una enfermedad leve y mejorará sin necesidad de ningún cuidado especial."
+			content: "Infórmese sobre el COVID-19 a través de fuentes confiables: su agencia de salud pública local o nacional, el sitio web de la OMS o su profesional sanitarios local. <br/>" +
+							 "<a href='https://www.boliviasegura.gob.bo'>https://www.boliviasegura.gob.bo</a><br/>" +
+							 "<a href='https://www.who.int/es/emergencies/diseases/novel-coronavirus-2019/advice-for-public'>https://www.who.int/es/emergencies/diseases/novel-coronavirus-2019/advice-for-public</a><br/>" +
+							 "Todos deben conocer los síntomas: para la mayoría de las personas, comienza con fiebre y tos seca, no con secreción nasal. La mayoría de las personas tendrá una enfermedad leve y mejorará sin necesidad de ningún cuidado especial.\n"
 		},
 		{
 			title  : "EVITAR LOS VIAJES",
@@ -69,13 +72,22 @@ export default () => {
 					data.map(faq => {
 						return (
 							<Panel key={faq.id} header={faq.title} className="site-collapse-custom-panel">
-								<p>{faq.content}</p>
+								<p dangerouslySetInnerHTML={{
+									__html: faq.content
+								}}></p>
 							</Panel>
 						);
 					})
 				}
-			</Collapse>,
-			<Button type="default" onClick={handleClick} style={{width: '100%'}}>Volver</Button>
+			</Collapse>
+			<div style={{marginTop: 16, marginBottom: 16}}>
+				<span>Fuente:</span>
+				<a href="http://www.nu.org.bo/noticias/diez-consejos-basicos-para-protegerse-del-coronavirus-segun-la-oms">
+					http://www.nu.org.bo/noticias/diez-consejos-basicos-para-protegerse-del-coronavirus-segun-la-oms
+				</a>
+			</div>
+			
+			<Button type="default" onClick={handleClick} style={{width: '100%', marginBottom: 16}}>Volver</Button>
 		</div>
 	);
 	
