@@ -29,15 +29,18 @@ const familyReducer = (state = initialState, action) => {
 				address     : action.data.direccion,
 				zone        : action.data.zona,
 				city        : action.data.ciudad,
-				department  : action.data.departamento ? {
-						id  : action.data.departamento.id,
-						name: action.data.departamento.nombre
+				department  : action.data.departamento
+											? {
+						id   : action.data.departamento.id,
+						name : action.data.departamento.nombre,
+						phone: action.data.departamento.telefono
 					}
-																							 : {},
-				municipality: action.municipio ? {
-					id  : action.data.municipio.id,
-					name: action.data.municipio.nombre
-				} : {},
+											: {},
+				municipality: action.data.municipio
+											? {
+						id  : action.data.municipio.id,
+						name: action.data.municipio.nombre
+					} : {},
 				members     : [],
 				fetched     : true,
 				toUpdate    : {}

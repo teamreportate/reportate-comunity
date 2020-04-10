@@ -105,7 +105,8 @@ class ServiceFamily extends ServiceBase {
 		this.axios.post(this.getBaseService() + 'api/pacientes/' + userId + '/control-diario/',
 			{
 				enfermedadesBase: sicknesses,
-				sintomas        : symptoms
+				sintomas        : symptoms,
+				paises          : countries,
 			}, {headers: this.getHeaders()})
 				.then((result) => {
 						if (onSuccess) {
