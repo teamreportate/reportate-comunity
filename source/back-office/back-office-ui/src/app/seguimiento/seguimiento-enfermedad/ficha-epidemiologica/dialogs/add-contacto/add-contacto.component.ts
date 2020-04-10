@@ -21,7 +21,7 @@ export class AddContactoComponent  extends ClicComponent  implements OnInit {
   @BlockUI() blockUi: NgBlockUI;
 
 
-  sexo = Constants.SEXOS;
+  sexos = Constants.SEXOS;
   public form: FormGroup;
   public today: Date;
   flex: number;
@@ -57,10 +57,9 @@ export class AddContactoComponent  extends ClicComponent  implements OnInit {
       ocupacion: new FormControl(this.data.ocupacion, Validators.compose([Validators.required, Validators.maxLength(100)])),
       ci: new FormControl(this.data.tiempoGestacion, Validators.compose([Validators.required, Validators.maxLength(100)])),
       fechaNacimiento: new FormControl(this.data.fechaNacimiento, Validators.compose([Validators.required, Validators.maxLength(100)])),
-      seguro: new FormControl(this.data.seguro, Validators.compose([Validators.required, Validators.maxLength(100)])),
-      codigoSeguro: new FormControl(this.data.codigoSeguro, Validators.compose([Validators.required, Validators.maxLength(100)])),
+      seguro: new FormControl(this.data.seguro, Validators.compose([Validators.required, Validators.maxLength(50)])),
+      codigoSeguro: new FormControl(this.data.codigoSeguro, Validators.compose([Validators.required, Validators.maxLength(30)])),
       tiempoGestacion: new FormControl(this.data.tiempoGestacion, Validators.compose([Validators.required, Validators.maxLength(100)])),
-
     });
   }
   close(): void {

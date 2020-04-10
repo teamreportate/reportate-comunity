@@ -25,7 +25,10 @@ public interface ControlDiarioEnfermedadRepository extends JpaRepository<Control
             "WHERE cde.controlDiario IN " +
             "  (SELECT cd" +
             "   FROM ControlDiario cd INNER JOIN cd.paciente p " +
-            "   WHERE p=:paciente AND p.estado =bo.com.reportate.model.enums.EstadoEnum.ACTIVO)")
+            "   WHERE p=:paciente " +
+            "   AND p.estado =bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "   AND cd.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO) " +
+            " AND cde.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<EnfermedadResponse> listarEnfermedadesByPaciente(@Param("paciente") Paciente paciente);
 
     boolean existsByControlDiarioAndEnfermedadAndEstado(ControlDiario controlDiario, Enfermedad enfermedad, EstadoEnum estadoEnum);
