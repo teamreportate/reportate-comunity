@@ -11,6 +11,7 @@ import bo.com.reportate.model.dto.DiagnosticoDto;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
 import bo.com.reportate.model.dto.response.NivelValoracionDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
+import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
 
 import org.springframework.data.domain.Page;
@@ -23,6 +24,7 @@ import org.springframework.data.repository.query.Param;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @Created by :MC4
@@ -112,4 +114,5 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
             @Param("fechaInicio") Date from,
             @Param("fechaFin") Date to);
 
+    Optional<Diagnostico> findByIdAndEstado(Long id, EstadoEnum estadoEnum);
 }

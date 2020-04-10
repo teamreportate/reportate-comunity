@@ -19,7 +19,11 @@
 
     <div fxLayout="row wrap" class="h-padding-5">
         <div fxFlex="100">
-            <ngx-datatable #table class="material" [messages]="this.tableMessages()" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]='10' [rows]="this.muniList" [scrollbarH]="this.scrollH">
+            <ngx-datatable #table class="material" [messages]="this.tableMessages()"
+                           [columnMode]="'force'" [headerHeight]="50"
+                           [footerHeight]="50" [rowHeight]="'auto'"
+                           [limit]='10' [rows]="this.muniList"
+                           [scrollbarH]="this.scrollH">
 
                 <ngx-datatable-column name="Acciones" [minWidth]="200" [maxWidth]="240" [draggable]="false" [resizeable]="false">
                     <ng-template let-row="row" ngx-datatable-cell-template>
@@ -34,17 +38,19 @@
                     </ng-template>
                 </ngx-datatable-column>
 
-                <ngx-datatable-column name="Latitud" [draggable]="false" [resizeable]="false">
-                    <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
-                        {{row.latitud}}
-                    </ng-template>
-                </ngx-datatable-column>
-
-                <ngx-datatable-column name="Longitud" [draggable]="false" [resizeable]="false">
-                    <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
-                        {{row.longitud}}
-                    </ng-template>
-                </ngx-datatable-column>
+              <ngx-datatable-column name="Teléfono" [draggable]="false" [resizeable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div *ngIf="validateNumber(row.telefono)">
+                    <i class="fa fa-whatsapp"></i>
+                    <a href="https://api.whatsapp.com/send?phone=+591 {{row.telefono}}&text=Buenos día." [target]="'_blank'">
+                      {{row.telefono}}
+                    </a>
+                  </div>
+                  <div *ngIf="!validateNumber(row.telefono)">
+                    {{row.telefono}}
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
 
                 <ngx-datatable-column name="Coordenada" [draggable]="false" [resizeable]="false">
                     <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">

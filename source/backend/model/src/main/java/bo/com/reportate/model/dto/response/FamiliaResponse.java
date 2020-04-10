@@ -29,7 +29,6 @@ public class FamiliaResponse implements Serializable {
     private String telefono;
     private String direccion;
     private String zona;
-    private String ciudad;
     private DepartamentoResponse departamento;
     private MunicipioResponse municipio;
     private List<PacienteResponse> pacientes = new ArrayList<>();
@@ -41,7 +40,6 @@ public class FamiliaResponse implements Serializable {
         this.telefono = familia.getTelefono();
         this.direccion = familia.getDireccion();
         this.zona = familia.getZona();
-        this.ciudad = familia.getCiudad();
         this.departamento = new DepartamentoResponse();
         BeanUtils.copyProperties(familia.getDepartamento(),this.departamento);
         this.municipio = new MunicipioResponse();

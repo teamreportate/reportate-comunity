@@ -28,6 +28,7 @@ public class DepartamentoDto implements Serializable {
     private Double latitud;
     private Double longitud;
     private EstadoEnum estado;
+    private String telefono;
     private List<MunicipioDto> municipios = new ArrayList<>();
 
     public DepartamentoDto(Departamento departamento){
@@ -36,6 +37,7 @@ public class DepartamentoDto implements Serializable {
         this.latitud = departamento.getLatitud();
         this.longitud = departamento.getLongitud();
         this.estado = departamento.getEstado();
+        this.telefono = departamento.getTelefono();
 
         departamento.getMunicipios().forEach( municipio -> {
             if(municipio.getEstado().equals(EstadoEnum.ACTIVO)) {

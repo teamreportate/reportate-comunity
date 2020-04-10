@@ -11,9 +11,14 @@ import {DashboardsRoutes} from './dashboards.routing';
 import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonsModule} from '../commons/commons.module';
+import { ResumeComponent } from './resume/resume.component';
+import { SospechosoComponent } from './sospechoso/sospechoso.component';
+import { ConfirmadoComponent } from './confirmado/confirmado.component';
+import { RecuperadosComponent } from './recuperados/recuperados.component';
+import { MuertosComponent } from './muertos/muertos.component';
 
 @NgModule({
-  declarations: [PrincipalComponent],
+  declarations: [PrincipalComponent, ResumeComponent, SospechosoComponent, ConfirmadoComponent, RecuperadosComponent, MuertosComponent],
   imports: [
     CommonModule,
     CommonsModule,

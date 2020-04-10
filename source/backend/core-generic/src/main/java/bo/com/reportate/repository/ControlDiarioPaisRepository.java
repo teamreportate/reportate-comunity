@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @Created by :MC4
@@ -23,7 +24,10 @@ import java.util.List;
 public interface ControlDiarioPaisRepository extends JpaRepository<ControlDiarioPais, Long> {
     @Query("SELECT new bo.com.reportate.model.dto.PaisVisitadoDto(cdp) " +
             "FROM ControlDiarioPais cdp INNER JOIN cdp.controlDiario cd "+
-            "WHERE cd.paciente=:paciente AND cd.paciente.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO" )
+            "WHERE cd.paciente=:paciente " +
+            "AND cd.paciente.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            " AND cdp.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            " AND cdp.pais.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO" )
     List<PaisVisitadoDto> listarPaisesVisitados(@Param("paciente") Paciente paciente);
     boolean existsByControlDiarioAndPaisAndEstado(ControlDiario controlDiario, Pais pais, EstadoEnum estadoEnum);
 
@@ -31,4 +35,6 @@ public interface ControlDiarioPaisRepository extends JpaRepository<ControlDiario
     @Query( " UPDATE ControlDiarioPais  cdp " +
             "SET cdp.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE cdp.pais =:pais AND cdp.controlDiario =:controlDiario ")
     void eliminarPais(@Param("pais") Pais pais, @Param("controlDiario") ControlDiario controlDiario);
+
+    Optional<ControlDiarioPais> findByIdAndEstado(Long id, EstadoEnum estadoEnum);
 }

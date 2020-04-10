@@ -1,14 +1,13 @@
-import { Component, OnInit, Output, Inject, ChangeDetectorRef } from '@angular/core';
-import { ClicComponent } from '../../../core/utils/clic-component';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AdministrationService } from '../../administration.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ModalDepartamentoComponent } from '../../departamentos/modal-departamento/modal-departamento.component';
-import { NotifierService } from 'angular-notifier';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { CustomOptions } from 'src/app/core/models/dto/custom-options';
-import { Page } from 'src/app/core/utils/paginator/page';
+import {ChangeDetectorRef, Component, Inject, OnInit, Output} from '@angular/core';
+import {ClicComponent} from '../../../core/utils/clic-component';
+import {BlockUI, NgBlockUI} from 'ng-block-ui';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AdministrationService} from '../../administration.service';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {NotifierService} from 'angular-notifier';
+import {MediaMatcher} from '@angular/cdk/layout';
+import {CustomOptions} from 'src/app/core/models/dto/custom-options';
+import {Page} from 'src/app/core/utils/paginator/page';
 
 @Component({
   selector: 'app-modal-centro',
@@ -36,13 +35,12 @@ export class ModalCentroComponent extends ClicComponent implements OnInit {
     this.form = new FormGroup ({
       id: new FormControl(this.data.centro.id),
       municipioId: new FormControl(this.data.municipio.id),
-      // tslint:disable-next-line:max-line-length
       nombre: new FormControl(this.data.centro.nombre, Validators.compose([Validators.required, Validators.maxLength(100)])),
-      ciudad: new FormControl(this.data.centro.ciudad, Validators.compose([Validators.required, Validators.maxLength(100)])),
+      telefono: new FormControl(this.data.centro.telefono, Validators.compose([Validators.required, Validators.maxLength(9)])),
       zona: new FormControl(this.data.centro.zona, Validators.compose([Validators.required, Validators.maxLength(100)])),
       direccion: new FormControl(this.data.centro.direccion, Validators.compose([Validators.required, Validators.maxLength(100)])),
-      latitud: new FormControl(this.data.centro.latitud, Validators.compose([Validators.required, Validators.pattern(this.validatorDecimal)])),
-      longitud: new FormControl(this.data.centro.latitud, Validators.compose([Validators.required, Validators.pattern(this.validatorDecimal)])),
+      latitud: new FormControl(this.data.centro.latitud?this.data.centro.latitud:0, Validators.compose([Validators.required, Validators.pattern(this.validatorDecimal)])),
+      longitud: new FormControl(this.data.centro.longitud?this.data.centro.longitud:0, Validators.compose([Validators.required, Validators.pattern(this.validatorDecimal)])),
   });
   }
 

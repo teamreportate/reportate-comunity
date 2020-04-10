@@ -35,8 +35,9 @@ export class ModalDepartamentoComponent extends ClicComponent implements OnInit 
       id: new FormControl(this.data.id),
       // tslint:disable-next-line:max-line-length
       nombre: new FormControl(this.data.nombre, Validators.compose([Validators.required, Validators.maxLength(100)])),
-      latitud: new FormControl(this.data.latitud, Validators.compose([Validators.required, Validators.pattern(this.validatorDecimal)])),
-      longitud: new FormControl(this.data.latitud, Validators.compose([Validators.required, Validators.pattern(this.validatorDecimal)])),
+      latitud: new FormControl(this.data.latitud?this.data.latitud:0, Validators.compose([Validators.required, Validators.pattern(this.validatorDecimal)])),
+      longitud: new FormControl(this.data.longitud?this.data.longitud:0, Validators.compose([Validators.required, Validators.pattern(this.validatorDecimal)])),
+      telefono: new FormControl(this.data.telefono, Validators.compose([Validators.required, Validators.maxLength(9)])),
   });
   }
 

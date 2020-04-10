@@ -87,6 +87,10 @@ export class MunicipiosComponent extends ClicComponent implements OnInit {
       });
   }
 
+  validateNumber(telefono: string) {
+    return (telefono && telefono.length == 8);
+  }
+
   selectDepartamento(depa) {
     this.departamento = depa;
     this.muniList = depa.municipios;

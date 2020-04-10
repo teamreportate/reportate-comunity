@@ -30,6 +30,7 @@ import java.util.TimeZone;
 @EntityScan(basePackages = {"bo.com.reportate.model"})
 @SpringBootApplication(scanBasePackages = {"bo.com.reportate.service", "bo.com.reportate","bo.com.reportate.jwt"})
 @EnableAsync(proxyTargetClass = true)
+@EnableScheduling
 //public class WebBackofficeApplication  implements CommandLineRunner {
 public class WebBackofficeApplication  extends SpringBootServletInitializer implements CommandLineRunner {
 

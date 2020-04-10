@@ -31,8 +31,12 @@ public class ControlDiarioPais extends AbstractAuditableEntity{
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "FECHA_VIAJE")
-    private Date fechaViaje;
+    @Column(name = "FECHA_LLEGADA")
+    private Date fechaLlegada;
+
+    @Column(name = "FECHA_SALIDA")
+    private Date fechaSalida;
+
     @Column(name = "CIUDAD", length = 500)
     private String ciudades;
     @JsonIgnore
