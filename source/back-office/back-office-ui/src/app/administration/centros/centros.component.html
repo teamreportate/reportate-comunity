@@ -30,7 +30,14 @@
 
     <div fxLayout="row wrap" class="h-padding-5">
         <div fxFlex="100">
-            <ngx-datatable #table class="material" [messages]="this.tableMessages()" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]='10' [rows]="this.centroList" [scrollbarH]="this.scrollH">
+            <ngx-datatable #table class="material" [messages]="this.tableMessages()"
+                           [columnMode]="'force'"
+                           [headerHeight]="50"
+                           [footerHeight]="50"
+                           [rowHeight]="'auto'"
+                           [limit]='10'
+                           [rows]="this.centroList"
+                           [scrollbarH]="this.scrollH">
 
                 <ngx-datatable-column name="Acciones" [minWidth]="100" [maxWidth]="200" [draggable]="false" [resizeable]="false">
                     <ng-template let-row="row" ngx-datatable-cell-template>
