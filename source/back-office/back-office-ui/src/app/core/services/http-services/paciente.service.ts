@@ -24,8 +24,13 @@ export class PacienteService {
     return this.httpClient.get<HttpResponse<any>>(this.endPoint, {observe: 'response'});
   }
 
-  updatePaciente(pacienteId: string, data: any) {
-    const url = Constantes.baseUri + Constants.pacienteApi +;
+  updatePaciente(data: any) {
+    const url = Constantes.baseUri + Constants.pacienteApi;
+    return this.httpClient.put(url, JSON.stringify(data), {observe: 'response'});
+  }
+
+  updatePacienteId(pacienteId: string, data: any) {
+    const url = Constantes.baseUri + Constants.pacienteApi + '/' + pacienteId;
     return this.httpClient.put(url, JSON.stringify(data), {observe: 'response'});
   }
 

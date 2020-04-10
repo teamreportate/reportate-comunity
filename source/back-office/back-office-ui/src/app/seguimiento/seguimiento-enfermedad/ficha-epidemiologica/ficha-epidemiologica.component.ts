@@ -241,7 +241,7 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
 
   updateDataPaciente(){
     if(this.form.valid){
-      this.pacienteService.updatePaciente(this.form.value).subscribe(response => {
+      this.pacienteService.updatePacienteId(this.idPaciente, this.form.value).subscribe(response => {
         this.blockUI.stop();
         // this.ngOnInit();
         // tslint:disable-next-line:max-line-length
