@@ -86,18 +86,22 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
     }
   }
 
-  selectMunicipio(object: Departamento) {
+  selectMunicipio(object) {
     this.tempMunicipio = [];
     this.tempCentro = [];
     this.form.get('municipioID').setValue(0);
     this.form.get('centroSaludId').setValue(0);
-    this.tempMunicipio = this.municipioList.filter((dto: Municipio) => dto.departamentoId === object.id);
+    if (object !== 0) {
+      this.tempMunicipio = this.municipioList.filter((dto: Municipio) => dto.departamentoId === object.id);
+    }
   }
 
-  selectCentro(object: Municipio) {
+  selectCentro(object) {
     this.tempCentro = [];
     this.form.get('centroSaludId').setValue(0);
-    this.tempCentro = this.centroList.filter((dto: Centro) => dto.municipioId === object.id);
+    if (object !== 0) {
+      this.tempCentro = this.centroList.filter((dto: Centro) => dto.municipioId === object.id);
+    }
   }
 
   private getListForSelect() {
@@ -134,6 +138,10 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
     // tslint:disable-next-line:max-line-length
     this.seguimientoEnfermedadService.filterSeguimientoEnfermedad(this.nombrePaciente, this.centroSaludId, this.municipioID, this.enfermedadId, this.clasificacion, this.departamentoId, this.startDate.format('DD/MM/YYYY'), this.endDate.format('DD/MM/YYYY'), this.pageControl.number, this.pageControl.size).subscribe(response => {
       this.pageControl = response.body;
+      if (this.pageControl.content.length === 0) {
+        const notif = {error: {title: 'Filtrado de Diagnósticos', detail: 'No se encontraron resultados.'}};
+        this.notifierError(notif, 'info');
+      }
       this.render = true;
       this.blockUI.stop();
     }, error => {
