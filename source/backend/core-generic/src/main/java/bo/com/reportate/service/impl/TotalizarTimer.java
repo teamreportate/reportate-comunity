@@ -35,7 +35,7 @@ public class TotalizarTimer {
 	@Autowired
 	private DiagnosticoResumenDiarioRepository diagnosticoResumenDiarioRepository;
 	
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 100000)
     public void updateTime() {
         try {
             log.info("Actualizando hora en nodo:{} ", InetAddress.getLocalHost().getHostAddress());

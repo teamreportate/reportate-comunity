@@ -273,4 +273,25 @@ public class PacienteController {
         }
     }
 
+    @RequestMapping(value = "/{contactoId}/eliminar-contacto", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Elimina un contacto", description = "Elimina contacto de una familia", tags = { "paciente" })
+    public ResponseEntity<PacienteDto> eliminarContacto(
+            @Parameter(description = "Identificador de Contacto", required = true)
+            @PathVariable("contactoId") Long contactoId) {
+        try {
+            this.pacienteService.eliminarContacto(contactoId);
+            log.info("Se elimina correctamente el contacto : {}",contactoId);
+            logService.info(Process.REGISTRO_PACIENTE,"Se elimina correctamente el contacto : {}",contactoId);
+            return ok().build();
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al eliminar el contacto: {}. Causa. {}",contactoId,e.getMessage());
+            logService.error(Process.REGISTRO_PACIENTE,"Se genero un error al eliminar el contacto: {}. Causa. {}",contactoId,e.getMessage());
+            return CustomErrorType.badRequest("Eliminar Contacto", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al eliminar el contcto : {}",contactoId,e);
+            logService.error(Process.REGISTRO_PACIENTE,"Se genero un error al eliminar el contacto : {}",contactoId);
+            return CustomErrorType.serverError("Eliminar Contacto", "Ocurrió un error al eliminar el contacto: " + contactoId);
+        }
+    }
+
 }

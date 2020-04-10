@@ -384,7 +384,6 @@ public class PacienteServiceImpl implements PacienteService {
     public PaisVisitadoDto agregarPais(Long pacienteId, Long paisId, Date fechaLlegada, Date fechaSalida, String ciudades) {
         ValidationUtil.throwExceptionIfInvalidText("ciudades",ciudades,true,500);
         Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontró el paciente"));
-        log.info("Buscando Pais :{}", paisId);
         Pais pais = this.paisRepository.findByIdAndEstado(paisId, EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontro el país seleccionado"));
         ControlDiario  controlDiario = this.controlDiarioRepository.findByPrimerControlTrueAndPacienteAndEstado(paciente, EstadoEnum.ACTIVO).orElseThrow(()->new OperationException("No se encontró el primer control del paciente"));
         if(this.controlDiarioPaisRepository.existsByControlDiarioAndPaisAndEstado(controlDiario, pais, EstadoEnum.ACTIVO)){
@@ -418,5 +417,12 @@ public class PacienteServiceImpl implements PacienteService {
         Pais pais = this.paisRepository.findByIdAndEstado(paisId, EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontro el país seleccionado"));
         ControlDiario  controlDiario = this.controlDiarioRepository.findByPrimerControlTrueAndPacienteAndEstado(paciente, EstadoEnum.ACTIVO).orElseThrow(()->new OperationException("No se encontró el primer control del paciente"));
         this.controlDiarioPaisRepository.eliminarPais(pais,controlDiario);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void eliminarContacto(Long contactoId) {
+        this.pacienteRepository.eliminarContacto(contactoId);
+
     }
 }
