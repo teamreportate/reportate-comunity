@@ -1,0 +1,55 @@
+package bo.com.reportate.repository;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
+
+import bo.com.reportate.model.CentroSalud;
+import bo.com.reportate.model.Departamento;
+import bo.com.reportate.model.DiagnosticosResumenDiario;
+import bo.com.reportate.model.Enfermedad;
+import bo.com.reportate.model.Municipio;
+import bo.com.reportate.model.dto.response.ResumenDto;
+import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
+
+public interface DiagnosticoResumenDiarioRepository extends JpaRepository<DiagnosticosResumenDiario, Long> , PagingAndSortingRepository<DiagnosticosResumenDiario, Long>{
+	@Query("SELECT d " +
+            "FROM DiagnosticosResumenDiario d " +
+            "WHERE CAST(d.createdDate AS date) = CAST(:fechaRegistro AS date) "
+            + "AND d.departamento = :departamento "
+            + "AND d.municipio = :municipio "
+            + "AND d.centroSalud = :centroSalud "
+            + "AND d.enfermedad = :enfermedad")
+	DiagnosticosResumenDiario buscarPorFiltros(
+            @Param("fechaRegistro") Date fechaRegistro,
+            @Param("departamento") Departamento departamento,
+            @Param("municipio") Municipio municipios,
+            @Param("centroSalud") CentroSalud centrosSalud,
+            @Param("enfermedad") Enfermedad enfermedad);
+	
+    @Query("SELECT new bo.com.reportate.model.dto.response.ResumenDto(cast(t.createdDate as date) as nombreGrafico, "
+    		+ "SUM(t.sospechoso) AS sospechoso, "
+    		+ "SUM(t.negativo) AS negativo, "
+    		+ "SUM(t.confirmado) AS confirmado, "
+    		+ "SUM(t.curado) AS curado, "
+    		+ "SUM(t.fallecido) AS fallecido) "
+            + "FROM DiagnosticosResumenDiario t WHERE t.createdDate BETWEEN :fechaInicio AND :fechaFin AND "
+            + "t.departamento IN (:departamentos) AND "
+            + "t.municipio in (:municipios) AND "
+            + "t.centroSalud IN (:centrosSalud) AND "
+            + "t.enfermedad IN (:enfermedades) "
+            + "GROUP BY t.createdDate "
+            + "ORDER BY t.createdDate")
+    List<ResumenDto> listarPorRangoFechas(
+            @Param("fechaInicio") Date from,
+            @Param("fechaFin") Date to,
+            @Param("departamentos") List<Departamento> departamentos,
+            @Param("municipios") List<Municipio> municipios,
+            @Param("centrosSalud") List<CentroSalud> centrosSalud,
+            @Param("enfermedades") List<Enfermedad> enfermedades);
+    
+}

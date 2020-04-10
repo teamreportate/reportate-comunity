@@ -10,7 +10,17 @@ import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor @Data
 public class GraficoDto implements Serializable{
+	
+	private static final long serialVersionUID = 8896814117952763756L;
 	private String nombreGrafico;
 	private Integer cantidadGrafico;
 	private Integer cantidadMaximaGrafico;
+	
+	public GraficoDto(String nombreGrafico, Integer cantidadGrafico) {
+		super();
+		this.nombreGrafico = nombreGrafico;
+		this.cantidadGrafico = cantidadGrafico;
+	}
+	
+	
 }
