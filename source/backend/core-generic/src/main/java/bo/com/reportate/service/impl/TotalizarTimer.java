@@ -1,19 +1,16 @@
 package bo.com.reportate.service.impl;
 
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
-
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.model.DiagnosticosResumenDiario;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
-import bo.com.reportate.repository.DiagnosticoRepository;
 import bo.com.reportate.repository.DiagnosticoResumenDiarioRepository;
 import bo.com.reportate.repository.PacienteRepository;
 import bo.com.reportate.utils.DateUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -38,7 +35,7 @@ public class TotalizarTimer {
 	@Autowired
 	private DiagnosticoResumenDiarioRepository diagnosticoResumenDiarioRepository;
 	
-    @Scheduled(fixedRate = 100000)
+    @Scheduled(fixedRate = 5000)
     public void updateTime() {
         try {
             log.info("Actualizando hora en nodo:{} ", InetAddress.getLocalHost().getHostAddress());

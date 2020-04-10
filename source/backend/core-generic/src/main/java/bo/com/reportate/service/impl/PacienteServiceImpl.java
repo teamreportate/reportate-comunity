@@ -303,14 +303,17 @@ public class PacienteServiceImpl implements PacienteService {
                     for (MuUsuario medico: medicos) {
                         notificacionService.notificacionSospechosoSintomas("Dr. "+ medico.getNombre(), medico.getEmail(),"Caso sospechoso " + enfermedad.getNombre(),"Existe un nuevo caso sospechoso de " + enfermedad.getNombre() + " con una valoración de " + resultadoPeso.toPlainString() , sintomasMail);
                     }
+
+
                 }
 
                 log.info("Registrando diagnostico del paciente {} con estado {}  de la enfermedad {} con {} sintomas.",paciente.getNombre(), estadoDiagnostico, enfermedad.getNombre(), sintomasDignostico.size());
+                paciente.setDiagnostico(diagnostico);
                 diagnostico.setEstadoDiagnostico(estadoDiagnostico);
                 diagnostico.setResultadoValoracion(resultadoPeso);
-
                 this.diagnosticoRepository.save(diagnostico);
                 this.diagnosticoSintomaRepository.saveAll(sintomasDignostico);
+                this.pacienteRepository.save(paciente);
             }
         }
         log.info("Se registro los sintomas correctamente");
