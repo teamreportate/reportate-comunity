@@ -32,7 +32,7 @@ public class FamiliaRequest implements Serializable {
     private String direccion;
     @NotNull
     private String zona;
-    private String ciudad;
+
     @NotNull
     private Long departamentoId;
     @NotNull

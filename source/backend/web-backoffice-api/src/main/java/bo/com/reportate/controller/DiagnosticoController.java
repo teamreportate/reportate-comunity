@@ -2,11 +2,7 @@ package bo.com.reportate.controller;
 
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
-import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
-import bo.com.reportate.model.dto.response.GraficoDto;
-import bo.com.reportate.model.dto.response.NivelValoracionDto;
-import bo.com.reportate.model.dto.response.NivelValoracionListDto;
-import bo.com.reportate.model.dto.response.TortaResponse;
+import bo.com.reportate.model.dto.response.*;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.service.DiagnosticoService;
 import bo.com.reportate.service.ParamService;
@@ -21,14 +17,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.NumberFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -104,7 +98,7 @@ public class DiagnosticoController {
     		//String genero, Integer edadInicial, Integer edadFinal,EstadoDiagnosticoEnum estadoDiagnostico, Long enfermedadId
         	GraficoDto graficoDto = new GraficoDto();
         	Integer cantidad =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication,null, null, departamentoId, municipioId,centroSaludId,null,
-            		null,null,clasificacion,0l);
+            		null,null,clasificacion, 0L);
         	graficoDto.setCantidadGrafico(cantidad);
         	graficoDto.setNombreGrafico(clasificacion.name());
         	graficoDto.setCantidadMaximaGrafico(paramService.getInt("TACOMETRO_MAXIMO"));
@@ -132,6 +126,22 @@ public class DiagnosticoController {
         }catch (Exception e){
             log.error("Se genero un error al agrupar los diagnosticos:",e);
             return CustomErrorType.serverError("Agrupar Diagnosticos", "Se genero un error al agrupar los diagnosticos");
+        }
+    }
+
+    @RequestMapping(value = "/{diagnosticoId}/sintomas",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Obtiene los síntomas del diagnostico", description = "Obtiene los síntomas del diagnostico ", tags = { "diagnostico" })
+    public ResponseEntity<List<DiagnosticoSintomaResponse>> getSintomas(
+            @Parameter(description = "Identificador de Diagnostico", required = true)
+            @PathVariable("diagnosticoId") Long diagnosticoId) {
+        try {
+            return ok(this.diagnosticoService.listarSintomas(diagnosticoId));
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al obtener los sintomas del diagnostico {}. Causa. {} ", diagnosticoId, e.getMessage());
+            return CustomErrorType.badRequest("Obtener Sintomas", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al obtener los sintomas del diagnostico {}",diagnosticoId,e);
+            return CustomErrorType.serverError("Obtener Sintomas", "Se genero un error al obtener los síntomas del diagnostico");
         }
     }
 }

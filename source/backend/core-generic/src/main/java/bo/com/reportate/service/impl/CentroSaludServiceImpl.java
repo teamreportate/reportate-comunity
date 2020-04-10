@@ -53,9 +53,9 @@ public class CentroSaludServiceImpl implements CentroSaludService {
     @Override
     public CentroSalud save(CentroSalud centroSalud) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",centroSalud.getNombre(),true,100);
-        ValidationUtil.throwExceptionIfInvalidText("direccion",centroSalud.getDireccion(),true,200);
+        ValidationUtil.throwExceptionIfInvalidText("dirección",centroSalud.getDireccion(),true,200);
         ValidationUtil.throwExceptionIfInvalidText("zona",centroSalud.getDireccion(),true,100);
-        ValidationUtil.throwExceptionIfInvalidText("ciudad",centroSalud.getDireccion(),true,100);
+        ValidationUtil.throwExceptionIfInvalidText("teléfono",centroSalud.getTelefono(),true,9);
         if(centroSaludRepository.existsByMunicipioAndNombreIgnoreCase(centroSalud.getMunicipio(),centroSalud.getNombre())){
             throw new OperationException("Ya existe un centro de salud con el nombre: "+centroSalud.getNombre()+" en el municipio: "+centroSalud.getMunicipio().getNombre());
         }
@@ -63,17 +63,16 @@ public class CentroSaludServiceImpl implements CentroSaludService {
     }
 
     @Override
-    public CentroSalud save(Long idMunicipio, String nombre, String direccion, String zona, String ciudad, Double latitud, Double longitud) {
+    public CentroSalud save(Long idMunicipio, String nombre, String direccion, String zona, String telefono, Double latitud, Double longitud) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",nombre,true,100);
-        ValidationUtil.throwExceptionIfInvalidText("direccion",direccion,true,200);
         ValidationUtil.throwExceptionIfInvalidText("zona",zona,true,100);
-        ValidationUtil.throwExceptionIfInvalidText("ciudad",ciudad,true,100);
-
-        Municipio municipio = this.municipioRepository.findById(idMunicipio).orElseThrow(()->new NotDataFoundException("No se encontro ningún municipio con el id: "+idMunicipio));
+        ValidationUtil.throwExceptionIfInvalidText("dirección",direccion,true,200);
+        ValidationUtil.throwExceptionIfInvalidText("teléfono",telefono,true,9);
+        Municipio municipio = this.municipioRepository.findById(idMunicipio).orElseThrow(()->new NotDataFoundException("No se encontró ningún municipio con el id: "+idMunicipio));
         if(centroSaludRepository.existsByMunicipioAndNombreIgnoreCase(municipio,nombre)){
             throw new OperationException("Ya existe un centro de salud con el nombre: "+nombre+" en el municipio: "+municipio.getNombre());
         }
-        return centroSaludRepository.save(CentroSalud.builder().nombre(nombre).zona(zona).direccion(direccion).ciudad(ciudad).latitud(latitud).longitud(longitud).municipio(municipio).build());
+        return centroSaludRepository.save(CentroSalud.builder().nombre(nombre).zona(zona).direccion(direccion).telefono(telefono).latitud(latitud).longitud(longitud).municipio(municipio).build());
     }
 
     @Override
@@ -85,11 +84,11 @@ public class CentroSaludServiceImpl implements CentroSaludService {
     }
 
     @Override
-    public CentroSalud update(Long centroSaludId, String nombre, String direccion, String zona, String ciudad, Double latitud, Double longitud) {
+    public CentroSalud update(Long centroSaludId, String nombre, String direccion, String zona, String telefono, Double latitud, Double longitud) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",nombre,true,100);
-        ValidationUtil.throwExceptionIfInvalidText("direccion",direccion,true,200);
+        ValidationUtil.throwExceptionIfInvalidText("dirección",direccion,true,200);
         ValidationUtil.throwExceptionIfInvalidText("zona",zona,true,100);
-        ValidationUtil.throwExceptionIfInvalidText("ciudad",ciudad,true,100);
+        ValidationUtil.throwExceptionIfInvalidText("teléfono",telefono,true,9);
         if(centroSaludRepository.existsByIdIsNotAndNombreIgnoreCase(centroSaludId, nombre)){
             throw new OperationException("Ya existe un centro de salud con el nombre: "+nombre+" en el municipio");
         }
@@ -97,7 +96,7 @@ public class CentroSaludServiceImpl implements CentroSaludService {
         centroSalud.setNombre(nombre);
         centroSalud.setDireccion(direccion);
         centroSalud.setZona(zona);
-        centroSalud.setCiudad(ciudad);
+        centroSalud.setTelefono(telefono);
         centroSalud.setLatitud(latitud);
         centroSalud.setLongitud(longitud);
         return this.centroSaludRepository.save(centroSalud);

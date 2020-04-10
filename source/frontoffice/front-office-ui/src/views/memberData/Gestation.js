@@ -19,6 +19,7 @@ export default () => {
 	const handleGestation = (event) => {
 		setGestation(event.target.value);
 	};
+	
 	return (
 		<div>
 			<p>¿Se encuentra en estado de gestación?</p>
@@ -55,7 +56,7 @@ export default () => {
 										style={{width: '100%', marginBottom: 8, marginLeft: 8}}>Guardar</Button>
 					</div>
 				</Form.Item>
-				
+			
 			</Form>
 		</div>
 	);

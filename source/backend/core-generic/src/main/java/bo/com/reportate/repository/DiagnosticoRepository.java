@@ -11,6 +11,7 @@ import bo.com.reportate.model.dto.DiagnosticoDto;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
 import bo.com.reportate.model.dto.response.NivelValoracionDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
+import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
 
 import org.springframework.data.domain.Page;
@@ -23,6 +24,7 @@ import org.springframework.data.repository.query.Param;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @Created by :MC4
@@ -53,15 +55,30 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
             @Param("nombre") String nombre,
             Pageable pageable);
 
+    @Query("SELECT new bo.com.reportate.model.dto.response.DiagnosticoResponseDto(d) " +
+            "FROM Diagnostico d INNER JOIN d.enfermedad enf INNER JOIN d.controlDiario cd " +
+            "INNER JOIN cd.paciente p INNER JOIN p.familia f  " +
+            " WHERE d.createdDate BETWEEN :fechaInicio AND :fechaFin AND d.departamento IN (:departamentos) " +
+            " AND d.municipio in (:municipios) AND d.centroSalud IN (:centrosSalud)" +
+            " AND d.estadoDiagnostico IN (:diagnosticos) " +
+            " AND enf IN (:enfermedades) " +
+            " ORDER BY d.id DESC")
+    Page<DiagnosticoResponseDto> listarDiagnostico(
+            @Param("fechaInicio") Date date,
+            @Param("fechaFin") Date to,
+            @Param("departamentos") List<Departamento> departamentos,
+            @Param("municipios") List<Municipio> municipios,
+            @Param("centrosSalud") List<CentroSalud> centrosSalud,
+            @Param("diagnosticos") List<EstadoDiagnosticoEnum> diagnosticos,
+            @Param("enfermedades") List<Enfermedad> enfermedades,
+            Pageable pageable);
+
 
     @Query("SELECT  new bo.com.reportate.model.dto.DiagnosticoDto(d) "+
             "FROM Diagnostico d INNER  JOIN  d.controlDiario cd "+
             "WHERE cd.paciente =:paciente " +
             "ORDER BY cd.createdDate DESC" )
     List<DiagnosticoDto> listarDiagnosticoByPaciente(@Param("paciente") Paciente paciente, Pageable pageable);
-
-
-
 
 
     @Query("SELECT count(1) " +
@@ -96,5 +113,7 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
     List<NivelValoracionDto> listarPorNivelValoracion(
             @Param("fechaInicio") Date from,
             @Param("fechaFin") Date to);
+
+    Optional<Diagnostico> findByIdAndEstado(Long id, EstadoEnum estadoEnum);
 
 }

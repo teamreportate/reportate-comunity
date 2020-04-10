@@ -62,15 +62,15 @@ public class MunicipioCotroller {
     @Operation(summary = "Guardar Municipio", description = "Metodo para guardar el municipio", tags = { "municipio" })
     public ResponseEntity<Municipio> saveMunicipio(
             @Parameter(description = "Objeto municipio a guardar", required = true)
-            @RequestBody MunicipioRequest municipioDto) {
+            @RequestBody MunicipioRequest municipioRequest) {
         try {
-            return ok(this.municipioService.save(municipioDto.getDepartamentoId(), municipioDto.getNombre(), municipioDto.getLatitud(), municipioDto.getLongitud()));
+            return ok(this.municipioService.save(municipioRequest.getDepartamentoId(), municipioRequest.getNombre(), municipioRequest.getLatitud(), municipioRequest.getLongitud(), municipioRequest.getTelefono()));
         }catch (NotDataFoundException | OperationException e){
-            log.error("Se genero un error al guardar el municipio: {}. Causa. {}",municipioDto.getNombre(),e.getMessage());
+            log.error("Se genero un error al guardar el municipio: {}. Causa. {}",municipioRequest.getNombre(),e.getMessage());
             return CustomErrorType.badRequest("Guardar Municipio", e.getMessage());
         }catch (Exception e){
-            log.error("Se genero un error al guardar el municipio : {}",municipioDto.getNombre(),e);
-            return CustomErrorType.serverError("Guardar Municipio", "Ocurrió un error al guardar el municipio: "+municipioDto.getNombre());
+            log.error("Se genero un error al guardar el municipio : {}",municipioRequest.getNombre(),e);
+            return CustomErrorType.serverError("Guardar Municipio", "Ocurrió un error al guardar el municipio: "+municipioRequest.getNombre());
         }
     }
 
@@ -82,7 +82,7 @@ public class MunicipioCotroller {
             @Parameter(description = "Objeto municipio a guardar", required = true)
             @RequestBody MunicipioRequest municipioRequest) {
         try {
-            return ok(this.municipioService.update(municipioId, municipioRequest.getNombre(), municipioRequest.getLatitud(), municipioRequest.getLongitud()));
+            return ok(this.municipioService.update(municipioId, municipioRequest.getNombre(), municipioRequest.getLatitud(), municipioRequest.getLongitud(), municipioRequest.getTelefono()));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al modificar el municipio: {}. Causa. {}",municipioId,e.getMessage());
             return CustomErrorType.badRequest("Modificar Municipio", e.getMessage());
@@ -108,7 +108,7 @@ public class MunicipioCotroller {
     }
 
 
-    @RequestMapping(value = "/{municipioId}/centros-de-salud",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{municipioId}/centros-de-salud",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CentroSaludDto>> listarCentrosSalud(@PathVariable("municipioId")Long municipioId) {
         try {
             return ok(this.centroSaludService.findByMunicipio(municipioId));

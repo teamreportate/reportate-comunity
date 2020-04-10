@@ -24,6 +24,7 @@ public class MunicipioDto implements Serializable {
     private Double latitud;
     private Double longitud;
     private EstadoEnum estado;
+    private String telefono;
     private List<CentroSaludDto> centroSaluds = new ArrayList<>();
     public MunicipioDto(Municipio municipio){
         this.id = municipio.getId();
@@ -31,8 +32,9 @@ public class MunicipioDto implements Serializable {
         this.latitud = municipio.getLatitud();
         this.longitud = municipio.getLongitud();
         this.estado = municipio.getEstado();
+        this.telefono = municipio.getTelefono();
         municipio.getCentroSaluds().forEach( centroSalud -> {
-            if(municipio.getEstado().equals(EstadoEnum.ACTIVO)) {
+            if(centroSalud.getEstado().equals(EstadoEnum.ACTIVO)) {
                 centroSaluds.add(new CentroSaludDto(centroSalud.getId(), centroSalud.getNombre()));
             }
         });

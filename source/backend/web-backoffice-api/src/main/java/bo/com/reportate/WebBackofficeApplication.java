@@ -1,6 +1,8 @@
 package bo.com.reportate;
 
 import bo.com.reportate.model.MuUsuario;
+import bo.com.reportate.model.enums.AuthTypeEnum;
+import bo.com.reportate.model.enums.TipoUsuarioEnum;
 import bo.com.reportate.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -28,6 +30,7 @@ import java.util.TimeZone;
 @EntityScan(basePackages = {"bo.com.reportate.model"})
 @SpringBootApplication(scanBasePackages = {"bo.com.reportate.service", "bo.com.reportate","bo.com.reportate.jwt"})
 @EnableAsync(proxyTargetClass = true)
+@EnableScheduling
 //public class WebBackofficeApplication  implements CommandLineRunner {
 public class WebBackofficeApplication  extends SpringBootServletInitializer implements CommandLineRunner {
 
@@ -66,7 +69,9 @@ class DataJpaConfig {
             }
 
             Optional<MuUsuario> principal = Optional.of((MuUsuario) authentication.getPrincipal());
-            return Optional.ofNullable(principal.get().getUsername());
+            return Optional.ofNullable((principal.get().getTipoUsuario().equals(TipoUsuarioEnum.PACIENTE))
+                    ? String.valueOf(principal.get().getId()):
+                    principal.get().getUsername());
         };
     }
 }

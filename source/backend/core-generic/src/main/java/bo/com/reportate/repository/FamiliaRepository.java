@@ -29,6 +29,11 @@ public interface FamiliaRepository extends JpaRepository<Familia, Long> {
     Optional<Familia> findFirstByUsuarioIdAndEstadoOrderByIdDesc(Long userId, EstadoEnum estadoEnum);
     Optional<Familia> findFirstByIdAndAndEstadoOrderByIdDesc(Long familiaId, EstadoEnum estadoEnum);
     boolean existsByNombreIgnoreCaseAndEstado(String nombre, EstadoEnum estadoEnum);
+    @Query("SELECT distinct (f) FROM Paciente  p INNER JOIN p.familia f " +
+            "WHERE p.id = :pacienteId " +
+            "AND p.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            " AND f.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO ")
+    Optional<Familia> getFamilia(@Param("pacienteId") Long pacienteId);
 
     @Modifying
     @Query(" UPDATE Familia f set f.estado= bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE f.id=:familiaId")

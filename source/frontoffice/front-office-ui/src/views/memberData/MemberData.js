@@ -17,7 +17,7 @@ export default ({newMember}) => {
 	const [gestation, setGestation]     = useState(false);
 	const [other, setOther]             = useState(false);
 	const member                        = useSelector(store => store.family.toUpdate);
-	
+	const [occupation, setOccupation]   = useState(false);
 	
 	function handleCancelClick() {
 		history.push("/dashboard");
@@ -74,7 +74,7 @@ export default ({newMember}) => {
 	
 	return (
 		<div>
-			<p>Introduce la informacion basica de tu familia</p>
+			<p>Ingresa la información básica del integrante de tú familia</p>
 			<Form
 				form={form}
 				layout='vertical'
@@ -85,9 +85,9 @@ export default ({newMember}) => {
 				<Form.Item label="Nombre"
 									 name="name"
 									 rules={[
-										 {required: true, message: 'Ingresa el nombre de tu familiar'},
-										 {max: 100, message: 'Nombre maximo 100 caracteres'},]}>
-					<Input placeholder="Introduce el nombre"/>
+										 {required: true, message: 'Ingresa el nombre del integrante de tú familia'},
+										 {max: 100, message: 'Nombre máximo 100 caracteres'},]}>
+					<Input placeholder="Ingrese el nombre y apellido"/>
 				</Form.Item>
 				<Form.Item label="Edad"
 									 name="age"
@@ -105,7 +105,7 @@ export default ({newMember}) => {
 									 rules={[{required: true, message: 'Ingresa el genero'}]}>
 					<Select
 						showSearch
-						placeholder="Seleccione un departamento"
+						placeholder="Seleccione una opción"
 						optionFilterProp="children"
 						filterOption={(input, option) =>
 							option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -120,7 +120,7 @@ export default ({newMember}) => {
 				</Form.Item>
 				{
 					sex === 'FEMENINO'
-					? <Form.Item label="Te encuentras en estado de gestacion?"
+					? <Form.Item label="¿Te encuentras en estado de gestación?"
 											 name="gestation">
 						<Radio.Group name="radiogroup" defaultValue={gestation} onChange={event => {
 							setGestation(event.target.value);
@@ -142,7 +142,6 @@ export default ({newMember}) => {
 							defaultValue={5}
 							min={1}
 							max={42}
-						
 						/>
 					</Form.Item>
 					: null
@@ -157,55 +156,66 @@ export default ({newMember}) => {
 				
 				{
 					newMember
-					? <Form.Item label="Ocupación"
-											 name="occupation"
-											 rules={[{required: true, message: 'Selecciona tu ocupación'}]}
-					>
-						<Select
-							showSearch
-							placeholder="Seleccione una ocupación"
-							optionFilterProp="children"
-							filterOption={(input, option) =>
-								option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-							}
-							onChange={(e) => {
-								if (form.getFieldValue('occupation') === 'otro') {
-									setOther(true);
-								} else {
-									setOther(false);
-								}
-								
-							}}
-						>
+					? (
+						<>
+							<Form.Item label="¿Es personal de salud?"
+												 name="occupationSwitch">
+								<Select
+									showSearch
+									placeholder="Seleccione una opción"
+									optionFilterProp="children"
+									filterOption={(input, option) =>
+										option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+									}
+									onChange={value => {
+										setOccupation(value);
+									}}
+								>
+									<Option value={false}>NO</Option>
+									<Option value={true}>SI</Option>
+								</Select>
+							</Form.Item>
+							
 							{
-								occupations.map(occupation => {
-									return <Option key={occupation.id} value={occupation.valor}>{occupation.valor}</Option>;
-								})
+								occupation
+								? <Form.Item label="Ocupación"
+														 name="occupation"
+														 rules={[{required: true, message: 'Selecciona tu ocupación'}]}
+								>
+									<Select
+										showSearch
+										placeholder="Seleccione una ocupación"
+										optionFilterProp="children"
+										filterOption={(input, option) =>
+											option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+										}
+										onChange={(e) => {
+											if (form.getFieldValue('occupation') === 'otro') {
+												setOther(true);
+											} else {
+												setOther(false);
+											}
+										}}
+									>
+										{
+											occupations.map(occupation => {
+												return <Option key={occupation.id} value={occupation.valor}>{occupation.valor}</Option>;
+											})
+										}</Select>
+								</Form.Item>
+								: null
 							}
-							<Option value="otro">Otro</Option>
-						</Select>
-					</Form.Item>
+						
+						</>
+					)
 					: null
 				}
-				
-				{
-					(other
-					 ? <Form.Item name="otherOccupation"
-												rules={[
-													{required: true, message: 'Ingresa una ocupación'},
-													{max: 100, message: 'Ocupación maximo 100 caracteres'},]}>
-						 <Input placeholder="Introduce tu ocupación"/>
-					 </Form.Item>
-					 : null)
-				}
-				
 				<Form.Item>
 					<div style={{display: "flex", flexDirection: "row", marginTop: 16}}>
 						<Button type="default" onClick={handleCancelClick}
 										style={{width: '100%', marginBottom: 8, marginRight: 8}}>Cancelar</Button>
 						<Button type="primary" htmlType="submit"
 										style={{width: '100%', marginBottom: 8, marginLeft: 8}}>Guardar</Button>
-					
 					</div>
 				</Form.Item>
 			</Form>

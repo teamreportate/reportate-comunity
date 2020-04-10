@@ -1,4 +1,4 @@
-import {Button, Checkbox, Form, Modal, Select, Tabs, Tag} from "antd";
+import {Button, Checkbox, Form, Modal, Select, Tabs} from "antd";
 import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import ServiceAppConfig from "../../services/ServiceAppConfig";
@@ -11,14 +11,15 @@ const {Option,} = Select;
 const {TabPane} = Tabs;
 
 const BaseData = () => {
-	const [step, setStep]             = useState("1");
-	const [sicknesses, setSicknesses] = useState([]);
-	const [symptoms, setSymptoms]     = useState([]);
-	const [countries, setCountries]   = useState([]);
-	let history                       = useHistory();
-	const [form]                      = Form.useForm();
-	const selectedUser                = useSelector(store => store.family.toUpdate);
-	const dispatch                    = useDispatch();
+	const [step, setStep]                 = useState("1");
+	const [sicknesses, setSicknesses]     = useState([]);
+	const [symptoms, setSymptoms]         = useState([]);
+	const [countries, setCountries]       = useState([]);
+	const [travelSwitch, setTravelSwitch] = useState(false);
+	let history                           = useHistory();
+	const [form]                          = Form.useForm();
+	const selectedUser                    = useSelector(store => store.family.toUpdate);
+	const dispatch                        = useDispatch();
 	useEffect(() => {
 		ServiceAppConfig.getBaseData((result => {
 			console.log(result);
@@ -96,9 +97,9 @@ const BaseData = () => {
 				onFinish={onFinish}
 				onFinishFailed={onFinishFailed}
 			>
-				<Tabs activeKey={step}>
-					<TabPane tab="Enfermedades base" key="1">
-						<p>¿Padece de alguna de las siguientes emfermades?</p>
+				<Tabs activeKey={step} type="card">
+					<TabPane tab={step === "1" ? "Enfermedades de base" : "1"} key="1">
+						<p>¿Padece de alguna de las siguientes enfermedades?</p>
 						<Form.Item name={'sicknesses'}>
 							<Checkbox.Group>
 								{
@@ -113,7 +114,7 @@ const BaseData = () => {
 							</Checkbox.Group>
 						</Form.Item>
 					</TabPane>
-					<TabPane tab="Sintomas iniciales" key="2">
+					<TabPane tab={step === "2" ? "Síntomas iniciales" : "2"} key="2">
 						<p>Padece de alguna de las siguientes emfermades</p>
 						<Form.Item name={'symptoms'}>
 							<Checkbox.Group style={{width: '100%'}}>
@@ -126,7 +127,7 @@ const BaseData = () => {
 														 justifyContent: "space-between",
 														 width         : '100%',
 														 alignItems    : "center",
-														 padding       : 8
+														 padding       : 4
 													 }}>
 												<Checkbox value={symptom.id}>
 													{symptom.pregunta}
@@ -146,29 +147,47 @@ const BaseData = () => {
 							</Checkbox.Group>
 						</Form.Item>
 					</TabPane>
-					<TabPane tab="Viaje" key="3">
+					<TabPane tab={step === "3" ? "Viajes" : "3"} key="3">
 						<p>¿Estuvo fuera del pais en el ultimo mes?</p>
-						<Form.Item name={'countries'}>
+						<Form.Item name={'countriesSwitch'}>
 							<Select
-								mode="multiple"
 								style={{width: '100%'}}
 								placeholder="Seleccione paises que visito"
 								onChange={(e) => {
-									console.log(e);
+									setTravelSwitch(e);
 								}}
 								optionLabelProp="label"
 							>
-								{
-									countries.map(country => {
-										return (
-											<Option key={country.id} value={country.id} label={country.nombre}>{country.nombre}</Option>
-										);
-									})
-								}
+								<Option value={false} label={"No"}>No</Option>
+								<Option value={true} label={"Si"}>Si</Option>
 							</Select>
 						</Form.Item>
+						{
+							travelSwitch
+							? <Form.Item name={'countries'}>
+								<Select
+									mode="multiple"
+									style={{width: '100%'}}
+									placeholder="Seleccione paises que visito"
+									onChange={(e) => {
+										console.log(e);
+									}}
+									optionLabelProp="label"
+								>
+									{
+										countries.map(country => {
+											return (
+												<Option key={country.id} value={country.id} label={country.nombre}>{country.nombre}</Option>
+											);
+										})
+									}
+								</Select>
+							</Form.Item>
+							: null
+						}
+					
 					</TabPane>
-				</Tabs>,
+				</Tabs>
 				<Form.Item>
 					<div style={{display: "flex", flexDirection: "row"}}>
 						<Button type="default" onClick={handleBackClick}

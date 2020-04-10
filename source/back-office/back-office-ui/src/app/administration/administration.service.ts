@@ -87,11 +87,11 @@ export class AdministrationService {
 
   requestCentroList(id): Observable<any> {
     let url = Constantes.baseUri + Constants.municipiosApi + '/' + id + '/' + 'centros-de-salud';
-    return this.http.post<any>(url, {observe: 'response'});
+    return this.http.get<HttpResponse<any>>(url, {observe: 'response'});
   }
 
   requestUpdateCentro(id: number, object: any): Observable<any> {
-    return this.http.post<any>( Constantes.baseUri + Constants.centrosApi + '/' + id, JSON.stringify(object));
+    return this.http.put<any>( Constantes.baseUri + Constants.centrosApi + '/' + id, JSON.stringify(object));
   }
 
   requestSaveCentro(object: any): Observable<any> {

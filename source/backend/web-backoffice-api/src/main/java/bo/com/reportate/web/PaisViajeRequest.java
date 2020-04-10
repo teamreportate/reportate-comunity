@@ -20,6 +20,7 @@ import java.util.Date;
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class PaisViajeRequest implements Serializable {
     private Long paisId;
-    private Date fechaViaje;
+    private Date fechaLlegada;
+    private Date fechaSalida;
     private String ciudad;
 }

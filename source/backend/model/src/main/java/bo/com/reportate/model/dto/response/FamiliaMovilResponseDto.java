@@ -27,7 +27,6 @@ public class FamiliaMovilResponseDto implements Serializable {
     private String telefono;
     private String direccion;
     private String zona;
-    private String ciudad;
     private DepartamentoDto departamento;
     private MunicipioDto municipio;
     private CentroSaludDto centroSalud;
@@ -38,7 +37,6 @@ public class FamiliaMovilResponseDto implements Serializable {
         this.telefono = familia.getTelefono();
         this.direccion = familia.getDireccion();
         this.zona = familia.getZona();
-        this.ciudad = familia.getCiudad();
         this.departamento = new DepartamentoDto();
         BeanUtils.copyProperties(familia.getDepartamento(),this.departamento);
         this.municipio = new MunicipioDto();

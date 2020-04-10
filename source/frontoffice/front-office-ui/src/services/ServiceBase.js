@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const BASE_SERVICE = 'https://dev.mc4.com.bo:9443/';
+// const BASE_SERVICE = 'https://reportate.mc4.com.bo:8443/reportate-api/';
+// const BASE_SERVICE = 'https://dev.mc4.com.bo:9443/';
+const BASE_SERVICE = 'https://localhost:9443/';
 
 class ServiceBase {
 	getBaseService = () => BASE_SERVICE;

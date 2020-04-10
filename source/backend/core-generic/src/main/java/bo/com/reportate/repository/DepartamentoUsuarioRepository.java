@@ -35,14 +35,16 @@ public interface DepartamentoUsuarioRepository extends JpaRepository<Departament
             "FROM DepartamentoUsuario du INNER JOIN du.muUsuario u " +
             "WHERE u.id =:userId " +
             "AND du.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
-            "AND u.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
+            "AND u.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND du.departamento.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO ")
     List<DepartamentoUsuarioDto> listarDepartamentoAsignados(@Param("userId") Long userId);
 
     @Query("SELECT new bo.com.reportate.model.dto.DepartamentoUsuarioDto(du.departamento.id, du.departamento.nombre, true) " +
             "FROM DepartamentoUsuario du INNER JOIN du.muUsuario u " +
             "WHERE u=:usuario " +
             "AND du.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
-            "AND u.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
+            "AND u.estado=bo.com.reportate.model.enums.EstadoEnum.ACTIVO" +
+            " AND du.departamento.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<DepartamentoUsuarioDto> listarAsignados(@Param("usuario") MuUsuario username);
 
     @Query("SELECT new bo.com.reportate.model.dto.DepartamentoUsuarioDto(d) " +
@@ -60,7 +62,8 @@ public interface DepartamentoUsuarioRepository extends JpaRepository<Departament
             "WHERE d NOT IN" +
             "   (SELECT du.departamento FROM DepartamentoUsuario du INNER JOIN du.muUsuario u " +
             "   WHERE u.id=:userId AND du.estado =bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
-            "   AND u.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO" +
+            "   AND u.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "    AND du.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO" +
             "   ) " +
             "AND d.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<DepartamentoUsuarioDto> listarDepartamentoNoAsignados(@Param("userId") Long userId);

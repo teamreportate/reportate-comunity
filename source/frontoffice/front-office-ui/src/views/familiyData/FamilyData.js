@@ -75,7 +75,7 @@ const FamilyData = (props) => {
 	
 	return (
 		<div>
-			<p>Introduce la informacion basica de tu familia</p>
+			<p>Introduce la información básica de tu familia</p>
 			<Form
 				form={form}
 				layout='vertical'
@@ -85,42 +85,26 @@ const FamilyData = (props) => {
 				<Form.Item label="Nombre"
 									 name="name"
 									 rules={[
-										 {required: true, message: 'Ingresa el nombre de tu familia'},
-										 {max: 100, message: 'Nombre maximo 100 caracteres'},]}
+										 {required: true, message: 'Ingrese un nombre para su familia.'},
+										 {max: 100, message: 'Nombre máximo 100 caracteres'},]}
 				>
-					<Input placeholder="Introduce en nombre de tu familia"/>
+					<Input placeholder="Ingrese un nombre para su familia."/>
 				</Form.Item>
-				<Form.Item label="Teléfono"
+				<Form.Item label="Nro. Teléfono de Familia"
 									 name="phone"
 									 rules={
 										 [
-											 {required: true, message: 'Ingresa el telefono'},
-											 {max: 8, message: 'Telefono maximo 8 caracteres'},]
+											 {required: true, message: 'Ingrese el número de teléfono de familia.'},
+											 {max: 8, message: 'Nro. Telefono máximo 8 caracteres'},]
 									 }
 				>
 					<Input placeholder="ej. 70000001"/>
 				</Form.Item>
-				<Form.Item label="Dirección"
-									 name="address"
-									 rules={[
-										 {required: true, message: 'Ingresa la dirección'},
-										 {max: 200, message: 'Telefono maximo 200 caracteres'},]}
-				>
-					<Input placeholder="ej. calle nro 10"/>
-				</Form.Item>
-				<Form.Item label="Zona"
-									 name="zone"
-									 rules={[
-										 {required: true, message: 'Ingresa la zona donde vivies'},
-										 {max: 100, message: 'Zona maximo 100 caracteres'},
-									 ]}
-				>
-					<Input placeholder="ej. centro"/>
-				</Form.Item>
+				
 				
 				<Form.Item label="Departamento"
 									 name="department"
-									 rules={[{required: true, message: 'Selecciona el departamento donde te encuentras'}]}
+									 rules={[{required: true, message: 'Selecciona el departamento donde vive tú familia'}]}
 				>
 					<Select
 						showSearch
@@ -140,9 +124,9 @@ const FamilyData = (props) => {
 					</Select>
 				</Form.Item>
 				
-				<Form.Item label="Municipio"
+				<Form.Item label="Municipio/Ciudad"
 									 name="municipality"
-									 rules={[{required: true, message: 'Selecciona el municipio donde te encuentras'}]}>
+									 rules={[{required: true, message: 'Selecciona el municipio donde vive tú familia'}]}>
 					<Select
 						showSearch
 						placeholder="Seleccione el municipio"
@@ -159,9 +143,26 @@ const FamilyData = (props) => {
 						}
 					</Select>
 				</Form.Item>
-				<Form.Item label="Centro de salud"
+				<Form.Item label="Zona"
+									 name="zone"
+									 rules={[
+										 {required: true, message: 'Ingrese la zona donde vivies tu familia.'},
+										 {max: 100, message: 'Zona máximo 100 caracteres'},
+									 ]}
+				>
+					<Input placeholder="ej. centro"/>
+				</Form.Item>
+				<Form.Item label="Dirección de la familia"
+									 name="address"
+									 rules={[
+										 {required: true, message: 'Ingrese la dirección de la familia'},
+										 {max: 200, message: 'Direción máximo 200 caracteres'},]}
+				>
+					<Input placeholder="Ej. calle nro. 10"/>
+				</Form.Item>
+				<Form.Item label="Centro de salud más cercano"
 									 name="healthCenter"
-									 rules={[{required: true, message: 'Selecciona el centro de salud'}]}
+									 rules={[{required: true, message: 'Selecciona el centro de salud más cercano'}]}
 				>
 					<Select
 						showSearch
@@ -177,16 +178,6 @@ const FamilyData = (props) => {
 							})
 						}
 					</Select>
-				</Form.Item>
-				
-				<Form.Item
-					label="Ciudad"
-					name="city"
-					rules={[
-						{required: true, message: 'Ingresa tu ciudad'},
-						{max: 100, message: 'Ciudad maximo 100 caracteres'},]}
-				>
-					<Input placeholder="escriba su ciudad"/>
 				</Form.Item>
 				<Form.Item>
 					<Button type="primary" htmlType="submit">Continuar</Button>

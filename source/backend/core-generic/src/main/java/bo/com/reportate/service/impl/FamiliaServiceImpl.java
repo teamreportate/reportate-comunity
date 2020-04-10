@@ -43,15 +43,14 @@ public class FamiliaServiceImpl implements FamiliaService {
     }
 
     @Override
-    public FamiliaMovilResponseDto save(Authentication  authentication, Long departamentoId, Long municipioId, String nombre, String telefono, String direccion, Double latitud, Double longitud, String ciudad, String zona, Long centroSaludId) {
+    public FamiliaMovilResponseDto save(Authentication  authentication, Long departamentoId, Long municipioId, String nombre, String telefono, String direccion, Double latitud, Double longitud, String zona, Long centroSaludId) {
         ValidationUtil.throwExceptionIfInvalidNumber("departamento",departamentoId,true,-1L);
         ValidationUtil.throwExceptionIfInvalidNumber("municipio",municipioId,true,-1L);
         ValidationUtil.throwExceptionIfInvalidNumber("centro de salud",centroSaludId,true,-1L);
         ValidationUtil.throwExceptionIfInvalidText("nombre",nombre, true,100);
         ValidationUtil.throwExceptionIfInvalidText("teléfono",telefono,true,8);
         ValidationUtil.throwExceptionIfInvalidText("dirección",direccion,true,200);
-        ValidationUtil.throwExceptionIfInvalidText("zona",ciudad,true,100);
-        ValidationUtil.throwExceptionIfInvalidText("ciudad",ciudad,false,100);
+        ValidationUtil.throwExceptionIfInvalidText("zona",zona,true,100);
         MuUsuario user = (MuUsuario) authentication.getPrincipal();
         Departamento departamento = this.departamentoRepository.findById(departamentoId).orElseThrow(()->new NotDataFoundException("No se encontró el departamento seleccionado"));
         Municipio municipio = null;
@@ -70,7 +69,6 @@ public class FamiliaServiceImpl implements FamiliaService {
         familia.setDireccion(direccion);
         familia.setTelefono(telefono);
         familia.setZona(zona);
-        familia.setCiudad(ciudad);
         familia.setDepartamento(departamento);
         familia.setMunicipio(municipio);
         familia.setCentroSalud(centroSalud);
@@ -85,7 +83,6 @@ public class FamiliaServiceImpl implements FamiliaService {
         responseDto.setTelefono(familia.getTelefono());
         responseDto.setDireccion(familia.getDireccion());
         responseDto.setZona(familia.getZona());
-        responseDto.setCiudad(familia.getCiudad());
         if(municipio!=null) {
             responseDto.setMunicipio(new MunicipioDto(municipio.getId(), municipio.getNombre()));
         }
@@ -97,13 +94,12 @@ public class FamiliaServiceImpl implements FamiliaService {
     }
 
     @Override
-    public FamiliaMovilResponseDto update( Long departamentoId, Long municipioId, Long familiaId, String nombre, String telefono, String direccion, String ciudad, String zona) {
+    public FamiliaMovilResponseDto update( Long departamentoId, Long municipioId, Long familiaId, String nombre, String telefono, String direccion,String zona) {
         ValidationUtil.throwExceptionIfInvalidNumber("familiaId",familiaId,true,0L);
         ValidationUtil.throwExceptionIfInvalidText("nombre",nombre, true,100);
         ValidationUtil.throwExceptionIfInvalidText("teléfono",telefono,true,8);
         ValidationUtil.throwExceptionIfInvalidText("dirección",direccion,true,200);
-        ValidationUtil.throwExceptionIfInvalidText("zona",ciudad,true,100);
-        ValidationUtil.throwExceptionIfInvalidText("ciudad",ciudad,false,100);
+        ValidationUtil.throwExceptionIfInvalidText("zona",zona,true,100);
         Familia familia = this.familiaRepository.findById(familiaId).orElseThrow(()->new NotDataFoundException("No se encontró ninguna familia para actualizar"));
         Departamento departamento = this.departamentoRepository.findById(departamentoId).orElseThrow(()->new NotDataFoundException("No se encontró ningún departamento con id: "+departamentoId));
         Municipio municipio = null;
@@ -114,7 +110,6 @@ public class FamiliaServiceImpl implements FamiliaService {
         familia.setDireccion(direccion);
         familia.setZona(zona);
         familia.setTelefono(telefono);
-        familia.setCiudad(ciudad);
         this.familiaRepository.save(familia);
         FamiliaMovilResponseDto responseDto = new FamiliaMovilResponseDto();
         responseDto.setId(familia.getId());
@@ -122,7 +117,6 @@ public class FamiliaServiceImpl implements FamiliaService {
         responseDto.setTelefono(familia.getTelefono());
         responseDto.setDireccion(familia.getDireccion());
         responseDto.setZona(familia.getZona());
-        responseDto.setCiudad(familia.getCiudad());
         if(municipio!=null) {
             responseDto.setMunicipio(new MunicipioDto(municipio.getId(), municipio.getNombre()));
         }

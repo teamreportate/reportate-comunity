@@ -36,6 +36,8 @@ public class Departamento extends AbstractAuditableEntity{
     private Double latitud;
     @Column(name = "LONGITUD")
     private Double longitud;
+    @Column(name = "TELEFONO", length = 9)
+    private String telefono;
 
     @JsonIgnore
     @OneToMany( mappedBy = "departamento", fetch = FetchType.LAZY)

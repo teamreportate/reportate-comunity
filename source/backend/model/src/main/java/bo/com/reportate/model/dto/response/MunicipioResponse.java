@@ -21,4 +21,5 @@ import java.io.Serializable;
 public class MunicipioResponse implements Serializable {
     private Long id;
     private String nombre;
+    private String telefono;
 }

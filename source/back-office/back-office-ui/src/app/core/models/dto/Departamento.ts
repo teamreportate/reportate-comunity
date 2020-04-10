@@ -5,5 +5,6 @@ export class Departamento extends AbstractAuditable<number>{
     nombre: string;
     latitud: number;
     longitud: number;
+    telefono: string;
     municipios: any[];
 }

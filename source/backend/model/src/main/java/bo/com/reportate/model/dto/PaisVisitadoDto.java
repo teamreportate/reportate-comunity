@@ -12,12 +12,16 @@ public class PaisVisitadoDto implements Serializable {
     Long id;
     String pais;
     String ciudad;
-    Date fecha;
+    Date fechaLlegada;
+    Date fechaSalida;
+    Long controlPaisId;
 
     public PaisVisitadoDto(ControlDiarioPais controlDiarioPais){
         this.id=controlDiarioPais.getPais().getId();
         this.pais=controlDiarioPais.getPais().getNombre();
-        this.fecha=controlDiarioPais.getFechaViaje();
+        this.fechaLlegada=controlDiarioPais.getFechaLlegada();
+        this.fechaSalida = controlDiarioPais.getFechaSalida();
         this.ciudad=controlDiarioPais.getCiudades();
+        this.controlPaisId = controlDiarioPais.getId();
     }
 }

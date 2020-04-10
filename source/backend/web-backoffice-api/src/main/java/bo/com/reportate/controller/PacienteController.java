@@ -5,7 +5,6 @@ import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.dto.PacienteDto;
 import bo.com.reportate.model.dto.PaisVisitadoDto;
 import bo.com.reportate.model.dto.response.EnfermedadResponse;
-import bo.com.reportate.model.dto.response.FamiliaResponse;
 import bo.com.reportate.model.dto.response.FichaEpidemiologicaResponse;
 import bo.com.reportate.model.enums.Process;
 import bo.com.reportate.service.LogService;
@@ -24,8 +23,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -69,7 +66,7 @@ public class PacienteController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Actualiza un registro de paciente", description = "Actualiza el registro de paciente para el usuario autentificado", tags = { "paciente" })
+    @Operation(summary = "Actualiza un registro de paciente desde FrontOffice", description = "Actualiza el registro de paciente para el usuario autentificado", tags = { "paciente" })
     public ResponseEntity<PacienteDto> updatePaciente(
             @AuthenticationPrincipal Authentication userDetails,
             @Parameter(description = "Objeto paciente para actualizar", required = true)
@@ -77,6 +74,33 @@ public class PacienteController {
         try {
             PacienteDto responseDto = this.pacienteService.update(
                     userDetails, pacienteRequest.getId(), pacienteRequest.getNombre(), pacienteRequest.getEdad(),
+                    pacienteRequest.getGenero(), pacienteRequest.getGestacion(), pacienteRequest.getTiempoGestacion(),
+                    pacienteRequest.getOcupacion(),pacienteRequest.getCi(),pacienteRequest.getFechaNacimiento(),
+                    pacienteRequest.getSeguro(), pacienteRequest.getCodigoSeguro());
+
+            log.info("Se actualizo de manera correcta el registro del paciente: {}",pacienteRequest.getNombre());
+            logService.info(Process.REGISTRO_FAMILIA,"Se actualizo de manera correcta el registro del paciente: {}",pacienteRequest.getNombre());
+            return ok(responseDto);
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error actualizar el registro del paciente: {}. Causa. {}",pacienteRequest.getNombre(),e.getMessage());
+            logService.error(Process.REGISTRO_FAMILIA,"Se genero un error actualizar el registro del paciente: {}. Causa. {}",pacienteRequest.getNombre(),e.getMessage());
+            return CustomErrorType.badRequest("Actualizar Paciente", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al guardar la familia : {}",pacienteRequest.getNombre(),e);
+            logService.error(Process.REGISTRO_FAMILIA,"Se genero un error al actualizar el registro del paciete : {}",pacienteRequest.getNombre());
+            return CustomErrorType.serverError("Actualizar Paciente", "Se genero un error al actualizar el registro del paciete: "+pacienteRequest.getNombre());
+        }
+    }
+
+    @RequestMapping(value = "/{pacienteId}",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Actualiza un registro de paciente", description = "Actualiza el registro de paciente para el usuario autentificado", tags = { "paciente" })
+    public ResponseEntity<PacienteDto> updatePaciente(
+            @Parameter(description = "Identificador de Paciente", required = true)
+            @PathVariable("pacienteId") Long pacienteId,
+            @Parameter(description = "Objeto paciente para actualizar", required = true)
+            @RequestBody PacienteRequest pacienteRequest) {
+        try {
+            PacienteDto responseDto = this.pacienteService.update(pacienteId, pacienteRequest.getNombre(), pacienteRequest.getEdad(),
                     pacienteRequest.getGenero(), pacienteRequest.getGestacion(), pacienteRequest.getTiempoGestacion(),
                     pacienteRequest.getOcupacion(),pacienteRequest.getCi(),pacienteRequest.getFechaNacimiento(),
                     pacienteRequest.getSeguro(), pacienteRequest.getCodigoSeguro());
@@ -175,13 +199,31 @@ public class PacienteController {
             @Parameter(description = "Identificador de País", required = true)
             @RequestBody PaisViajeRequest pais) {
         try {
-            return ok(this.pacienteService.agregarPais(pacienteId, pais.getPaisId(), pais.getFechaViaje(), pais.getCiudad()));
+            return ok(this.pacienteService.agregarPais(pacienteId, pais.getPaisId(), pais.getFechaLlegada(), pais.getFechaSalida(), pais.getCiudad()));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al agregar un país. Causa. {} ",e.getMessage());
             return CustomErrorType.badRequest("Agregar País", e.getMessage());
         }catch (Exception e){
-            log.error("Se genero un error el país",e);
+            log.error("Se genero un error el agregar país visitado.",e);
             return CustomErrorType.serverError("Agregar País", "Se genero un error al agregar país");
+        }
+    }
+
+    @RequestMapping(value = "/{controlPaisId}/agregar-pais",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Actualizar País viajado", description = "Actualizar un país al que viajo el paciente", tags = { "paciente" })
+    public ResponseEntity<PaisVisitadoDto> editarPaises(
+            @Parameter(description = "Identificador del Control Pais ", required = true)
+            @PathVariable("controlPaisId") Long controlPaisId,
+            @Parameter(description = "Objeto de País Viajado", required = true)
+            @RequestBody PaisViajeRequest pais) {
+        try {
+            return ok(this.pacienteService.editarPaisesVisitados(controlPaisId, pais.getFechaLlegada(), pais.getFechaSalida(), pais.getCiudad()));
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al editar un país. Causa. {} ",e.getMessage());
+            return CustomErrorType.badRequest("Actualizar País", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al editar el país visitado",e);
+            return CustomErrorType.serverError("Actualizar País", "Se genero un error al editar el país visitado");
         }
     }
 

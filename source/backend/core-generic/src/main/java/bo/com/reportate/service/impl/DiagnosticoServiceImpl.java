@@ -3,6 +3,7 @@ package bo.com.reportate.service.impl;
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.model.*;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
+import bo.com.reportate.model.dto.response.DiagnosticoSintomaResponse;
 import bo.com.reportate.model.dto.response.NivelValoracionDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
@@ -52,6 +53,8 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
 	private CentroSaludUsuarioRepository centroSaludUsuarioRepository;
 	@Autowired
 	private CentroSaludRepository centroSaludRepository;
+	@Autowired
+	private DiagnosticoSintomaRepository diagnosticoSintomaRepository;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -108,6 +111,13 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
 			return diagnosticoRepository.listarDiagnostico(from, to, departamentos, municipios, centroSaluds,
 					diagnosticoEnums, enfermedads, pageable);
 		}
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<DiagnosticoSintomaResponse> listarSintomas(Long diagnosticoId) {
+		Diagnostico diagnostico = this.diagnosticoRepository.findByIdAndEstado(diagnosticoId, EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontró el diagnostico"));
+		return this.diagnosticoSintomaRepository.listarSintomas(diagnostico);
 	}
 
 	@Override
