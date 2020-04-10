@@ -57,13 +57,14 @@ public class MunicipioServiceImpl implements MunicipioService {
         return municipioRepository.save(municipio);
     }
     @Override
-    public Municipio save(Long idDepartamento, String nombre, Double latitud, Double longitud) {
+    public Municipio save(Long idDepartamento, String nombre, Double latitud, Double longitud, String telefono) {
         Departamento departamento = this.departamentoRepository.findById(idDepartamento).orElseThrow(()->new NotDataFoundException("No se encontró ningún departamento con el ID: "+idDepartamento));
         ValidationUtil.throwExceptionIfInvalidText("nombre",nombre,true,100);
+        ValidationUtil.throwExceptionIfInvalidText("teléfono",telefono,true,9);
         if(municipioRepository.existsByNombreIgnoreCaseAndDepartamento(nombre, departamento)){
             throw new OperationException("Ya existe un municipio con el nombre: "+nombre);
         }
-        return municipioRepository.save(Municipio.builder().nombre(nombre).latitud(latitud).longitud(longitud).departamento(departamento).build());
+        return municipioRepository.save(Municipio.builder().nombre(nombre).latitud(latitud).longitud(longitud).telefono(telefono).departamento(departamento).build());
     }
 
     @Override
@@ -81,8 +82,9 @@ public class MunicipioServiceImpl implements MunicipioService {
     }
 
     @Override
-    public Municipio update(Long municipioId, String nombre, Double latitud, Double longitud) {
+    public Municipio update(Long municipioId, String nombre, Double latitud, Double longitud, String telefono) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",nombre,true,100);
+        ValidationUtil.throwExceptionIfInvalidText("teléfono",telefono,true,9);
         if(municipioRepository.existsByIdIsNotAndNombreIgnoreCase(municipioId, nombre)){
             throw new OperationException("Ya existe un municipio con el nombre: "+nombre);
         }
@@ -90,6 +92,7 @@ public class MunicipioServiceImpl implements MunicipioService {
         municipio.setNombre(nombre);
         municipio.setLatitud(latitud);
         municipio.setLongitud(longitud);
+        municipio.setTelefono(telefono);
         return this.municipioRepository.save(municipio);
 
     }

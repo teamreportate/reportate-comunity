@@ -85,6 +85,10 @@ export class DepartamentosComponent extends ClicComponent implements OnInit {
       });
   }
 
+  validateNumber(telefono: string) {
+    return (telefono && telefono.length == 8);
+  }
+
   notifierError(error: any, type?: string) {
     if (error && error.error) {
       const customOptions: CustomOptions = {

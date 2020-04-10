@@ -56,7 +56,7 @@ public class CentroSaludCotroller {
     public ResponseEntity<CentroSalud> saveCentroSalud(@RequestBody CentroSaludRequest centroSaludRequest) {
         try {
             return ok(this.centroSaludService.save(centroSaludRequest.getMunicipioId(), centroSaludRequest.getNombre(),
-                    centroSaludRequest.getDireccion(), centroSaludRequest.getZona(),centroSaludRequest.getCiudad(),centroSaludRequest.getLatitud(), centroSaludRequest.getLongitud()));
+                    centroSaludRequest.getDireccion(), centroSaludRequest.getZona(),centroSaludRequest.getTelefono(),centroSaludRequest.getLatitud(), centroSaludRequest.getLongitud()));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al guardar el centro de salud: {}. Causa. {}",centroSaludRequest.getNombre(),e.getMessage());
             return CustomErrorType.badRequest("Guardar Centro de Salud", e.getMessage());
@@ -74,7 +74,7 @@ public class CentroSaludCotroller {
             @Parameter(description = "Objeto centro de salud a actualizar", required = true)
             @RequestBody CentroSaludRequest centroSaludRequest) {
         try {
-            return ok(this.centroSaludService.update(centroSaludId, centroSaludRequest.getNombre(), centroSaludRequest.getDireccion(), centroSaludRequest.getZona(), centroSaludRequest.getCiudad(), centroSaludRequest.getLatitud(), centroSaludRequest.getLongitud()));
+            return ok(this.centroSaludService.update(centroSaludId, centroSaludRequest.getNombre(), centroSaludRequest.getDireccion(), centroSaludRequest.getZona(), centroSaludRequest.getTelefono(), centroSaludRequest.getLatitud(), centroSaludRequest.getLongitud()));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al modificar el centro de salud: {}. Causa. {}",centroSaludId,e.getMessage());
             return CustomErrorType.badRequest("Modificar Centro de Salud", e.getMessage());

@@ -25,4 +25,5 @@ import java.util.List;
 public class DepartamentoResponse implements Serializable {
     private Long id;
     private String nombre;
+    private String telefono;
 }

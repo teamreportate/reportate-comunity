@@ -23,15 +23,17 @@
                     <mat-error *ngIf="this.form.get('nombre').hasError('required') && this.form.get('nombre').touched" class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
                     <mat-error *ngIf="this.form.get('nombre').hasError('maxlength') && this.form.get('nombre').touched" class="text-danger font-11">Sólo se permite <strong>100 caracteres</strong>.</mat-error>
                 </mat-form-field>
+
                 <mat-form-field fxFlex="50">
-                    <input maxlength="100" matInput placeholder="Ciudad" formControlName="ciudad">
+                    <input maxlength="100" matInput placeholder="Teléfono" formControlName="telefono">
                     <mat-hint align="end">
-                        {{this.form.get('ciudad').value? this.form.get('ciudad').value.length:0}} / 100
+                        {{this.form.get('telefono').value? this.form.get('telefono').value.length:0}} / 9
                     </mat-hint>
-                    <mat-error *ngIf="this.form.get('ciudad').hasError('required') && this.form.get('ciudad').touched" class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
-                    <mat-error *ngIf="this.form.get('ciudad').hasError('maxlength') && this.form.get('ciudad').touched" class="text-danger font-11">Sólo se permite <strong>100 caracteres</strong>.</mat-error>
+                    <mat-error *ngIf="this.form.get('telefono').hasError('required') && this.form.get('telefono').touched" class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>
+                    <mat-error *ngIf="this.form.get('telefono').hasError('maxlength') && this.form.get('telefono').touched" class="text-danger font-11">Sólo se permite <strong>8 dígitos</strong>.</mat-error>
                 </mat-form-field>
             </div>
+
             <div fxFlex="100" fxLayoutGap="10px">
                 <mat-form-field fxFlex="50">
                     <input maxlength="100" matInput placeholder="Dirección" formControlName="direccion">

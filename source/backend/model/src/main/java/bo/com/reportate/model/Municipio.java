@@ -36,6 +36,8 @@ public class Municipio extends AbstractAuditableEntity{
     private Double latitud;
     @Column(name = "LONGITUD")
     private Double longitud;
+    @Column(name = "TELEFONO", length = 9)
+    private String telefono;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_DEPARTAMENTO", referencedColumnName = "ID")
     private Departamento departamento;

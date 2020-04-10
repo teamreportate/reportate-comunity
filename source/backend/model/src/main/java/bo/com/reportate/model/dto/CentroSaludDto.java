@@ -24,7 +24,7 @@ public class CentroSaludDto implements Serializable {
     private String nombre;
     private String direccion;
     private String zona;
-    private String ciudad;
+    private String telefono;
     private Double latitud;
     private Double longitud;
     private EstadoEnum estado;
@@ -35,7 +35,7 @@ public class CentroSaludDto implements Serializable {
         this.nombre = centroSalud.getNombre();
         this.direccion = centroSalud.getDireccion();
         this.zona = centroSalud.getZona();
-        this.ciudad = centroSalud.getCiudad();
+        this.telefono = centroSalud.getTelefono();
         this.estado = centroSalud.getEstado();
         this.longitud = centroSalud.getLongitud();
         this.latitud = centroSalud.getLatitud();

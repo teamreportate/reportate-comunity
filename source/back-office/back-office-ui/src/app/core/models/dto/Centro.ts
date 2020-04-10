@@ -9,5 +9,6 @@ export class Centro extends AbstractAuditable<number>{
     zona: string;
     ciudad: string;
     asignado: boolean;
+    telefono: string;
     municipioId?: number;
 }
