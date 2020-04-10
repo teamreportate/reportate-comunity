@@ -68,6 +68,7 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       zona: new FormControl('', Validators.compose([Validators.required])),
       direccion: new FormControl('', Validators.compose([Validators.required])),
       ocupacion: new FormControl('', Validators.compose([Validators.required])),
+      fechaNacimiento: new FormControl('', Validators.compose([Validators.required])),
 
       ubicacion: new FormControl('', Validators.compose([Validators.required])),
     });
@@ -87,7 +88,7 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       zona: new FormControl(data.zona, Validators.compose([Validators.required])),
       direccion: new FormControl(data.direccion, Validators.compose([Validators.required])),
       ocupacion: new FormControl(data.ocupacion, Validators.compose([Validators.required])),
-
+      fechaNacimiento: new FormControl(data.fechaNacimiento, Validators.compose([Validators.required])),
       ubicacion: new FormControl(data.ubicacion, Validators.compose([Validators.required])),
     });
   }
@@ -139,7 +140,7 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       .subscribe(confirm => {
         if (confirm) {
           this.blockUI.start('Procesando solicitud...');
-          this.pacienteService.eliminarContacto(this.idPaciente, row.id).subscribe(response => {
+          this.pacienteService.eliminarContacto( row.id).subscribe(response => {
             this.blockUI.stop();
             this.ngOnInit();
             // tslint:disable-next-line:max-line-length

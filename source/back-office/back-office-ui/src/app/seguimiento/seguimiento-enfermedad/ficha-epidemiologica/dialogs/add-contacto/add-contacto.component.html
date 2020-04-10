@@ -17,16 +17,11 @@
           <mat-datepicker #fechaNacimiento></mat-datepicker>
         </mat-form-field>
       </div>
-      <div fxFlex="100">
-        <mat-form-field>
-          <input maxlength="500" matInput placeholder="Telefono" formControlName="telefono">
 
-        </mat-form-field>
-      </div>
       <div fxFlex="100">
         <mat-form-field>
-          <mat-select placeholder="Sexo" [formControl]="this.form.get('sexo')">
-            <mat-option *ngFor="let clasificacion of this.sexo" [value]="clasificacion.key">
+          <mat-select placeholder="Sexo" [formControl]="this.form.get('genero')">
+            <mat-option *ngFor="let clasificacion of this.sexos" [value]="clasificacion.key">
               {{clasificacion.value}}
             </mat-option>
           </mat-select>
@@ -34,8 +29,7 @@
       </div>
       <div fxFlex="100">
         <mat-form-field>
-          <input maxlength="500" matInput placeholder="Edad" formControlName="edad">
-
+          <input maxlength="500" matInput placeholder="Edad" formControlName="edad" [formControl]="this.form.get('edad')">
         </mat-form-field>
       </div>
     </div>

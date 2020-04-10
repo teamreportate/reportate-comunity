@@ -69,6 +69,14 @@
       </mat-form-field>
     </div>
     <div [fxFlex]="33" class="h-padding-5">
+      <mat-form-field class="picker-date-filter">
+        <input matInput [matDatepicker]="fechaNacimiento"  placeholder="Fecha Nacimiento"
+               [formControl]="this.form.get('fechaNacimiento')" readonly>
+        <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
+        <mat-datepicker #fechaNacimiento></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div [fxFlex]="33" class="h-padding-5">
       <button mat-icon-button matTooltip="Ver Ubicación">
         <i class="fa fa-map-o"></i>
         <a href="{{this.form.controls['ubicacion']}}" [target]="'_blank'">

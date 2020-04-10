@@ -36,7 +36,7 @@ export class AddPaisViajadoComponent extends ClicComponent implements OnInit {
     this.form = this.builder.group({
       id: new FormControl(this.data.id),
       // tslint:disable-next-line:max-line-length
-      pais: new FormControl(this.data.pais, Validators.compose([Validators.required, Validators.maxLength(100)])),
+      paisId: new FormControl(this.data.paisId, Validators.compose([Validators.required, Validators.maxLength(100)])),
       ciudad: new FormControl(this.data.ciudad, Validators.compose([Validators.required, Validators.maxLength(100)])),
       fechaLlegada: new FormControl(this.data.fechaLlegada, Validators.compose([Validators.required, Validators.maxLength(100)])),
       fechaSalida: new FormControl(this.data.fechaSalida, Validators.compose([Validators.required, Validators.maxLength(100)])),

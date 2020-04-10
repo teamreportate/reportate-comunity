@@ -5,7 +5,7 @@
     <div fxLayout="row wrap" [formGroup]="this.form">
       <div fxFlex="100">
         <mat-form-field>
-          <mat-select placeholder="Pais" [formControl]="this.form.get('pais')">
+          <mat-select placeholder="Pais" [formControl]="this.form.get('paisId')">
             <mat-option *ngFor="let pais of this.paises" [value]="pais.id">
               {{pais.nombre}}
             </mat-option>
