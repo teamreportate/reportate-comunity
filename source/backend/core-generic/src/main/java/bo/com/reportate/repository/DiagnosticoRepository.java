@@ -115,5 +115,4 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
             @Param("fechaFin") Date to);
 
     Optional<Diagnostico> findByIdAndEstado(Long id, EstadoEnum estadoEnum);
-
 }
