@@ -25,7 +25,7 @@ public class CentroSaludRequest implements Serializable {
     private Double longitud;
     private String direccion;
     private String zona;
-    private String ciudad;
+    private String telefono;
     private Long municipioId;
 
 }

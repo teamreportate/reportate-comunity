@@ -40,8 +40,8 @@ public class CentroSalud extends AbstractAuditableEntity{
     private String direccion;
     @Column(name = "ZONA", length = 100, nullable = false)
     private String zona;
-    @Column(name = "CIUDAD", length = 100, nullable = false)
-    private String ciudad;
+    @Column(name = "TELEFONO", length = 9)
+    private String telefono;
 
     @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

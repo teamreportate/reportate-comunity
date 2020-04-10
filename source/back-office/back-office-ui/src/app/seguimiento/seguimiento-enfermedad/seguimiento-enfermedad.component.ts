@@ -12,8 +12,9 @@ import {DepartamentoService} from '../../core/services/http-services/departament
 import {Enfermedad} from '../../core/models/enfermedad';
 import {Departamento} from '../../core/models/departamento';
 import {Constants} from '../../core/constants';
-import { Municipio } from 'src/app/core/models/dto/Municipio';
-import { Centro } from 'src/app/core/models/dto/Centro';
+import {Municipio} from 'src/app/core/models/dto/Municipio';
+import {Centro} from 'src/app/core/models/dto/Centro';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -26,13 +27,14 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
 
   // tslint:disable-next-line:max-line-length
   constructor(private seguimientoEnfermedadService: SeguimientoEnfermedadService,
-    private enfermedadService: EnfermedadService,
-    private formBuilder: FormBuilder, public changeDetector: ChangeDetectorRef, public media: MediaMatcher,
-              private notifier: NotifierService) {
+              private enfermedadService: EnfermedadService,
+              private formBuilder: FormBuilder, public changeDetector: ChangeDetectorRef, public media: MediaMatcher,
+              private notifier: NotifierService, private router: Router) {
     super();
     this.clasificacionList = Constants.CLASIFICACION_ENFERMEDAD;
     moment.locale('es-BO');
   }
+
   @BlockUI() blockUI: NgBlockUI;
   public render: boolean;
   public enfermedadList: Enfermedad[] = [];
@@ -67,7 +69,7 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
       this.enfermedadList = response.body;
     });
     this.getListForSelect();
-    this.initializePage(10, true );
+    this.initializePage(10, true);
   }
 
 
@@ -91,6 +93,7 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
     this.form.get('centroSaludId').setValue(0);
     this.tempMunicipio = this.municipioList.filter((dto: Municipio) => dto.departamentoId === object.id);
   }
+
   selectCentro(object: Municipio) {
     this.tempCentro = [];
     this.form.get('centroSaludId').setValue(0);
@@ -104,6 +107,11 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
       this.centroList = response.body.centrosSalud;
     });
   }
+
+  fichaEpidemiologica(row: any) {
+    this.router.navigate(['seguimiento/ficha-epidemiologica', row.pacienteId]);
+  }
+
   private initialForm(): FormGroup {
     this.startDate = moment().subtract(30, 'days').subtract(4, 'hour');
     this.endDate = moment().subtract(4, 'hour');
@@ -183,7 +191,6 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
     this.filterFlex = 33;
     this.scrollH = false;
   }
-
 
 
   viewCoordenada(myURL: any) {

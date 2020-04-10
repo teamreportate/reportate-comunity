@@ -57,17 +57,19 @@ public class DepartamentoServiceImpl implements DepartamentoService {
         return departamentoRepository.save(departamento);
     }
     @Override
-    public Departamento save(String nombre, Double latitud, Double longitud) {
+    public Departamento save(String nombre, Double latitud, Double longitud, String telefono) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",nombre,true,100);
+        ValidationUtil.throwExceptionIfInvalidText("teléfono",telefono,true,9);
         if(departamentoRepository.existsByNombreIgnoreCase(nombre)){
             throw new OperationException("Ya existe un departamento con el nombre: "+nombre);
         }
-        return departamentoRepository.save(Departamento.builder().nombre(nombre).latitud(latitud).longitud(longitud).build());
+        return departamentoRepository.save(Departamento.builder().nombre(nombre).latitud(latitud).longitud(longitud).telefono(telefono).build());
     }
 
     @Override
-    public Departamento update(Long departamentoId, String nombre, Double latitud, Double longitud) {
+    public Departamento update(Long departamentoId, String nombre, Double latitud, Double longitud, String telefono) {
         ValidationUtil.throwExceptionIfInvalidText("nombre",nombre,true,100);
+        ValidationUtil.throwExceptionIfInvalidText("teléfono",telefono,true,9);
         if(departamentoRepository.existsByIdIsNotAndNombreIgnoreCase(departamentoId, nombre)){
             throw new OperationException("Ya existe un departamento con el nombre: "+nombre);
         }
@@ -75,6 +77,7 @@ public class DepartamentoServiceImpl implements DepartamentoService {
         departamento.setNombre(nombre);
         departamento.setLatitud(latitud);
         departamento.setLongitud(longitud);
+        departamento.setTelefono(telefono);
         return this.departamentoRepository.save(departamento);
     }
 

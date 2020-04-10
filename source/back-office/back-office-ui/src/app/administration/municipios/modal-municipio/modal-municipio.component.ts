@@ -38,8 +38,9 @@ export class ModalMunicipioComponent extends ClicComponent implements OnInit {
       departamentoId: new FormControl(this.data.departamento.id),
       // tslint:disable-next-line:max-line-length
       nombre: new FormControl(this.data.municipio.nombre, Validators.compose([Validators.required, Validators.maxLength(100)])),
-      latitud: new FormControl(this.data.municipio.latitud, Validators.compose([Validators.required, Validators.pattern(this.validatorDecimal)])),
-      longitud: new FormControl(this.data.municipio.latitud, Validators.compose([Validators.required, Validators.pattern(this.validatorDecimal)])),
+      latitud: new FormControl(this.data.municipio.latitud?this.data.municipio.latitud:0, Validators.compose([Validators.required, Validators.pattern(this.validatorDecimal)])),
+      longitud: new FormControl(this.data.municipio.longitud?this.data.municipio.longitud:0, Validators.compose([Validators.required, Validators.pattern(this.validatorDecimal)])),
+      telefono: new FormControl(this.data.municipio.telefono, Validators.compose([Validators.required, Validators.maxLength(9)])),
   });
   }
 

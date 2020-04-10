@@ -20,12 +20,12 @@ public interface MunicipioService {
     List<Municipio> findAll();
     List<MunicipioDto> findByDepartamento(Long idDepartamento);
     Municipio save(Municipio municipio);
-    Municipio save(Long idDepartamento, String nombre, Double latitud, Double longitud);
+    Municipio save(Long idDepartamento, String nombre, Double latitud, Double longitud, String telefono);
     List<MunicipioUsuarioDto> listarMuniciposAsignados(String username);
 
     Municipio findById(Long municipioId);
 
-    Municipio update(Long municipioId, String nombre, Double latitud, Double longitud);
+    Municipio update(Long municipioId, String nombre, Double latitud, Double longitud, String telefono);
 
     void eliminar(Long municipioId);
     void inactivar(Long municipioId);

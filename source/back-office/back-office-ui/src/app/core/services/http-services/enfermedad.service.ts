@@ -20,7 +20,7 @@ export class EnfermedadService {
   }
 
   getEnfermedades(): Observable<HttpResponse<any>> {
-    this.endPoint = Constantes.baseUri + Constants.enfermedadApi+ '/filtro';
+    this.endPoint = Constantes.baseUri + Constants.enfermedadApi + '/filtro';
     return this.httpClient.get<HttpResponse<any>>(this.endPoint, {observe: 'response'});
   }
 

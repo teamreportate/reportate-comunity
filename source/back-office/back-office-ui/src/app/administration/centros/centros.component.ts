@@ -31,7 +31,7 @@ export class CentrosComponent extends ClicComponent implements OnInit {
   public selectDepa: any;
   private tmp: Centro[];
   selectMuni: any;
-  
+
 
   constructor(private administrationService: AdministrationService, private dialog: MatDialog,
     private changeDetector: ChangeDetectorRef, private media: MediaMatcher,
@@ -98,22 +98,21 @@ export class CentrosComponent extends ClicComponent implements OnInit {
   }
 
   selectMunicipio(muni: any) {
-    console.log(muni);
     this.municipio = muni;
 
     this.obtenerCentros(muni);
   }
+  validateNumber(telefono: string) {
+    return (telefono && telefono.length == 8);
+  }
 
   obtenerCentros(muni) {
     this.administrationService.requestCentroList(muni.id).subscribe( response => {
-      console.log(response)
       this.centroList = response;
-
       if (this.centroList.length > 0) {
         this.centroList.sort((a: Municipio, b: Municipio) => a.nombre.localeCompare(b.nombre));
         this.tmp = this.centroList;
       }
-
       this.blockUI.stop();
     }, error => {
       this.blockUI.stop();

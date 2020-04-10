@@ -18,6 +18,7 @@
         <div [fxFlex]="this.flex" fxLayoutAlign="start center" class="h-padding-5">
             <button mat-raised-button class="btn-full" color="accent" (click)="this.openDialog(null)">Nuevo Centro de Salud</button>
         </div>
+
         <div [fxFlex]="this.flex===100?100:100-this.flex" fxLayoutAlign="center center" class="h-padding-5">
             <mat-form-field>
                 <input matInput placeholder='Buscar...' (keyup)="this.onFilter($event.target.value)" maxlength="30" />
@@ -44,35 +45,41 @@
                     </ng-template>
                 </ngx-datatable-column>
 
+              <ngx-datatable-column name="Teléfono" [draggable]="false" [resizeable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div *ngIf="validateNumber(row.telefono)">
+                    <i class="fa fa-whatsapp"></i>
+                    <a href="https://api.whatsapp.com/send?phone=+591 {{row.telefono}}&text=Buenos día." [target]="'_blank'">
+                      {{row.telefono}}
+                    </a>
+                  </div>
+                  <div *ngIf="!validateNumber(row.telefono)">
+                    {{row.telefono}}
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column name="Zona" [draggable]="false" [resizeable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
+                  {{row.zona}}
+                </ng-template>
+              </ngx-datatable-column>
+
                 <ngx-datatable-column name="Dirección" [draggable]="false" [resizeable]="false">
                     <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
                         {{row.direccion}}
                     </ng-template>
                 </ngx-datatable-column>
 
-                <ngx-datatable-column name="Zona" [draggable]="false" [resizeable]="false">
-                    <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
-                        {{row.zona}}
-                    </ng-template>
-                </ngx-datatable-column>
+              <ngx-datatable-column name="Ubicación Geográfica" [draggable]="false" [resizeable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <i class="fa fa-map-o"></i>
+                  <a href="https://maps.google.com/?q={{row.latitud}},{{row.longitud}}" [target]="'_blank'">
+                    {{ 'Ver ubicación' }}
+                  </a>
+                </ng-template>
+              </ngx-datatable-column>
 
-                <ngx-datatable-column name="Latitud" [draggable]="false" [resizeable]="false">
-                    <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
-                        {{row.latitud}}
-                    </ng-template>
-                </ngx-datatable-column>
-
-                <ngx-datatable-column name="Longitud" [draggable]="false" [resizeable]="false">
-                    <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
-                        {{row.longitud}}
-                    </ng-template>
-                </ngx-datatable-column>
-
-                <ngx-datatable-column name="Coordenada" [draggable]="false" [resizeable]="false">
-                    <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
-                        <a target="_blank" href="https://maps.google.com/?q={{row.latitud}},{{row.longitud}}">Ver ubicación</a>
-                    </ng-template>
-                </ngx-datatable-column>
               <ngx-datatable-column name="Estado" [maxWidth]="200" [draggable]="false" [resizeable]="false">
                 <ng-template let-row="row" ngx-datatable-cell-template>
                   <div class="{{row.estado === 'ACTIVO'?'primary-state':'warn-state'}}"><span

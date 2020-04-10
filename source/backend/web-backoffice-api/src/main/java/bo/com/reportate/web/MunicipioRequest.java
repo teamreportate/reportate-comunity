@@ -22,5 +22,6 @@ public class MunicipioRequest implements Serializable {
     private String nombre;
     private Double latitud;
     private Double longitud;
+    private String telefono;
     private Long departamentoId;
 }

@@ -62,8 +62,6 @@ public class DepartamentoCotroller {
         }
     }
 
-
-
     @RequestMapping(value = "/{departamentoId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Departamento> getById(@PathVariable("departamentoId") Long departamentoId) {
         try {
@@ -80,7 +78,7 @@ public class DepartamentoCotroller {
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Departamento> saveDepartamento(@RequestBody DepartamentoRequestDto departamentoDto) {
         try {
-            return ok(this.departamentoService.save(departamentoDto.getNombre(), departamentoDto.getLatitud(), departamentoDto.getLongitud()));
+            return ok(this.departamentoService.save(departamentoDto.getNombre(), departamentoDto.getLatitud(), departamentoDto.getLongitud(), departamentoDto.getTelefono()));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al guardar el departamento: {}. Causa. {}",departamentoDto.getNombre(),e.getMessage());
             return CustomErrorType.badRequest("Guardar Departamento", e.getMessage());
@@ -98,7 +96,7 @@ public class DepartamentoCotroller {
             @Parameter(description = "Objeto departamento que se va a modificar", required = true)
             @RequestBody DepartamentoRequestDto departamentoDto) {
         try {
-            return ok(this.departamentoService.update(departamentoId, departamentoDto.getNombre(), departamentoDto.getLatitud(), departamentoDto.getLongitud()));
+            return ok(this.departamentoService.update(departamentoId, departamentoDto.getNombre(), departamentoDto.getLatitud(), departamentoDto.getLongitud(), departamentoDto.getTelefono()));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al modificar el departamento: {}. Causa. {}",departamentoId,e.getMessage());
             return CustomErrorType.badRequest("Modificar Departamento", e.getMessage());
@@ -122,7 +120,7 @@ public class DepartamentoCotroller {
         }
     }
 
-    @RequestMapping(value = "/{departamentoId}/municipios",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{departamentoId}/municipios",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<MunicipioDto>> listarMunicipios(@PathVariable("departamentoId")Long departamentoId) {
         try {
             return ok(this.municipioService.findByDepartamento(departamentoId));
