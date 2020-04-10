@@ -241,9 +241,10 @@ public class PacienteServiceImpl implements PacienteService {
         Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No existe el paciente registrado"));
         ControlDiario controlDiario = ControlDiario.builder()
                 .paciente(paciente)
-                .primerControl(this.controlDiarioRepository.existsByPrimerControlTrueAndPaciente(paciente))
+                .primerControl(!this.controlDiarioRepository.existsByPrimerControlTrueAndPaciente(paciente))
                 .build();
         this.controlDiarioRepository.save(controlDiario);
+
         log.info("Registrando sintomas...");
         List<Sintoma> sintomasRecibidos = new ArrayList<>();
         for (SintomaRequest sintAux : sintomas) {
