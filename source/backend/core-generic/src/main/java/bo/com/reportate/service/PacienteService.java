@@ -40,4 +40,5 @@ public interface PacienteService {
     PaisVisitadoDto agregarPais(Long pacienteId, Long paisId, Date fechaLlegada, Date fechaSalida, String ciudades);
     PaisVisitadoDto editarPaisesVisitados(Long controlPaisId, Date fechaLlegada, Date fechaSalida, String ciudades);
     void eliminarPais(Long pacienteId, Long paisId);
+    void eliminarContacto(Long contactoId);
 }

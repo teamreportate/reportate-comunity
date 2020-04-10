@@ -241,9 +241,10 @@ public class PacienteServiceImpl implements PacienteService {
         Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId,EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No existe el paciente registrado"));
         ControlDiario controlDiario = ControlDiario.builder()
                 .paciente(paciente)
-                .primerControl(this.controlDiarioRepository.existsByPrimerControlTrueAndPaciente(paciente))
+                .primerControl(!this.controlDiarioRepository.existsByPrimerControlTrueAndPaciente(paciente))
                 .build();
         this.controlDiarioRepository.save(controlDiario);
+
         log.info("Registrando sintomas...");
         List<Sintoma> sintomasRecibidos = new ArrayList<>();
         for (SintomaRequest sintAux : sintomas) {
@@ -302,14 +303,17 @@ public class PacienteServiceImpl implements PacienteService {
                     for (MuUsuario medico: medicos) {
                         notificacionService.notificacionSospechosoSintomas("Dr. "+ medico.getNombre(), medico.getEmail(),"Caso sospechoso " + enfermedad.getNombre(),"Existe un nuevo caso sospechoso de " + enfermedad.getNombre() + " con una valoración de " + resultadoPeso.toPlainString() , sintomasMail);
                     }
+
+
                 }
 
                 log.info("Registrando diagnostico del paciente {} con estado {}  de la enfermedad {} con {} sintomas.",paciente.getNombre(), estadoDiagnostico, enfermedad.getNombre(), sintomasDignostico.size());
+                paciente.setDiagnostico(diagnostico);
                 diagnostico.setEstadoDiagnostico(estadoDiagnostico);
                 diagnostico.setResultadoValoracion(resultadoPeso);
-
                 this.diagnosticoRepository.save(diagnostico);
                 this.diagnosticoSintomaRepository.saveAll(sintomasDignostico);
+                this.pacienteRepository.save(paciente);
             }
         }
         log.info("Se registro los sintomas correctamente");
@@ -413,5 +417,12 @@ public class PacienteServiceImpl implements PacienteService {
         Pais pais = this.paisRepository.findByIdAndEstado(paisId, EstadoEnum.ACTIVO).orElseThrow(()->new NotDataFoundException("No se encontro el país seleccionado"));
         ControlDiario  controlDiario = this.controlDiarioRepository.findByPrimerControlTrueAndPacienteAndEstado(paciente, EstadoEnum.ACTIVO).orElseThrow(()->new OperationException("No se encontró el primer control del paciente"));
         this.controlDiarioPaisRepository.eliminarPais(pais,controlDiario);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void eliminarContacto(Long contactoId) {
+        this.pacienteRepository.eliminarContacto(contactoId);
+
     }
 }
