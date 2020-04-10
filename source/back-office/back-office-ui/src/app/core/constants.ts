@@ -24,6 +24,7 @@ export class Constants {
   static paisApi = 'api/pais';
   static sintomasApi = 'api/sintoma';
   static enfermedadApi = 'api/enfermedades';
+  static pacienteApi = 'api/pacientes';
   static departmentApi = 'api/departamentos';
   static diagnosticoApi = 'api/diagnosticos';
   static userApi = 'api/usuarios';
@@ -39,6 +40,14 @@ export class Constants {
     value: 'CONFIRMADO'
 
   }];
+  static CLASIFICACION_ENFERMEDAD2 = [{key: 'SOSPECHOSO', value: 'SOSPECHOSO'},
+    {key: 'NEGATIVO', value: 'NEGATIVO'}, {
+      key: 'CONFIRMADO',
+      value: 'CONFIRMADO'
 
+    }];
+
+  static SEXOS = [{key: 'MASCULINO', value: 'MASCULINO'},
+    {key: 'FEMENINO', value: 'FEMENINO'}];
 }
 

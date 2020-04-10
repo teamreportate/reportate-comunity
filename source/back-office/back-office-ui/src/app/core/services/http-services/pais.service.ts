@@ -13,14 +13,14 @@ import {Observable} from 'rxjs';
 import {Constants} from '../../constants';
 
 @Injectable()
-export class EnfermedadService {
+export class PaisService {
   private endPoint: string;
 
   constructor(private httpClient: HttpClient) {
   }
 
-  getEnfermedades(): Observable<HttpResponse<any>> {
-    this.endPoint = Constantes.baseUri + Constants.enfermedadApi + '/filtro';
+  getPais(): Observable<HttpResponse<any>> {
+    this.endPoint = Constantes.baseUri + Constants.paisApi;
     return this.httpClient.get<HttpResponse<any>>(this.endPoint, {observe: 'response'});
   }
 
