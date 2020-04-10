@@ -17,6 +17,7 @@ import DailyData from "./memberData/DailyData";
 import {useDispatch, useSelector} from "react-redux";
 import Modal from "antd/es/modal";
 import {appConfigSetMessage} from "../store/appConfig/actions";
+import HealthCenter from "./healthCenter/HealthCenter";
 
 const {Content, Footer} = Layout;
 
@@ -102,6 +103,9 @@ function App() {
 							</PrivateRoute>
 							<PrivateRoute path="/faq">
 								<Faq/>
+							</PrivateRoute>
+							<PrivateRoute path="/health-centers">
+								<HealthCenter/>
 							</PrivateRoute>
 							<PrivateRoute path="/daily-data">
 								<DailyData/>

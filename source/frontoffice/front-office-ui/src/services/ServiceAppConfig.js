@@ -22,7 +22,7 @@ class ServiceAppConfig extends ServiceBase {
 				.catch((error) => this.handleAxiosErrors(error));
 	};
 	
-	getBaseData    = (onSuccess = false) => {
+	getBaseData      = (onSuccess = false) => {
 		this.axios.get(this.getBaseService() + SERVICE_APP_GET_BASE_DATA,
 			{
 				headers: this.getHeaders()
@@ -35,7 +35,7 @@ class ServiceAppConfig extends ServiceBase {
 				)
 				.catch((error) => this.handleAxiosErrors(error));
 	};
-	getSymptoms    = (onSuccess = false, onFailure = false) => {
+	getSymptoms      = (onSuccess = false, onFailure = false) => {
 		this.axios.get(this.getBaseService() + SERVICE_APP_GET_DAILY_DATA,
 			{headers: this.getHeaders()})
 				.then((result) => {
@@ -48,8 +48,22 @@ class ServiceAppConfig extends ServiceBase {
 					this.handleAxiosErrors(error);
 				});
 	};
-	getOccupations = (onSuccess = false, onFailure = false) => {
+	getOccupations   = (onSuccess = false, onFailure = false) => {
 		this.axios.get(this.getBaseService() + SERVICE_APP_GET_OCCUPATIONS,
+			{headers: this.getHeaders()})
+				.then((result) => {
+						if (onSuccess) {
+							onSuccess(result.data);
+						}
+					}
+				)
+				.catch((error) => {
+					this.handleAxiosErrors(error);
+				});
+	};
+	getHealthCenters = (municipio_id, onSuccess = false, onFailure = false) => {
+		///api/municipios/{municipioId}/centros-de-salud
+		this.axios.get(this.getBaseService() + "api/municipios/" + municipio_id + "/centros-de-salud",
 			{headers: this.getHeaders()})
 				.then((result) => {
 						if (onSuccess) {
