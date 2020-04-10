@@ -15,9 +15,9 @@
       <div fxFlex="100">
         <mat-form-field>
           <input maxlength="100" matInput placeholder="Ciudad" formControlName="ciudad">
-          <mat-hint align="end">
-            {{this.form.get('ciudad').value? this.form.get('ciudad').value.length:0}} / 100
-          </mat-hint>
+<!--          <mat-hint align="end">-->
+<!--            {{this.form.get('ciudad').value? this.form.get('ciudad').value.length:0}} / 100-->
+<!--          </mat-hint>-->
 <!--          <mat-error-->
 <!--            *ngIf="this.form.get('nombre').hasError('required') && this.form.get('nombre').touched"-->
 <!--            class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>-->
@@ -29,10 +29,18 @@
       </div>
       <div fxFlex="100">
         <mat-form-field class="picker-date-filter">
-          <input matInput [matDatepicker]="fecha"  placeholder="Fecha De Viaje"
-                 [formControl]="this.form.get('fecha')" readonly>
-          <mat-datepicker-toggle matSuffix [for]="fecha"></mat-datepicker-toggle>
-          <mat-datepicker #fecha></mat-datepicker>
+          <input matInput [matDatepicker]="fechaLlegada"  placeholder="Fecha De Viaje"
+                 [formControl]="this.form.get('fechaLlegada')" readonly>
+          <mat-datepicker-toggle matSuffix [for]="fechaLlegada"></mat-datepicker-toggle>
+          <mat-datepicker #fechaLlegada></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100">
+        <mat-form-field class="picker-date-filter">
+          <input matInput [matDatepicker]="fechaSalida"  placeholder="Fecha De Viaje"
+                 [formControl]="this.form.get('fechaSalida')" readonly>
+          <mat-datepicker-toggle matSuffix [for]="fechaSalida"></mat-datepicker-toggle>
+          <mat-datepicker #fechaSalida></mat-datepicker>
         </mat-form-field>
       </div>
     </div>

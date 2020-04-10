@@ -2,7 +2,6 @@ import {ChangeDetectorRef, Component, Inject, OnInit, Output} from '@angular/cor
 import {ClicComponent} from '../../../../../core/utils/clic-component';
 import {BlockUI, NgBlockUI} from 'ng-block-ui';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {AdministrationService} from '../../../../../administration/administration.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {NotifierService} from 'angular-notifier';
 import {MediaMatcher} from '@angular/cdk/layout';
@@ -34,15 +33,17 @@ export class AddPaisViajadoComponent extends ClicComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.form = this.builder.group({
+      id: new FormControl(this.data.id),
+      // tslint:disable-next-line:max-line-length
+      pais: new FormControl(this.data.pais, Validators.compose([Validators.required, Validators.maxLength(100)])),
+      ciudad: new FormControl(this.data.ciudad, Validators.compose([Validators.required, Validators.maxLength(100)])),
+      fechaLlegada: new FormControl(this.data.fechaLlegada, Validators.compose([Validators.required, Validators.maxLength(100)])),
+      fechaSalida: new FormControl(this.data.fechaSalida, Validators.compose([Validators.required, Validators.maxLength(100)])),
+    });
     this.servicioPais.getPais().subscribe(response => {
       this.paises = response.body;
-      this.form = this.builder.group({
-        id: new FormControl(this.data.id),
-        // tslint:disable-next-line:max-line-length
-        pais: new FormControl(this.data.pais, Validators.compose([Validators.required, Validators.maxLength(100)])),
-        ciudad: new FormControl(this.data.ciudad, Validators.compose([Validators.required, Validators.maxLength(100)])),
-        fechaViaje: new FormControl(this.data.fechaNacimiento, Validators.compose([Validators.required, Validators.maxLength(100)])),
-      });
+
     });
   }
 
