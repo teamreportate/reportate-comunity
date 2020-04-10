@@ -37,13 +37,13 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
     
     @Query("SELECT new bo.com.reportate.model.DiagnosticosResumenDiario( "
     		+ "d.enfermedad, d.departamento, d.municipio, d.centroSalud, "
-            + "(select count(d1) from Paciente d1 where d1.diagnostico = d AND d.estadoDiagnostico = :sospechoso) AS sospechoso, "
-            + "(select count(d2) from Paciente d2 where d2.diagnostico = d AND d.estadoDiagnostico = :negativo) AS negativo, "
-            + "(select count(d3) from Paciente d3 where d3.diagnostico = d AND d.estadoDiagnostico = :confirmado) AS confirmado, "
-            + "(select count(d4) from Paciente d4 where d4.diagnostico = d AND d.estadoDiagnostico = :curado) AS curado, "
-            + "(select count(d5) from Paciente d5 where d5.diagnostico = d AND d.estadoDiagnostico = :fallecido) AS fallecido) "
+            + "(select count(d1) from Paciente t1 INNER JOIN t1.diagnostico d1 where d1.createdDate BETWEEN :fechaInicio AND :fechaFin AND d1.estadoDiagnostico = :sospechoso) AS sospechoso, "
+            + "(select count(d2) from Paciente t2 INNER JOIN t2.diagnostico d2 where d2.createdDate BETWEEN :fechaInicio AND :fechaFin AND d2.estadoDiagnostico = :negativo) AS negativo, "
+            + "(select count(d3) from Paciente t3 INNER JOIN t3.diagnostico d3 where d3.createdDate BETWEEN :fechaInicio AND :fechaFin AND  d3.estadoDiagnostico = :confirmado) AS confirmado, "
+            + "(select count(d4) from Paciente t4 INNER JOIN t4.diagnostico d4 where d4.createdDate BETWEEN :fechaInicio AND :fechaFin AND d4.estadoDiagnostico = :curado) AS curado, "
+            + "(select count(d5) from Paciente t5 INNER JOIN t5.diagnostico d5 where d5.createdDate BETWEEN :fechaInicio AND :fechaFin AND  d5.estadoDiagnostico = :fallecido) AS fallecido) "
             + "FROM Paciente t INNER JOIN t.diagnostico d WHERE d.createdDate BETWEEN :fechaInicio AND :fechaFin "
-            + "GROUP BY d.enfermedad, d.departamento, d.municipio, d.centroSalud, d "
+            + "GROUP BY d.enfermedad, d.departamento, d.municipio, d.centroSalud "
             + "ORDER BY d.enfermedad, d.departamento, d.municipio, d.centroSalud")
     
     List<DiagnosticosResumenDiario> resumenPorPacienteEstadoDiagnostico(
