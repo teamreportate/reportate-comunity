@@ -27,7 +27,7 @@ export class MuertosComponent implements OnInit {
   draw() {
     this.option = {
       title: {
-        text: 'CONFIRMADOS'
+        text: 'MUERTOS'
       },
       xAxis: {
         type: 'category',
