@@ -201,7 +201,7 @@ public class PacienteController {
         try {
             return ok(this.pacienteService.agregarPais(pacienteId, pais.getPaisId(), pais.getFechaLlegada(), pais.getFechaSalida(), pais.getCiudad()));
         }catch (NotDataFoundException | OperationException e){
-            log.error("Se genero un error al agregar un país. Causa. {} ",e.getMessage());
+            log.error("Se genero un error al agregar un país. Causa. {} ", e.getMessage());
             return CustomErrorType.badRequest("Agregar País", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error el agregar país visitado.",e);
@@ -209,7 +209,7 @@ public class PacienteController {
         }
     }
 
-    @RequestMapping(value = "/{controlPaisId}/agregar-pais",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{controlPaisId}/editar-pais",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Actualizar País viajado", description = "Actualizar un país al que viajo el paciente", tags = { "paciente" })
     public ResponseEntity<PaisVisitadoDto> editarPaises(
             @Parameter(description = "Identificador del Control Pais ", required = true)
