@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @Created by :MC4
@@ -72,5 +73,10 @@ public class Diagnostico extends AbstractAuditableEntity{
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_CENTRO_SALUD", referencedColumnName = "ID")
     private CentroSalud centroSalud;
+
+    @JsonIgnore
+    @OneToMany( mappedBy = "diagnostico", fetch = FetchType.LAZY)
+    private List<DiagnosticoSintoma> sintomaList;
+
 
 }

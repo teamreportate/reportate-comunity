@@ -34,7 +34,6 @@ public class FichaEpidemiologicaResponse implements Serializable {
     private String cedulaIdentidad;
     private String departamento;
     private String municipio;
-    private String ciudad;
     private String zona;
     private String direccion;
     private String Ubicacion;

@@ -67,11 +67,9 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
       const formValue = this.form.value;
       const from = formValue.from.getDate() + '%2F' + (formValue.from.getMonth() + 1) + '%2F' + formValue.from.getFullYear();
       const to = formValue.to.getDate() + '%2F' + (formValue.to.getMonth() + 1) + '%2F' + formValue.to.getFullYear();
-
       this.service.byValorationRequest(from, to).subscribe(response => {
         this.data = response.body.datas;
         this.draw(this.data);
-
         this.blockUI.stop();
       }, error => {
         this.blockUI.stop();

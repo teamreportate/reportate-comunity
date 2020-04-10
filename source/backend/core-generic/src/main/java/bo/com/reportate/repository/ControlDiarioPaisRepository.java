@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @Created by :MC4
@@ -31,4 +32,6 @@ public interface ControlDiarioPaisRepository extends JpaRepository<ControlDiario
     @Query( " UPDATE ControlDiarioPais  cdp " +
             "SET cdp.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE cdp.pais =:pais AND cdp.controlDiario =:controlDiario ")
     void eliminarPais(@Param("pais") Pais pais, @Param("controlDiario") ControlDiario controlDiario);
+
+    Optional<ControlDiarioPais> findByIdAndEstado(Long id, EstadoEnum estadoEnum);
 }

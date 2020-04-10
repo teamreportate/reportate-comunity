@@ -37,6 +37,7 @@ public interface PacienteService {
     FichaEpidemiologicaResponse getFichaEpidemiologica(Long pacienteId);
     EnfermedadResponse agregarEnfermedadBase(Long pacienteId, Long enfermedadId);
     void eliminarEnfermedadBase(Long pacienteId, Long enfermedadId);
-    PaisVisitadoDto agregarPais(Long pacienteId, Long paisId, Date fechaViaje, String ciudades);
+    PaisVisitadoDto agregarPais(Long pacienteId, Long paisId, Date fechaLlegada, Date fechaSalida, String ciudades);
+    PaisVisitadoDto editarPaisesVisitados(Long controlPaisId, Date fechaLlegada, Date fechaSalida, String ciudades);
     void eliminarPais(Long pacienteId, Long paisId);
 }
