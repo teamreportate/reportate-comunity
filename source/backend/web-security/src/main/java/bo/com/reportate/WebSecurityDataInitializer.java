@@ -173,6 +173,16 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         parametro = new MuParametro(null, Constants.Parameters.MAIL_FROM, "Dirección de correo electronico desde la que se va a enviar los correos.", "no-reply@mc4.com.bo", null, null, null, ParamTipoDato.CADENA, false,null, mailParams);
         this.paramService.saveParametro(parametro);
 
+
+
+        MuGrupoParametro diagnostico = this.grupoParametroRepository.findByGrupo("Parámetros de diagnostico").orElse(MuGrupoParametro.builder()
+                .grupo("Parámetros de diagnostico")
+                .descripcion("Parámetros de diagnostico")
+                .build());
+
+        parametro = new MuParametro(null, Constants.Parameters.INDICADOR_SOSPECHOSO, "Indicador para clasificar como sospechoso un diagnostico", null, null, new BigDecimal("5"), null, ParamTipoDato.NUMERICO, false,null, diagnostico);
+        this.paramService.saveParametro(parametro);
+
         log.info("************************* Fin Cargando parametros *************************");
     }
 
@@ -194,10 +204,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         this.dominioService.saveValorDominio(valorDominio);
         valorDominio = MuValorDominio.builder().dominio(dominio).valor("Personal de Laboratorio").descripcion("Personal de Salud").build();
         this.dominioService.saveValorDominio(valorDominio);
-        valorDominio = MuValorDominio.builder().dominio(dominio).valor("Ingeniero").descripcion("Ingeniero").build();
-        this.dominioService.saveValorDominio(valorDominio);
 
-        
         log.info("************************* Fin Cargando dominios *************************");
     }
 

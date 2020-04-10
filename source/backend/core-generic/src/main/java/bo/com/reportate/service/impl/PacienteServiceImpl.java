@@ -1,24 +1,17 @@
 package bo.com.reportate.service.impl;
 
+import bo.com.reportate.cache.CacheService;
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.*;
-
 import bo.com.reportate.model.dto.DiagnosticoDto;
-
-
 import bo.com.reportate.model.dto.PacienteDto;
-
 import bo.com.reportate.model.dto.PaisVisitadoDto;
 import bo.com.reportate.model.dto.request.EnfermedadRequest;
 import bo.com.reportate.model.dto.request.PaisRequest;
 import bo.com.reportate.model.dto.request.SintomaRequest;
-
-import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
 import bo.com.reportate.model.dto.response.EnfermedadResponse;
-
 import bo.com.reportate.model.dto.response.FichaEpidemiologicaResponse;
-
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
@@ -27,13 +20,9 @@ import bo.com.reportate.service.LogService;
 import bo.com.reportate.service.NotificacionService;
 import bo.com.reportate.service.PacienteService;
 import bo.com.reportate.util.ValidationUtil;
-
-import bo.com.reportate.utils.BigDecimalUtil;
 import bo.com.reportate.utils.DateUtil;
 import bo.com.reportate.utils.StringUtil;
-
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.math3.analysis.function.Sin;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -44,7 +33,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Created by :MC4
@@ -73,6 +64,7 @@ public class PacienteServiceImpl implements PacienteService {
     @Autowired private NotificacionService notificacionService;
     @Autowired private UsuarioRepository usuarioRepository;
     @Autowired private DiagnosticoSintomaRepository diagnosticoSintomaRepository;
+    @Autowired private CacheService cacheService;
 
     @Override
     public PacienteDto save(Authentication userDetails, String nombre, Integer edad, GeneroEnum genero, Boolean gestacion, Integer tiempoGestacion, String ocupacion) {
@@ -297,7 +289,7 @@ public class PacienteServiceImpl implements PacienteService {
             if(resultadoPeso.compareTo(BigDecimal.ZERO) > 0) {// Sintomas de la enfermedad
                 log.info("Resultado enfermedad:{}  del calculo:{}",enfermedad.getNombre(), resultadoPeso);
                 EstadoDiagnosticoEnum estadoDiagnostico = EstadoDiagnosticoEnum.NEGATIVO;
-                if(resultadoPeso.compareTo(new BigDecimal("5")) > 0){
+                if(resultadoPeso.compareTo(cacheService.getNumberParam(Constants.Parameters.INDICADOR_SOSPECHOSO)) > 0){
                     estadoDiagnostico = EstadoDiagnosticoEnum.SOSPECHOSO;
                     List<MuUsuario> medicos = this.usuarioRepository.obtenerMedicoPordepartamento(controlDiario.getPaciente().getFamilia().getDepartamento());
                     for (MuUsuario medico: medicos) {
