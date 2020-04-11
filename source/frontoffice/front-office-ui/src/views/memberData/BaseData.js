@@ -1,4 +1,4 @@
-import {Button, Checkbox, Form, Modal, Select, Tabs} from "antd";
+import {Button, Checkbox, Form, Modal, Select, Spin, Tabs} from "antd";
 import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import ServiceAppConfig from "../../services/ServiceAppConfig";
@@ -16,10 +16,12 @@ const BaseData = () => {
 	const [symptoms, setSymptoms]         = useState([]);
 	const [countries, setCountries]       = useState([]);
 	const [travelSwitch, setTravelSwitch] = useState(false);
+	const [ok, setOk]                     = useState(false);
 	let history                           = useHistory();
 	const [form]                          = Form.useForm();
 	const selectedUser                    = useSelector(store => store.family.toUpdate);
 	const dispatch                        = useDispatch();
+	const [loading, setLoading]           = useState(false);
 	useEffect(() => {
 		ServiceAppConfig.getBaseData((result => {
 			console.log(result);
@@ -47,8 +49,14 @@ const BaseData = () => {
 			setStep("1");
 		else if (step === "3")
 			setStep("2");
+		else if (step === "4")
+			setStep("3");
 		else
 			history.push("/dashboard");
+	}
+	
+	function handleOk(e) {
+		setOk(e.target.checked);
 	}
 	
 	const onFinish = values => {
@@ -56,31 +64,45 @@ const BaseData = () => {
 			setStep("2");
 		else if (step === "2")
 			setStep("3");
+		else if (step === "3")
+			setStep("4");
 		else {
-			const tempSymptoms   = [];
-			const tempSicknesses = [];
-			const tempCountries  = [];
-			console.log(values);
-			if (values.sicknesses)
-				values.sicknesses.forEach(sickness => {
-					tempSicknesses.push({id: sickness, nombre: ""});
+			if (ok) {
+				setLoading(true);
+				const tempSymptoms   = [];
+				const tempSicknesses = [];
+				const tempCountries  = [];
+				console.log(values);
+				if (values.sicknesses)
+					values.sicknesses.forEach(sickness => {
+						tempSicknesses.push({id: sickness, nombre: ""});
+					});
+				if (values.symptoms)
+					values.symptoms.forEach(symptom => {
+						tempSymptoms.push({id: symptom, respuesta: true, observacion: ""});
+					});
+				if (values.countries)
+					values.countries.forEach(country => {
+						tempCountries.push({id: country, nombre: ""});
+					});
+				
+				
+				ServiceFamily.dailyControl(selectedUser.id, tempSicknesses, tempSymptoms, tempCountries, (result) => {
+					dispatch(familySetFirstControl(selectedUser));
+					dispatch(appConfigSetMessage({text: result, type: "success"}));
+					setLoading(false);
+					history.push("/dashboard");
 				});
-			if (values.symptoms)
-				values.symptoms.forEach(symptom => {
-					tempSymptoms.push({id: symptom, respuesta: true, observacion: ""});
+			} else {
+				Modal.info({
+					title  : 'info',
+					content: (
+						<div>
+							<p>Tiene que aceptar para proceder</p>
+						</div>
+					),
 				});
-			if (values.countries)
-				values.countries.forEach(country => {
-					tempCountries.push({id: country, nombre: ""});
-				});
-			
-			
-			ServiceFamily.dailyControl(selectedUser.id, tempSicknesses, tempSymptoms, tempCountries, (result) => {
-				dispatch(familySetFirstControl(selectedUser));
-				dispatch(appConfigSetMessage({text: result, type: "success"}));
-				history.push("/dashboard");
-			});
-			
+			}
 		}
 		
 	};
@@ -88,7 +110,12 @@ const BaseData = () => {
 	const onFinishFailed = errorInfo => {
 		console.log('Failed:', errorInfo);
 	};
-	
+	if (loading) {
+		return <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
+			<Spin/>
+			<span>Cargando...</span>
+		</div>;
+	}
 	return (
 		<div>
 			<Form
@@ -96,6 +123,9 @@ const BaseData = () => {
 				layout='vertical'
 				onFinish={onFinish}
 				onFinishFailed={onFinishFailed}
+				initialValues={{
+					countriesSwitch: false
+				}}
 			>
 				<Tabs activeKey={step} type="card">
 					<TabPane tab={step === "1" ? "Enfermedades de base" : "1"} key="1">
@@ -115,7 +145,7 @@ const BaseData = () => {
 						</Form.Item>
 					</TabPane>
 					<TabPane tab={step === "2" ? "Síntomas iniciales" : "2"} key="2">
-						<p>Padece de alguna de las siguientes emfermades</p>
+						<p>Presenta algunos de los siguientes sintomas</p>
 						<Form.Item name={'symptoms'}>
 							<Checkbox.Group style={{width: '100%'}}>
 								{
@@ -186,6 +216,13 @@ const BaseData = () => {
 							: null
 						}
 					
+					</TabPane>
+					<TabPane tab={step === "4" ? "Terminar" : "4"} key="4">
+						<p>¡Gracias! Recuerda que debes realizar tu autocontrol dos a tres veces al día. Tu información nos permite
+							ayudarte.</p>
+						<Form.Item name={'countriesSwitch'}>
+							<Checkbox onChange={handleOk}>Aceptar</Checkbox>
+						</Form.Item>
 					</TabPane>
 				</Tabs>
 				<Form.Item>

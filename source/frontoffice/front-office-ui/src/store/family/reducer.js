@@ -54,7 +54,8 @@ const familyReducer = (state = initialState, action) => {
 						sex          : paciente.genero,
 						gestation    : paciente.gestacion,
 						gestationTime: paciente.tiempoGestacion,
-						firstControl : paciente.controlInicial
+						firstControl : paciente.controlInicial,
+						occupation    : paciente.ocupacion
 					});
 				});
 			return newState;

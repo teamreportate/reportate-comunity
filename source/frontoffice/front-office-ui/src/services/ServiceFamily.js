@@ -57,7 +57,7 @@ class ServiceFamily extends ServiceBase {
 				genero         : member.sex,
 				gestacion      : member.gestation,
 				tiempoGestacion: member.gestationTime,
-				ocupacion      : member.occupation === 'otro' ? member.otherOccupation : member.occupation,
+				ocupacion      : member.occupation,
 				
 			}, {
 				headers: this.getHeaders()
@@ -84,7 +84,8 @@ class ServiceFamily extends ServiceBase {
 				genero         : member.sex,
 				gestacion      : member.gestation,
 				tiempoGestacion: member.gestationTime,
-				controlInicial : 'control'
+				controlInicial : 'control',
+				ocupacion      : member.occupation,
 			}, {
 				headers: this.getHeaders()
 			})
@@ -108,6 +109,18 @@ class ServiceFamily extends ServiceBase {
 				sintomas        : symptoms,
 				paises          : countries,
 			}, {headers: this.getHeaders()})
+				.then((result) => {
+						if (onSuccess) {
+							onSuccess(result.data);
+						}
+					}
+				)
+				.catch((error) => this.handleAxiosErrors(error));
+	}
+	
+	getHistory(userId, onSuccess = false, onFailure = false) {
+		this.axios.get(this.getBaseService() + 'api/pacientes/' + userId + '/diganosticos/',
+			{headers: this.getHeaders()})
 				.then((result) => {
 						if (onSuccess) {
 							onSuccess(result.data);
