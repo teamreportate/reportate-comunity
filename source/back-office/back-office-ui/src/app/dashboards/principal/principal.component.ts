@@ -83,9 +83,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
       to: new FormControl(this.to, Validators.compose([Validators.required])),
     }, {
     });
-    this.getByValorationRequest();
-    this.getReportWithFiltersRequest();
-    this.getTotals();
+    this.updateData();
   }
 
   getSetting() {
@@ -169,11 +167,16 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
     }
   }
 
+  updateData() {
+    this.getByValorationRequest();
+    this.getReportWithFiltersRequest();
+    this.getTotals();
+  }
+
   draw(data: any[]) {
     this.option = {
       title: {
-        text: '' + (this.from.getDate() + '/' + (this.from.getMonth() + 1) + '/' + this.from.getFullYear()) +
-        '-' + (this.to.getDate() + '/' + (this.to.getMonth() + 1) + '/' + this.to.getFullYear())
+        text: 'Total registros'
       },
       legend: {},
       tooltip: {},
