@@ -331,6 +331,7 @@ public class PacienteServiceImpl implements PacienteService {
 
                 if (paciente.getDiagnostico() == null) {
                     paciente.setDiagnostico(diagnostico);
+                    this.pacienteRepository.save(paciente);
                 } else if (!(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.SOSPECHOSO) &&
                         diagnostico.getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.NEGATIVO))) {
                     paciente.setDiagnostico(diagnostico);
