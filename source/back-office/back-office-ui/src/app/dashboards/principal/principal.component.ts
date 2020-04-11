@@ -1,5 +1,5 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { MatDialog, throwMatDialogContentAlreadyAttachedError } from '@angular/material';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -12,12 +12,21 @@ import { NotifierService } from 'angular-notifier';
 import { Page } from '../../core/utils/paginator/page';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { CustomOptions } from '../../core/models/dto/custom-options';
+import { Filter, Basic, Data } from '../dashboard.type.js';
+import { Department, Municipaly, SaludCentre } from 'src/app/access/users/user.type.js';
+import { AccessService } from 'src/app/access/access.service.js';
+import { EnfermedadService } from 'src/app/core/services/http-services/enfermedad.service';
+import { ResumeComponent } from '../resume/resume.component';
+import { ConfirmadoComponent } from '../confirmado/confirmado.component';
+import { RecuperadosComponent } from '../recuperados/recuperados.component';
+import { SospechosoComponent } from '../sospechoso/sospechoso.component';
+import { FallecidosComponent } from '../fallecidos/fallecidos.component';
 
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
   styleUrls: ['./principal.component.sass'],
-  providers: [DashboardService]
+  providers: [DashboardService, AccessService, EnfermedadService]
 })
 export class PrincipalComponent extends ClicComponent implements OnInit, AfterViewInit {
   @BlockUI() blockUI: NgBlockUI;
@@ -28,17 +37,19 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
 
   from = new Date();
   to = new Date();
+  filter: Filter = new Filter();
 
   echarts = echarts;
-  echarts1 = echarts;
   myChart: any;
-  myChart1: any;
 
-  data = [];
-  data1 = [];
+  data: Data = new Data();
 
   option: any;
-  option1: any;
+
+  departments: Department[] = [];
+  municipalities: Municipaly[] = [];
+  saludCentres: SaludCentre[] = [];
+  enfermedades: Basic[] = [];
 
   list = [
     { departamento: 'Santa Cruz', sospechoso: 150, confirmado: 20, recuperado: 8, muerto: 1 },
@@ -52,9 +63,20 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
     { departamento: 'Oruro', sospechoso: 20, confirmado: 1, recuperado: 1, muerto: 0 },
   ];
 
+  @ViewChild(ResumeComponent) resumeComponent: ResumeComponent;
+  @ViewChild(ConfirmadoComponent) confirmadoComponent: ConfirmadoComponent;
+  @ViewChild(RecuperadosComponent) recuperadosComponent: RecuperadosComponent;
+  @ViewChild(SospechosoComponent) sospechosoComponent: SospechosoComponent;
+  @ViewChild(FallecidosComponent) fallecidosComponent: FallecidosComponent;
 
-  constructor(private dialog: MatDialog, private service: DashboardService,
-    private changeDetector: ChangeDetectorRef, private media: MediaMatcher, private router: Router, private notifier: NotifierService) {
+
+  constructor(
+    private service: DashboardService,
+    private accessService: AccessService,
+    private enfermedadService: EnfermedadService,
+    private changeDetector: ChangeDetectorRef,
+    private media: MediaMatcher,
+    private notifier: NotifierService) {
     super();
     this.mostrar = false;
   }
@@ -63,6 +85,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
 
   ngOnInit() {
     this.initialListener(this.changeDetector, this.media);
+    this.getSetting();
     this.initForm();
   }
 
@@ -74,10 +97,30 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
     }, {
     });
     this.getByValorationRequest();
+    this.getReportWithFiltersRequest();
+  }
 
-    setTimeout(() => {
-      this.getByValorationRequest();
-    }, 500);
+  getSetting() {
+    this.accessService.requestCompleteDepartmentsList().subscribe(response => {
+      this.departments = response.body.departamentos;
+      this.municipalities = response.body.municipios;
+      this.saludCentres = response.body.centrosSalud;
+      this.getEnfermedades();
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
+    });
+  }
+
+  getEnfermedades() {
+    this.enfermedadService.getEnfermedades().subscribe(response => {
+      this.enfermedades = response.body;
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
+    });
   }
 
   getByValorationRequest() {
@@ -87,9 +130,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
       const to = formValue.to.getDate() + '%2F' + (formValue.to.getMonth() + 1) + '%2F' + formValue.to.getFullYear();
       this.service.byValorationRequest(from, to).subscribe(response => {
 
-        this.data = response.body.datas;
-        this.draw(this.data);
-        this.draw1(this.data);
+        this.draw(response.body.datas);
         this.blockUI.stop();
       }, error => {
         this.blockUI.stop();
@@ -98,96 +139,40 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
     }
   }
 
-  draw(data1: any) {
-    const data = {
-      dia: ['06/04/2020', '07/04/2020', '08/04/2020', '08/04/2020', '09/04/2020', '10/04/2020', '11/04/2020', '12/04/2020'],
-      sospechoso: [100, 150, 20, 10, 45, 55, 90, 55],
-      confirmado: [52, 50, 50, 80, 15, 35, 90, 36],
-      recuperados: [80, 35, 20, 20, 15, 55, 70, 25],
-      muerto: [10, 5, 0, 2, 4, 5, 8, 12]
-    };
-    this.option = {
-      title: {
-        text: 'RESUMEN'
-      },
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'cross',
-          label: {
-            backgroundColor: '#6a7985'
-          }
-        }
-      },
-      legend: {
-        data: []
-      },
-      toolbox: {
-        feature: {
-          saveAsImage: {}
-        }
-      },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-      },
-      xAxis: [
-        {
-          type: 'category',
-          boundaryGap: false,
-          data: data.dia
-        }
-      ],
-      yAxis: [
-        {
-          type: 'value'
-        }
-      ],
-      series: [
-        {
-          name: 'Sospechoso',
-          type: 'line',
-          stack: '总量',
-          areaStyle: {},
-          data: data.sospechoso
-        },
-        {
-          name: 'Confirmado',
-          type: 'line',
-          stack: '总量',
-          areaStyle: {},
-          data: data.confirmado
-        },
-        {
-          name: 'Recuperado',
-          type: 'line',
-          stack: '总量',
-          areaStyle: {},
-          data: data.recuperados
-        },
-        {
-          name: 'Muerto',
-          type: 'line',
-          stack: '总量',
-          areaStyle: {},
-          data: data.muerto
-        }
-      ]
-    };
+  getReportWithFiltersRequest() {
+    if (this.form.valid) {
+      const formValue = this.form.value;
+      const from = formValue.from.getDate() + '%2F' + (formValue.from.getMonth() + 1) + '%2F' + formValue.from.getFullYear();
+      const to = formValue.to.getDate() + '%2F' + (formValue.to.getMonth() + 1) + '%2F' + formValue.to.getFullYear();
 
-    this.myChart = this.echarts.init(document.getElementById('main'));
-    this.myChart.setOption(this.option);
+      this.service.reportWithFiltersRequest(from, to, this.filter).subscribe(response => {
+
+        this.data = response.body;
+        this.resumeComponent.draw(this.data);
+        this.confirmadoComponent.draw(this.data);
+        this.sospechosoComponent.draw(this.data);
+        this.recuperadosComponent.draw(this.data);
+        this.fallecidosComponent.draw(this.data);
+
+        this.blockUI.stop();
+      }, error => {
+        this.blockUI.stop();
+        if (error) this.notifierError(error);
+      });
+    }
   }
 
-  draw1(data1: any) {
-    this.option1 = {
+  draw(data: any[]) {
+    this.option = {
+      title: {
+        text: '' + (this.from.getDate() + '/' + (this.from.getMonth() + 1) + '/' + this.from.getFullYear()) +
+        '-' + (this.to.getDate() + '/' + (this.to.getMonth() + 1) + '/' + this.to.getFullYear())
+      },
       legend: {},
       tooltip: {},
       dataset: {
         dimensions: ['registrado', 'alto', 'medio', 'bajo'],
-        source: data1
+        source: data
       },
       xAxis: { type: 'category' },
       yAxis: {},
@@ -197,10 +182,14 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
         { type: 'bar' }
       ]
     };
-
-    this.myChart1 = this.echarts1.init(document.getElementById('main1'));
-    this.myChart1.setOption(this.option1);
+    this.myChart = this.echarts.init(document.getElementById('main'));
+    this.myChart.setOption(this.option);
   }
+
+
+
+
+
 
 
 
