@@ -179,4 +179,31 @@ public class DiagnosticoController {
             return CustomErrorType.serverError("Listar por estado Diagnosticos", "Se genero un error al listar por estado los diagnosticos");
         }
     }
+    
+    @RequestMapping(value = "/listar-total-lugar",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Agrupar los diagnosticos por estado y lugar", description = "Agrupar los diagnosticos por estado y lugar", tags = { "grupos de diagnosticos por estado y lugar" })
+    public ResponseEntity<TablaResponse> listarTotalPorLugar(
+    		@AuthenticationPrincipal Authentication authentication,
+    		@Parameter(description = "Fecha inicio para el filtro", required = true)
+            @RequestParam("from") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_PARAM_URL) Date from,
+            @Parameter(description = "Fecha fin para el filtro", required = true)
+            @RequestParam("to") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_PARAM_URL) Date to,
+            @Parameter(description = "Identificador de Departamento", required = true)
+    		@RequestParam("departamentoId") Long departamentoId,
+            @Parameter(description = "Identificador de Municipio", required = true)
+            @RequestParam("municipioId") Long municipioId,
+            @Parameter(description = "Identificador de Centro Salud", required = true)
+            @RequestParam("centroSaludId") Long centroSaludId,
+            @Parameter(description = "Identificador de Enfermedad", required = true)
+            @RequestParam("enfermedadId") Long enfermedadId) {
+        try {
+            return ok(this.diagnosticoResumenEstadoService.cantidadDiagnosticoPorLugar(authentication, from, to, departamentoId, municipioId, centroSaludId, enfermedadId));
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al listar por estado los diagnosticos: Causa. {}",e.getMessage());
+            return CustomErrorType.badRequest("Listar por estado Diagnosticos", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al agrupar los diagnosticos:",e);
+            return CustomErrorType.serverError("Listar por estado Diagnosticos", "Se genero un error al listar por estado los diagnosticos");
+        }
+    }
 }
