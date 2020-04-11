@@ -156,6 +156,29 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       });
   }
 
+  deletePais(row: any) {
+    const textContent: String = `Confirmar eliminar el Pais : ${row.pais}`;
+    this.dialog.open(ConfirmDialogComponent, this.confirmConfig({textContent, title: 'Eliminar Pais viajado'}))
+      .afterClosed()
+      .subscribe(confirm => {
+        if (confirm) {
+          this.blockUI.start('Procesando solicitud...');
+          this.pacienteService.eliminarPaisViajado( this.idPaciente, row.id).subscribe(response => {
+            this.blockUI.stop();
+            this.ngOnInit();
+            // tslint:disable-next-line:max-line-length
+            const notif = {error: {title: 'Eliminar Pais Viajado', detail: 'Pais viajado eliminado satisfactoriamente.'}};
+            this.notifierError(notif, 'info');
+          }, error => {
+            this.blockUI.stop();
+            if (error) {
+              this.notifierError(error);
+            }
+          });
+        }
+      });
+  }
+
   deleteEnfermedad(row: any) {
     const textContent: String = `Confirma eliminar la Enfermedad: ${row.nombre}`;
     this.dialog.open(ConfirmDialogComponent, this.confirmConfig({textContent, title: 'Eliminar Enfermedad'}))
