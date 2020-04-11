@@ -1,7 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 
 import echarts from '../../../assets/js/echarts.min.js';
 
@@ -58,7 +56,6 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
   @ViewChild(RecuperadosComponent) recuperadosComponent: RecuperadosComponent;
   @ViewChild(SospechosoComponent) sospechosoComponent: SospechosoComponent;
   @ViewChild(FallecidosComponent) fallecidosComponent: FallecidosComponent;
-
 
   constructor(
     private service: DashboardService,
