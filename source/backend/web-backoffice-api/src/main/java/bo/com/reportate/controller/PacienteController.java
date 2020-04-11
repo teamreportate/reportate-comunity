@@ -295,7 +295,7 @@ public class PacienteController {
         }
     }
 
-    @RequestMapping(value = "/{paienteId}/diganosticos",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{pacienteId}/diagnosticos",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Obteniene los ultimos diagnosticos", description = "Obteniene los ultimos diagnosticos del paciente. Este método es solo para la aplicación móvil", tags = { "familia" })
     public ResponseEntity<List<MovilControlDiario>> getDiagnostico(
             @Parameter(description = "Identificador de paciente", required = true)

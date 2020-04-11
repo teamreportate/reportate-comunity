@@ -122,7 +122,7 @@ public class PacienteServiceImpl implements PacienteService {
         ValidationUtil.throwExceptionIfInvalidText("ci", ci, false, 20);
         ValidationUtil.throwExceptionIfInvalidText("fechaNamiento", fechaNacimiento, false, 10);
         Date fechNacimient = null;
-        if (StringUtil.isEmptyOrNull(fechaNacimiento)) {
+        if (!StringUtil.isEmptyOrNull(fechaNacimiento)) {
             fechNacimient = DateUtil.toDate(DateUtil.FORMAT_DATE, fechaNacimiento);
             if (fechNacimient == null) {
                 throw new OperationException("No se logró convertir a formato dd/mm/yyyy la fecha: " + fechaNacimiento);
@@ -166,7 +166,7 @@ public class PacienteServiceImpl implements PacienteService {
         ValidationUtil.throwExceptionIfInvalidText("ci", ci, false, 20);
         ValidationUtil.throwExceptionIfInvalidText("fechaNamiento", fechaNacimiento, false, 10);
         Date fechNacimient = null;
-        if (StringUtil.isEmptyOrNull(fechaNacimiento)) {
+        if (!StringUtil.isEmptyOrNull(fechaNacimiento)) {
             fechNacimient = DateUtil.toDate(DateUtil.FORMAT_DATE, fechaNacimiento);
             if (fechNacimient == null) {
                 throw new OperationException("No se logró convertir a formato dd/mm/yyyy la fecha: " + fechaNacimiento);
