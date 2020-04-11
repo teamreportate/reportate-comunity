@@ -19,6 +19,6 @@ public interface SintomaService {
     Sintoma save(SintomaDto sintomaDto);
     Sintoma findById(Long sintomaId);
     Sintoma update(Long id, SintomaDto sintomaDto);
-    boolean cambiarEstado(Long id);
+    boolean eliminar(Long id);
 
 }
