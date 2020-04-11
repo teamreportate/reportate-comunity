@@ -5,10 +5,12 @@ import bo.com.reportate.model.dto.PaisDto;
 import bo.com.reportate.model.dto.response.PaisResponse;
 import bo.com.reportate.model.enums.EstadoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,9 +25,6 @@ import java.util.Optional;
  * @Copyright :MC4
  */
 public interface PaisRepository extends JpaRepository<Pais, Long> {
-    @Query(" SELECT p FROM Pais p" +
-            " order by p.id desc")
-    List<Pais> listAllActivos();
 
     List<PaisDto> findByEstadoOrderByNombreAsc(EstadoEnum estadoEnum);
 
@@ -36,4 +35,8 @@ public interface PaisRepository extends JpaRepository<Pais, Long> {
     boolean existsByNombreIgnoreCase(String nombre);
     boolean existsByNombreIgnoreCaseAndEstado(String nombre, EstadoEnum estadoEnum);
     boolean existsByIdNotAndNombreIgnoreCaseAndEstado(Long id, String nombre, EstadoEnum estadoEnum);
+
+    @Modifying
+    @Query("UPDATE Pais set estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE id=:paisId")
+    void eliminar(@Param("paisId") Long id);
 }

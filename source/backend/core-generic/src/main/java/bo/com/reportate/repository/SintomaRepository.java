@@ -5,10 +5,12 @@ import bo.com.reportate.model.dto.SintomaDto;
 import bo.com.reportate.model.dto.response.SintomaResponse;
 import bo.com.reportate.model.enums.EstadoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,4 +32,8 @@ public interface SintomaRepository extends JpaRepository<Sintoma, Long> {
     List<SintomaResponse> findByEstadoAndControlDiarioTrue();
     boolean existsByNombreIgnoreCaseAndEstado(String nombre, EstadoEnum estadoEnum);
     boolean existsByIdNotAndNombreIgnoreCaseAndEstado(Long id, String nombre, EstadoEnum estadoEnum);
+
+    @Modifying
+    @Query("UPDATE Sintoma set estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE id=:sintomaId")
+    void eliminar(@Param("sintomaId") Long id);
 }

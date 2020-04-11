@@ -33,13 +33,15 @@ export class AddPaisViajadoComponent extends ClicComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.warn(this.data);
     this.form = this.builder.group({
       id: new FormControl(this.data.id),
-      // tslint:disable-next-line:max-line-length
-      paisId: new FormControl(this.data.paisId, Validators.compose([Validators.required, Validators.maxLength(100)])),
+      paisId: new FormControl(this.data.id, Validators.compose([Validators.required, Validators.maxLength(100)])),
+      pais: new FormControl(this.data.pais, Validators.compose([Validators.maxLength(100)])),
       ciudad: new FormControl(this.data.ciudad, Validators.compose([Validators.required, Validators.maxLength(100)])),
-      fechaLlegada: new FormControl(this.data.fechaLlegada, Validators.compose([Validators.required, Validators.maxLength(100)])),
-      fechaSalida: new FormControl(this.data.fechaSalida, Validators.compose([Validators.required, Validators.maxLength(100)])),
+      controlPaisId: new FormControl(this.data.controlPaisId, Validators.compose([Validators.maxLength(100)])),
+      fechaLlegada: new FormControl(new Date(this.data.fechaLlegada), Validators.compose([Validators.required, Validators.maxLength(100)])),
+      fechaSalida: new FormControl(new Date(this.data.fechaSalida), Validators.compose([Validators.required, Validators.maxLength(100)])),
     });
     this.servicioPais.getPais().subscribe(response => {
       this.paises = response.body;
@@ -66,7 +68,7 @@ export class AddPaisViajadoComponent extends ClicComponent implements OnInit {
       });
     } else {
       this.blockUi.start('Procesando solicitud...');
-      this.service.addPaisViajado(this.data.idPaciente, this.form.value).subscribe(response => {
+      this.service.updatePaisViajado(this.form.controls['controlPaisId'].value, this.form.value).subscribe(response => {
         this.blockUi.stop();
         const msg = {title: 'Actualizar Pais viajado', detail: 'Pais viajado actualizado satisfactoriamente.'};
         this.dialogRef.close(msg);

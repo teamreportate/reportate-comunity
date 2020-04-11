@@ -12,6 +12,7 @@ import bo.com.reportate.model.dto.request.PaisRequest;
 import bo.com.reportate.model.dto.request.SintomaRequest;
 import bo.com.reportate.model.dto.response.EnfermedadResponse;
 import bo.com.reportate.model.dto.response.FichaEpidemiologicaResponse;
+import bo.com.reportate.model.dto.response.MovilControlDiario;
 import bo.com.reportate.model.dto.response.PaisResponse;
 import bo.com.reportate.model.enums.GeneroEnum;
 import org.springframework.security.core.Authentication;
@@ -41,4 +42,5 @@ public interface PacienteService {
     PaisVisitadoDto editarPaisesVisitados(Long controlPaisId, Date fechaLlegada, Date fechaSalida, String ciudades);
     void eliminarPais(Long pacienteId, Long paisId);
     void eliminarContacto(Long contactoId);
+    List<MovilControlDiario> getControlDiario(Long pacienteId);
 }
