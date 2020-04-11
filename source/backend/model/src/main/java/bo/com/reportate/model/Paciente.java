@@ -53,6 +53,7 @@ public class Paciente extends AbstractAuditableEntity{
     private String codigoSeguro;
     @Column(name = "SEGURDO", length = 50)
     private String seguro;
+
     @JsonIgnore
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_DIAGNOSTICO", referencedColumnName = "ID")

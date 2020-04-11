@@ -68,6 +68,7 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       zona: new FormControl('', Validators.compose([Validators.required])),
       direccion: new FormControl('', Validators.compose([Validators.required])),
       ocupacion: new FormControl('', Validators.compose([Validators.required])),
+      fechaNacimiento: new FormControl('', Validators.compose([Validators.required])),
 
       ubicacion: new FormControl('', Validators.compose([Validators.required])),
     });
@@ -87,7 +88,7 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       zona: new FormControl(data.zona, Validators.compose([Validators.required])),
       direccion: new FormControl(data.direccion, Validators.compose([Validators.required])),
       ocupacion: new FormControl(data.ocupacion, Validators.compose([Validators.required])),
-
+      fechaNacimiento: new FormControl(data.fechaNacimiento, Validators.compose([Validators.required])),
       ubicacion: new FormControl(data.ubicacion, Validators.compose([Validators.required])),
     });
   }
@@ -139,11 +140,34 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       .subscribe(confirm => {
         if (confirm) {
           this.blockUI.start('Procesando solicitud...');
-          this.pacienteService.eliminarContacto(this.idPaciente, row.id).subscribe(response => {
+          this.pacienteService.eliminarContacto( row.id).subscribe(response => {
             this.blockUI.stop();
             this.ngOnInit();
             // tslint:disable-next-line:max-line-length
             const notif = {error: {title: 'Eliminar Contacto', detail: 'Contacto eliminado satisfactoriamente.'}};
+            this.notifierError(notif, 'info');
+          }, error => {
+            this.blockUI.stop();
+            if (error) {
+              this.notifierError(error);
+            }
+          });
+        }
+      });
+  }
+
+  deletePais(row: any) {
+    const textContent: String = `Confirmar eliminar el Pais : ${row.pais}`;
+    this.dialog.open(ConfirmDialogComponent, this.confirmConfig({textContent, title: 'Eliminar Pais viajado'}))
+      .afterClosed()
+      .subscribe(confirm => {
+        if (confirm) {
+          this.blockUI.start('Procesando solicitud...');
+          this.pacienteService.eliminarPaisViajado( this.idPaciente, row.id).subscribe(response => {
+            this.blockUI.stop();
+            this.ngOnInit();
+            // tslint:disable-next-line:max-line-length
+            const notif = {error: {title: 'Eliminar Pais Viajado', detail: 'Pais viajado eliminado satisfactoriamente.'}};
             this.notifierError(notif, 'info');
           }, error => {
             this.blockUI.stop();

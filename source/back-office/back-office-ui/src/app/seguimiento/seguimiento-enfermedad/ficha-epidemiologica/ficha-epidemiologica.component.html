@@ -69,6 +69,14 @@
       </mat-form-field>
     </div>
     <div [fxFlex]="33" class="h-padding-5">
+      <mat-form-field class="picker-date-filter">
+        <input matInput [matDatepicker]="fechaNacimiento" placeholder="Fecha Nacimiento"
+               [formControl]="this.form.get('fechaNacimiento')" readonly>
+        <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
+        <mat-datepicker #fechaNacimiento></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div [fxFlex]="33" class="h-padding-5">
       <button mat-icon-button matTooltip="Ver Ubicación">
         <i class="fa fa-map-o"></i>
         <a href="{{this.form.controls['ubicacion']}}" [target]="'_blank'">
@@ -78,8 +86,9 @@
     </div>
   </div>
   <div fxLayout="row wrap" fxLayoutAlign="start start">
-    <button mat-flat-button color="accent" (click)="this.updateDataPaciente()" class="m-r-10">Guardar Datos Paciente</button>
-    <button mat-flat-button color="accent" >Generar Reporte</button>
+    <button mat-flat-button color="accent" (click)="this.updateDataPaciente()" class="m-r-10">Guardar Datos Paciente
+    </button>
+    <button mat-flat-button color="accent">Generar Reporte</button>
   </div>
 
 
@@ -140,14 +149,18 @@
                      [limit]="'4'"
                      [rows]="this.listPaisesVisitados">
 
-        <ngx-datatable-column name="Acciones" [maxWidth]="80" [draggable]="false" [resizeable]="false">
+        <ngx-datatable-column name="Acciones" [maxWidth]="130" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
             <div fxLayout="row" fxFlexAlign="start start">
               <div fxFlex="100" fxFlexAlign="center top">
-                <button mat-icon-button matTooltip="Eliminar">
+                <button mat-icon-button matTooltip="Editar Pais Viajado" (click)="this.openDialogPaisesViaje(row)">
                   <mat-icon color="accent">edit</mat-icon>
                 </button>
+                <button mat-icon-button matTooltip="Eliminar Pais Viajado" (click)="this.deletePais(row)">
+                  <mat-icon color="accent">delete</mat-icon>
+                </button>
               </div>
+
             </div>
           </ng-template>
         </ngx-datatable-column>
@@ -167,6 +180,16 @@
         <ngx-datatable-column name="Ciudad" [maxWidth]="300" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
             {{row.ciudad }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Fecha Salida" [maxWidth]="250" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.fechaSalida | date: "dd/MM/yyyy"}}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Fecha Llegada" [maxWidth]="250" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.fechaLlegada | date: "dd/MM/yyyy"}}
           </ng-template>
         </ngx-datatable-column>
       </ngx-datatable>

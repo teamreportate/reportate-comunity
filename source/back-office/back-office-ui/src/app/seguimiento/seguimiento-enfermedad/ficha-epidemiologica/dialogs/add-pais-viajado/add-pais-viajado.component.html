@@ -3,13 +3,18 @@
     <mat-card-title>{{form.controls['id'].value?"Actualizar Pais Viajado":"Registro de Pais viajado"}}</mat-card-title></mat-card-header>
   <mat-card-content>
     <div fxLayout="row wrap" [formGroup]="this.form">
-      <div fxFlex="100">
+      <div fxFlex="100" *ngIf="!this.data.id">
         <mat-form-field>
-          <mat-select placeholder="Pais" [formControl]="this.form.get('pais')">
+          <mat-select placeholder="Pais" [formControl]="this.form.get('paisId')">
             <mat-option *ngFor="let pais of this.paises" [value]="pais.id">
               {{pais.nombre}}
             </mat-option>
           </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" *ngIf="this.data.id">
+          <mat-form-field>
+            <input maxlength="100" readonly matInput placeholder="Pais" formControlName="pais" [formControl]="this.form.get('pais')">
         </mat-form-field>
       </div>
       <div fxFlex="100">
@@ -29,20 +34,21 @@
       </div>
       <div fxFlex="100">
         <mat-form-field class="picker-date-filter">
-          <input matInput [matDatepicker]="fechaLlegada"  placeholder="Fecha De Viaje"
-                 [formControl]="this.form.get('fechaLlegada')" readonly>
-          <mat-datepicker-toggle matSuffix [for]="fechaLlegada"></mat-datepicker-toggle>
-          <mat-datepicker #fechaLlegada></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div fxFlex="100">
-        <mat-form-field class="picker-date-filter">
-          <input matInput [matDatepicker]="fechaSalida"  placeholder="Fecha De Viaje"
+          <input matInput [matDatepicker]="fechaSalida"  placeholder="Fecha De Viaje Salida"
                  [formControl]="this.form.get('fechaSalida')" readonly>
           <mat-datepicker-toggle matSuffix [for]="fechaSalida"></mat-datepicker-toggle>
           <mat-datepicker #fechaSalida></mat-datepicker>
         </mat-form-field>
       </div>
+      <div fxFlex="100">
+        <mat-form-field class="picker-date-filter">
+          <input matInput [matDatepicker]="fechaLlegada"  placeholder="Fecha De Viaje Llegada"
+                 [formControl]="this.form.get('fechaLlegada')" readonly>
+          <mat-datepicker-toggle matSuffix [for]="fechaLlegada"></mat-datepicker-toggle>
+          <mat-datepicker #fechaLlegada></mat-datepicker>
+        </mat-form-field>
+      </div>
+
     </div>
     <mat-card-actions fxLayoutAlign="end center" fxLayoutGap="5px" >
       <button mat-stroked-button color="warn" type="button" (click)="this.cancel()">Cancelar</button>

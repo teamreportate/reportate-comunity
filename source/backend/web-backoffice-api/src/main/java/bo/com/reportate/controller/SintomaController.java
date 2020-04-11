@@ -8,7 +8,6 @@ import bo.com.reportate.service.SintomaService;
 import bo.com.reportate.util.CustomErrorType;
 import bo.com.reportate.utils.FormatUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.math3.analysis.function.Sin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -84,22 +83,19 @@ public class SintomaController {
         }
     }
 
-    @DeleteMapping("/{id}/cambiar-estado")
-    public ResponseEntity cambiarEstado(@PathVariable("id") Long id) {
+    @PutMapping("/{id}/eliminar")
+    public ResponseEntity eliminar(@PathVariable("id") Long id) {
         try{
-            boolean estado = sintomaService.cambiarEstado(id);
+            boolean estado = sintomaService.eliminar(id);
             if(estado){
                 return ok().build();
-            }
-            else {
+            } else {
                 return noContent().build();
             }
-        }
-        catch (OperationException e){
+        } catch (OperationException e){
             log.error("Error al cambiar de estado el síntoma: {}", e.getMessage());
             return CustomErrorType.badRequest(FormatUtil.MSG_TITLE_ERROR, e.getMessage());
-        }
-        catch (Exception e){
+        } catch (Exception e){
             log.error("Error no controlado al cambiar de estado el síntoma.", e);
             return CustomErrorType.badRequest(FormatUtil.MSG_TITLE_ERROR, FormatUtil.defaultError());
         }

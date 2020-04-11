@@ -13,6 +13,7 @@ import bo.com.reportate.utils.FormatUtil;
 import org.jfree.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -40,6 +41,11 @@ public class EnfermedadServiceImpl implements EnfermedadService {
     @Override
     public List<EnfermedadResponse> listNoBase() {
         return this.enfermedadRepository.findByEnfermedadBaseFalseAndEstadoOrderByNombreAsc(EstadoEnum.ACTIVO);
+    }
+
+    @Override
+    public List<EnfermedadResponse> listBase() {
+        return this.enfermedadRepository.findByEnfermedadBaseTrueAndEstadoOrderByNombreAsc(EstadoEnum.ACTIVO);
     }
 
     @Override
@@ -83,16 +89,9 @@ public class EnfermedadServiceImpl implements EnfermedadService {
     }
 
     @Override
-    public boolean cambiarEstado(Long id) {
-        Enfermedad enfermedad = enfermedadRepository.getOne(id);
-        if (enfermedad == null) {
-            throw new OperationException(FormatUtil.noRegistrado("Enfermedad", id));
-        }
-        Log.info("Persistiendo el objeto");
-        EstadoEnum estado = enfermedad.getEstado() == EstadoEnum.ACTIVO ? EstadoEnum.INACTIVO : EstadoEnum.ACTIVO;
-        enfermedad.setEstado(estado);
-
-        enfermedadRepository.save(enfermedad);
-        return enfermedad.getEstado() == EstadoEnum.ACTIVO;
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public boolean eliminar(Long id) {
+        this.enfermedadRepository.eliminar(id);
+        return true;
     }
 }

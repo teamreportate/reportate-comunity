@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,6 +38,14 @@ public class FichaEpidemiologicaResponse implements Serializable {
     private String zona;
     private String direccion;
     private String Ubicacion;
+
+    private String ci;
+    private Date fechaNacimineto;
+    private String seguro;
+    private String codigoSeguro;
+    private String ocupacion;
+    private Boolean gestacion;
+    private Integer tiempoGestacion;
 
     private List<PaisVisitadoDto> paisesVisitados;
     private List<EnfermedadResponse> enfermedadesBase;

@@ -34,6 +34,11 @@ export class PacienteService {
     return this.httpClient.put(url, JSON.stringify(data), {observe: 'response'});
   }
 
+  updatePaisViajado(controlPaisId: string, data: any) {
+    const url = Constantes.baseUri + Constants.pacienteApi + '/' + controlPaisId + '/editar-pais';
+    return this.httpClient.put(url, JSON.stringify(data), {observe: 'response'});
+  }
+
   addPaisViajado(idPaciente: string, data: any) {
     const url = Constantes.baseUri + Constants.pacienteApi + '/' + idPaciente + '/agregar-pais';
     return this.httpClient.put(url, JSON.stringify(data), {observe: 'response'});
@@ -44,8 +49,13 @@ export class PacienteService {
     return this.httpClient.put(url, null, {observe: 'response'});
   }
 
-  eliminarContacto(idPaciente: string, idContacto: string) {
-    const url = Constantes.baseUri + Constants.pacienteApi + '/' + idPaciente + '/' + idContacto + '/eliminar-contacto';
+  eliminarPaisViajado(idPaciente: string, paisId: string) {
+    const url = Constantes.baseUri + Constants.pacienteApi + '/' + idPaciente + '/' + paisId + '/eliminar-pais-visitado';
+    return this.httpClient.put(url, null, {observe: 'response'});
+  }
+
+  eliminarContacto(idContacto: string) {
+    const url = Constantes.baseUri + Constants.pacienteApi + '/' + idContacto + '/eliminar-contacto';
     return this.httpClient.put(url, {observe: 'response'});
   }
 

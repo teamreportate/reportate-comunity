@@ -27,6 +27,8 @@ public interface Constants {
         String MAIL_USERNAME = "MAIL_USERNAME";
         String MAIL_PASS = "MAIL_PASSWORD";
         String MAIL_FROM = "MAIL_FROM";
+
+        String INDICADOR_SOSPECHOSO = "INDICADOR_SOSPECHOSO";
     }
 }
 

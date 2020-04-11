@@ -12,6 +12,8 @@ import bo.com.reportate.utils.FormatUtil;
 import org.jfree.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,16 +76,9 @@ public class SintomaServiceImpl implements SintomaService {
     }
 
     @Override
-    public boolean cambiarEstado(Long id) {
-        Sintoma sintoma = sintomaRepository.getOne(id);
-        if (sintoma == null) {
-            throw new OperationException(FormatUtil.noRegistrado("Síntoma", id));
-        }
-
-        EstadoEnum estado = sintoma.getEstado() == EstadoEnum.ACTIVO ? EstadoEnum.INACTIVO : EstadoEnum.ACTIVO;
-        sintoma.setEstado(estado);
-
-        sintomaRepository.save(sintoma);
-        return sintoma.getEstado() == EstadoEnum.ACTIVO;
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public boolean eliminar(Long id) {
+        this.sintomaRepository.eliminar(id);
+        return true;
     }
 }

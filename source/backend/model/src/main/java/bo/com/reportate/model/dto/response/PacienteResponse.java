@@ -26,4 +26,5 @@ public class PacienteResponse  implements Serializable {
     private Boolean gestacion = false;
     private Integer tiempoGestacion;
     private Boolean controlInicial;
+    private String ocupacion;
 }

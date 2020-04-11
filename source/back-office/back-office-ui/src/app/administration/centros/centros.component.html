@@ -1,36 +1,42 @@
 <clic-page [title]="'Listado de Centros de Salud'" (reloadEmitter)="this.ngOnInit()">
-    <br>
+  <div fxLayout="row wrap">
+    <mat-form-field [fxFlex]="this.flex" class="h-padding-5">
+      <mat-label>Seleccione un Departamento</mat-label>
+      <mat-select [(ngModel)]="selectDepa" (selectionChange)="selectDepartamento($event.value)">
+          <mat-option *ngFor="let depa of depaList" [value]="depa">{{depa.nombre}}</mat-option>
+      </mat-select>
+  </mat-form-field>
+
+  <mat-form-field [fxFlex]="this.flex" class="h-padding-5">
+      <mat-label>Seleccione un Municipio</mat-label>
+      <mat-select [(ngModel)]="selectMuni" (selectionChange)="selectMunicipio($event.value)">
+          <mat-option *ngFor="let muni of muniList" [value]="muni">{{muni.nombre}}</mat-option>
+      </mat-select>
+  </mat-form-field>
+  </div>
+
     <div fxLayout="row wrap">
-        <mat-form-field>
-            <mat-label>Seleccione un Departamento</mat-label>
-            <mat-select [(ngModel)]="selectDepa" (selectionChange)="selectDepartamento($event.value)">
-                <mat-option *ngFor="let depa of depaList" [value]="depa">{{depa.nombre}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Seleccione un Municipio</mat-label>
-            <mat-select [(ngModel)]="selectMuni" (selectionChange)="selectMunicipio($event.value)">
-                <mat-option *ngFor="let muni of muniList" [value]="muni">{{muni.nombre}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <div [fxFlex]="this.flex" fxLayoutAlign="start center" class="h-padding-5">
-            <button mat-raised-button class="btn-full" color="accent" (click)="this.openDialog(null)">Nuevo Centro de Salud</button>
-        </div>
-
-        <div [fxFlex]="this.flex===100?100:100-this.flex" fxLayoutAlign="center center" class="h-padding-5">
-            <mat-form-field>
-                <input matInput placeholder='Buscar...' (keyup)="this.onFilter($event.target.value)" maxlength="30" />
-            </mat-form-field>
-        </div>
-
-
+      <div [fxFlex]="this.flex" fxLayoutAlign="start center" class="h-padding-5">
+        <button mat-raised-button class="btn-full" color="accent" (click)="this.openDialog(null)" [(disabled)]="this.flagButton">Nuevo Centro de Salud</button>
     </div>
+
+    <div [fxFlex]="this.flex===100?100:100-this.flex" fxLayoutAlign="center center" class="h-padding-5">
+        <mat-form-field>
+            <input matInput placeholder='Buscar...' (keyup)="this.onFilter($event.target.value)" maxlength="30" />
+        </mat-form-field>
+    </div>
+  </div>
 
     <div fxLayout="row wrap" class="h-padding-5">
         <div fxFlex="100">
-            <ngx-datatable #table class="material" [messages]="this.tableMessages()" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]='10' [rows]="this.centroList" [scrollbarH]="this.scrollH">
+            <ngx-datatable #table class="material" [messages]="this.tableMessages()"
+                           [columnMode]="'force'"
+                           [headerHeight]="50"
+                           [footerHeight]="50"
+                           [rowHeight]="'auto'"
+                           [limit]='10'
+                           [rows]="this.centroList"
+                           [scrollbarH]="this.scrollH">
 
                 <ngx-datatable-column name="Acciones" [minWidth]="100" [maxWidth]="200" [draggable]="false" [resizeable]="false">
                     <ng-template let-row="row" ngx-datatable-cell-template>

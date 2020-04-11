@@ -1,7 +1,10 @@
 package bo.com.reportate.repository;
 
+import bo.com.reportate.model.ControlDiario;
 import bo.com.reportate.model.ControlDiarioSintoma;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 /**
  * @Created by :MC4
@@ -13,4 +16,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @Copyright :MC4
  */
 public interface ControlDiarioSintomaRepository extends JpaRepository<ControlDiarioSintoma, Long> {
+    List<ControlDiarioSintoma> findByControlDiario(ControlDiario controlDiario);
 }

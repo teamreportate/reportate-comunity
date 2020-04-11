@@ -5,7 +5,9 @@ import bo.com.reportate.model.dto.EnfermedadDto;
 import bo.com.reportate.model.dto.response.EnfermedadResponse;
 import bo.com.reportate.model.enums.EstadoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +27,7 @@ public interface EnfermedadRepository extends JpaRepository<Enfermedad, Long> {
     List<EnfermedadResponse> listarEnfermedadesActivos();
 
     List<EnfermedadResponse> findByEnfermedadBaseFalseAndEstadoOrderByNombreAsc(EstadoEnum estadoEnum);
+    List<EnfermedadResponse> findByEnfermedadBaseTrueAndEstadoOrderByNombreAsc(EstadoEnum estadoEnum);
     List<EnfermedadDto> findByEstadoOrderByNombreAsc(EstadoEnum estadoEnum);
 
     @Query("SELECT new bo.com.reportate.model.dto.response.EnfermedadResponse(e) " +
@@ -44,4 +47,8 @@ public interface EnfermedadRepository extends JpaRepository<Enfermedad, Long> {
     List<Enfermedad> listAll();
 
     List<Enfermedad> findByEnfermedadBaseFalseAndEstado(EstadoEnum estadoEnum);
+
+    @Modifying
+    @Query("UPDATE Enfermedad set estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE id=:enfermedadId")
+    void eliminar(@Param("enfermedadId") Long id);
 }
