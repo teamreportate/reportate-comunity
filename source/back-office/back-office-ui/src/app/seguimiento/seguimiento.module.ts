@@ -36,9 +36,10 @@ import {AddPaisViajadoComponent} from './seguimiento-enfermedad/ficha-epidemiolo
 import {PacienteService} from '../core/services/http-services/paciente.service';
 import {PaisService} from '../core/services/http-services/pais.service';
 import {EnfermedadService} from '../core/services/http-services/enfermedad.service';
+import { ListSintomasComponent } from './seguimiento-enfermedad/ficha-epidemiologica/dialogs/list-sintomas/list-sintomas.component';
 
 @NgModule({
-  declarations: [SeguimientoEnfermedadComponent, FichaEpidemiologicaComponent, AddContactoComponent, AddEnfermedadComponent, AddPaisViajadoComponent],
+  declarations: [SeguimientoEnfermedadComponent, FichaEpidemiologicaComponent, AddContactoComponent, AddEnfermedadComponent, AddPaisViajadoComponent, ListSintomasComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(SeguimientoRoute),
