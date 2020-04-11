@@ -1,14 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import echarts from '../../../assets/js/echarts.min.js';
+import { Data } from '../dashboard.type.js';
 
 @Component({
   selector: 'app-recuperados',
   templateUrl: './recuperados.component.html'
 })
 export class RecuperadosComponent implements OnInit {
-
-  @Input() data = [];
 
   mostrar: boolean;
   option: any;
@@ -21,10 +20,9 @@ export class RecuperadosComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.draw();
   }
 
-  draw() {
+  draw(data: Data) {
     this.option = {
       title: {
         text: 'RECUPERADOS'
@@ -32,13 +30,13 @@ export class RecuperadosComponent implements OnInit {
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: ['06/04/2020', '07/04/2020', '08/04/2020', '08/04/2020', '09/04/2020', '10/04/2020', '11/04/2020', '12/04/2020']
+        data: data.dias
       },
       yAxis: {
         type: 'value'
       },
       series: [{
-        data: [80, 35, 20, 20, 15, 55, 70, 25],
+        data: data.curados,
         type: 'line',
         areaStyle: {
           color: {
