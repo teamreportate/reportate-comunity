@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @Created by :MC4
@@ -36,7 +37,8 @@ public class ControlDiario extends AbstractAuditableEntity{
     @JoinColumn(name = "ID_PACIENTE", referencedColumnName = "ID")
     private Paciente paciente;
 
-
+    @Column(name = "RECOMENDACION", length = 500)
+    private String recomendacion;
 
 
 }

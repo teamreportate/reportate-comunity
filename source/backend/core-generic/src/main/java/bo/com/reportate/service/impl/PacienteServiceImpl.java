@@ -12,6 +12,8 @@ import bo.com.reportate.model.dto.request.PaisRequest;
 import bo.com.reportate.model.dto.request.SintomaRequest;
 import bo.com.reportate.model.dto.response.EnfermedadResponse;
 import bo.com.reportate.model.dto.response.FichaEpidemiologicaResponse;
+import bo.com.reportate.model.dto.response.MovilControlDiario;
+import bo.com.reportate.model.dto.response.SintomaResponse;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
@@ -442,5 +444,28 @@ public class PacienteServiceImpl implements PacienteService {
     public void eliminarContacto(Long contactoId) {
         this.pacienteRepository.eliminarContacto(contactoId);
 
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<MovilControlDiario> getControlDiario(Long pacienteId) {
+        Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId,EstadoEnum.ACTIVO).orElseThrow(()-> new NotDataFoundException("No se encontró el paciente"));
+        Pageable pageable = PageRequest.of(0, 10);
+        List<ControlDiario> controlDiarios = this.controlDiarioRepository.listarControlDiario(paciente, pageable);
+        List<MovilControlDiario> list = new ArrayList<>();
+        for (ControlDiario cd: controlDiarios){
+            MovilControlDiario resp = new MovilControlDiario();
+            resp.setId(cd.getId());
+            resp.setFechaRegistro(cd.getCreatedDate());
+            resp.setRecomendacion(cd.getRecomendacion());
+            List<ControlDiarioSintoma> diarioSintomaList = this.controlDiarioSintomaRepository.findByControlDiario(cd);
+            List<SintomaResponse> sintomaResponses = new ArrayList<>();
+            diarioSintomaList.forEach(controlDiarioSintoma ->
+                    sintomaResponses.add(
+                            new SintomaResponse(controlDiarioSintoma.getSintoma().getId(),controlDiarioSintoma.getSintoma().getNombre(),"",false,"")));
+            resp.setSintomas(sintomaResponses);
+            list.add(resp);
+        }
+        return list;
     }
 }
