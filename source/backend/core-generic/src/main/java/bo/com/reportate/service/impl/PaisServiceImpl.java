@@ -13,6 +13,7 @@ import bo.com.reportate.utils.FormatUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -70,17 +71,9 @@ public class PaisServiceImpl implements PaisService {
     }
 
     @Override
-    public boolean cambiarEstado(Long id) {
-        log.info("Validaciones");
-        Pais pais = paisRepository.getOne(id);
-        if (pais == null) {
-            throw new OperationException(FormatUtil.noRegistrado("País", id));
-        }
-        log.info("Persistiendo el objeto");
-        EstadoEnum estado = pais.getEstado() == EstadoEnum.ACTIVO ? EstadoEnum.INACTIVO : EstadoEnum.ACTIVO;
-        pais.setEstado(estado);
-
-        paisRepository.save(pais);
-        return pais.getEstado() == EstadoEnum.ACTIVO;
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public boolean eliminar(Long id) {
+        this.paisRepository.eliminar(id);
+        return true;
     }
 }

@@ -27,5 +27,5 @@ public interface EnfermedadService {
     Enfermedad save(EnfermedadDto enfermedadDto);
     Enfermedad findById(Long enfermedadId);
     Enfermedad update(Long id, EnfermedadDto enfermedadDto);
-    boolean cambiarEstado(Long id);
+    boolean eliminar(Long id);
 }

@@ -109,30 +109,28 @@ public class EnfermedadController {
         try {
             return ok(this.enfermedadService.listActivos());
         }catch (NotDataFoundException e){
-            log.error("Se genero un error al obtener la enfermedad.",e.getMessage());
+            log.error("Se genero un error al obtener la enfermedad. Cuasa.{}",e.getMessage());
             return CustomErrorType.badRequest("Obtener enfermedad", "Ocurrió un error al obtener las enfermedades");
         }catch (Exception e){
-            log.error("Se genero un error al obtener las enfermedades.",e.getMessage());
+            log.error("Se genero un error al obtener las enfermedades.",e);
             return CustomErrorType.serverError("Obtener enfermedades", "Ocurrió un error al obtener las enfermedades");
         }
     }
 
-    @DeleteMapping("/{id}/cambiar-estado")
-    public ResponseEntity cambiarEstado(@PathVariable("id") Long id) {
+    @PutMapping("/{id}/eliminar")
+    public ResponseEntity eliminar(@PathVariable("id") Long id) {
         try{
-            boolean estado = enfermedadService.cambiarEstado(id);
+            boolean estado = enfermedadService.eliminar(id);
             if(estado){
                 return ok().build();
             }
             else {
                 return noContent().build();
             }
-        }
-        catch (OperationException e){
+        } catch (OperationException e){
             log.error("Error al cambiar de estado la enfermedad: {}", e.getMessage());
             return CustomErrorType.badRequest(FormatUtil.MSG_TITLE_ERROR, e.getMessage());
-        }
-        catch (Exception e){
+        } catch (Exception e){
             log.error("Error no controlado al cambiar de estado la enfermadad.", e);
             return CustomErrorType.badRequest(FormatUtil.MSG_TITLE_ERROR, FormatUtil.defaultError());
         }

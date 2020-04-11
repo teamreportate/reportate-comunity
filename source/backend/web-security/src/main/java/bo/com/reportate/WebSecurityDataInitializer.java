@@ -179,7 +179,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
                 .grupo("Parámetros de diagnostico")
                 .descripcion("Parámetros de diagnostico")
                 .build());
-
+        this.grupoParametroRepository.save(diagnostico);
         parametro = new MuParametro(null, Constants.Parameters.INDICADOR_SOSPECHOSO, "Indicador para clasificar como sospechoso un diagnostico", null, null, new BigDecimal("5"), null, ParamTipoDato.NUMERICO, false,null, diagnostico);
         this.paramService.saveParametro(parametro);
 
