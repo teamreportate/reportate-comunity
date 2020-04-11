@@ -12,7 +12,7 @@ import { NotifierService } from 'angular-notifier';
 import { Page } from '../../core/utils/paginator/page';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { CustomOptions } from '../../core/models/dto/custom-options';
-import { Filter, Basic, Data } from '../dashboard.type.js';
+import { Filter, Basic, Data, DataTotal } from '../dashboard.type.js';
 import { Department, Municipaly, SaludCentre } from 'src/app/access/users/user.type.js';
 import { AccessService } from 'src/app/access/access.service.js';
 import { EnfermedadService } from 'src/app/core/services/http-services/enfermedad.service';
@@ -51,17 +51,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
   saludCentres: SaludCentre[] = [];
   enfermedades: Basic[] = [];
 
-  list = [
-    { departamento: 'Santa Cruz', sospechoso: 150, confirmado: 20, recuperado: 8, muerto: 1 },
-    { departamento: 'Cochabamba', sospechoso: 90, confirmado: 15, recuperado: 5, muerto: 0 },
-    { departamento: 'Beni', sospechoso: 88, confirmado: 10, recuperado: 3, muerto: 0 },
-    { departamento: 'Pando', sospechoso: 85, confirmado: 10, recuperado: 3, muerto: 0 },
-    { departamento: 'La paz', sospechoso: 79, confirmado: 9, recuperado: 4, muerto: 0 },
-    { departamento: 'Tarija', sospechoso: 55, confirmado: 5, recuperado: 2, muerto: 0 },
-    { departamento: 'Sucre', sospechoso: 55, confirmado: 6, recuperado: 2, muerto: 0 },
-    { departamento: 'Potosí', sospechoso: 30, confirmado: 3, recuperado: 2, muerto: 0 },
-    { departamento: 'Oruro', sospechoso: 20, confirmado: 1, recuperado: 1, muerto: 0 },
-  ];
+  totalsList: DataTotal = new DataTotal();
 
   @ViewChild(ResumeComponent) resumeComponent: ResumeComponent;
   @ViewChild(ConfirmadoComponent) confirmadoComponent: ConfirmadoComponent;
@@ -98,6 +88,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
     });
     this.getByValorationRequest();
     this.getReportWithFiltersRequest();
+    this.getTotals();
   }
 
   getSetting() {
@@ -121,6 +112,25 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
       this.blockUI.stop();
       if (error) this.notifierError(error);
     });
+  }
+
+
+  getTotals() {
+    if (this.form.valid) {
+      const formValue = this.form.value;
+      const from = formValue.from.getDate() + '%2F' + (formValue.from.getMonth() + 1) + '%2F' + formValue.from.getFullYear();
+      const to = formValue.to.getDate() + '%2F' + (formValue.to.getMonth() + 1) + '%2F' + formValue.to.getFullYear();
+
+      this.service.reportTotals(from, to, this.filter).subscribe(response => {
+
+        this.totalsList = response.body;
+
+        this.blockUI.stop();
+      }, error => {
+        this.blockUI.stop();
+        if (error) this.notifierError(error);
+      });
+    }
   }
 
   getByValorationRequest() {

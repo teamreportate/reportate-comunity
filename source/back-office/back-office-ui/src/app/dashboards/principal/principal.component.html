@@ -1,4 +1,4 @@
-<h4 class="text-center">Test realizados (datos de prueba)</h4>
+<h4 class="text-center">Test realizados</h4>
 <mat-accordion>
   <mat-expansion-panel (opened)="panelOpenState = true"
                        (closed)="panelOpenState = false">
@@ -69,7 +69,7 @@
               </mat-form-field>
             </div>
             <div fxFlex="6" class="text-right">
-              <button mat-flat-button color="accent" type="button" title="Filtrar lista" (click)="getReportWithFiltersRequest()">
+              <button mat-flat-button color="accent" type="button" title="Filtrar resultados" (click)="getReportWithFiltersRequest()">
                 <span class="material-icons"> filter_list </span> </button>
             </div>
 
@@ -84,12 +84,13 @@
 
 <div fxLayout="row wrap" fxLayoutAlign="space-around">
   <div fxFlex="38">
+    <h4 class="text-center">{{totalsList.nivelLugar}}</h4>
     <ngx-datatable #table class="material" [messages]="this.tableMessages()" [columnMode]="'force'" [headerHeight]="50"
-      [footerHeight]="50" [rowHeight]="'auto'" [limit]='10' [rows]="list" [scrollbarH]="this.scrollH">
+      [footerHeight]="50" [rowHeight]="'auto'" [limit]='10' [rows]="totalsList.items" [scrollbarH]="this.scrollH">
 
-      <ngx-datatable-column name="Departamento" [draggable]="false" [minWidth]="120" [resizeable]="false">
+      <ngx-datatable-column name="Nombre" [draggable]="false" [minWidth]="120" [resizeable]="false">
         <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
-          {{row.departamento}}
+          {{row.nombre}}
         </ng-template>
       </ngx-datatable-column>
 
@@ -107,13 +108,13 @@
 
       <ngx-datatable-column name="Recuperados" [draggable]="false" [resizeable]="false">
         <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
-          {{row.recuperado }}
+          {{row.curado }}
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Muertos" [draggable]="false" [resizeable]="false">
+      <ngx-datatable-column name="Fallecidos" [draggable]="false" [resizeable]="false">
         <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
-          {{row.muerto }}
+          {{row.fallecido }}
         </ng-template>
       </ngx-datatable-column>
 
