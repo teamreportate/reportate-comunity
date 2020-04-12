@@ -157,14 +157,6 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
       const from = formValue.from.getDate() + '%2F' + (formValue.from.getMonth() + 1) + '%2F' + formValue.from.getFullYear();
       const to = formValue.to.getDate() + '%2F' + (formValue.to.getMonth() + 1) + '%2F' + formValue.to.getFullYear();
 
-
-      this.service.reportResumenWithFiltersRequest(from, to, this.filter).subscribe(response => {
-        this.resumen = response.body;
-        this.resumeComponent.draw(this.resumen);
-      }, error => {
-        if (error) this.notifierError(error);
-      });
-
       this.service.reportWithFiltersRequest(from, to, this.filter).subscribe(response => {
         this.data = response.body;
         this.confirmadoComponent.draw(this.data);
@@ -180,8 +172,27 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
     }
   }
 
+  reportResumenWithFiltersRequest() {
+    this.blockUI.start('Actualizando gráficos...');
+    if (this.form.valid) {
+      const formValue = this.form.value;
+      const from = formValue.from.getDate() + '%2F' + (formValue.from.getMonth() + 1) + '%2F' + formValue.from.getFullYear();
+      const to = formValue.to.getDate() + '%2F' + (formValue.to.getMonth() + 1) + '%2F' + formValue.to.getFullYear();
+
+      this.service.reportResumenWithFiltersRequest(from, to, this.filter).subscribe(response => {
+        this.resumen = response.body;
+        this.resumeComponent.draw(this.resumen);
+        this.blockUI.stop();
+      }, error => {
+        this.blockUI.stop();
+        if (error) this.notifierError(error);
+      });
+    }
+  }
+
   updateData() {
     this.getByValorationRequest();
+    this.reportResumenWithFiltersRequest();
     this.getReportWithFiltersRequest();
     this.getTotals();
   }
@@ -197,9 +208,30 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
       xAxis: { type: 'category' },
       yAxis: {},
       series: [
-        { type: 'bar' },
-        { type: 'bar' },
-        { type: 'bar' }
+        {
+          type: 'bar',
+          color: {
+            colorStops: [{
+              offset: 0, color: '#FB9678'
+            }]
+          }
+        },
+        {
+          type: 'bar',
+          color: {
+            colorStops: [{
+              offset: 0, color: '#F4D03F'
+            }]
+          }
+        },
+        {
+          type: 'bar',
+          color: {
+            colorStops: [{
+              offset: 0, color: '#2ECC71'
+            }]
+          }
+        }
       ]
     };
     this.myChart = this.echarts.init(document.getElementById('main'));

@@ -38,13 +38,13 @@ export class RecuperadosComponent implements OnInit {
         areaStyle: {
           color: {
             colorStops: [{
-              offset: 0, color: '#90BCC2'
+              offset: 0, color: '#2ECC71'
             }]
           }
         },
         color: {
           colorStops: [{
-            offset: 0, color: '#90BCC2'
+            offset: 0, color: '#2ECC71'
           }]
         }
       }]
