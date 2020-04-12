@@ -17,7 +17,7 @@ import {
   MatProgressSpinnerModule,
   MatRippleModule,
   MatSelectModule,
-  MatSlideToggleModule,
+  MatSlideToggleModule, MatSortModule,
   MatTabsModule,
   MatTooltipModule
 } from '@angular/material';
@@ -36,7 +36,8 @@ import {AddPaisViajadoComponent} from './seguimiento-enfermedad/ficha-epidemiolo
 import {PacienteService} from '../core/services/http-services/paciente.service';
 import {PaisService} from '../core/services/http-services/pais.service';
 import {EnfermedadService} from '../core/services/http-services/enfermedad.service';
-import { ListSintomasComponent } from './seguimiento-enfermedad/ficha-epidemiologica/dialogs/list-sintomas/list-sintomas.component';
+import {ListSintomasComponent} from './seguimiento-enfermedad/ficha-epidemiologica/dialogs/list-sintomas/list-sintomas.component';
+import {DiagnosticoService} from '../core/services/http-services/diagnostico.service';
 
 @NgModule({
   declarations: [SeguimientoEnfermedadComponent, FichaEpidemiologicaComponent, AddContactoComponent, AddEnfermedadComponent, AddPaisViajadoComponent, ListSintomasComponent],
@@ -68,9 +69,10 @@ import { ListSintomasComponent } from './seguimiento-enfermedad/ficha-epidemiolo
     MatMenuModule,
     DragDropModule,
     CommonsModule,
-    SharedModule
-  ], entryComponents: [AddContactoComponent, AddPaisViajadoComponent, AddEnfermedadComponent],
-  providers: [PacienteService, PaisService, EnfermedadService]
+    SharedModule,
+    MatSortModule
+  ], entryComponents: [AddContactoComponent, AddPaisViajadoComponent, AddEnfermedadComponent,ListSintomasComponent],
+  providers: [PacienteService, PaisService, EnfermedadService, DiagnosticoService]
 })
 export class SeguimientoModule {
 }
