@@ -100,6 +100,7 @@ export default ({newMember}) => {
 				initialValues={{
 					occupationSwitch: !!member.occupation,
 					occupation      : member.occupation,
+					age             : 20,
 				}}
 			>
 				<Form.Item label="Nombre"
@@ -114,7 +115,6 @@ export default ({newMember}) => {
 									 rules={[{required: true, message: 'Ingresa la edad'}]}>
 					<InputNumber
 						style={{width: '100%'}}
-						defaultValue={20}
 						min={0}
 						max={150}
 					
@@ -237,11 +237,3 @@ export default ({newMember}) => {
 		</div>
 	);
 }
-
-const styles = {
-	radio: {
-		display   : 'block',
-		height    : '30px',
-		lineHeight: '30px',
-	}
-};

@@ -35,7 +35,6 @@ export default () => {
 	useEffect(() => {
 		if (user.logged) {
 			if (family.fetched) {
-				console.log({family_id: family.id});
 				if (family.id > 0) {
 					history.push("/dashboard");
 				} else {
