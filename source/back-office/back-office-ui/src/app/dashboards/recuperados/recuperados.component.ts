@@ -24,9 +24,6 @@ export class RecuperadosComponent implements OnInit {
 
   draw(data: Data) {
     this.option = {
-      title: {
-        text: 'RECUPERADOS'
-      },
       xAxis: {
         type: 'category',
         boundaryGap: false,

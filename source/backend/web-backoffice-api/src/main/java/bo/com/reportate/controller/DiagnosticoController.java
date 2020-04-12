@@ -2,13 +2,17 @@ package bo.com.reportate.controller;
 
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
+import bo.com.reportate.model.Diagnostico;
+import bo.com.reportate.model.dto.DiagnosticoDto;
 import bo.com.reportate.model.dto.response.*;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.service.DiagnosticoResumenEstadoService;
+import bo.com.reportate.service.DiagnosticoResumenTotalEstadoService;
 import bo.com.reportate.service.DiagnosticoService;
 import bo.com.reportate.service.ParamService;
 import bo.com.reportate.util.CustomErrorType;
 import bo.com.reportate.utils.DateUtil;
+import bo.com.reportate.web.ActualizacionDiagnosticoRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -46,6 +50,7 @@ public class DiagnosticoController {
     @Autowired private DiagnosticoService diagnosticoService;
     @Autowired private ParamService paramService;
     @Autowired private DiagnosticoResumenEstadoService diagnosticoResumenEstadoService;
+    @Autowired private DiagnosticoResumenTotalEstadoService diagnosticoResumenTotalEstadoService;
 
     @RequestMapping(value = "/listar-filtro/{page}/{size}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Listar los diagnosticos", description = "Listar los diagnosticos", tags = { "diagnostico" })
@@ -236,6 +241,56 @@ public class DiagnosticoController {
             return CustomErrorType.serverError("Listar por estado Diagnosticos", "Se genero un error al listar por estado los diagnosticos");
         }
     }
+    
+    @RequestMapping(value = "/listar-total-por-estado-diagnostico",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Agrupar los diagnosticos por estado", description = "Agrupar los diagnosticos por estado", tags = { "grupos de diagnosticos por estado" })
+    public ResponseEntity<GraficoLineaResponse> listarTotalPorEstadoDiagnostico(
+    		@AuthenticationPrincipal Authentication authentication,
+    		@Parameter(description = "Fecha inicio para el filtro", required = true)
+            @RequestParam("from") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_PARAM_URL) Date from,
+            @Parameter(description = "Fecha fin para el filtro", required = true)
+            @RequestParam("to") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_PARAM_URL) Date to,
+            @Parameter(description = "Identificador de Departamento", required = true)
+    		@RequestParam("departamentoId") Long departamentoId,
+            @Parameter(description = "Identificador de Municipio", required = true)
+            @RequestParam("municipioId") Long municipioId,
+            @Parameter(description = "Identificador de Centro Salud", required = true)
+            @RequestParam("centroSaludId") Long centroSaludId,
+            @Parameter(description = "Identificador de Enfermedad", required = true)
+            @RequestParam("enfermedadId") Long enfermedadId) {
+        try {
+        	GraficoLineaResponse response = new GraficoLineaResponse();
+        	List<ResumenDto> resumenDtos= this.diagnosticoResumenTotalEstadoService.cantidadDiagnosticoPorFiltros(authentication, from, to, departamentoId, municipioId, centroSaludId, enfermedadId);
+        	
+        	for (ResumenDto resumenDto : resumenDtos) {
+				response.add(DateUtil.toString(DateUtil.FORMAT_DATE, resumenDto.getNombreGrafico()), resumenDto.getSospechoso(), resumenDto.getNegativo(),resumenDto.getConfirmado(),resumenDto.getCurado(),resumenDto.getFallecido());
+			}
+            return ok(response);
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al listar por estado los diagnosticos: Causa. {}",e.getMessage());
+            return CustomErrorType.badRequest("Listar por estado Diagnosticos", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al agrupar los diagnosticos:",e);
+            return CustomErrorType.serverError("Listar por estado Diagnosticos", "Se genero un error al listar por estado los diagnosticos");
+        }
+    }
 
+    @RequestMapping(value = "/{diagnosticoId}/actualizar-diagnostico",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes =  MediaType.APPLICATION_JSON_VALUE )
+    @Operation(summary = "Actualiza el estado de un diagnóstico", description = "Actualiza el estado de un diagnóstico, este método sólo es permitido para médicos", tags = { "diagnostico" })
+    public ResponseEntity<DiagnosticoDto> actualizarDiagnostico(
+            @AuthenticationPrincipal Authentication authentication,
+            @PathVariable("diagnosticoId") Long diagnosticoId,
+            @RequestBody ActualizacionDiagnosticoRequest diagnosticoRequest){
+        try{
+            DiagnosticoDto diagnosticoDto = this.diagnosticoService.actualizarDiagnostico(authentication, diagnosticoId, diagnosticoRequest.getEstadoDiagnostico(), diagnosticoRequest.getObservacion());
+            return ok(diagnosticoDto);
+        }catch (NotDataFoundException | OperationException e){
+            log.error("No se logro actualizar diagnostico con id {}. Causa. {}", diagnosticoId, e.getMessage());
+            return CustomErrorType.badRequest("Actualizar Diagnóstico",e.getMessage());
+        }catch (Exception e){
+            log.error("No se logro actualizar diagnostico con id {}", diagnosticoId, e);
+            return CustomErrorType.badRequest("Actualizar Diagnóstico","No se logro actualizar diagnóstico");
+        }
+    }
 
 }

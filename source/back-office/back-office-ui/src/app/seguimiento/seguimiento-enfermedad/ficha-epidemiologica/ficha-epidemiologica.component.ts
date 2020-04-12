@@ -12,6 +12,8 @@ import {BlockUI, NgBlockUI} from 'ng-block-ui';
 import {AddEnfermedadComponent} from './dialogs/add-enfermedad/add-enfermedad.component';
 import {AddPaisViajadoComponent} from './dialogs/add-pais-viajado/add-pais-viajado.component';
 import {AddContactoComponent} from './dialogs/add-contacto/add-contacto.component';
+import * as moment from 'moment';
+import {ListSintomasComponent} from './dialogs/list-sintomas/list-sintomas.component';
 
 interface Food {
   value: string;
@@ -38,6 +40,8 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
   constructor(private route: ActivatedRoute, public dialog: MatDialog, private pacienteService: PacienteService, private formBuilder: FormBuilder, private notifier: NotifierService) {
     super();
     this.form = this.initial();
+    moment.locale('es-BO');
+
   }
 
   estados = Constants.CLASIFICACION_ENFERMEDAD2;
@@ -60,16 +64,18 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       nombre: new FormControl('', Validators.compose([Validators.required])),
       edad: new FormControl('', Validators.compose([Validators.required])),
       telefono: new FormControl('', Validators.compose([Validators.required])),
-      cedulaIdentidad: new FormControl('', Validators.compose([Validators.required])),
+      ci: new FormControl('', Validators.compose([Validators.required])),
       departamento: new FormControl('', Validators.compose([Validators.required])),
       municipio: new FormControl('', Validators.compose([Validators.required])),
       genero: new FormControl('', Validators.compose([Validators.required])),
       ciudad: new FormControl('', Validators.compose([Validators.required])),
-      zona: new FormControl('', Validators.compose([Validators.required])),
       direccion: new FormControl('', Validators.compose([Validators.required])),
       ocupacion: new FormControl('', Validators.compose([Validators.required])),
+      gestacion: new FormControl('', Validators.compose([])),
+      tiempoGestacion: new FormControl('', Validators.compose([])),
       fechaNacimiento: new FormControl('', Validators.compose([Validators.required])),
-
+      seguro: new FormControl('', Validators.compose([])),
+      codigoSeguro: new FormControl('', Validators.compose([])),
       ubicacion: new FormControl('', Validators.compose([Validators.required])),
     });
   }
@@ -80,15 +86,18 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       nombre: new FormControl(data.nombre, Validators.compose([Validators.required])),
       edad: new FormControl(data.edad, Validators.compose([Validators.required])),
       telefono: new FormControl(data.telefono, Validators.compose([Validators.required])),
-      cedulaIdentidad: new FormControl(data.cedulaIdentidad, Validators.compose([Validators.required])),
+      ci: new FormControl(data.ci, Validators.compose([Validators.required])),
       departamento: new FormControl(data.departamento, Validators.compose([Validators.required])),
       municipio: new FormControl(data.municipio, Validators.compose([Validators.required])),
       genero: new FormControl(data.genero, Validators.compose([Validators.required])),
       ciudad: new FormControl(data.ciudad, Validators.compose([Validators.required])),
-      zona: new FormControl(data.zona, Validators.compose([Validators.required])),
       direccion: new FormControl(data.direccion, Validators.compose([Validators.required])),
       ocupacion: new FormControl(data.ocupacion, Validators.compose([Validators.required])),
-      fechaNacimiento: new FormControl(data.fechaNacimiento, Validators.compose([Validators.required])),
+      gestacion: new FormControl(data.gestacion, Validators.compose([])),
+      tiempoGestacion: new FormControl(data.tiempoGestacion, Validators.compose([])),
+      fechaNacimiento: new FormControl(new Date(data.fechaNacimiento), Validators.compose([Validators.required])),
+      seguro: new FormControl(data.seguro, Validators.compose([])),
+      codigoSeguro: new FormControl(data.codigoSeguro, Validators.compose([])),
       ubicacion: new FormControl(data.ubicacion, Validators.compose([Validators.required])),
     });
   }
@@ -140,7 +149,7 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       .subscribe(confirm => {
         if (confirm) {
           this.blockUI.start('Procesando solicitud...');
-          this.pacienteService.eliminarContacto( row.id).subscribe(response => {
+          this.pacienteService.eliminarContacto(row.id).subscribe(response => {
             this.blockUI.stop();
             this.ngOnInit();
             // tslint:disable-next-line:max-line-length
@@ -163,7 +172,7 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       .subscribe(confirm => {
         if (confirm) {
           this.blockUI.start('Procesando solicitud...');
-          this.pacienteService.eliminarPaisViajado( this.idPaciente, row.id).subscribe(response => {
+          this.pacienteService.eliminarPaisViajado(this.idPaciente, row.id).subscribe(response => {
             this.blockUI.stop();
             this.ngOnInit();
             // tslint:disable-next-line:max-line-length
@@ -263,15 +272,33 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       });
   }
 
-  updateDataPaciente(){
-    if(this.form.valid){
+  openDialogSintomas(row: any) {
+    const temporal: any = {};
+    temporal.id = row.id;
+    const dialogRef = this.dialog.open(ListSintomasComponent, this.dialogConfig(temporal));
+    dialogRef.afterClosed()
+      .subscribe(result => {
+
+      });
+  }
+
+
+  updateDataPaciente() {
+    if (this.form.valid) {
+      this.blockUI.start('Procesando solicitud...');
+
+      const value = this.form.controls['fechaNacimiento'].value;
+      this.form.controls['fechaNacimiento'].setValue(moment(this.form.controls['fechaNacimiento'].value).format('DD/MM/YYYY'));
       this.pacienteService.updatePacienteId(this.idPaciente, this.form.value).subscribe(response => {
         this.blockUI.stop();
         // this.ngOnInit();
         // tslint:disable-next-line:max-line-length
         const notif = {error: {title: 'Datos de paciente', detail: 'Datos del paciente actualizado satisfactoriamente.'}};
         this.notifierError(notif, 'info');
+        this.form.controls['fechaNacimiento'].setValue(value);
       }, error => {
+        this.form.controls['fechaNacimiento'].setValue(value);
+
         this.blockUI.stop();
         if (error) {
           this.notifierError(error);

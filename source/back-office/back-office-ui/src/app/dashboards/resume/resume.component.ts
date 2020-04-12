@@ -24,9 +24,6 @@ export class ResumeComponent implements OnInit {
 
   draw(data: Data) {
     this.option = {
-      title: {
-        text: 'RESUMEN'
-      },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -37,7 +34,7 @@ export class ResumeComponent implements OnInit {
         }
       },
       legend: {
-        data: []
+        data: ['Sospechosos', 'Descartados', 'Confirmados', 'Recuperados', 'Fallecidos']
       },
       toolbox: {
         feature: {
@@ -68,6 +65,12 @@ export class ResumeComponent implements OnInit {
           type: 'line',
           areaStyle: {},
           data: data.sospechosos
+        },
+        {
+          name: 'Descartados',
+          type: 'line',
+          areaStyle: {},
+          data: data.negativos
         },
         {
           name: 'Confirmados',

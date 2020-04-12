@@ -1,7 +1,9 @@
 package bo.com.reportate.service.impl;
 
 import bo.com.reportate.exception.NotDataFoundException;
+import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.*;
+import bo.com.reportate.model.dto.DiagnosticoDto;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
 import bo.com.reportate.model.dto.response.DiagnosticoSintomaResponse;
 import bo.com.reportate.model.dto.response.MapResponse;
@@ -9,11 +11,15 @@ import bo.com.reportate.model.dto.response.NivelValoracionDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
+import bo.com.reportate.model.enums.Process;
+import bo.com.reportate.model.enums.TipoUsuarioEnum;
 import bo.com.reportate.repository.*;
 import bo.com.reportate.service.DiagnosticoService;
+import bo.com.reportate.service.LogService;
 import bo.com.reportate.util.ValidationUtil;
 import bo.com.reportate.utils.DateUtil;
 import bo.com.reportate.utils.StringUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +40,7 @@ import java.util.*;
  * @Copyright :MC4
  */
 @Service
+@Slf4j
 public class DiagnosticoServiceImpl implements DiagnosticoService {
 	@Autowired
 	private DiagnosticoRepository diagnosticoRepository;
@@ -53,6 +60,8 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
 	private CentroSaludRepository centroSaludRepository;
 	@Autowired
 	private DiagnosticoSintomaRepository diagnosticoSintomaRepository;
+	@Autowired
+	private LogService logService;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -230,4 +239,25 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
         }
         return diagnosticoRepository.listarPacientesParaMapa(from, to, departamentos, municipios, centroSaluds, diagnosticoEnums, enfermedads);
     }
+
+	@Override
+	public DiagnosticoDto actualizarDiagnostico(Authentication authentication, Long diagnosticoId, EstadoDiagnosticoEnum estadoDiagnosticoEnum, String observacion) {
+		MuUsuario usuario = (MuUsuario) authentication.getPrincipal();
+		ValidationUtil.throwExceptionIfInvalidNumber("diagnostico",diagnosticoId,true ,0L);
+		ValidationUtil.throwExceptionIfInvalidText("observación", observacion, false, 4000);
+//		if(!usuario.getTipoUsuario().equals(TipoUsuarioEnum.MEDICO)){
+//			log.error("El usuario {} no es medico para actualizar el estado de un diagnostico", usuario.getUsername());
+//			throw new OperationException("Esta opción sólo está permitido para médicos.");
+//		}
+		Diagnostico diagnostico = this.diagnosticoRepository.findByIdAndEstado(diagnosticoId,EstadoEnum.ACTIVO).orElseThrow(()->new OperationException("No se encontró el diagnóstico"));
+		log.info("El usuario [{}] esta procediendo a actualizar diagnostico del paciente [{}] a estado {} ", usuario.getUsername(), diagnostico.getControlDiario().getPaciente().getNombre(), estadoDiagnosticoEnum);
+		logService.info(Process.DIAGNOSTICO,"El usuario [{}] esta procediendo a actualizar diagnostico del paciente [{}] a estado {} ", usuario.getUsername(), diagnostico.getControlDiario().getPaciente().getNombre(), estadoDiagnosticoEnum);
+		diagnostico.setEstadoDiagnostico(estadoDiagnosticoEnum);
+		diagnostico.setObservacion(observacion);
+		diagnostico.setMedico(usuario);
+		this.diagnosticoRepository.save(diagnostico);
+		log.info("El usuario [{}] esta procediendo a actualo correctamente el diagnostico del paciente [{}] a estado {} ", usuario.getUsername(), diagnostico.getControlDiario().getPaciente().getNombre(), estadoDiagnosticoEnum);
+		logService.info(Process.DIAGNOSTICO,"El usuario [{}] esta procediendo a actualo correctamente el diagnostico del paciente [{}] a estado {} ", usuario.getUsername(), diagnostico.getControlDiario().getPaciente().getNombre(), estadoDiagnosticoEnum);
+		return new DiagnosticoDto(diagnostico);
+	}
 }

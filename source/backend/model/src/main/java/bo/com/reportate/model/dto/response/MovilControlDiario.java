@@ -2,6 +2,7 @@ package bo.com.reportate.model.dto.response;
 
 import bo.com.reportate.model.ControlDiario;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
+import bo.com.reportate.utils.DateUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,18 +26,18 @@ import java.util.List;
 @Getter @Setter @NoArgsConstructor
 public class MovilControlDiario implements Serializable {
     private Long id;
-    private Date fechaRegistro;
+    private String fechaRegistro;
     private String recomendacion;
     private List<SintomaResponse> sintomas = new ArrayList<>();
     public MovilControlDiario(Long id, Date fechaRegistro, String recomendacion ){
         this.id = id;
-        this.fechaRegistro = fechaRegistro;
+        this.fechaRegistro = DateUtil.toString(DateUtil.FORMAT_DATE_MINUTE,fechaRegistro);
         this.recomendacion = recomendacion;
     }
 
     public MovilControlDiario(ControlDiario controlDiario){
         this.id = controlDiario.getId();
-        this.fechaRegistro = controlDiario.getCreatedDate();
+        this.fechaRegistro = DateUtil.toString(DateUtil.FORMAT_DATE_MINUTE,controlDiario.getCreatedDate());
         this.recomendacion = controlDiario.getRecomendacion();
     }
 }

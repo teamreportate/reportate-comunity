@@ -23,7 +23,6 @@ import { FallecidosComponent } from '../fallecidos/fallecidos.component';
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
-  styleUrls: ['./principal.component.sass'],
   providers: [DashboardService, AccessService, EnfermedadService]
 })
 export class PrincipalComponent extends ClicComponent implements OnInit, AfterViewInit {
@@ -40,7 +39,10 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
   echarts = echarts;
   myChart: any;
 
+  searchValue = '';
+
   data: Data = new Data();
+  resumen: Data = new Data();
 
   option: any;
 
@@ -87,6 +89,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
   }
 
   getSetting() {
+    this.blockUI.start('Recuperando lista de departamentos y municipios');
     this.accessService.requestCompleteDepartmentsList().subscribe(response => {
       this.departments = response.body.departamentos;
       this.municipalities = response.body.municipios;
@@ -100,6 +103,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
   }
 
   getEnfermedades() {
+    this.blockUI.start('Recuperando lista de enfermedades');
     this.enfermedadService.getEnfermedades().subscribe(response => {
       this.enfermedades = response.body;
       this.blockUI.stop();
@@ -111,6 +115,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
 
 
   getTotals() {
+    this.blockUI.start('Actualizando totales');
     if (this.form.valid) {
       const formValue = this.form.value;
       const from = formValue.from.getDate() + '%2F' + (formValue.from.getMonth() + 1) + '%2F' + formValue.from.getFullYear();
@@ -129,6 +134,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
   }
 
   getByValorationRequest() {
+    this.blockUI.start('Actualizando los datos');
     if (this.form.valid) {
       const formValue = this.form.value;
       const from = formValue.from.getDate() + '%2F' + (formValue.from.getMonth() + 1) + '%2F' + formValue.from.getFullYear();
@@ -145,15 +151,22 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
   }
 
   getReportWithFiltersRequest() {
+    this.blockUI.start('Actualizando gráficos...');
     if (this.form.valid) {
       const formValue = this.form.value;
       const from = formValue.from.getDate() + '%2F' + (formValue.from.getMonth() + 1) + '%2F' + formValue.from.getFullYear();
       const to = formValue.to.getDate() + '%2F' + (formValue.to.getMonth() + 1) + '%2F' + formValue.to.getFullYear();
 
-      this.service.reportWithFiltersRequest(from, to, this.filter).subscribe(response => {
 
+      this.service.reportResumenWithFiltersRequest(from, to, this.filter).subscribe(response => {
+        this.resumen = response.body;
+        this.resumeComponent.draw(this.resumen);
+      }, error => {
+        if (error) this.notifierError(error);
+      });
+
+      this.service.reportWithFiltersRequest(from, to, this.filter).subscribe(response => {
         this.data = response.body;
-        this.resumeComponent.draw(this.data);
         this.confirmadoComponent.draw(this.data);
         this.sospechosoComponent.draw(this.data);
         this.recuperadosComponent.draw(this.data);
@@ -175,9 +188,6 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
 
   draw(data: any[]) {
     this.option = {
-      title: {
-        text: 'Total registros'
-      },
       legend: {},
       tooltip: {},
       dataset: {
@@ -196,6 +206,9 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
     this.myChart.setOption(this.option);
   }
 
+  print() {
+    window.print();
+  }
 
 
 

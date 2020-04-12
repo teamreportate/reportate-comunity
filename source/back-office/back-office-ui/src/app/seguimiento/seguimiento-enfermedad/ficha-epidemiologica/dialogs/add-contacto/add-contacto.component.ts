@@ -49,17 +49,23 @@ export class AddContactoComponent  extends ClicComponent  implements OnInit {
   ngOnInit() {
     this.form = this.builder.group({
       id: new FormControl(this.data.id),
-      // tslint:disable-next-line:max-line-length
       nombre: new FormControl(this.data.nombre, Validators.compose([Validators.required, Validators.maxLength(100)])),
       edad: new FormControl(this.data.edad, Validators.compose([Validators.required, Validators.maxLength(100)])),
-      genero: new FormControl(this.data.genero, Validators.compose([Validators.required, Validators.maxLength(100)])),
-      gestacion: new FormControl(this.data.gestacion, Validators.compose([Validators.required, Validators.maxLength(100)])),
-      ocupacion: new FormControl(this.data.ocupacion, Validators.compose([Validators.required, Validators.maxLength(100)])),
-      ci: new FormControl(this.data.tiempoGestacion, Validators.compose([Validators.required, Validators.maxLength(100)])),
-      fechaNacimiento: new FormControl(this.data.fechaNacimiento, Validators.compose([Validators.required, Validators.maxLength(100)])),
-      seguro: new FormControl(this.data.seguro, Validators.compose([Validators.required, Validators.maxLength(50)])),
-      codigoSeguro: new FormControl(this.data.codigoSeguro, Validators.compose([Validators.required, Validators.maxLength(30)])),
-      tiempoGestacion: new FormControl(this.data.tiempoGestacion, Validators.compose([Validators.required, Validators.maxLength(100)])),
+      genero: new FormControl(this.data.genero, Validators.compose([Validators.required])),
+      // telefono: new FormControl(this.data.telefono, Validators.compose([Validators.required])),
+      gestacion: new FormControl(this.data.gestacion, Validators.compose([])),
+      tiempoGestacion: new FormControl(this.data.tiempoGestacion, Validators.compose([])),
+      ocupacion: new FormControl(this.data.ocupacion, Validators.compose([Validators.required])),
+      ci: new FormControl(this.data.ci, Validators.compose([Validators.required])),
+      fechaNacimiento: new FormControl(new Date(this.data.fechaNacimiento), Validators.compose([Validators.required])),
+      seguro: new FormControl(this.data.seguro, Validators.compose([])),
+      codigoSeguro: new FormControl(this.data.codigoSeguro, Validators.compose([])),
+
+      // departamento: new FormControl(this.data.departamento, Validators.compose([Validators.required])),
+      // municipio: new FormControl(this.data.municipio, Validators.compose([Validators.required])),
+      // ciudad: new FormControl(this.data.ciudad, Validators.compose([Validators.required])),
+      // direccion: new FormControl(this.data.direccion, Validators.compose([Validators.required])),
+      // ubicacion: new FormControl(this.data.ubicacion, Validators.compose([Validators.required])),
     });
   }
   close(): void {
@@ -68,21 +74,33 @@ export class AddContactoComponent  extends ClicComponent  implements OnInit {
   save() {
     if (isNaN(this.data.id)) {
       this.blockUi.start('Procesando solicitud...');
+      const value = this.form.controls['fechaNacimiento'].value;
+      this.form.controls['fechaNacimiento'].setValue(moment(this.form.controls['fechaNacimiento'].value).format('DD/MM/YYYY'));
       this.service.addContacto(this.data.idPaciente, this.form.value).subscribe(response => {
         this.blockUi.stop();
         const msg = { title: 'Registrar Contacto', detail: 'Contacto registrado satisfactoriamente.', object: response.body};
         this.dialogRef.close(msg);
+        this.form.controls['fechaNacimiento'].setValue(value);
+
       }, error => {
+        this.form.controls['fechaNacimiento'].setValue(value);
+
         this.blockUi.stop();
         if (error) { this.notifierError(error); }
       });
     } else {
+      const value = this.form.controls['fechaNacimiento'].value;
+      this.form.controls['fechaNacimiento'].setValue(moment(this.form.controls['fechaNacimiento'].value).format('DD/MM/YYYY'));
       this.blockUi.start('Procesando solicitud...');
       this.service.updatePaciente(this.form.value).subscribe(response => {
         this.blockUi.stop();
         const msg = { title: 'Actualizar Contacto', detail: 'Contacto actualizado satisfactoriamente.', object: response.body};
         this.dialogRef.close(msg);
+        this.form.controls['fechaNacimiento'].setValue(value);
+
       }, error => {
+        this.form.controls['fechaNacimiento'].setValue(value);
+
         this.blockUi.stop();
         if (error) { this.notifierError(error); }
       });

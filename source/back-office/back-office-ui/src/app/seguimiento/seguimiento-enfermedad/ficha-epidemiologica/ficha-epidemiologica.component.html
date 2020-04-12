@@ -28,7 +28,7 @@
     </div>
     <div [fxFlex]="33" class="h-padding-5">
       <mat-form-field>
-        <input matInput placeholder="CI/PASAPORTE *" [formControl]="this.form.controls['cedulaIdentidad']"
+        <input matInput placeholder="CI/PASAPORTE *" [formControl]="this.form.controls['ci']"
                maxlength="100">
       </mat-form-field>
     </div>
@@ -51,17 +51,11 @@
     </div>
     <div [fxFlex]="33" class="h-padding-5">
       <mat-form-field>
-        <input matInput placeholder="Zona *" [formControl]="this.form.controls['zona']" maxlength="100">
+        <input matInput placeholder="Direccion *" [formControl]="this.form.controls['direccion']" maxlength="100">
       </mat-form-field>
     </div>
   </div>
   <div fxLayout="row wrap">
-
-    <div [fxFlex]="33" class="h-padding-5">
-      <mat-form-field>
-        <input matInput placeholder="Direccion *" [formControl]="this.form.controls['direccion']" maxlength="100">
-      </mat-form-field>
-    </div>
 
     <div [fxFlex]="33" class="h-padding-5">
       <mat-form-field>
@@ -85,6 +79,47 @@
       </button>
     </div>
   </div>
+  <div fxLayout="row wrap">
+    <div fxFlex="33" class="h-padding-5" *ngIf="this.form.controls['genero'].value === 'FEMENINO'">
+
+      {{ this.form.controls['gestacion'].value ? 'SI' : 'NO' }}
+      &nbsp;&nbsp;
+      <mat-slide-toggle [color]="'primary'" [formControl]="this.form.controls['gestacion']"
+                        class="example-margin">
+        ¿ Gestación ?
+      </mat-slide-toggle>
+    </div>
+    <div [fxFlex]="33" class="h-padding-5" *ngIf="this.form.controls['gestacion'].value">
+      <mat-form-field>
+        <input matInput placeholder="Tiempo Gestación *" [formControl]="this.form.controls['tiempoGestacion']"
+               maxlength="100">
+      </mat-form-field>
+    </div>
+    <div [fxFlex]="33" class="h-padding-5">
+      <mat-form-field>
+        <input matInput placeholder="Seguro *" [formControl]="this.form.controls['seguro']"
+               maxlength="100">
+      </mat-form-field>
+    </div>
+    <div [fxFlex]="33" class="h-padding-5">
+      <mat-form-field>
+        <input matInput placeholder="Codigo Seguro *" [formControl]="this.form.controls['codigoSeguro']"
+               maxlength="100">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!--    <div fxFlex="33" class="p-l-10" *ngIf="this.form.controls['genero'].value === 'FEMENINO'">-->
+
+  <!--      {{ this.form.controls['gestacion'] ? 'SI' : 'NO' }}-->
+  <!--      &nbsp;&nbsp;-->
+  <!--      <mat-slide-toggle [color]="'primary'" [formControl]="this.form.controls['tiempoGestacion']"-->
+  <!--                        class="example-margin">-->
+  <!--        ¿ Gestación ?-->
+  <!--      </mat-slide-toggle>-->
+  <!--    </div>-->
+
+
   <div fxLayout="row wrap" fxLayoutAlign="start start">
     <button mat-flat-button color="accent" (click)="this.updateDataPaciente()" class="m-r-10">Guardar Datos Paciente
     </button>
@@ -219,7 +254,7 @@
           <ng-template let-row="row" ngx-datatable-cell-template>
             <div fxLayout="row" fxFlexAlign="start start">
               <div fxFlex="100" fxFlexAlign="center top">
-                <button mat-icon-button matTooltip="Ver Sintomas">
+                <button mat-icon-button matTooltip="Ver Sintomas" (click)="openDialogSintomas(row)">
                   <mat-icon color="accent">visibility</mat-icon>
                 </button>
               </div>
@@ -279,7 +314,7 @@
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div fxLayout="row" fxFlexAlign="start start">
             <div fxFlex="100" fxFlexAlign="center top">
-              <button mat-icon-button matTooltip="Editar contacto">
+              <button mat-icon-button matTooltip="Editar contacto" (click)="openDialogContactos(row)">
                 <mat-icon color="accent">
                   edit
                 </mat-icon>
