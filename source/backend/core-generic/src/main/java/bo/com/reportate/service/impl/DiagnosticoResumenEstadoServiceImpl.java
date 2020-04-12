@@ -99,6 +99,13 @@ public class DiagnosticoResumenEstadoServiceImpl implements DiagnosticoResumenEs
 		for (ResumenDto resumenDto : resumen) {
 			if(!resumenAux.contains(resumenDto)) {
 				resumenAux.add(resumenDto);
+			}else {
+				ResumenDto resumenDtoAux = resumenAux.get(resumenAux.indexOf(resumenDto));
+				resumenDtoAux.setConfirmado(resumenDto.getConfirmado()+resumenDtoAux.getConfirmado());
+				resumenDtoAux.setCurado(resumenDto.getCurado()+resumenDtoAux.getCurado());
+				resumenDtoAux.setFallecido(resumenDto.getFallecido()+resumenDtoAux.getFallecido());
+				resumenDtoAux.setNegativo(resumenDto.getNegativo()+resumenDtoAux.getNegativo());
+				resumenDtoAux.setSospechoso(resumenDto.getSospechoso()+resumenDtoAux.getSospechoso());
 			}
 		}
 		return resumenAux;
