@@ -18,7 +18,6 @@ const FamilyData = (props) => {
 	const [healthCenters, setHealthCenters]   = useState([]);
 	const [coords, setCoords]                 = useState({latitude: 0, longitude: 0});
 	const dispatch                            = useDispatch();
-	const [values, setValues]                 = useState(null);
 	
 	const [form] = Form.useForm();
 	
@@ -55,7 +54,6 @@ const FamilyData = (props) => {
 	};
 	
 	const onFinish = values => {
-		setValues(values);
 		ServiceFamily.register({...values, 'latitude': coords.latitude, 'longitude': coords.longitude},
 			(result) => {
 				dispatch(familySetData(result));

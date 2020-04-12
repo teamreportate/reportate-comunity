@@ -2,9 +2,11 @@ package bo.com.reportate.service.impl;
 
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.model.DiagnosticosResumenDiario;
+import bo.com.reportate.model.DiagnosticosResumenTotalDiario;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.repository.DiagnosticoResumenDiarioRepository;
+import bo.com.reportate.repository.DiagnosticoResumenTotalDiarioRepository;
 import bo.com.reportate.repository.PacienteRepository;
 import bo.com.reportate.utils.DateUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -34,16 +36,20 @@ public class TotalizarTimer {
     private PacienteRepository pacienteRepository;
 	@Autowired
 	private DiagnosticoResumenDiarioRepository diagnosticoResumenDiarioRepository;
+	@Autowired
+	private DiagnosticoResumenTotalDiarioRepository diagnosticoResumenTotalDiarioRepository;
 	
     @Scheduled(fixedRate = 100000)
     public void updateTime() {
         try {
+        	
+        	Date dateSystem = new Date();
             log.info("Actualizando hora en nodo:{} ", InetAddress.getLocalHost().getHostAddress());
-            List<DiagnosticosResumenDiario> diagnosticosResumenDiarios= pacienteRepository.resumenPorPacienteEstadoDiagnostico(DateUtil.formatToStart(new Date()), DateUtil.formatToEnd(new Date()), EstadoDiagnosticoEnum.SOSPECHOSO, EstadoDiagnosticoEnum.NEGATIVO, EstadoDiagnosticoEnum.CONFIRMADO, EstadoDiagnosticoEnum.CURADO, EstadoDiagnosticoEnum.FALLECIDO);
+            List<DiagnosticosResumenDiario> diagnosticosResumenDiarios= pacienteRepository.resumenPorPacienteEstadoDiagnostico(DateUtil.formatToStart(dateSystem), DateUtil.formatToEnd(dateSystem), EstadoDiagnosticoEnum.SOSPECHOSO, EstadoDiagnosticoEnum.NEGATIVO, EstadoDiagnosticoEnum.CONFIRMADO, EstadoDiagnosticoEnum.CURADO, EstadoDiagnosticoEnum.FALLECIDO);
             for (DiagnosticosResumenDiario diagnosticosResumenDiario : diagnosticosResumenDiarios) {
             	diagnosticosResumenDiario.setEstado(EstadoEnum.ACTIVO);
             	try {
-				DiagnosticosResumenDiario diagnosticosResumenDiarioAux = diagnosticoResumenDiarioRepository.buscarPorFiltros(new Date(),
+				DiagnosticosResumenDiario diagnosticosResumenDiarioAux = diagnosticoResumenDiarioRepository.buscarPorFiltros(dateSystem,
 						diagnosticosResumenDiario.getDepartamento(),diagnosticosResumenDiario.getMunicipio(),diagnosticosResumenDiario.getCentroSalud(),diagnosticosResumenDiario.getEnfermedad());
 				if(diagnosticosResumenDiarioAux!=null) {
 				diagnosticosResumenDiarioAux.setConfirmado(diagnosticosResumenDiario.getConfirmado());
@@ -58,6 +64,52 @@ public class TotalizarTimer {
             	}catch (NotDataFoundException e) {
             		log.error(e.getMessage(),e);
             		diagnosticoResumenDiarioRepository.save(diagnosticosResumenDiario);
+				}
+			}
+            
+            diagnosticosResumenDiarios= pacienteRepository.resumenPorPacienteEstadoDiagnostico(DateUtil.formatToStart(DateUtil.toDate("dd/MM/yyyy", "10/04/2020")), DateUtil.formatToEnd(dateSystem), EstadoDiagnosticoEnum.SOSPECHOSO, EstadoDiagnosticoEnum.NEGATIVO, EstadoDiagnosticoEnum.CONFIRMADO, EstadoDiagnosticoEnum.CURADO, EstadoDiagnosticoEnum.FALLECIDO);
+            for (DiagnosticosResumenDiario diagnosticosResumenDiario : diagnosticosResumenDiarios) {
+            	diagnosticosResumenDiario.setEstado(EstadoEnum.ACTIVO);
+            	try {
+            		DiagnosticosResumenTotalDiario diagnosticosResumenTotalDiarioAux = diagnosticoResumenTotalDiarioRepository.buscarPorFiltros(dateSystem,
+						diagnosticosResumenDiario.getDepartamento(),diagnosticosResumenDiario.getMunicipio(),diagnosticosResumenDiario.getCentroSalud(),diagnosticosResumenDiario.getEnfermedad());
+				if(diagnosticosResumenTotalDiarioAux!=null) {
+					diagnosticosResumenTotalDiarioAux.setCentroSalud(diagnosticosResumenDiario.getCentroSalud());
+					diagnosticosResumenTotalDiarioAux.setEnfermedad(diagnosticosResumenDiario.getEnfermedad());
+					diagnosticosResumenTotalDiarioAux.setDepartamento(diagnosticosResumenDiario.getDepartamento());
+					diagnosticosResumenTotalDiarioAux.setMunicipio(diagnosticosResumenDiario.getMunicipio());
+					diagnosticosResumenTotalDiarioAux.setConfirmado(diagnosticosResumenDiario.getConfirmado());
+					diagnosticosResumenTotalDiarioAux.setCurado(diagnosticosResumenDiario.getCurado());
+					diagnosticosResumenTotalDiarioAux.setFallecido(diagnosticosResumenDiario.getFallecido());
+					diagnosticosResumenTotalDiarioAux.setNegativo(diagnosticosResumenDiario.getNegativo());
+					diagnosticosResumenTotalDiarioAux.setSospechoso(diagnosticosResumenDiario.getSospechoso());
+					diagnosticoResumenTotalDiarioRepository.save(diagnosticosResumenTotalDiarioAux);
+				}else {
+					diagnosticosResumenTotalDiarioAux = new DiagnosticosResumenTotalDiario();
+					diagnosticosResumenTotalDiarioAux.setCentroSalud(diagnosticosResumenDiario.getCentroSalud());
+					diagnosticosResumenTotalDiarioAux.setEnfermedad(diagnosticosResumenDiario.getEnfermedad());
+					diagnosticosResumenTotalDiarioAux.setDepartamento(diagnosticosResumenDiario.getDepartamento());
+					diagnosticosResumenTotalDiarioAux.setMunicipio(diagnosticosResumenDiario.getMunicipio());
+					diagnosticosResumenTotalDiarioAux.setConfirmado(diagnosticosResumenDiario.getConfirmado());
+					diagnosticosResumenTotalDiarioAux.setCurado(diagnosticosResumenDiario.getCurado());
+					diagnosticosResumenTotalDiarioAux.setFallecido(diagnosticosResumenDiario.getFallecido());
+					diagnosticosResumenTotalDiarioAux.setNegativo(diagnosticosResumenDiario.getNegativo());
+					diagnosticosResumenTotalDiarioAux.setSospechoso(diagnosticosResumenDiario.getSospechoso());
+					diagnosticoResumenTotalDiarioRepository.save(diagnosticosResumenTotalDiarioAux);
+				}
+            	}catch (NotDataFoundException e) {
+            		log.error(e.getMessage(),e);
+            		DiagnosticosResumenTotalDiario diagnosticosResumenTotalDiarioAux = new DiagnosticosResumenTotalDiario();
+            		diagnosticosResumenTotalDiarioAux.setCentroSalud(diagnosticosResumenDiario.getCentroSalud());
+					diagnosticosResumenTotalDiarioAux.setEnfermedad(diagnosticosResumenDiario.getEnfermedad());
+					diagnosticosResumenTotalDiarioAux.setDepartamento(diagnosticosResumenDiario.getDepartamento());
+					diagnosticosResumenTotalDiarioAux.setMunicipio(diagnosticosResumenDiario.getMunicipio());
+					diagnosticosResumenTotalDiarioAux.setConfirmado(diagnosticosResumenDiario.getConfirmado());
+					diagnosticosResumenTotalDiarioAux.setCurado(diagnosticosResumenDiario.getCurado());
+					diagnosticosResumenTotalDiarioAux.setFallecido(diagnosticosResumenDiario.getFallecido());
+					diagnosticosResumenTotalDiarioAux.setNegativo(diagnosticosResumenDiario.getNegativo());
+					diagnosticosResumenTotalDiarioAux.setSospechoso(diagnosticosResumenDiario.getSospechoso());
+            		diagnosticoResumenTotalDiarioRepository.save(diagnosticosResumenTotalDiarioAux);
 				}
 			}
         } catch (UnknownHostException e) {

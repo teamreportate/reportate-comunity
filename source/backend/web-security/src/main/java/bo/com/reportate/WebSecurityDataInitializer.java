@@ -203,6 +203,14 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
                 "Gracias por registrar tus síntomas. Recuerda registras todos los días", null, null, null, ParamTipoDato.CADENA, false,null, diagnostico);
         this.paramService.saveParametro(parametro);
 
+        parametro = new MuParametro(null, Constants.Parameters.MENSAJE_CANTIDAD_MAXIMA_REGISTRO, "Mensaje para el paciente cuando sobrepasa la cantidad de controles diarios ",
+                "La cantidad de controles recomendados es ${CANTIDAD}, le sugerimos realizar los controles en la mañana y en la tarde.", null, null, null, ParamTipoDato.CADENA, false,null, diagnostico);
+        this.paramService.saveParametro(parametro);
+
+        parametro = new MuParametro(null, Constants.Parameters.CANTIDAD_MAXIMA_CONTROL, "Parámetro que indica la cantidad máxima de veces que un paciente puede realizar controles ",
+                null, null, new BigDecimal("2"), null, ParamTipoDato.NUMERICO, false,null, diagnostico);
+        this.paramService.saveParametro(parametro);
+
         log.info("************************* Fin Cargando parametros *************************");
     }
 

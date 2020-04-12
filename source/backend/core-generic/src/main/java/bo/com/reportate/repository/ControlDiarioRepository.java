@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,4 +32,6 @@ public interface ControlDiarioRepository extends JpaRepository<ControlDiario, Lo
             " AND p.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
             " AND p=:paciente ORDER BY cd.id DESC ")
     List<ControlDiario> listarControlDiario(@Param("paciente") Paciente paciente, Pageable pageable);
+
+    Integer countByPacienteAndCreatedDateBetween(Paciente paciente, Date from, Date to);
 }

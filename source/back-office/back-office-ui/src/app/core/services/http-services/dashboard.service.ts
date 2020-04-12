@@ -44,6 +44,17 @@ export class DashboardService {
 
   }
 
+  reportResumenWithFiltersRequest(from: string, to: string, filterParam: any): Observable<HttpResponse<any>> {
+    const url = Constantes.baseUri + Constants.diagnosticoApi +
+      '/listar-total-por-estado-diagnostico?from=' + from + '&to=' + to
+      + '&departamentoId=' + filterParam.departamentoId
+      + '&municipioId=' + filterParam.municipioId
+      + '&centroSaludId=' + filterParam.centroSaludId
+      + '&enfermedadId=' + filterParam.enfermedadId;
+    return this.httpClient.get<HttpResponse<any>>(url, { observe: 'response' });
+
+  }
+
   reportTotals(from: string, to: string, filterParam: any): Observable<HttpResponse<any>> {
     const url = Constantes.baseUri + Constants.diagnosticoApi +
     '/listar-total-lugar?from=' + from + '&to=' + to
