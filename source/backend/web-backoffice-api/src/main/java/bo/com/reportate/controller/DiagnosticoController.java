@@ -208,7 +208,7 @@ public class DiagnosticoController {
             @Parameter(description = "Identificador de Enfermedad", required = true)
             @RequestParam("enfermedadId") Long enfermedadId) {
         try {
-            return ok(this.diagnosticoResumenEstadoService.cantidadDiagnosticoPorLugar(authentication, from, to, departamentoId, municipioId, centroSaludId, enfermedadId));
+            return ok(this.diagnosticoResumenTotalEstadoService.cantidadDiagnosticoPorLugar(authentication, from, to, departamentoId, municipioId, centroSaludId, enfermedadId));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al listar por estado los diagnosticos: Causa. {}",e.getMessage());
             return CustomErrorType.badRequest("Listar por estado Diagnosticos", e.getMessage());
