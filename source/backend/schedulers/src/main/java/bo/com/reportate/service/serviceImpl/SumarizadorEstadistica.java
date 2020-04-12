@@ -30,7 +30,7 @@ import java.util.List;
  */
 @Component
 @Slf4j
-public class TotalizarTimer {
+public class SumarizadorEstadistica {
 	
 	@Autowired
     private PacienteRepository pacienteRepository;
@@ -42,9 +42,7 @@ public class TotalizarTimer {
     @Scheduled(fixedRate = 100000)
     public void updateTime() {
         try {
-        	
         	Date dateSystem = new Date();
-            log.info("Actualizando hora en nodo:{} ", InetAddress.getLocalHost().getHostAddress());
             List<DiagnosticosResumenDiario> diagnosticosResumenDiarios= pacienteRepository.resumenPorPacienteEstadoDiagnostico(DateUtil.formatToStart(dateSystem), DateUtil.formatToEnd(dateSystem), EstadoDiagnosticoEnum.SOSPECHOSO, EstadoDiagnosticoEnum.NEGATIVO, EstadoDiagnosticoEnum.CONFIRMADO, EstadoDiagnosticoEnum.CURADO, EstadoDiagnosticoEnum.FALLECIDO);
             for (DiagnosticosResumenDiario diagnosticosResumenDiario : diagnosticosResumenDiarios) {
             	diagnosticosResumenDiario.setEstado(EstadoEnum.ACTIVO);
@@ -98,7 +96,7 @@ public class TotalizarTimer {
 					diagnosticoResumenTotalDiarioRepository.save(diagnosticosResumenTotalDiarioAux);
 				}
             	}catch (NotDataFoundException e) {
-            		log.error(e.getMessage(),e);
+            		log.error("Error al sumarizar",e);
             		DiagnosticosResumenTotalDiario diagnosticosResumenTotalDiarioAux = new DiagnosticosResumenTotalDiario();
             		diagnosticosResumenTotalDiarioAux.setCentroSalud(diagnosticosResumenDiario.getCentroSalud());
 					diagnosticosResumenTotalDiarioAux.setEnfermedad(diagnosticosResumenDiario.getEnfermedad());
@@ -112,8 +110,8 @@ public class TotalizarTimer {
             		diagnosticoResumenTotalDiarioRepository.save(diagnosticosResumenTotalDiarioAux);
 				}
 			}
-        } catch (UnknownHostException e) {
-            log.error("Error Actualizando hora en nodo:", e);
+        } catch (Exception e) {
+            log.error("Error al Totalizar los datos estadisticos:", e);
         }
     }
 }
