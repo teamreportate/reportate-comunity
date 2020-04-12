@@ -53,6 +53,21 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
 
   totalsList: DataTotal = new DataTotal();
 
+  total = {
+    sospechosos: 150,
+    descartados: 100,
+    confirmados: 70,
+    recuperados: 50,
+    fallecidos: 10,
+    total: 380
+  };
+
+  percentSospechosos = (this.total.sospechosos * 100) / this.total.total;
+  percentDescartados = (this.total.descartados * 100) / this.total.total;
+  percentConfirmados = (this.total.confirmados * 100) / this.total.total;
+  percentRecuperados = (this.total.recuperados * 100) / this.total.total;
+  percentFallecidos = (this.total.fallecidos * 100) / this.total.total;
+
   @ViewChild(ResumeComponent) resumeComponent: ResumeComponent;
   @ViewChild(ConfirmadoComponent) confirmadoComponent: ConfirmadoComponent;
   @ViewChild(RecuperadosComponent) recuperadosComponent: RecuperadosComponent;
