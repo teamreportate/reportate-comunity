@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @Created by :MC4
@@ -178,17 +177,10 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
 
 	@Override
 	public List<NivelValoracionDto> listarPorNivelValoracion(Date from, Date to) {
-		List<NivelValoracionDto> nivelValoracionDtos= diagnosticoRepository.listarPorNivelValoracion(DateUtil.formatToStart(from), DateUtil.formatToEnd(to));
-		Map<NivelValoracionDto, List<NivelValoracionDto>> values= nivelValoracionDtos.stream().collect(Collectors.groupingBy(NivelValoracionDto::getRegistrado))
-	    .entrySet().stream()
-	    .collect(Collectors.toMap(x -> {
-	        long alto = x.getValue().stream().mapToLong(NivelValoracionDto::getAlto).sum();
-	        long medio= x.getValue().stream().mapToLong(NivelValoracionDto::getMedio).sum();
-	        long bajo= x.getValue().stream().mapToLong(NivelValoracionDto::getBajo).sum();
-	        return new NivelValoracionDto(x.getKey(), alto, medio,bajo);
-	    }, Map.Entry::getValue));
-		return values.keySet().stream()
-				.collect(Collectors.toList());
+		List<NivelValoracionDto> list = diagnosticoRepository.listarPorNivelValoracion(DateUtil.formatToStart(from), DateUtil.formatToEnd(to));
+		Set<String> deptSet = new HashSet<>();
+		list.removeIf(p -> !deptSet.add(p.getRegistrado()));
+		return list;
 	}
 
 
