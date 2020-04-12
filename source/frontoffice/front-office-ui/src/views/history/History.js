@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
 
 import ServiceFamily from "../../services/ServiceFamily";
-import {Collapse} from "antd";
+import {Button, Collapse} from "antd";
 import {FaCheck} from "react-icons/fa";
 
 
@@ -16,7 +16,9 @@ export default () => {
 				console.log(result);
 			});
 	}, [member.id]);
-	
+	function handleClick() {
+		history.push("/dashboard");
+	}
 	return (
 		<div>
 			{history.map((item => {
@@ -42,6 +44,8 @@ export default () => {
 					</Collapse>
 				</div>;
 			}))}
+			
+			<Button type="default" onClick={handleClick} style={{width: '100%', marginBottom: 16}}>Volver</Button>
 			<style>{`
       [data-theme='compact'] .site-collapse-custom-collapse .site-collapse-custom-panel,
 			.site-collapse-custom-collapse .site-collapse-custom-panel {
