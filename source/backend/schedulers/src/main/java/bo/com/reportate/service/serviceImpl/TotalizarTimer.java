@@ -1,4 +1,4 @@
-package bo.com.reportate.service.impl;
+package bo.com.reportate.service.serviceImpl;
 
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.model.DiagnosticosResumenDiario;
