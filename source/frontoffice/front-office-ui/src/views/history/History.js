@@ -1,27 +1,29 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
-
+import {useHistory} from "react-router-dom";
 import ServiceFamily from "../../services/ServiceFamily";
 import {Button, Collapse} from "antd";
 import {FaCheck} from "react-icons/fa";
 
 
 export default () => {
-	const member                = useSelector(store => store.family.toUpdate);
-	const [history, setHistory] = useState([]);
+	const member                            = useSelector(store => store.family.toUpdate);
+	const [memberHistory, setMemberHistory] = useState([]);
+	let history                             = useHistory();
 	useEffect(() => {
 		ServiceFamily.getHistory(member.id,
 			(result) => {
-				setHistory(result);
-				console.log(result);
+				setMemberHistory(result);
 			});
 	}, [member.id]);
+	
 	function handleClick() {
 		history.push("/dashboard");
 	}
+	
 	return (
 		<div>
-			{history.map((item => {
+			{memberHistory.map((item => {
 				return <div key={item.id} style={styles.card}>
 					<div style={{padding: 16}}>
 						<small>{item.fechaRegistro}</small>
