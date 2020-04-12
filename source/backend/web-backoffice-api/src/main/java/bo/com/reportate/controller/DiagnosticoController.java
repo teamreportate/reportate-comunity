@@ -90,7 +90,7 @@ public class DiagnosticoController {
     }
     @RequestMapping(value = "/tacometro-por-clasificacion",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Contabilizar los diagnosticos por clasificación", description = "Contabilizar los diagnosticos por clasificación", tags = { "cantidad diagnosticos por clasificación" })
-    public ResponseEntity<GraficoDto> cantidadDiagnosticoPorEstadoDiagnostico(
+    public ResponseEntity<TotalResponse> cantidadDiagnosticoPorEstadoDiagnostico(
     		@AuthenticationPrincipal Authentication authentication,
     		@Parameter(description = "Identificador de Departamento", required = true)
     		@RequestParam("departamentoId") Long departamentoId,
@@ -98,18 +98,24 @@ public class DiagnosticoController {
             @RequestParam("municipioId") Long municipioId,
             @Parameter(description = "Identificador de Centro Salud", required = true)
             @RequestParam("centroSaludId") Long centroSaludId,
-            @Parameter(description = "Clasificacion de diagnostico", required = true)
-            @RequestParam("clasificacion")EstadoDiagnosticoEnum clasificacion){
+            @Parameter(description = "Identificador de Enfermedad", required = true)
+            @RequestParam("enfermedadId") Long enfermedadId){
         try {
         	//Authentication authentication,BigDecimal valoracionInicio, BigDecimal valoracionFin, Long departamentoId,Long municipioId, Long centroSaludId,
     		//String genero, Integer edadInicial, Integer edadFinal,EstadoDiagnosticoEnum estadoDiagnostico, Long enfermedadId
-        	GraficoDto graficoDto = new GraficoDto();
-        	Integer cantidad =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication,null, null, departamentoId, municipioId,centroSaludId,null,
-            		null,null,clasificacion, 0L);
-        	graficoDto.setCantidadGrafico(cantidad);
-        	graficoDto.setNombreGrafico(clasificacion.name());
-        	graficoDto.setCantidadMaximaGrafico(paramService.getInt("TACOMETRO_MAXIMO"));
-            return ok(graficoDto);
+        	Integer sospechosos =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication,departamentoId, municipioId,centroSaludId,null,
+            		null,null,EstadoDiagnosticoEnum.SOSPECHOSO, enfermedadId);
+        	Integer confirmados =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication, departamentoId, municipioId,centroSaludId,null,
+            		null,null,EstadoDiagnosticoEnum.CONFIRMADO, enfermedadId);
+        	Integer recuperados =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication,departamentoId, municipioId,centroSaludId,null,
+            		null,null,EstadoDiagnosticoEnum.CURADO, enfermedadId);
+        	Integer fallecidos =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication, departamentoId, municipioId,centroSaludId,null,
+            		null,null,EstadoDiagnosticoEnum.FALLECIDO, enfermedadId);
+        	Integer negativos =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication, departamentoId, municipioId,centroSaludId,null,
+            		null,null,EstadoDiagnosticoEnum.NEGATIVO, enfermedadId);
+        	
+        	TotalResponse totalResponse = new TotalResponse(sospechosos,negativos,confirmados,recuperados,fallecidos,sospechosos+confirmados+recuperados+fallecidos+negativos);
+            return ok(totalResponse);
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al contabilizar los diagnosticos: Causa. {}",e.getMessage());
             return CustomErrorType.badRequest("Contabilizar Diagnosticos", e.getMessage());
