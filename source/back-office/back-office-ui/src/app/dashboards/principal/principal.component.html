@@ -95,8 +95,14 @@
           <input matInput placeholder='Buscar...' [(ngModel)]="searchValue"/>
         </mat-form-field>
       </div>
-      <ngx-datatable #table class="material" [messages]="this.tableMessages()" [columnMode]="'force'"
-        [headerHeight]="40" [footerHeight]="50" [rowHeight]="'auto'" [limit]='10' [rows]="totalsList.items | filterBy:searchValue:'nombre'"
+      <ngx-datatable #table class="material"
+        [messages]="this.tableMessages()"
+        [columnMode]="'force'"
+        [headerHeight]="40"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [limit]='10'
+        [rows]="totalsList.items | filterBy:searchValue:'nombre'"
         [scrollbarH]="this.scrollH">
 
         <ngx-datatable-column name="{{totalsList.nivelLugar}}" [draggable]="false" [minWidth]="100" [resizeable]="false">
