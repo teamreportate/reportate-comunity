@@ -208,9 +208,30 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
       xAxis: { type: 'category' },
       yAxis: {},
       series: [
-        { type: 'bar' },
-        { type: 'bar' },
-        { type: 'bar' }
+        {
+          type: 'bar',
+          color: {
+            colorStops: [{
+              offset: 0, color: '#FB9678'
+            }]
+          }
+        },
+        {
+          type: 'bar',
+          color: {
+            colorStops: [{
+              offset: 0, color: '#F4D03F'
+            }]
+          }
+        },
+        {
+          type: 'bar',
+          color: {
+            colorStops: [{
+              offset: 0, color: '#2ECC71'
+            }]
+          }
+        }
       ]
     };
     this.myChart = this.echarts.init(document.getElementById('main'));
