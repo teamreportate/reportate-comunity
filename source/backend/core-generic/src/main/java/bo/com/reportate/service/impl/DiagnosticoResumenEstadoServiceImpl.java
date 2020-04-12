@@ -94,7 +94,14 @@ public class DiagnosticoResumenEstadoServiceImpl implements DiagnosticoResumenEs
 			enfermedads.addAll(enfermedadRepository.findByEnfermedadBaseFalseAndEstado(EstadoEnum.ACTIVO));
 		}
 		
-		return diagnosticoResumenDiarioRepository.listarPorRangoFechas(DateUtil.formatToStart(from), DateUtil.formatToEnd(to), departamentos, municipios, centroSaluds, enfermedads);
+		List<ResumenDto> resumen= diagnosticoResumenDiarioRepository.listarPorRangoFechas(DateUtil.formatToStart(from), DateUtil.formatToEnd(to), departamentos, municipios, centroSaluds, enfermedads);
+		List<ResumenDto> resumenAux = new ArrayList<>();
+		for (ResumenDto resumenDto : resumen) {
+			if(!resumenAux.contains(resumenDto)) {
+				resumenAux.add(resumenDto);
+			}
+		}
+		return resumenAux;
 	}
 
 	@Override
