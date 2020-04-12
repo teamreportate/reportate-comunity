@@ -83,7 +83,7 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
 
 
     @Query("SELECT count(1) " +
-            "FROM Diagnostico d INNER JOIN d.enfermedad enf INNER JOIN d.controlDiario cd INNER JOIN cd.paciente p " +
+            "FROM Paciente p INNER JOIN p.diagnostico d INNER JOIN d.enfermedad enf " +
             "WHERE (:valoracionInicio IS NULL OR d.resultadoValoracion >= :valoracionInicio) AND (:valoracionFin IS NULL OR d.resultadoValoracion <= :valoracionFin) AND "
             + "p.genero IN :generos AND "
             + "((:edadInicial IS NULL OR p.edad >= :edadInicial) AND (:edadFinal IS NULL OR p.edad <= :edadFinal)) AND "
