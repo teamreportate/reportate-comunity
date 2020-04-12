@@ -40,6 +40,9 @@ export class Constants {
     value: 'CONFIRMADO'
 
   }];
+  static SOS: 'SOSPECHOSO';
+  static NEG: 'NEGATIVO';
+  static CONF: 'CONFIRMADO';
   static CLASIFICACION_ENFERMEDAD2 = [{key: 'SOSPECHOSO', value: 'SOSPECHOSO'},
     {key: 'NEGATIVO', value: 'NEGATIVO'}, {
       key: 'CONFIRMADO',
