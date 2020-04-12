@@ -42,6 +42,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
   searchValue = '';
 
   data: Data = new Data();
+  resumen: Data = new Data();
 
   option: any;
 
@@ -150,16 +151,22 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
   }
 
   getReportWithFiltersRequest() {
-    this.blockUI.start('Actualizando los datos');
+    this.blockUI.start('Actualizando gráficos...');
     if (this.form.valid) {
       const formValue = this.form.value;
       const from = formValue.from.getDate() + '%2F' + (formValue.from.getMonth() + 1) + '%2F' + formValue.from.getFullYear();
       const to = formValue.to.getDate() + '%2F' + (formValue.to.getMonth() + 1) + '%2F' + formValue.to.getFullYear();
 
-      this.service.reportWithFiltersRequest(from, to, this.filter).subscribe(response => {
 
+      this.service.reportResumenWithFiltersRequest(from, to, this.filter).subscribe(response => {
+        this.resumen = response.body;
+        this.resumeComponent.draw(this.resumen);
+      }, error => {
+        if (error) this.notifierError(error);
+      });
+
+      this.service.reportWithFiltersRequest(from, to, this.filter).subscribe(response => {
         this.data = response.body;
-        this.resumeComponent.draw(this.data);
         this.confirmadoComponent.draw(this.data);
         this.sospechosoComponent.draw(this.data);
         this.recuperadosComponent.draw(this.data);
