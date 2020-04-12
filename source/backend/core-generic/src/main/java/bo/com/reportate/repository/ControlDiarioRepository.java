@@ -7,6 +7,7 @@ import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.service.EmailService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -34,4 +35,8 @@ public interface ControlDiarioRepository extends JpaRepository<ControlDiario, Lo
     List<ControlDiario> listarControlDiario(@Param("paciente") Paciente paciente, Pageable pageable);
 
     Integer countByPacienteAndCreatedDateBetween(Paciente paciente, Date from, Date to);
+
+    @Modifying
+    @Query(" UPDATE ControlDiario cd SET cd.recomendacion =:recomendacion WHERE cd=:controlDiario")
+    void agregarRecomendacion(@Param("controlDiario") ControlDiario controlDiario, @Param("recomendacion") String recomendacion);
 }

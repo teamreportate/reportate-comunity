@@ -89,13 +89,13 @@ export default () => {
 													icon={<ContainerFilled/>}
 													onClick={() => {
 														reportMember(item);
-													}}>Diagnosticos
+													}}>Reportar
 									</Button>
 									<Button type="primary"
 													icon={<AlertFilled/>}
 													onClick={() => {
 														historyMember(item);
-													}}>Reportar
+													}}>Diagnósticos
 									</Button>
 								
 								</div>

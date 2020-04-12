@@ -31,7 +31,7 @@ export default () => {
 					<Collapse bordered={false}
 										className="site-collapse-custom-collapse">
 						<Collapse.Panel key="1"
-														header="sintomas reportados"
+														header="Síntomas reportados"
 														className="site-collapse-custom-panel">
 							{item.sintomas.map(sintoma => {
 								return <p key={sintoma.id} style={styles.p}>

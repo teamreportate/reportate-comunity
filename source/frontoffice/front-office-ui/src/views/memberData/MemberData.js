@@ -154,7 +154,7 @@ export default ({newMember}) => {
 				
 				{
 					gestation && sex === 'FEMENINO'
-					? <Form.Item label="Cuantas semanas"
+					? <Form.Item label="¿Cuantas semanas?"
 											 name="gestationTime"
 											 rules={[{required: true, message: 'Ingresa el tiempo de gestación'}]}>
 						<InputNumber
@@ -215,11 +215,11 @@ export default ({newMember}) => {
 					 <>
 						 <Form.Item>
 							 <Button type="default" onClick={handleReportClick} style={{width: '100%', marginBottom: 8}}
-											 className='options'>Reportar sintoma</Button>
+											 className='options'>Reportar Síntomas</Button>
 						 </Form.Item>
 						 <Form.Item>
 							 <Button type="default" onClick={handleHistoryClick} style={{width: '100%', marginBottom: 8}}
-											 className='options'>Diagnosticos</Button>
+											 className='options'>Diagnósticos</Button>
 						 </Form.Item>
 					 </>
 				 )

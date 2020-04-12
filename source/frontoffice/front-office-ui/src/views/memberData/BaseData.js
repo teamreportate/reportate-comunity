@@ -129,7 +129,7 @@ const BaseData = () => {
 			>
 				<Tabs activeKey={step} type="card">
 					<TabPane tab={step === "1" ? "Enfermedades de base" : "1"} key="1">
-						<p>¿Padece de alguna de las siguientes enfermedades?</p>
+						<p>¿Padece alguna de las siguientes enfermedades de base?</p>
 						<Form.Item name={'sicknesses'}>
 							<Checkbox.Group>
 								{
@@ -145,7 +145,7 @@ const BaseData = () => {
 						</Form.Item>
 					</TabPane>
 					<TabPane tab={step === "2" ? "Síntomas iniciales" : "2"} key="2">
-						<p>Presenta algunos de los siguientes sintomas</p>
+						<p>Presenta algunos de los siguientes síntomas</p>
 						<Form.Item name={'symptoms'}>
 							<Checkbox.Group style={{width: '100%'}}>
 								{
@@ -178,11 +178,11 @@ const BaseData = () => {
 						</Form.Item>
 					</TabPane>
 					<TabPane tab={step === "3" ? "Viajes" : "3"} key="3">
-						<p>¿Estuvo fuera del pais en el ultimo mes?</p>
+						<p>¿Estuvo fuera del país en el ultimo mes?</p>
 						<Form.Item name={'countriesSwitch'}>
 							<Select
 								style={{width: '100%'}}
-								placeholder="Seleccione paises que visito"
+								placeholder="Seleccione los países que visitó"
 								onChange={(e) => {
 									setTravelSwitch(e);
 								}}
@@ -198,7 +198,7 @@ const BaseData = () => {
 								<Select
 									mode="multiple"
 									style={{width: '100%'}}
-									placeholder="Seleccione paises que visito"
+									placeholder="Seleccione los países que visito"
 									onChange={(e) => {
 										console.log(e);
 									}}

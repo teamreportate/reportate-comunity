@@ -31,7 +31,7 @@ export default () => {
 	
 	return (
 		<div>
-			<p>Padece de alguna de las siguientes emfermades</p>
+			<p>¿Padece alguna de las siguientes enfermedades de base?</p>
 			<Form
 				form={form}
 				layout='vertical'
