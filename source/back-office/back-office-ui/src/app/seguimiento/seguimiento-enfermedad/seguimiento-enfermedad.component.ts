@@ -213,10 +213,6 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
   }
 
   validateNumber(telefono: string) {
-    if (telefono.length > 8 || !telefono) {
-      return false;
-    } else {
-      return true;
-    }
+    return !(telefono.length > 8 || !telefono);
   }
 }
