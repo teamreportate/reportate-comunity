@@ -123,8 +123,7 @@ public class EnfermedadController {
             boolean estado = enfermedadService.eliminar(id);
             if(estado){
                 return ok().build();
-            }
-            else {
+            } else {
                 return noContent().build();
             }
         } catch (OperationException e){
@@ -133,6 +132,20 @@ public class EnfermedadController {
         } catch (Exception e){
             log.error("Error no controlado al cambiar de estado la enfermadad.", e);
             return CustomErrorType.badRequest(FormatUtil.MSG_TITLE_ERROR, FormatUtil.defaultError());
+        }
+    }
+
+    @RequestMapping(value = "/enfermedades-base", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Listar enfermedades base", description = "Listar enfermedades base", tags = { "enfermedades" })
+    public ResponseEntity<List<EnfermedadResponse>> listaEnfermedadesBase() {
+        try {
+            return ok(this.enfermedadService.listBase());
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al listar las enfermedades: Causa. {}",e.getMessage());
+            return CustomErrorType.badRequest("Listar Enfermedades", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al listar  enfermedades:",e);
+            return CustomErrorType.serverError("Listar Enfermedades", "Se genero un error al listar enfermedades");
         }
     }
 }

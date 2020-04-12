@@ -1,14 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import echarts from '../../../assets/js/echarts.min.js';
+import { Data } from '../dashboard.type.js';
 
 @Component({
-  selector: 'app-muertos',
-  templateUrl: './muertos.component.html'
+  selector: 'app-fallecidos',
+  templateUrl: './fallecidos.component.html'
 })
-export class MuertosComponent implements OnInit {
-
-  @Input() data = [];
+export class FallecidosComponent implements OnInit {
 
   mostrar: boolean;
   option: any;
@@ -21,24 +20,20 @@ export class MuertosComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.draw();
   }
 
-  draw() {
+  draw(data: Data) {
     this.option = {
-      title: {
-        text: 'MUERTOS'
-      },
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: ['06/04/2020', '07/04/2020', '08/04/2020', '08/04/2020', '09/04/2020', '10/04/2020', '11/04/2020', '12/04/2020']
+        data: data.dias
       },
       yAxis: {
         type: 'value'
       },
       series: [{
-        data: [10, 5, 0, 2, 4, 5, 8, 12],
+        data: data.fallecidos,
         type: 'line',
         areaStyle: {
           color: {

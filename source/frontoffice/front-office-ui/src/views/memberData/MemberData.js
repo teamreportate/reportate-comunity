@@ -1,4 +1,4 @@
-import {Button, Form, Input, InputNumber, Radio, Select} from "antd";
+import {Button, Form, Input, InputNumber, Radio, Select, Spin} from "antd";
 import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import ServiceFamily from "../../services/ServiceFamily";
@@ -15,9 +15,9 @@ export default ({newMember}) => {
 	const [form]                        = Form.useForm();
 	const [sex, setSex]                 = useState(null);
 	const [gestation, setGestation]     = useState(false);
-	const [other, setOther]             = useState(false);
+	const [loading, setLoading]         = useState(false);
 	const member                        = useSelector(store => store.family.toUpdate);
-	const [occupation, setOccupation]   = useState(false);
+	const [occupation, setOccupation]   = useState(!!member.occupation);
 	
 	function handleCancelClick() {
 		history.push("/dashboard");
@@ -40,30 +40,39 @@ export default ({newMember}) => {
 		return fields;
 	};
 	
-	const handleReportClick = () => {
+	const handleReportClick  = () => {
 		history.push("/daily-data");
+	};
+	const handleHistoryClick = () => {
+		history.push("/history");
 	};
 	
 	
 	const onFinish = values => {
+		setLoading(true);
 		if (newMember) {
 			ServiceFamily.registerMember(values,
 				(result) => {
 					dispatch(familyAddMember(result));
+					setLoading(false);
 					history.push("/dashboard");
 				},
 				(data) => {
 					dispatch(appConfigSetMessage({text: data.detail}));
+					setLoading(false);
 				});
 			
 		} else {
+			console.log(values);
 			ServiceFamily.updateMember({...values, id: member.id, firstControl: member.firstControl},
 				(result) => {
 					dispatch(familyUpdateMember(result));
+					setLoading(false);
 					history.push("/dashboard");
 				},
 				(data) => {
 					dispatch(appConfigSetMessage({text: data.detail}));
+					setLoading(false);
 				});
 		}
 	};
@@ -71,6 +80,13 @@ export default ({newMember}) => {
 	const onFinishFailed = errorInfo => {
 		console.log('Failed:', errorInfo);
 	};
+	
+	if (loading) {
+		return <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
+			<Spin/>
+			<span>Guardando...</span>
+		</div>;
+	}
 	
 	return (
 		<div>
@@ -81,6 +97,10 @@ export default ({newMember}) => {
 				onFinish={onFinish}
 				onFinishFailed={onFinishFailed}
 				fields={newMember ? [] : getDefaultFields()}
+				initialValues={{
+					occupationSwitch: !!member.occupation,
+					occupation      : member.occupation,
+				}}
 			>
 				<Form.Item label="Nombre"
 									 name="name"
@@ -146,69 +166,64 @@ export default ({newMember}) => {
 					</Form.Item>
 					: null
 				}
-				{(newMember)
-				 ? null : <Form.Item>
-					 <Button type="default" onClick={handleReportClick} style={{width: '100%', marginBottom: 8}}
-									 className='options'>Reportar
-						 sintoma</Button>
-				 </Form.Item>
-				}
+				
+				
+				<Form.Item label="¿Es personal de salud?"
+									 name="occupationSwitch">
+					<Select
+						showSearch
+						placeholder="Seleccione una opción"
+						optionFilterProp="children"
+						filterOption={(input, option) =>
+							option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+						}
+						onChange={value => {
+							setOccupation(value);
+						}}
+					>
+						<Option value={false}>NO</Option>
+						<Option value={true}>SI</Option>
+					</Select>
+				</Form.Item>
 				
 				{
-					newMember
-					? (
-						<>
-							<Form.Item label="¿Es personal de salud?"
-												 name="occupationSwitch">
-								<Select
-									showSearch
-									placeholder="Seleccione una opción"
-									optionFilterProp="children"
-									filterOption={(input, option) =>
-										option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-									}
-									onChange={value => {
-										setOccupation(value);
-									}}
-								>
-									<Option value={false}>NO</Option>
-									<Option value={true}>SI</Option>
-								</Select>
-							</Form.Item>
-							
-							{
-								occupation
-								? <Form.Item label="Ocupación"
-														 name="occupation"
-														 rules={[{required: true, message: 'Selecciona tu ocupación'}]}
-								>
-									<Select
-										showSearch
-										placeholder="Seleccione una ocupación"
-										optionFilterProp="children"
-										filterOption={(input, option) =>
-											option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-										}
-										onChange={(e) => {
-											if (form.getFieldValue('occupation') === 'otro') {
-												setOther(true);
-											} else {
-												setOther(false);
-											}
-										}}
-									>
-										{
-											occupations.map(occupation => {
-												return <Option key={occupation.id} value={occupation.valor}>{occupation.valor}</Option>;
-											})
-										}</Select>
-								</Form.Item>
-								: null
+					occupation
+					? <Form.Item label="Ocupación"
+											 name="occupation"
+											 rules={[{required: true, message: 'Selecciona tu ocupación'}]}
+					>
+						<Select
+							showSearch
+							placeholder="Seleccione una ocupación"
+							optionFilterProp="children"
+							filterOption={(input, option) =>
+								option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
 							}
-						
-						</>
-					)
+						>
+							{
+								occupations.map(occupation => {
+									return <Option key={occupation.id} value={occupation.valor}>{occupation.valor}</Option>;
+								})
+							}</Select>
+					</Form.Item>
 					: null
+				}
+				
+				
+				{(newMember)
+				 ? null : (
+					 <>
+						 <Form.Item>
+							 <Button type="default" onClick={handleReportClick} style={{width: '100%', marginBottom: 8}}
+											 className='options'>Reportar sintoma</Button>
+						 </Form.Item>
+						 <Form.Item>
+							 <Button type="default" onClick={handleHistoryClick} style={{width: '100%', marginBottom: 8}}
+											 className='options'>Diagnosticos</Button>
+						 </Form.Item>
+					 </>
+				 )
+					
 				}
 				<Form.Item>
 					<div style={{display: "flex", flexDirection: "row", marginTop: 16}}>

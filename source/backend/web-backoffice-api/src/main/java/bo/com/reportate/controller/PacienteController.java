@@ -4,8 +4,7 @@ import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.dto.PacienteDto;
 import bo.com.reportate.model.dto.PaisVisitadoDto;
-import bo.com.reportate.model.dto.response.EnfermedadResponse;
-import bo.com.reportate.model.dto.response.FichaEpidemiologicaResponse;
+import bo.com.reportate.model.dto.response.*;
 import bo.com.reportate.model.enums.Process;
 import bo.com.reportate.service.LogService;
 import bo.com.reportate.service.PacienteService;
@@ -23,6 +22,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -291,6 +292,24 @@ public class PacienteController {
             log.error("Se genero un error al eliminar el contcto : {}",contactoId,e);
             logService.error(Process.REGISTRO_PACIENTE,"Se genero un error al eliminar el contacto : {}",contactoId);
             return CustomErrorType.serverError("Eliminar Contacto", "Ocurrió un error al eliminar el contacto: " + contactoId);
+        }
+    }
+
+    @RequestMapping(value = "/{pacienteId}/diagnosticos",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Obteniene los ultimos diagnosticos", description = "Obteniene los ultimos diagnosticos del paciente. Este método es solo para la aplicación móvil", tags = { "familia" })
+    public ResponseEntity<List<MovilControlDiario>> getDiagnostico(
+            @Parameter(description = "Identificador de paciente", required = true)
+            @PathVariable("pacienteId") Long pacienteId) {
+        try {
+            return ok(this.pacienteService.getControlDiario(pacienteId));
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al obtener la familia del usuario. Causa. {} ",e.getMessage());
+            logService.error(Process.REGISTRO_FAMILIA,"Se genero un error al obtener la familia del usuario. Causa. {}",e.getMessage());
+            return CustomErrorType.badRequest("Obtener Familia", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al obtener la familia del usuario",e);
+            logService.error(Process.REGISTRO_FAMILIA,"Se genero un error al obtener la familia del usuario");
+            return CustomErrorType.serverError("Obtener Familia", "Se genero un error al obtener la familia del usuario");
         }
     }
 

@@ -12,6 +12,8 @@ import bo.com.reportate.model.dto.request.PaisRequest;
 import bo.com.reportate.model.dto.request.SintomaRequest;
 import bo.com.reportate.model.dto.response.EnfermedadResponse;
 import bo.com.reportate.model.dto.response.FichaEpidemiologicaResponse;
+import bo.com.reportate.model.dto.response.MovilControlDiario;
+import bo.com.reportate.model.dto.response.SintomaResponse;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
@@ -120,7 +122,7 @@ public class PacienteServiceImpl implements PacienteService {
         ValidationUtil.throwExceptionIfInvalidText("ci", ci, false, 20);
         ValidationUtil.throwExceptionIfInvalidText("fechaNamiento", fechaNacimiento, false, 10);
         Date fechNacimient = null;
-        if (StringUtil.isEmptyOrNull(fechaNacimiento)) {
+        if (!StringUtil.isEmptyOrNull(fechaNacimiento)) {
             fechNacimient = DateUtil.toDate(DateUtil.FORMAT_DATE, fechaNacimiento);
             if (fechNacimient == null) {
                 throw new OperationException("No se logró convertir a formato dd/mm/yyyy la fecha: " + fechaNacimiento);
@@ -160,11 +162,11 @@ public class PacienteServiceImpl implements PacienteService {
         ValidationUtil.throwExceptionIfInvalidNumber("edad", edad, true, -1, 120);
         ValidationUtil.throwExceptionIfInvalidNumber("tiempo de gestación", tiempoGestacion, false, -1, 41);
 
-        ValidationUtil.throwExceptionIfInvalidText("ocupación", ocupacion, true, 50);
+        ValidationUtil.throwExceptionIfInvalidText("ocupación", ocupacion, false, 50);
         ValidationUtil.throwExceptionIfInvalidText("ci", ci, false, 20);
         ValidationUtil.throwExceptionIfInvalidText("fechaNamiento", fechaNacimiento, false, 10);
         Date fechNacimient = null;
-        if (StringUtil.isEmptyOrNull(fechaNacimiento)) {
+        if (!StringUtil.isEmptyOrNull(fechaNacimiento)) {
             fechNacimient = DateUtil.toDate(DateUtil.FORMAT_DATE, fechaNacimiento);
             if (fechNacimient == null) {
                 throw new OperationException("No se logró convertir a formato dd/mm/yyyy la fecha: " + fechaNacimiento);
@@ -251,7 +253,7 @@ public class PacienteServiceImpl implements PacienteService {
 
         if (sintomas == null || sintomas.isEmpty()) {
             log.error("No existe sintomas para registrar en el control diario");
-            return "Todo Bien";
+            return cacheService.getStringParam(Constants.Parameters.MENSAJE_SIN_SINTOMAS);
         }
 
         log.info("Registrando sintomas...");
@@ -320,8 +322,14 @@ public class PacienteServiceImpl implements PacienteService {
                 if (paciente.getDiagnostico() != null && (paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.CONFIRMADO) ||
                         paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.ACTIVO))) {
                     diagnostico.setEstadoDiagnostico(EstadoDiagnosticoEnum.ACTIVO);
+                    diagnostico.setObservacion(cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_ACTIVO));
                     this.diagnosticoRepository.save(diagnostico);
                 } else {
+                    if(estadoDiagnostico.equals(EstadoDiagnosticoEnum.SOSPECHOSO)) {
+                        diagnostico.setObservacion(cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_SOSPECHOSO));
+                    }else{
+                        diagnostico.setObservacion(cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_LEVES));
+                    }
                     diagnostico.setEstadoDiagnostico(estadoDiagnostico);
                     this.diagnosticoRepository.save(diagnostico);
                 }
@@ -329,15 +337,29 @@ public class PacienteServiceImpl implements PacienteService {
 
                 if (paciente.getDiagnostico() == null) {
                     paciente.setDiagnostico(diagnostico);
+                    this.pacienteRepository.save(paciente);
                 } else if (!(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.SOSPECHOSO) &&
                         diagnostico.getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.NEGATIVO))) {
                     paciente.setDiagnostico(diagnostico);
                     this.pacienteRepository.save(paciente);
+
                 }
             }
         }
-        log.info("Se registro los sintomas correctamente");
-        return enfermedades.get(0).getMensajeDiagnostico();
+
+        if(paciente.getDiagnostico() == null){
+            return cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_LEVES);
+        }
+        if(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.NEGATIVO)){
+            return cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_LEVES);
+        }
+        if(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.ACTIVO)){
+            return cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_ACTIVO);
+        }
+        if(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.SOSPECHOSO)){
+            return cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_SOSPECHOSO);
+        }
+        return cacheService.getStringParam(Constants.Parameters.MENSAJE_DEFECTO);
     }
 
     @Transactional(readOnly = true)
@@ -442,5 +464,28 @@ public class PacienteServiceImpl implements PacienteService {
     public void eliminarContacto(Long contactoId) {
         this.pacienteRepository.eliminarContacto(contactoId);
 
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<MovilControlDiario> getControlDiario(Long pacienteId) {
+        Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId,EstadoEnum.ACTIVO).orElseThrow(()-> new NotDataFoundException("No se encontró el paciente"));
+        Pageable pageable = PageRequest.of(0, 10);
+        List<ControlDiario> controlDiarios = this.controlDiarioRepository.listarControlDiario(paciente, pageable);
+        List<MovilControlDiario> list = new ArrayList<>();
+        for (ControlDiario cd: controlDiarios){
+            MovilControlDiario resp = new MovilControlDiario();
+            resp.setId(cd.getId());
+            resp.setFechaRegistro(cd.getCreatedDate());
+            resp.setRecomendacion(cd.getRecomendacion());
+            List<ControlDiarioSintoma> diarioSintomaList = this.controlDiarioSintomaRepository.findByControlDiario(cd);
+            List<SintomaResponse> sintomaResponses = new ArrayList<>();
+            diarioSintomaList.forEach(controlDiarioSintoma ->
+                    sintomaResponses.add(
+                            new SintomaResponse(controlDiarioSintoma.getSintoma().getId(),controlDiarioSintoma.getSintoma().getNombre(),"",false,"")));
+            resp.setSintomas(sintomaResponses);
+            list.add(resp);
+        }
+        return list;
     }
 }
