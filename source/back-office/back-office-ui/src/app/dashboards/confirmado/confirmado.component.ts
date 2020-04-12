@@ -24,9 +24,6 @@ export class ConfirmadoComponent implements OnInit {
 
   draw(data: Data) {
     this.option = {
-      title: {
-        text: 'CONFIRMADOS'
-      },
       xAxis: {
         type: 'category',
         boundaryGap: false,

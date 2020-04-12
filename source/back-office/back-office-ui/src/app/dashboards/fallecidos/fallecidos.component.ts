@@ -24,9 +24,6 @@ export class FallecidosComponent implements OnInit {
 
   draw(data: Data) {
     this.option = {
-      title: {
-        text: 'FALLECIDOS'
-      },
       xAxis: {
         type: 'category',
         boundaryGap: false,
