@@ -23,6 +23,14 @@ public class NivelValoracionDto implements Serializable{
 		this.medio = medio;
 		this.bajo = bajo;
 	}
+
+	public NivelValoracionDto(String registrado, Long alto, Long medio, Long bajo) {
+		super();
+		this.registrado = registrado;
+		this.alto = alto;
+		this.medio = medio;
+		this.bajo = bajo;
+	}
 	
 	
 }

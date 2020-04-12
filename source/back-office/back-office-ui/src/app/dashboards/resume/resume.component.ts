@@ -1,14 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import echarts from '../../../assets/js/echarts.min.js';
+import { Data } from '../dashboard.type.js';
 
 @Component({
   selector: 'app-resume',
   templateUrl: './resume.component.html'
 })
 export class ResumeComponent implements OnInit {
-
-  @Input() data = [];
 
   mostrar: boolean;
   option: any;
@@ -21,17 +20,9 @@ export class ResumeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.draw();
   }
 
-  draw() {
-    const data = {
-      dia: ['06/04/2020', '07/04/2020', '08/04/2020', '08/04/2020', '09/04/2020', '10/04/2020', '11/04/2020', '12/04/2020'],
-      sospechoso: [100, 150, 20, 10, 45, 55, 90, 55],
-      confirmado: [52, 50, 50, 80, 15, 35, 90, 36],
-      recuperados: [80, 35, 20, 20, 15, 55, 70, 25],
-      muerto: [10, 5, 0, 2, 4, 5, 8, 12]
-    };
+  draw(data: Data) {
     this.option = {
       title: {
         text: 'RESUMEN'
@@ -63,7 +54,7 @@ export class ResumeComponent implements OnInit {
         {
           type: 'category',
           boundaryGap: false,
-          data: data.dia
+          data: data.dias
         }
       ],
       yAxis: [
@@ -73,32 +64,28 @@ export class ResumeComponent implements OnInit {
       ],
       series: [
         {
-          name: 'Sospechoso',
+          name: 'Sospechosos',
           type: 'line',
-          stack: '总量',
           areaStyle: {},
-          data: data.sospechoso
+          data: data.sospechosos
         },
         {
-          name: 'Confirmado',
+          name: 'Confirmados',
           type: 'line',
-          stack: '总量',
           areaStyle: {},
-          data: data.confirmado
+          data: data.confirmados
         },
         {
-          name: 'Recuperado',
+          name: 'Recuperados',
           type: 'line',
-          stack: '总量',
           areaStyle: {},
-          data: data.recuperados
+          data: data.curados
         },
         {
-          name: 'Muerto',
+          name: 'Fallecidos',
           type: 'line',
-          stack: '总量',
           areaStyle: {},
-          data: data.muerto
+          data: data.fallecidos
         }
       ]
     };

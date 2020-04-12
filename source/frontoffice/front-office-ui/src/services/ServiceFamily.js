@@ -119,7 +119,7 @@ class ServiceFamily extends ServiceBase {
 	}
 	
 	getHistory(userId, onSuccess = false, onFailure = false) {
-		this.axios.get(this.getBaseService() + 'api/pacientes/' + userId + '/diganosticos',
+		this.axios.get(this.getBaseService() + 'api/pacientes/' + userId + '/diganosticos/',
 			{headers: this.getHeaders()})
 				.then((result) => {
 						if (onSuccess) {

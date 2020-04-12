@@ -33,8 +33,7 @@ public class Diagnostico extends AbstractAuditableEntity{
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "OBSERVACION")
-    @Lob
+    @Column(name = "OBSERVACION", length = 4000)
     private String observacion;
 
     @Column(name = "ESTADO_DIAGNOSTICO")
