@@ -32,7 +32,6 @@ public class FichaEpidemiologicaResponse implements Serializable {
     private Integer edad;
     private GeneroEnum genero;
     private String telefono;
-    private String cedulaIdentidad;
     private String departamento;
     private String municipio;
     private String zona;

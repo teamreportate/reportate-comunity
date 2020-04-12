@@ -2,6 +2,7 @@ package bo.com.reportate.service;
 
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
 import bo.com.reportate.model.dto.response.DiagnosticoSintomaResponse;
+import bo.com.reportate.model.dto.response.MapResponse;
 import bo.com.reportate.model.dto.response.NivelValoracionDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
@@ -28,4 +29,6 @@ public interface DiagnosticoService {
     List<NivelValoracionDto> listarPorNivelValoracion(Date from,Date to);
     Page<DiagnosticoResponseDto> listarDiagnostico(Authentication authentication, Date from, Date to, Long departamentoId, Long municipioId, Long centroSaludId, String nomprePaciente, EstadoDiagnosticoEnum estadoDiagnostico, Long enfermedadId, Pageable pageable);
     List<DiagnosticoSintomaResponse> listarSintomas(Long diagnosticoId);
+    List<MapResponse> listarPacientesPor(Authentication authentication, Date from, Date to, Long departamentoId,
+                                         Long municipioId, Long centroSaludId, Long enfermedadId,EstadoDiagnosticoEnum estadoDiagnostico);
 }

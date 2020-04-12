@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import bo.com.reportate.model.dto.response.MapResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -153,4 +154,6 @@ public class DiagnosticoResumenEstadoServiceImpl implements DiagnosticoResumenEs
 		tabla.setItems(items);
 		return tabla;
 	}
+
+
 }
