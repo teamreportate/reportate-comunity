@@ -40,14 +40,6 @@ export default ({newMember}) => {
 		return fields;
 	};
 	
-	const handleReportClick  = () => {
-		history.push("/daily-data");
-	};
-	const handleHistoryClick = () => {
-		history.push("/history");
-	};
-	
-	
 	const onFinish = values => {
 		setLoading(true);
 		if (newMember) {
@@ -55,7 +47,7 @@ export default ({newMember}) => {
 				(result) => {
 					dispatch(familyAddMember(result));
 					setLoading(false);
-					history.push("/dashboard");
+					history.push("/base-data");
 				},
 				(data) => {
 					dispatch(appConfigSetMessage({text: data.detail}));
@@ -63,7 +55,6 @@ export default ({newMember}) => {
 				});
 			
 		} else {
-			console.log(values);
 			ServiceFamily.updateMember({...values, id: member.id, firstControl: member.firstControl},
 				(result) => {
 					dispatch(familyUpdateMember(result));
@@ -90,7 +81,12 @@ export default ({newMember}) => {
 	
 	return (
 		<div>
-			<p>Ingresa la información básica del integrante de tú familia</p>
+			{
+				newMember
+				? <p>Ingresa la información básica del integrante de tú familia</p>
+				: <p>Información de <b>{member.name}</b></p>
+			}
+			
 			<Form
 				form={form}
 				layout='vertical'
@@ -100,6 +96,7 @@ export default ({newMember}) => {
 				initialValues={{
 					occupationSwitch: !!member.occupation,
 					occupation      : member.occupation,
+					age             : 20,
 				}}
 			>
 				<Form.Item label="Nombre"
@@ -114,7 +111,6 @@ export default ({newMember}) => {
 									 rules={[{required: true, message: 'Ingresa la edad'}]}>
 					<InputNumber
 						style={{width: '100%'}}
-						defaultValue={20}
 						min={0}
 						max={150}
 					
@@ -151,10 +147,9 @@ export default ({newMember}) => {
 					</Form.Item>
 					: null
 				}
-				
 				{
 					gestation && sex === 'FEMENINO'
-					? <Form.Item label="Cuantas semanas"
+					? <Form.Item label="¿Cuantas semanas?"
 											 name="gestationTime"
 											 rules={[{required: true, message: 'Ingresa el tiempo de gestación'}]}>
 						<InputNumber
@@ -208,23 +203,6 @@ export default ({newMember}) => {
 					</Form.Item>
 					: null
 				}
-				
-				
-				{(newMember)
-				 ? null : (
-					 <>
-						 <Form.Item>
-							 <Button type="default" onClick={handleReportClick} style={{width: '100%', marginBottom: 8}}
-											 className='options'>Reportar sintoma</Button>
-						 </Form.Item>
-						 <Form.Item>
-							 <Button type="default" onClick={handleHistoryClick} style={{width: '100%', marginBottom: 8}}
-											 className='options'>Diagnosticos</Button>
-						 </Form.Item>
-					 </>
-				 )
-					
-				}
 				<Form.Item>
 					<div style={{display: "flex", flexDirection: "row", marginTop: 16}}>
 						<Button type="default" onClick={handleCancelClick}
@@ -237,11 +215,3 @@ export default ({newMember}) => {
 		</div>
 	);
 }
-
-const styles = {
-	radio: {
-		display   : 'block',
-		height    : '30px',
-		lineHeight: '30px',
-	}
-};

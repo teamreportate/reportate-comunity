@@ -24,9 +24,6 @@ export class ConfirmadoComponent implements OnInit {
 
   draw(data: Data) {
     this.option = {
-      title: {
-        text: 'CONFIRMADOS'
-      },
       xAxis: {
         type: 'category',
         boundaryGap: false,
@@ -41,13 +38,13 @@ export class ConfirmadoComponent implements OnInit {
         areaStyle: {
           color: {
             colorStops: [{
-              offset: 0, color: '#6D7C87'
+              offset: 0, color: '#F4D03F'
             }]
           }
         },
         color: {
           colorStops: [{
-            offset: 0, color: '#6D7C87'
+            offset: 0, color: '#F4D03F'
           }]
         }
       }]

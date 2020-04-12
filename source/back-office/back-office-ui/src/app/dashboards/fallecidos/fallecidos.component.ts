@@ -24,9 +24,6 @@ export class FallecidosComponent implements OnInit {
 
   draw(data: Data) {
     this.option = {
-      title: {
-        text: 'FALLECIDOS'
-      },
       xAxis: {
         type: 'category',
         boundaryGap: false,
@@ -41,13 +38,13 @@ export class FallecidosComponent implements OnInit {
         areaStyle: {
           color: {
             colorStops: [{
-              offset: 0, color: '#E1A793'
+              offset: 0, color: '#FB9678'
             }]
           }
         },
         color: {
           colorStops: [{
-            offset: 0, color: '#E1A793'
+            offset: 0, color: '#FB9678'
           }]
         }
       }]

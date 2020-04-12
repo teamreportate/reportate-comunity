@@ -162,7 +162,7 @@ public class PacienteServiceImpl implements PacienteService {
         ValidationUtil.throwExceptionIfInvalidNumber("edad", edad, true, -1, 120);
         ValidationUtil.throwExceptionIfInvalidNumber("tiempo de gestación", tiempoGestacion, false, -1, 41);
 
-        ValidationUtil.throwExceptionIfInvalidText("ocupación", ocupacion, true, 50);
+        ValidationUtil.throwExceptionIfInvalidText("ocupación", ocupacion, false, 50);
         ValidationUtil.throwExceptionIfInvalidText("ci", ci, false, 20);
         ValidationUtil.throwExceptionIfInvalidText("fechaNamiento", fechaNacimiento, false, 10);
         Date fechNacimient = null;
@@ -240,21 +240,36 @@ public class PacienteServiceImpl implements PacienteService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public String controlDiario(Long pacienteId, List<EnfermedadRequest> enfermedadesBase, List<PaisRequest> paisesVisitados, List<SintomaRequest> sintomas) {
         log.info("Inician el registro del control diario.");
         ValidationUtil.throwExceptionIfInvalidNumber("paciente", pacienteId, true, 0L);
-
         Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId, EstadoEnum.ACTIVO).orElseThrow(() -> new NotDataFoundException("No existe el paciente registrado"));
+
+        Integer cantidadControles = cacheService.getIntegerParam(Constants.Parameters.CANTIDAD_MAXIMA_CONTROL);
+        if(paciente.getCantidadControles() != null){
+            cantidadControles = paciente.getCantidadControles();
+        }
+        if(this.controlDiarioRepository.countByPacienteAndCreatedDateBetween(paciente,
+                DateUtil.formatToStart(new Date()),DateUtil.formatToEnd(new Date())) >= cantidadControles){
+            log.error("la cantidad máxima de controles es {}",cantidadControles);
+            return cacheService.getStringParam(Constants.Parameters.MENSAJE_CANTIDAD_MAXIMA_REGISTRO).replace("${CANTIDAD}",String.valueOf(cantidadControles));
+        }
+
         ControlDiario controlDiario = ControlDiario.builder()
                 .paciente(paciente)
                 .primerControl(!this.controlDiarioRepository.existsByPrimerControlTrueAndPaciente(paciente))
                 .build();
-        this.controlDiarioRepository.save(controlDiario);
+
 
         if (sintomas == null || sintomas.isEmpty()) {
             log.error("No existe sintomas para registrar en el control diario");
-            return "Todo Bien";
+            controlDiario.setRecomendacion(cacheService.getStringParam(Constants.Parameters.MENSAJE_SIN_SINTOMAS));
+            this.controlDiarioRepository.save(controlDiario);
+            return controlDiario.getRecomendacion();
         }
+
+        this.controlDiarioRepository.saveAndFlush(controlDiario);
 
         log.info("Registrando sintomas...");
         List<Sintoma> sintomasRecibidos = new ArrayList<>();
@@ -322,8 +337,14 @@ public class PacienteServiceImpl implements PacienteService {
                 if (paciente.getDiagnostico() != null && (paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.CONFIRMADO) ||
                         paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.ACTIVO))) {
                     diagnostico.setEstadoDiagnostico(EstadoDiagnosticoEnum.ACTIVO);
+                    diagnostico.setObservacion(cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_ACTIVO));
                     this.diagnosticoRepository.save(diagnostico);
                 } else {
+                    if(estadoDiagnostico.equals(EstadoDiagnosticoEnum.SOSPECHOSO)) {
+                        diagnostico.setObservacion(cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_SOSPECHOSO));
+                    }else{
+                        diagnostico.setObservacion(cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_LEVES));
+                    }
                     diagnostico.setEstadoDiagnostico(estadoDiagnostico);
                     this.diagnosticoRepository.save(diagnostico);
                 }
@@ -331,15 +352,46 @@ public class PacienteServiceImpl implements PacienteService {
 
                 if (paciente.getDiagnostico() == null) {
                     paciente.setDiagnostico(diagnostico);
+                    this.pacienteRepository.save(paciente);
                 } else if (!(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.SOSPECHOSO) &&
                         diagnostico.getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.NEGATIVO))) {
                     paciente.setDiagnostico(diagnostico);
                     this.pacienteRepository.save(paciente);
+
                 }
             }
         }
-        log.info("Se registro los sintomas correctamente");
-        return enfermedades.get(0).getMensajeDiagnostico();
+
+        String recomendacion;
+        if(paciente.getDiagnostico() == null){
+            recomendacion = cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_LEVES);
+            this.controlDiarioRepository.agregarRecomendacion(controlDiario,recomendacion);
+            controlDiario.setRecomendacion(recomendacion);
+            return recomendacion;
+        }
+        if(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.NEGATIVO)){
+            recomendacion = cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_LEVES);
+            this.controlDiarioRepository.agregarRecomendacion(controlDiario,recomendacion);
+            controlDiario.setRecomendacion(recomendacion);
+            return recomendacion;
+        }
+        if(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.ACTIVO)){
+            recomendacion = cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_ACTIVO);
+            this.controlDiarioRepository.agregarRecomendacion(controlDiario,recomendacion);
+            controlDiario.setRecomendacion(recomendacion);
+            return recomendacion;
+        }
+        if(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.SOSPECHOSO)){
+            recomendacion = cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_SOSPECHOSO);
+            controlDiario.setRecomendacion(recomendacion);
+            this.controlDiarioRepository.agregarRecomendacion(controlDiario,recomendacion);
+            return recomendacion;
+        }
+
+        recomendacion = cacheService.getStringParam(Constants.Parameters.MENSAJE_DEFECTO);
+        this.controlDiarioRepository.agregarRecomendacion(controlDiario,recomendacion);
+        controlDiario.setRecomendacion(recomendacion);
+        return recomendacion;
     }
 
     @Transactional(readOnly = true)
@@ -456,7 +508,7 @@ public class PacienteServiceImpl implements PacienteService {
         for (ControlDiario cd: controlDiarios){
             MovilControlDiario resp = new MovilControlDiario();
             resp.setId(cd.getId());
-            resp.setFechaRegistro(cd.getCreatedDate());
+            resp.setFechaRegistro(DateUtil.toString(DateUtil.FORMAT_DATE_MINUTE,cd.getCreatedDate()));
             resp.setRecomendacion(cd.getRecomendacion());
             List<ControlDiarioSintoma> diarioSintomaList = this.controlDiarioSintomaRepository.findByControlDiario(cd);
             List<SintomaResponse> sintomaResponses = new ArrayList<>();

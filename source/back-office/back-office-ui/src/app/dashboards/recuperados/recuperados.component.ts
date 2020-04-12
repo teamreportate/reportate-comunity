@@ -24,9 +24,6 @@ export class RecuperadosComponent implements OnInit {
 
   draw(data: Data) {
     this.option = {
-      title: {
-        text: 'RECUPERADOS'
-      },
       xAxis: {
         type: 'category',
         boundaryGap: false,
@@ -41,13 +38,13 @@ export class RecuperadosComponent implements OnInit {
         areaStyle: {
           color: {
             colorStops: [{
-              offset: 0, color: '#90BCC2'
+              offset: 0, color: '#2ECC71'
             }]
           }
         },
         color: {
           colorStops: [{
-            offset: 0, color: '#90BCC2'
+            offset: 0, color: '#2ECC71'
           }]
         }
       }]

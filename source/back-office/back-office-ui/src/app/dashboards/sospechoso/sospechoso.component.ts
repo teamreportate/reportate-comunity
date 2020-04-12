@@ -24,9 +24,6 @@ export class SospechosoComponent implements OnInit {
 
   draw(data: Data) {
     this.option = {
-      title: {
-        text: 'SOSPECHOSOS'
-      },
       xAxis: {
         type: 'category',
         boundaryGap: false,
@@ -41,13 +38,13 @@ export class SospechosoComponent implements OnInit {
         areaStyle: {
           color: {
             colorStops: [{
-              offset: 0, color: '#D4716E'
+              offset: 0, color: '#01C0C8'
             }]
           }
         },
         color: {
           colorStops: [{
-            offset: 0, color: '#D4716E'
+            offset: 0, color: '#01C0C8'
           }]
         }
       }]

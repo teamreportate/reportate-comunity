@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import bo.com.reportate.model.dto.response.MapResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -93,7 +94,21 @@ public class DiagnosticoResumenEstadoServiceImpl implements DiagnosticoResumenEs
 			enfermedads.addAll(enfermedadRepository.findByEnfermedadBaseFalseAndEstado(EstadoEnum.ACTIVO));
 		}
 		
-		return diagnosticoResumenDiarioRepository.listarPorRangoFechas(DateUtil.formatToStart(from), DateUtil.formatToEnd(to), departamentos, municipios, centroSaluds, enfermedads);
+		List<ResumenDto> resumen= diagnosticoResumenDiarioRepository.listarPorRangoFechas(DateUtil.formatToStart(from), DateUtil.formatToEnd(to), departamentos, municipios, centroSaluds, enfermedads);
+		List<ResumenDto> resumenAux = new ArrayList<>();
+		for (ResumenDto resumenDto : resumen) {
+			if(!resumenAux.contains(resumenDto)) {
+				resumenAux.add(resumenDto);
+			}else {
+				ResumenDto resumenDtoAux = resumenAux.get(resumenAux.indexOf(resumenDto));
+				resumenDtoAux.setConfirmado(resumenDto.getConfirmado()+resumenDtoAux.getConfirmado());
+				resumenDtoAux.setCurado(resumenDto.getCurado()+resumenDtoAux.getCurado());
+				resumenDtoAux.setFallecido(resumenDto.getFallecido()+resumenDtoAux.getFallecido());
+				resumenDtoAux.setNegativo(resumenDto.getNegativo()+resumenDtoAux.getNegativo());
+				resumenDtoAux.setSospechoso(resumenDto.getSospechoso()+resumenDtoAux.getSospechoso());
+			}
+		}
+		return resumenAux;
 	}
 
 	@Override
@@ -153,4 +168,6 @@ public class DiagnosticoResumenEstadoServiceImpl implements DiagnosticoResumenEs
 		tabla.setItems(items);
 		return tabla;
 	}
+
+
 }

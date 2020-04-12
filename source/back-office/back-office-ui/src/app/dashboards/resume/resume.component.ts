@@ -24,9 +24,6 @@ export class ResumeComponent implements OnInit {
 
   draw(data: Data) {
     this.option = {
-      title: {
-        text: 'RESUMEN'
-      },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -37,7 +34,7 @@ export class ResumeComponent implements OnInit {
         }
       },
       legend: {
-        data: []
+        data: ['Sospechosos', 'Descartados', 'Confirmados', 'Recuperados', 'Fallecidos']
       },
       toolbox: {
         feature: {
@@ -66,25 +63,86 @@ export class ResumeComponent implements OnInit {
         {
           name: 'Sospechosos',
           type: 'line',
-          areaStyle: {},
+          areaStyle: {
+            color: {
+              colorStops: [{
+                offset: 0, color: '#01C0C8'
+              }]
+            }
+          },
+          color: {
+            colorStops: [{
+              offset: 0, color: '#01C0C8'
+            }]
+          },
           data: data.sospechosos
+        },
+        {
+          name: 'Descartados',
+          type: 'line',
+          areaStyle: {
+            color: {
+              colorStops: [{
+                offset: 0, color: '#C777DB'
+              }]
+            }
+          },
+          color: {
+            colorStops: [{
+              offset: 0, color: '#C777DB'
+            }]
+          },
+          data: data.negativos
         },
         {
           name: 'Confirmados',
           type: 'line',
-          areaStyle: {},
+          areaStyle: {
+            color: {
+              colorStops: [{
+                offset: 0, color: '#F4D03F'
+              }]
+            }
+          },
+          color: {
+            colorStops: [{
+              offset: 0, color: '#F4D03F'
+            }]
+          },
           data: data.confirmados
         },
         {
           name: 'Recuperados',
           type: 'line',
-          areaStyle: {},
+          areaStyle: {
+            color: {
+              colorStops: [{
+                offset: 0, color: '#2ECC71'
+              }]
+            }
+          },
+          color: {
+            colorStops: [{
+              offset: 0, color: '#2ECC71'
+            }]
+          },
           data: data.curados
         },
         {
           name: 'Fallecidos',
           type: 'line',
-          areaStyle: {},
+          areaStyle: {
+            color: {
+              colorStops: [{
+                offset: 0, color: '#FB9678'
+              }]
+            }
+          },
+          color: {
+            colorStops: [{
+              offset: 0, color: '#FB9678'
+            }]
+          },
           data: data.fallecidos
         }
       ]

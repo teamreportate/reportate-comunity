@@ -1,3 +1,30 @@
-<p>
-  list-sintomas works!
-</p>
+<mat-card>
+  <mat-card-header class="bg-primary-theme text-white">
+    <mat-card-title>{{"Lista de sintomas" }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div fxLayout="row wrap">
+      <div fxFlex="100">
+        <table matSort >
+          <tr>
+            <th mat-sort-header="sintoma">Sintoma</th>
+            <th mat-sort-header=" ">{{' '}}</th>
+            <th mat-sort-header="valoracion">Valoración</th>
+          </tr>
+          <tr *ngFor="let data of listSintomas">
+            <td>{{data.sintoma}}</td>
+            <td>{{'   '}}</td>
+              <td>{{data.valoracion}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <mat-card-actions fxLayoutAlign="end center" fxLayoutGap="5px">
+      <button mat-stroked-button color="warn" type="button" (click)="this.cancel()">Cerrar</button>
+    </mat-card-actions>
+  </mat-card-content>
+</mat-card>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>
+1
