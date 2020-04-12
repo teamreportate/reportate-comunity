@@ -1,7 +1,5 @@
-<h4 class="text-center">Test realizados</h4>
 <mat-accordion>
-  <mat-expansion-panel (opened)="panelOpenState = true"
-                       (closed)="panelOpenState = false">
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
     <mat-expansion-panel-header>
       <mat-panel-description>
         <h5 class="text-center">Personalizar filtros</h5>
@@ -10,70 +8,76 @@
 
     <div fxLayout="row" class="h-padding-5">
       <div fxFlex="100">
-          <div fxLayout="row wrap" fxLayoutAlign="space-around" >
-            <ng-container [formGroup]="form">
-              <div fxFlex="10">
-                <mat-form-field>
-                  <mat-label>Fecha inicio</mat-label>
-                  <input matInput [matDatepicker]="f" [max]="to" formControlName="from" readonly>
-                  <mat-datepicker-toggle matSuffix [for]="f"></mat-datepicker-toggle>
-                  <mat-datepicker #f></mat-datepicker>
-                </mat-form-field>
-              </div>
-              <div fxFlex="10">
-                <mat-form-field>
-                  <mat-label>Fecha fin</mat-label>
-                  <input matInput [matDatepicker]="t" [min]="from" formControlName="to" readonly>
-                  <mat-datepicker-toggle matSuffix [for]="t"></mat-datepicker-toggle>
-                  <mat-datepicker #t></mat-datepicker>
-                </mat-form-field>
-              </div>
-            </ng-container>
-            <div fxFlex="14">
+        <div fxLayout="row wrap" fxLayoutAlign="space-around">
+          <ng-container [formGroup]="form">
+            <div fxFlex="10">
               <mat-form-field>
-                <mat-label>Departamento</mat-label>
-                <mat-select required aria-placeholder="seleccionar" [(ngModel)]="filter.departamentoId">
-                  <mat-option [value]="0">Todos</mat-option>
-                  <mat-option [value]="item.id" *ngFor="let item of departments;">{{item.nombre}}</mat-option>
-                </mat-select>
+                <mat-label>Fecha inicio</mat-label>
+                <input matInput [matDatepicker]="f" [max]="to" formControlName="from" readonly>
+                <mat-datepicker-toggle matSuffix [for]="f"></mat-datepicker-toggle>
+                <mat-datepicker #f></mat-datepicker>
               </mat-form-field>
             </div>
-            <div fxFlex="15">
+            <div fxFlex="10">
               <mat-form-field>
-                <mat-label>Municipio</mat-label>
-                <mat-select required aria-placeholder="seleccionar" [(ngModel)]="filter.municipioId">
-                  <mat-option [value]="0">Todos</mat-option>
-                  <mat-option [value]="item.id" *ngFor="let item of municipalities | filterBy:filter.departamentoId:'departamentoId';">{{item.nombre}}
-                  </mat-option>
-                </mat-select>
+                <mat-label>Fecha fin</mat-label>
+                <input matInput [matDatepicker]="t" [min]="from" formControlName="to" readonly>
+                <mat-datepicker-toggle matSuffix [for]="t"></mat-datepicker-toggle>
+                <mat-datepicker #t></mat-datepicker>
               </mat-form-field>
             </div>
-            <div fxFlex="15">
-              <mat-form-field>
-                <mat-label>Centro de salud</mat-label>
-                <mat-select required aria-placeholder="seleccionar" [(ngModel)]="filter.centroSaludId">
-                  <mat-option [value]="0">Todos</mat-option>
-                  <mat-option [value]="item.id" *ngFor="let item of saludCentres | filterBy:filter.municipioId:'municipioId';">{{item.nombre}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div fxFlex="14">
-              <mat-form-field>
-                <mat-label>Enfermedad</mat-label>
-                <mat-select required aria-placeholder="seleccionar" [(ngModel)]="filter.enfermedadId">
-                  <mat-option [value]="0">Todos</mat-option>
-                  <mat-option [value]="item.id" *ngFor="let item of enfermedades; ">{{item.nombre}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div fxFlex="6" class="text-right">
-              <button mat-flat-button color="accent" type="button" title="Filtrar resultados" (click)="updateData()">
-                <span class="material-icons"> filter_list </span> </button>
-            </div>
-
+          </ng-container>
+          <div fxFlex="14">
+            <mat-form-field>
+              <mat-label>Departamento</mat-label>
+              <mat-select required aria-placeholder="seleccionar" [(ngModel)]="filter.departamentoId">
+                <mat-option [value]="0">Todos</mat-option>
+                <mat-option [value]="item.id" *ngFor="let item of departments;">{{item.nombre}}</mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
+          <div fxFlex="15">
+            <mat-form-field>
+              <mat-label>Municipio</mat-label>
+              <mat-select required aria-placeholder="seleccionar" [(ngModel)]="filter.municipioId">
+                <mat-option [value]="0">Todos</mat-option>
+                <mat-option [value]="item.id"
+                  *ngFor="let item of municipalities | filterBy:filter.departamentoId:'departamentoId';">{{item.nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="15">
+            <mat-form-field>
+              <mat-label>Centro de salud</mat-label>
+              <mat-select required aria-placeholder="seleccionar" [(ngModel)]="filter.centroSaludId">
+                <mat-option [value]="0">Todos</mat-option>
+                <mat-option [value]="item.id"
+                  *ngFor="let item of saludCentres | filterBy:filter.municipioId:'municipioId';">{{item.nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="14">
+            <mat-form-field>
+              <mat-label>Enfermedad</mat-label>
+              <mat-select required aria-placeholder="seleccionar" [(ngModel)]="filter.enfermedadId">
+                <mat-option [value]="0">Todos</mat-option>
+                <mat-option [value]="item.id" *ngFor="let item of enfermedades; ">{{item.nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="5">
+            <button mat-flat-button color="accent" type="button" title="Filtrar resultados" (click)="updateData()">
+              <span class="material-icons"> filter_list </span> </button>
+          </div>
+<!--           <div fxFlex="5">
+            <button mat-flat-button color="accent" type="button" title="Filtrar resultados" (click)="print()">
+              <span class="material-icons"> print </span> </button>
+          </div> -->
+
+        </div>
 
       </div>
     </div>
@@ -83,82 +87,96 @@
 <br>
 
 <div fxLayout="row wrap" fxLayoutAlign="space-around">
-  <div fxFlex="38">
-    <h4 class="text-center">{{totalsList.nivelLugar}}</h4>
-    <ngx-datatable #table class="material" [messages]="this.tableMessages()" [columnMode]="'force'" [headerHeight]="50"
-      [footerHeight]="50" [rowHeight]="'auto'" [limit]='10' [rows]="totalsList.items" [scrollbarH]="this.scrollH">
+  <div fxFlex="48">
+    <div class="card dashboard-datatable" style="width: 100%; height:580px; padding: 25px 0px 5px 0px;">
+      <div class="card-header">
+        <h4 class="text-center m-0">{{totalsList.nivelLugar}}</h4>
+        <mat-form-field style="padding: 0px 20px 0px 20px;">
+          <input matInput placeholder='Buscar...' [(ngModel)]="searchValue"/>
+        </mat-form-field>
+      </div>
+      <ngx-datatable #table class="material" [messages]="this.tableMessages()" [columnMode]="'force'"
+        [headerHeight]="40" [footerHeight]="50" [rowHeight]="'auto'" [limit]='10' [rows]="totalsList.items | filterBy:searchValue:'nombre'"
+        [scrollbarH]="this.scrollH">
 
-      <ngx-datatable-column name="Nombre" [draggable]="false" [minWidth]="120" [resizeable]="false">
-        <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
-          {{row.nombre}}
-        </ng-template>
-      </ngx-datatable-column>
+        <ngx-datatable-column name="Nombre" [draggable]="false" [minWidth]="100" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
+            {{row.nombre}}
+          </ng-template>
+        </ngx-datatable-column>
 
-      <ngx-datatable-column name="Sospechosos" [draggable]="false" [resizeable]="false">
-        <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
-          {{row.sospechoso}}
-        </ng-template>
-      </ngx-datatable-column>
+        <ngx-datatable-column name="Sospechosos" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.sospechoso}}
+          </ng-template>
+        </ngx-datatable-column>
 
-      <ngx-datatable-column name="Confirmados" [draggable]="false" [resizeable]="false">
-        <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
-          {{row.confirmado }}
-        </ng-template>
-      </ngx-datatable-column>
+        <ngx-datatable-column name="Confirmados" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.confirmado }}
+          </ng-template>
+        </ngx-datatable-column>
 
-      <ngx-datatable-column name="Recuperados" [draggable]="false" [resizeable]="false">
-        <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
-          {{row.curado }}
-        </ng-template>
-      </ngx-datatable-column>
+        <ngx-datatable-column name="Recuperados" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.curado }}
+          </ng-template>
+        </ngx-datatable-column>
 
-      <ngx-datatable-column name="Fallecidos" [draggable]="false" [resizeable]="false">
-        <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
-          {{row.fallecido }}
-        </ng-template>
-      </ngx-datatable-column>
+        <ngx-datatable-column name="Fallecidos" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.fallecido }}
+          </ng-template>
+        </ngx-datatable-column>
 
-    </ngx-datatable>
+      </ngx-datatable>
+
+    </div>
+
   </div>
-
-  <div fxFlex="60">
+  <div fxFlex="48">
     <div class="card">
       <div fxLayout="row wrap" fxLayoutAlign="space-around">
         <div fxFlex="100">
+          <h4 class="text-center m-0">RESUMEN</h4><br>
           <app-resume></app-resume>
         </div>
       </div>
     </div>
-    <div fxLayout="row wrap" fxLayoutAlign="space-around">
-      <div fxFlex="49">
-        <div class="card">
-          <app-sospechoso></app-sospechoso>
-        </div>
-      </div>
-      <div fxFlex="49">
-        <div class="card">
-          <app-confirmado></app-confirmado>
-        </div>
-      </div>
-    </div>
-    <div fxLayout="row wrap" fxLayoutAlign="space-around">
-      <div fxFlex="49">
-        <div class="card">
-          <app-recuperados></app-recuperados>
-        </div>
-      </div>
-      <div fxFlex="49">
-        <div class="card">
-          <app-fallecidos></app-fallecidos>
-        </div>
-      </div>
-    </div>
+  </div>
+</div>
+
+<div fxLayout="row wrap" fxLayoutAlign="space-around">
+  <div fxFlex="48">
     <div class="card">
-      <div fxLayout="row wrap" fxLayoutAlign="space-around">
-        <div fxFlex="100">
-          <div id="main" style="width: 100%; height:500px;"></div>
-        </div>
-      </div>
+      <h4 class="text-center m-0">SOSPECHOSOS</h4>
+      <app-sospechoso></app-sospechoso>
+    </div>
+  </div>
+  <div fxFlex="48">
+    <div class="card">
+      <h4 class="text-center m-0">CONFIRMADOS</h4>
+      <app-confirmado></app-confirmado>
+    </div>
+  </div>
+  <div fxFlex="48">
+    <div class="card">
+      <h4 class="text-center m-0">RECUPERADOS</h4>
+      <app-recuperados></app-recuperados>
+    </div>
+  </div>
+  <div fxFlex="48">
+    <div class="card">
+      <h4 class="text-center m-0">FALLECIDOS</h4>
+      <app-fallecidos></app-fallecidos>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div fxLayout="row wrap" fxLayoutAlign="space-around">
+    <div fxFlex="96">
+      <h4 class="text-center m-0">TOTAL REGISTROS</h4><br>
+      <div id="main" style="width: 100%; height:500px;"></div>
     </div>
   </div>
 </div>

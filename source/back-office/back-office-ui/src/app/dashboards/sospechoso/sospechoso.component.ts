@@ -24,9 +24,6 @@ export class SospechosoComponent implements OnInit {
 
   draw(data: Data) {
     this.option = {
-      title: {
-        text: 'SOSPECHOSOS'
-      },
       xAxis: {
         type: 'category',
         boundaryGap: false,
