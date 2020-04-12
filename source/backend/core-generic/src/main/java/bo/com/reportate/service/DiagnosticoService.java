@@ -1,5 +1,6 @@
 package bo.com.reportate.service;
 
+import bo.com.reportate.model.dto.DiagnosticoDto;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
 import bo.com.reportate.model.dto.response.DiagnosticoSintomaResponse;
 import bo.com.reportate.model.dto.response.MapResponse;
@@ -31,4 +32,6 @@ public interface DiagnosticoService {
     List<DiagnosticoSintomaResponse> listarSintomas(Long diagnosticoId);
     List<MapResponse> listarPacientesPor(Authentication authentication, Date from, Date to, Long departamentoId,
                                          Long municipioId, Long centroSaludId, Long enfermedadId,EstadoDiagnosticoEnum estadoDiagnostico);
+
+    DiagnosticoDto actualizarDiagnostico(Authentication authentication, Long diagnosticoId, EstadoDiagnosticoEnum estadoDiagnosticoEnum, String observacion);
 }

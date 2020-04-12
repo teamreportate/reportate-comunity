@@ -476,7 +476,7 @@ public class PacienteServiceImpl implements PacienteService {
         for (ControlDiario cd: controlDiarios){
             MovilControlDiario resp = new MovilControlDiario();
             resp.setId(cd.getId());
-            resp.setFechaRegistro(cd.getCreatedDate());
+            resp.setFechaRegistro(DateUtil.toString(DateUtil.FORMAT_DATE_MINUTE,cd.getCreatedDate()));
             resp.setRecomendacion(cd.getRecomendacion());
             List<ControlDiarioSintoma> diarioSintomaList = this.controlDiarioSintomaRepository.findByControlDiario(cd);
             List<SintomaResponse> sintomaResponses = new ArrayList<>();

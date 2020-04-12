@@ -2,6 +2,8 @@ package bo.com.reportate.controller;
 
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
+import bo.com.reportate.model.Diagnostico;
+import bo.com.reportate.model.dto.DiagnosticoDto;
 import bo.com.reportate.model.dto.response.*;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.service.DiagnosticoResumenEstadoService;
@@ -9,6 +11,7 @@ import bo.com.reportate.service.DiagnosticoService;
 import bo.com.reportate.service.ParamService;
 import bo.com.reportate.util.CustomErrorType;
 import bo.com.reportate.utils.DateUtil;
+import bo.com.reportate.web.ActualizacionDiagnosticoRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -237,5 +240,22 @@ public class DiagnosticoController {
         }
     }
 
+    @RequestMapping(value = "/{diagnosticoId}/actualizar-diagnostico",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes =  MediaType.APPLICATION_JSON_VALUE )
+    @Operation(summary = "Actualiza el estado de un diagnóstico", description = "Actualiza el estado de un diagnóstico, este método sólo es permitido para médicos", tags = { "diagnostico" })
+    public ResponseEntity<DiagnosticoDto> actualizarDiagnostico(
+            @AuthenticationPrincipal Authentication authentication,
+            @PathVariable("diagnosticoId") Long diagnosticoId,
+            @RequestBody ActualizacionDiagnosticoRequest diagnosticoRequest){
+        try{
+            DiagnosticoDto diagnosticoDto = this.diagnosticoService.actualizarDiagnostico(authentication, diagnosticoId, diagnosticoRequest.getEstadoDiagnostico(), diagnosticoRequest.getObservacion());
+            return ok(diagnosticoDto);
+        }catch (NotDataFoundException | OperationException e){
+            log.error("No se logro actualizar diagnostico con id {}. Causa. {}", diagnosticoId, e.getMessage());
+            return CustomErrorType.badRequest("Actualizar Diagnóstico",e.getMessage());
+        }catch (Exception e){
+            log.error("No se logro actualizar diagnostico con id {}", diagnosticoId, e);
+            return CustomErrorType.badRequest("Actualizar Diagnóstico","No se logro actualizar diagnóstico");
+        }
+    }
 
 }
