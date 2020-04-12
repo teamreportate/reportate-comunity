@@ -162,7 +162,7 @@ public class PacienteServiceImpl implements PacienteService {
         ValidationUtil.throwExceptionIfInvalidNumber("edad", edad, true, -1, 120);
         ValidationUtil.throwExceptionIfInvalidNumber("tiempo de gestación", tiempoGestacion, false, -1, 41);
 
-        ValidationUtil.throwExceptionIfInvalidText("ocupación", ocupacion, true, 50);
+        ValidationUtil.throwExceptionIfInvalidText("ocupación", ocupacion, false, 50);
         ValidationUtil.throwExceptionIfInvalidText("ci", ci, false, 20);
         ValidationUtil.throwExceptionIfInvalidText("fechaNamiento", fechaNacimiento, false, 10);
         Date fechNacimient = null;
@@ -253,7 +253,7 @@ public class PacienteServiceImpl implements PacienteService {
 
         if (sintomas == null || sintomas.isEmpty()) {
             log.error("No existe sintomas para registrar en el control diario");
-            return "Todo Bien";
+            return cacheService.getStringParam(Constants.Parameters.MENSAJE_SIN_SINTOMAS);
         }
 
         log.info("Registrando sintomas...");
@@ -322,8 +322,14 @@ public class PacienteServiceImpl implements PacienteService {
                 if (paciente.getDiagnostico() != null && (paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.CONFIRMADO) ||
                         paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.ACTIVO))) {
                     diagnostico.setEstadoDiagnostico(EstadoDiagnosticoEnum.ACTIVO);
+                    diagnostico.setObservacion(cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_ACTIVO));
                     this.diagnosticoRepository.save(diagnostico);
                 } else {
+                    if(estadoDiagnostico.equals(EstadoDiagnosticoEnum.SOSPECHOSO)) {
+                        diagnostico.setObservacion(cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_SOSPECHOSO));
+                    }else{
+                        diagnostico.setObservacion(cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_LEVES));
+                    }
                     diagnostico.setEstadoDiagnostico(estadoDiagnostico);
                     this.diagnosticoRepository.save(diagnostico);
                 }
@@ -336,11 +342,24 @@ public class PacienteServiceImpl implements PacienteService {
                         diagnostico.getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.NEGATIVO))) {
                     paciente.setDiagnostico(diagnostico);
                     this.pacienteRepository.save(paciente);
+
                 }
             }
         }
-        log.info("Se registro los sintomas correctamente");
-        return enfermedades.get(0).getMensajeDiagnostico();
+
+        if(paciente.getDiagnostico() == null){
+            return cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_LEVES);
+        }
+        if(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.NEGATIVO)){
+            return cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_LEVES);
+        }
+        if(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.ACTIVO)){
+            return cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_ACTIVO);
+        }
+        if(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.SOSPECHOSO)){
+            return cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_SOSPECHOSO);
+        }
+        return cacheService.getStringParam(Constants.Parameters.MENSAJE_DEFECTO);
     }
 
     @Transactional(readOnly = true)
