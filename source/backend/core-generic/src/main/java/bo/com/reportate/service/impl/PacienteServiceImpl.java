@@ -243,8 +243,18 @@ public class PacienteServiceImpl implements PacienteService {
     public String controlDiario(Long pacienteId, List<EnfermedadRequest> enfermedadesBase, List<PaisRequest> paisesVisitados, List<SintomaRequest> sintomas) {
         log.info("Inician el registro del control diario.");
         ValidationUtil.throwExceptionIfInvalidNumber("paciente", pacienteId, true, 0L);
-
         Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId, EstadoEnum.ACTIVO).orElseThrow(() -> new NotDataFoundException("No existe el paciente registrado"));
+
+        Integer cantidadControles = cacheService.getIntegerParam(Constants.Parameters.CANTIDAD_MAXIMA_CONTROL);
+        if(paciente.getCantidadControles() != null){
+            cantidadControles = paciente.getCantidadControles();
+        }
+        if(this.controlDiarioRepository.countByPacienteAndCreatedDateBetween(paciente,
+                DateUtil.formatToStart(new Date()),DateUtil.formatToEnd(new Date())) >= cantidadControles){
+            log.error("la cantidad máxima de controles es {}",cantidadControles);
+            return cacheService.getStringParam(Constants.Parameters.MENSAJE_CANTIDAD_MAXIMA_REGISTRO).replace("${CANTIDAD}",String.valueOf(cantidadControles));
+        }
+
         ControlDiario controlDiario = ControlDiario.builder()
                 .paciente(paciente)
                 .primerControl(!this.controlDiarioRepository.existsByPrimerControlTrueAndPaciente(paciente))
