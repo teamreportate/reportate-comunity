@@ -24,6 +24,7 @@ import {Router} from '@angular/router';
   providers: [SeguimientoEnfermedadService, EnfermedadService, DepartamentoService]
 })
 export class SeguimientoEnfermedadComponent extends ClicComponent implements OnInit {
+  panelOpenState = false;
 
   // tslint:disable-next-line:max-line-length
   constructor(private seguimientoEnfermedadService: SeguimientoEnfermedadService,

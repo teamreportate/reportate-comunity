@@ -19,7 +19,8 @@ import {
   MatSelectModule,
   MatSlideToggleModule,
   MatTabsModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatExpansionModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
@@ -37,11 +38,12 @@ import {PacienteService} from '../core/services/http-services/paciente.service';
 import {PaisService} from '../core/services/http-services/pais.service';
 import {EnfermedadService} from '../core/services/http-services/enfermedad.service';
 import { ListSintomasComponent } from './seguimiento-enfermedad/ficha-epidemiologica/dialogs/list-sintomas/list-sintomas.component';
+import { GeolocalizacionCasosComponent } from './geolocalizacion-casos/geolocalizacion-casos.component';
 
 @NgModule({
-  declarations: [SeguimientoEnfermedadComponent, FichaEpidemiologicaComponent, AddContactoComponent, AddEnfermedadComponent, AddPaisViajadoComponent, ListSintomasComponent],
+  // tslint:disable-next-line:max-line-length
+  declarations: [SeguimientoEnfermedadComponent, FichaEpidemiologicaComponent, AddContactoComponent, AddEnfermedadComponent, AddPaisViajadoComponent, ListSintomasComponent, GeolocalizacionCasosComponent],
   imports: [
-    CommonModule,
     RouterModule.forChild(SeguimientoRoute),
     CommonModule,
     MatCardModule,
@@ -68,7 +70,8 @@ import { ListSintomasComponent } from './seguimiento-enfermedad/ficha-epidemiolo
     MatMenuModule,
     DragDropModule,
     CommonsModule,
-    SharedModule
+    SharedModule,
+    MatExpansionModule,
   ], entryComponents: [AddContactoComponent, AddPaisViajadoComponent, AddEnfermedadComponent],
   providers: [PacienteService, PaisService, EnfermedadService]
 })
