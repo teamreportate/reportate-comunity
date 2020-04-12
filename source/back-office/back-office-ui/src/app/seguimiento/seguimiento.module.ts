@@ -38,9 +38,10 @@ import {PaisService} from '../core/services/http-services/pais.service';
 import {EnfermedadService} from '../core/services/http-services/enfermedad.service';
 import {ListSintomasComponent} from './seguimiento-enfermedad/ficha-epidemiologica/dialogs/list-sintomas/list-sintomas.component';
 import {DiagnosticoService} from '../core/services/http-services/diagnostico.service';
+import {AddObservacionComponent} from './seguimiento-enfermedad/ficha-epidemiologica/dialogs/add-observacion/add-observacion.component';
 
 @NgModule({
-  declarations: [SeguimientoEnfermedadComponent, FichaEpidemiologicaComponent, AddContactoComponent, AddEnfermedadComponent, AddPaisViajadoComponent, ListSintomasComponent],
+  declarations: [SeguimientoEnfermedadComponent, FichaEpidemiologicaComponent, AddContactoComponent, AddEnfermedadComponent, AddPaisViajadoComponent, ListSintomasComponent, AddObservacionComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(SeguimientoRoute),
@@ -71,7 +72,7 @@ import {DiagnosticoService} from '../core/services/http-services/diagnostico.ser
     CommonsModule,
     SharedModule,
     MatSortModule
-  ], entryComponents: [AddContactoComponent, AddPaisViajadoComponent, AddEnfermedadComponent,ListSintomasComponent],
+  ], entryComponents: [AddContactoComponent, AddPaisViajadoComponent, AddEnfermedadComponent, ListSintomasComponent, AddObservacionComponent],
   providers: [PacienteService, PaisService, EnfermedadService, DiagnosticoService]
 })
 export class SeguimientoModule {

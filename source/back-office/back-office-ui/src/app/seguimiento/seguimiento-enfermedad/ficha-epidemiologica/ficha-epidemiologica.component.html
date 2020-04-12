@@ -277,8 +277,8 @@
         <ngx-datatable-column name="Clasificacion" [maxWidth]="300" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
             <mat-form-field>
-              <mat-select [(value)]="row.clasificacion">
-                <mat-option *ngFor="let estado of estados" [value]="estado.key">
+              <mat-select [(value)]="row.clasificacion" (selectionChange)="this.selectedState($event, row)">
+                <mat-option *ngFor="let estado of estados" [value]="estado.key" >
                   {{estado.value}}
                 </mat-option>
               </mat-select>

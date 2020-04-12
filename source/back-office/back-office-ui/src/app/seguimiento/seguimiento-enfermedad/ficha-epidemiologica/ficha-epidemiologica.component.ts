@@ -14,6 +14,7 @@ import {AddPaisViajadoComponent} from './dialogs/add-pais-viajado/add-pais-viaja
 import {AddContactoComponent} from './dialogs/add-contacto/add-contacto.component';
 import * as moment from 'moment';
 import {ListSintomasComponent} from './dialogs/list-sintomas/list-sintomas.component';
+import {AddObservacionComponent} from './dialogs/add-observacion/add-observacion.component';
 
 interface Food {
   value: string;
@@ -305,5 +306,23 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
         }
       });
     }
+  }
+
+
+  selectedState(event: any, row: any) {
+    const temporal: any = {};
+    temporal.idDiagnostico = row.id;
+    temporal.estado = event.value;
+    temporal.observacion = null;
+    const dialogRef = this.dialog.open(AddObservacionComponent, this.dialogConfig(temporal));
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result) {
+          const notif = {error: {title: result.title, detail: result.detail}};
+          this.notifierError(notif, 'info');
+        }
+        this.ngOnInit();
+
+      });
   }
 }

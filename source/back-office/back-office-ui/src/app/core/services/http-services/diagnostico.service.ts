@@ -16,5 +16,9 @@ export class DiagnosticoService {
     return this.httpClient.get<HttpResponse<any>>(this.endPoint, {observe: 'response'});
   }
 
+  updateDiagnosticoState(diagnosticoId: string, data: any) {
+    const url = Constantes.baseUri + Constants.diagnosticoApi + '/' + diagnosticoId + '/actualizar-diagnostico';
+    return this.httpClient.put(url, JSON.stringify(data), {observe: 'response'});
+  }
 
 }
