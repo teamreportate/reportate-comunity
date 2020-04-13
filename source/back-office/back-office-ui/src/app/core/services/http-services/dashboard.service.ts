@@ -63,6 +63,14 @@ export class DashboardService {
     + '&centroSaludId=' + filterParam.centroSaludId
     + '&enfermedadId=' + filterParam.enfermedadId;
     return this.httpClient.get<HttpResponse<any>>(url, { observe: 'response' });
+  }
 
+  reportTotalNumbers(filterParam: any): Observable<HttpResponse<any>> {
+    const url = Constantes.baseUri + Constants.diagnosticoApi +
+    '/tacometro-por-clasificacion?departamentoId=' + filterParam.departamentoId
+    + '&municipioId=' + filterParam.municipioId
+    + '&centroSaludId=' + filterParam.centroSaludId
+    + '&enfermedadId=' + filterParam.enfermedadId;
+    return this.httpClient.get<HttpResponse<any>>(url, { observe: 'response' });
   }
 }
