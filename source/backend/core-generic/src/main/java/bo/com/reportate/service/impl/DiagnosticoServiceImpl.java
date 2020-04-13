@@ -129,8 +129,7 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Integer cantidadDiagnosticoPorFiltros(Authentication authentication, BigDecimal valoracionInicio,
-			BigDecimal valoracionFin, Long departamentoId, Long municipioId, Long centroSaludId, GeneroEnum genero,
+	public Integer cantidadDiagnosticoPorFiltros(Authentication authentication,Long departamentoId, Long municipioId, Long centroSaludId, GeneroEnum genero,
 			Integer edadInicial, Integer edadFinal, EstadoDiagnosticoEnum estadoDiagnostico, Long enfermedadId) {
 
 		MuUsuario usuario = (MuUsuario) authentication.getPrincipal();
@@ -180,7 +179,7 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
 		} else {
 			generoEnums.add(genero);
 		};
-		return diagnosticoRepository.cantidadDiagnosticoPorFiltros(valoracionInicio, valoracionFin, departamentos,
+		return diagnosticoRepository.cantidadDiagnosticoPorFiltros(departamentos,
 				municipios, centroSaluds, diagnosticoEnums, enfermedads, generoEnums, edadInicial, edadFinal);
 	}
 

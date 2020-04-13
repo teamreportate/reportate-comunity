@@ -73,7 +73,7 @@ const FamilyData = (props) => {
 	
 	return (
 		<div>
-			<p>Introduce la información básica de tu familia</p>
+			<p>Ingresa la información básica de tu familia</p>
 			<Form
 				form={form}
 				layout='vertical'

@@ -85,22 +85,57 @@
   </mat-expansion-panel>
 </mat-accordion>
 <br>
+<div class="card total-cifras text-center" >
+  <div fxLayout="row wrap" fxLayoutAlign="space-around">
+    <div fxFlex="19">
+      <label>TOTAL SOSPECHOSOS</label>
+      <h2>{{total.sospechosos}}</h2>
+      <span style="color: #01C0C8;">{{percentSospechosos | number: '2.1-2'}} %</span>
+    </div>
+    <div fxFlex="19">
+      <label>TOTAL DESCARTADOS</label>
+      <h2>{{total.descartados}}</h2>
+      <span style="color: #C777DB;">{{percentDescartados | number: '2.1-2'}} %</span>
+    </div>
+    <div fxFlex="19">
+      <label>TOTAL CONFIRMADOS</label>
+      <h2>{{total.confirmados}}</h2>
+      <span style="color: #F4D03F;">{{percentConfirmados | number: '2.1-2'}} %</span>
+    </div>
+    <div fxFlex="19">
+      <label>TOTAL RECUPERADOS</label>
+      <h2>{{total.recuperados}}</h2>
+      <span style="color: #2ECC71;">{{percentRecuperados | number: '2.1-2'}} %</span>
+    </div>
+    <div fxFlex="19">
+      <label>TOTAL FALLECIDOS</label>
+      <h2>{{total.fallecidos}}</h2>
+      <span style="color: #FB9678;">{{percentFallecidos | number: '2.1-2'}} %</span>
+    </div>
+  </div>
+</div>
 
 <div fxLayout="row wrap" fxLayoutAlign="space-around">
   <div fxFlex="48">
     <div class="card dashboard-datatable" style="width: 100%; height:580px; padding: 25px 0px 5px 0px;">
       <div class="card-header">
-        <h4 class="text-center m-0">{{totalsList.nivelLugar}}</h4>
+        <h4 class="text-center m-0">TOTALES</h4>
         <mat-form-field style="padding: 0px 20px 0px 20px;">
           <input matInput placeholder='Buscar...' [(ngModel)]="searchValue"/>
         </mat-form-field>
       </div>
-      <ngx-datatable #table class="material" [messages]="this.tableMessages()" [columnMode]="'force'"
-        [headerHeight]="40" [footerHeight]="50" [rowHeight]="'auto'" [limit]='10' [rows]="totalsList.items | filterBy:searchValue:'nombre'"
+      <ngx-datatable #table class="material"
+        [messages]="this.tableMessages()"
+        [columnMode]="'force'"
+        [headerHeight]="40"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [limit]='10'
+        [rows]="totalsList.items | filterBy:searchValue:'nombre'"
         [scrollbarH]="this.scrollH">
 
-        <ngx-datatable-column name="Nombre" [draggable]="false" [minWidth]="100" [resizeable]="false">
-          <ng-template let-row="row" ngx-datatable-cell-template class="text-bottom">
+        <ngx-datatable-column name="{{totalsList.nivelLugar}}" [draggable]="false" [minWidth]="100" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template class="text-left">
             {{row.nombre}}
           </ng-template>
         </ngx-datatable-column>

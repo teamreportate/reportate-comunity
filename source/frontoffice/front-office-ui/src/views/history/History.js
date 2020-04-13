@@ -1,25 +1,29 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
-
+import {useHistory} from "react-router-dom";
 import ServiceFamily from "../../services/ServiceFamily";
-import {Collapse} from "antd";
+import {Button, Collapse} from "antd";
 import {FaCheck} from "react-icons/fa";
 
 
 export default () => {
-	const member                = useSelector(store => store.family.toUpdate);
-	const [history, setHistory] = useState([]);
+	const member                            = useSelector(store => store.family.toUpdate);
+	const [memberHistory, setMemberHistory] = useState([]);
+	let history                             = useHistory();
 	useEffect(() => {
 		ServiceFamily.getHistory(member.id,
 			(result) => {
-				setHistory(result);
-				console.log(result);
+				setMemberHistory(result);
 			});
 	}, [member.id]);
 	
+	function handleClick() {
+		history.push("/dashboard");
+	}
+	
 	return (
 		<div>
-			{history.map((item => {
+			{memberHistory.map((item => {
 				return <div key={item.id} style={styles.card}>
 					<div style={{padding: 16}}>
 						<small>{item.fechaRegistro}</small>
@@ -31,7 +35,7 @@ export default () => {
 					<Collapse bordered={false}
 										className="site-collapse-custom-collapse">
 						<Collapse.Panel key="1"
-														header="sintomas reportados"
+														header="Síntomas reportados"
 														className="site-collapse-custom-panel">
 							{item.sintomas.map(sintoma => {
 								return <p key={sintoma.id} style={styles.p}>
@@ -42,6 +46,8 @@ export default () => {
 					</Collapse>
 				</div>;
 			}))}
+			
+			<Button type="default" onClick={handleClick} style={{width: '100%', marginBottom: 16}}>Volver</Button>
 			<style>{`
       [data-theme='compact'] .site-collapse-custom-collapse .site-collapse-custom-panel,
 			.site-collapse-custom-collapse .site-collapse-custom-panel {

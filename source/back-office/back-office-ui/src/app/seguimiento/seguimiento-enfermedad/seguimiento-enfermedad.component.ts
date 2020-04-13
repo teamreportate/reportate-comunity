@@ -20,12 +20,12 @@ import {Router} from '@angular/router';
 @Component({
   selector: 'app-seguimiento-enfermedad',
   templateUrl: './seguimiento-enfermedad.component.html',
-  styleUrls: ['./seguimiento-enfermedad.component.sass'],
+  styleUrls: ['./seguimiento-enfermedad.component.sass', './seguimiento-enfermedad.component.scss'],
   providers: [SeguimientoEnfermedadService, EnfermedadService, DepartamentoService]
 })
 export class SeguimientoEnfermedadComponent extends ClicComponent implements OnInit {
+  panelOpenState = false;
 
-  // tslint:disable-next-line:max-line-length
   constructor(private seguimientoEnfermedadService: SeguimientoEnfermedadService,
               private enfermedadService: EnfermedadService,
               private formBuilder: FormBuilder, public changeDetector: ChangeDetectorRef, public media: MediaMatcher,

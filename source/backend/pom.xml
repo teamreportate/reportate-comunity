@@ -39,6 +39,7 @@
         <module>core-generic</module>
         <module>web-security</module>
         <module>web-backoffice-api</module>
+        <module>schedulers</module>
     </modules>
 
 	<dependencies>

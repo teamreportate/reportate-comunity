@@ -5,7 +5,7 @@ import {useHistory} from "react-router-dom";
 import {familySetUpdateMember} from "../../store/family/actions";
 import {FaExclamationTriangle, FaRegPlusSquare, FaUserCircle} from "react-icons/fa";
 import 'animate.css/animate.min.css';
-import {AlertFilled, ContainerFilled, EditFilled} from '@ant-design/icons';
+import {AlertFilled, ArrowDownOutlined, ContainerFilled, EditFilled} from '@ant-design/icons';
 
 
 export default () => {
@@ -61,7 +61,8 @@ export default () => {
 				accordion
 			>
 				{
-					members.map((item, index) => {
+					members.length > 0
+					? members.map((item, index) => {
 						return (
 							<Collapse.Panel key={index}
 															className="site-collapse-custom-panel"
@@ -89,20 +90,25 @@ export default () => {
 													icon={<ContainerFilled/>}
 													onClick={() => {
 														reportMember(item);
-													}}>Diagnosticos
+													}}>Reportar
 									</Button>
 									<Button type="primary"
 													icon={<AlertFilled/>}
 													onClick={() => {
 														historyMember(item);
-													}}>Reportar
+													}}>Diagnósticos
 									</Button>
 								
 								</div>
 							</Collapse.Panel>
 						);
-						
 					})
+					: <div style={styles.help}>
+						No tienes familiares registrados <br/>
+						registra uno para continuar <br/>
+						<ArrowDownOutlined style={{fontSize: 30}}/>
+					
+					</div>
 				}
 			</Collapse>
 			<Button size={'large'} type="default" className='add' style={styles.buttons} onClick={handleClick}>
@@ -139,5 +145,14 @@ const styles = {
 	alert  : {color: "#4c9fdc"},
 	buttons: {
 		flex: 1, marginBottom: 8, display: "flex", alignItems: 'center', justifyContent: "space-between"
+	},
+	help   : {
+		padding     : 16,
+		background  : '#a3bf48',
+		color       : 'white',
+		textAlign   : 'center',
+		marginBottom: 8,
+		borderRadius: 4,
+		fontWeight  : 'bold'
 	}
 };

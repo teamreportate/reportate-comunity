@@ -27,7 +27,7 @@ export default () => {
 		case "list": {
 			return (
 				<div style={{display: 'flex', flexDirection: 'column'}}>
-					<p>¿Estuvo o tuvo contacto con alguna persona que llego del extrangero?</p>
+					<p>¿Estuvo en contacto con alguna persona que llegó del extranjero?</p>
 					<Form
 						form={form}
 						layout='vertical'

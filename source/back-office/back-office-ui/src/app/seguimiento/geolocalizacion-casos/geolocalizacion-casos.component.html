@@ -1,0 +1,102 @@
+<clic-page [title]="'Geolocalización de Diagnósticos'" (reloadEmitter)="this.ngOnInit()">
+</clic-page>
+<mat-accordion>
+  <mat-expansion-panel (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-description>
+        <h5 class="text-center">Personalizar filtros</h5>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+            <div fxLayout="row wrap">
+              <div [fxFlex]="this.filterFlex" class="h-padding-5">
+                <mat-form-field class="picker-date-filter">
+                  <input matInput [matDatepicker]="startDate" [max]="this.today" placeholder="Fecha Inicial"
+                         [formControl]="this.form.get('from')" readonly>
+                  <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                  <mat-datepicker #startDate></mat-datepicker>
+                </mat-form-field>
+              </div>
+          
+              <div [fxFlex]="this.filterFlex" class="h-padding-5">
+                <mat-form-field class="picker-date-filter">
+                  <input matInput [matDatepicker]="endDate" [max]="this.today" placeholder="Fecha Final"
+                         [formControl]="this.form.get('to')" readonly>
+                  <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                  <mat-datepicker #endDate></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxLayout="row wrap">
+              <div [fxFlex]="this.filterFlex" class="h-padding-5">
+                <mat-form-field>
+                  <mat-select placeholder="Departamento" [formControl]="this.form.get('departamentoId')">
+                    <mat-option (click)="selectMunicipio(0)" [value]="0">Todos</mat-option>
+                    <mat-option (click)="selectMunicipio(dto)" *ngFor="let dto of this.departamentoList" [value]="dto.id">
+                      {{dto.nombre}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div [fxFlex]="this.filterFlex" class="h-padding-5">
+                <mat-form-field>
+                  <mat-select placeholder="Municipio" [formControl]="this.form.get('municipioID')">
+                    <mat-option (click)="selectCentro(0)" [value]="0">Todos</mat-option>
+                    <mat-option (click)="selectCentro(dto)" *ngFor="let dto of this.tempMunicipio" [value]="dto.id">
+                      {{dto.nombre}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+          
+              <div [fxFlex]="this.filterFlex" class="h-padding-5">
+                <mat-form-field>
+                  <mat-select placeholder="Centro de Salud" [formControl]="this.form.get('centroSaludId')">
+                    <mat-option [value]="0">Todos</mat-option>
+                    <mat-option *ngFor="let dto of this.tempCentro" [value]="dto.id">
+                      {{dto.nombre}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxLayout="row wrap">
+              <div [fxFlex]="this.filterFlex" class="h-padding-5">
+                <mat-form-field>
+                  <mat-select placeholder="Enfermedad" [formControl]="this.form.get('enfermedadId')">
+                    <mat-option [value]="0">Todos</mat-option>
+                    <mat-option *ngFor="let enfermedad of this.enfermedadList" [value]="enfermedad.id">
+                      {{enfermedad.nombre}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div [fxFlex]="this.filterFlex" class="h-padding-5">
+                <mat-form-field>
+                  <mat-select placeholder="Clasificación Enfermedades" [formControl]="this.form.get('clasificacion')">
+                    <mat-option *ngFor="let clasificacion of this.clasificacionList" [value]="clasificacion.key">
+                      {{clasificacion.value}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div [fxFlex]="this.filterFlex" class="h-padding-5">
+                <div fxFlex="100" class="h-padding-5">
+                  <button mat-flat-button color="accent" (click)="this.onSearch()">Buscar</button>
+                </div>
+              </div>
+            </div>
+
+  </mat-expansion-panel>
+</mat-accordion>
+<br>
+<div>
+  <svg width="18" height="18"><circle cx="9" cy="9" r="9" fill="red"/></svg>&nbsp;Negativo&nbsp;
+  <svg width="18" height="18"><circle cx="9" cy="9" r="9" fill="green"/></svg>&nbsp;Confirmado&nbsp;
+  <svg width="18" height="18"><circle cx="9" cy="9" r="9" fill="yellow"/></svg>&nbsp;Sospechoso
+</div>
+<div id="mapa-mapbox"></div>
+<ng-template #customNotification let-notificationData="notification">
+  <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+</ng-template>
