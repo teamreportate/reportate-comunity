@@ -92,7 +92,7 @@ export class AddContactoComponent  extends ClicComponent  implements OnInit {
       const value = this.form.controls['fechaNacimiento'].value;
       this.form.controls['fechaNacimiento'].setValue(moment(this.form.controls['fechaNacimiento'].value).format('DD/MM/YYYY'));
       this.blockUi.start('Procesando solicitud...');
-      this.service.updatePaciente(this.form.value).subscribe(response => {
+      this.service.updatePacienteId(this.form.controls['id'].value,this.form.value).subscribe(response => {
         this.blockUi.stop();
         const msg = { title: 'Actualizar Contacto', detail: 'Contacto actualizado satisfactoriamente.', object: response.body};
         this.dialogRef.close(msg);

@@ -204,7 +204,7 @@ public class PacienteServiceImpl implements PacienteService {
         ValidationUtil.throwExceptionIfInvalidNumber("edad", edad, true, -1, 120);
         ValidationUtil.throwExceptionIfInvalidNumber("tiempo de gestación", tiempoGestacion, false, -1, 41);
 
-        ValidationUtil.throwExceptionIfInvalidText("ocupación", ocupacion, true, 50);
+        ValidationUtil.throwExceptionIfInvalidText("ocupación", ocupacion, false, 50);
         ValidationUtil.throwExceptionIfInvalidText("ci", ci, false, 20);
         ValidationUtil.throwExceptionIfInvalidText("fechaNamiento", fechaNacimiento, false, 10);
         Date fechNacimient = null;
