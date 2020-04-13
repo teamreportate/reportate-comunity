@@ -1,139 +1,143 @@
 <clic-page [title]="'DATOS DE PACIENTE'" (reloadEmitter)="this.ngOnInit()">
-  <div fxLayout="row wrap">
-    <div [fxFlex]="33" class="h-padding-5">
-      <mat-form-field>
-        <input matInput placeholder="Nombre *" [formControl]="this.form.controls['nombre']" maxlength="100">
-      </mat-form-field>
+    <div fxLayout="row wrap">
+      <div [fxFlex]="33" class="h-padding-5">
+        <mat-form-field>
+          <input matInput placeholder="Nombre *" [formControl]="this.form.controls['nombre']" maxlength="100">
+        </mat-form-field>
+      </div>
+      <div [fxFlex]="33" class="h-padding-5">
+        <mat-form-field>
+          <input matInput placeholder="Edad *" [formControl]="this.form.controls['edad']" maxlength="3">
+        </mat-form-field>
+      </div>
+      <div [fxFlex]="33" class="h-padding-5">
+        <mat-form-field>
+          <mat-select placeholder="Sexo" [formControl]="this.form.controls['genero']">
+            <mat-option *ngFor="let genero of this.generos" [value]="genero.key">
+              {{genero.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
-    <div [fxFlex]="33" class="h-padding-5">
-      <mat-form-field >
-        <input matInput placeholder="Edad *" [formControl]="this.form.controls['edad']" maxlength="3"  >
-      </mat-form-field>
+    <div fxLayout="row wrap">
+      <div [fxFlex]="33" class="h-padding-5">
+        <mat-form-field>
+          <input matInput placeholder="Teléfono *" [formControl]="this.form.controls['telefono']" maxlength="100"
+                 type="phone" readonly="true">
+        </mat-form-field>
+      </div>
+      <div [fxFlex]="33" class="h-padding-5">
+        <mat-form-field>
+          <input matInput placeholder="CI/Pasaporte " [formControl]="this.form.controls['ci']"
+                 maxlength="100">
+        </mat-form-field>
+      </div>
+      <div [fxFlex]="33" class="h-padding-5">
+        <mat-form-field>
+          <input matInput placeholder="Departamento *" [formControl]="this.form.controls['departamento']"
+                 maxlength="100" readonly="true">
+        </mat-form-field>
+      </div>
     </div>
-    <div [fxFlex]="33" class="h-padding-5">
-      <mat-form-field>
-        <mat-select placeholder="Sexo" [formControl]="this.form.controls['genero']">
-          <mat-option *ngFor="let genero of this.generos" [value]="genero.key">
-            {{genero.value}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+    <div fxLayout="row wrap">
+      <div [fxFlex]="33" class="h-padding-5">
+        <mat-form-field>
+          <input matInput placeholder="Municipio/Ciudad *" [formControl]="this.form.controls['municipio']"
+                 maxlength="100" readonly="true">
+        </mat-form-field>
+      </div>
+      <div [fxFlex]="33" class="h-padding-5">
+        <mat-form-field>
+          <input matInput placeholder="Zona *" [formControl]="this.form.controls['zona']" maxlength="100"
+                 readonly="true">
+        </mat-form-field>
+      </div>
+      <div [fxFlex]="33" class="h-padding-5">
+        <mat-form-field>
+          <input matInput placeholder="Dirección *" [formControl]="this.form.controls['direccion']" maxlength="100"
+                 readonly="true">
+        </mat-form-field>
+      </div>
     </div>
-  </div>
-  <div fxLayout="row wrap">
-    <div [fxFlex]="33" class="h-padding-5">
-      <mat-form-field >
-        <input matInput placeholder="Teléfono *" [formControl]="this.form.controls['telefono']" maxlength="100" type="phone" readonly="true">
-      </mat-form-field>
-    </div>
-    <div [fxFlex]="33" class="h-padding-5">
-      <mat-form-field>
-        <input matInput placeholder="CI/Pasaporte " [formControl]="this.form.controls['ci']"
-               maxlength="100">
-      </mat-form-field>
-    </div>
-    <div [fxFlex]="33" class="h-padding-5">
-      <mat-form-field>
-        <input matInput placeholder="Departamento *" [formControl]="this.form.controls['departamento']" maxlength="100" readonly="true">
-      </mat-form-field>
-    </div>
-  </div>
-  <div fxLayout="row wrap">
-    <div [fxFlex]="33" class="h-padding-5">
-      <mat-form-field>
-        <input matInput placeholder="Municipio/Ciudad *" [formControl]="this.form.controls['municipio']" maxlength="100" readonly="true">
-      </mat-form-field>
-    </div>
-    <div [fxFlex]="33" class="h-padding-5">
-      <mat-form-field>
-        <input matInput placeholder="Zona *" [formControl]="this.form.controls['zona']" maxlength="100" readonly="true">
-      </mat-form-field>
-    </div>
-    <div [fxFlex]="33" class="h-padding-5">
-      <mat-form-field>
-        <input matInput placeholder="Dirección *" [formControl]="this.form.controls['direccion']" maxlength="100" readonly="true">
-      </mat-form-field>
-    </div>
-  </div>
-  <div fxLayout="row wrap">
+    <div fxLayout="row wrap">
 
-    <div [fxFlex]="33" class="h-padding-5">
-      <mat-form-field>
-        <input matInput placeholder="Ocupación" [formControl]="this.form.controls['ocupacion']" maxlength="100">
-      </mat-form-field>
+      <div [fxFlex]="33" class="h-padding-5">
+        <mat-form-field>
+          <input matInput placeholder="Ocupación" [formControl]="this.form.controls['ocupacion']" maxlength="100">
+        </mat-form-field>
+      </div>
+      <div [fxFlex]="33" class="h-padding-5">
+        <mat-form-field class="picker-date-filter">
+          <input matInput [matDatepicker]="fechaNacimiento" placeholder="Fecha de Nacimiento"
+                 [formControl]="this.form.get('fechaNacimiento')" readonly>
+          <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
+          <mat-datepicker #fechaNacimiento></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div [fxFlex]="33" class="h-padding-5">
+        <button mat-icon-button matTooltip="Ver Ubicación">
+          <i class="fa fa-map-o"></i>
+          <a href="{{this.form.controls['ubicacion'].value}}" [target]="'_blank'">
+            {{ 'Ver ubicación' }}
+          </a>
+        </button>
+      </div>
     </div>
-    <div [fxFlex]="33" class="h-padding-5">
-      <mat-form-field class="picker-date-filter">
-        <input matInput [matDatepicker]="fechaNacimiento" placeholder="Fecha de Nacimiento"
-               [formControl]="this.form.get('fechaNacimiento')" readonly>
-        <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
-        <mat-datepicker #fechaNacimiento></mat-datepicker>
-      </mat-form-field>
+    <div fxLayout="row wrap">
+      <div fxFlex="33" class="h-padding-5" *ngIf="this.form.controls['genero'].value === 'FEMENINO'">
+
+        {{ this.form.controls['gestacion'].value ? 'SI' : 'NO' }}
+        &nbsp;&nbsp;
+        <mat-slide-toggle [color]="'primary'" [formControl]="this.form.controls['gestacion']"
+                          class="example-margin">
+          ¿ Gestación ?
+        </mat-slide-toggle>
+      </div>
+      <div [fxFlex]="33" class="h-padding-5" *ngIf="this.form.controls['gestacion'].value">
+        <mat-form-field>
+          <input matInput placeholder="Tiempo de Gestación *" [formControl]="this.form.controls['tiempoGestacion']"
+                 maxlength="100">
+        </mat-form-field>
+      </div>
+      <div [fxFlex]="33" class="h-padding-5">
+        <mat-form-field>
+          <input matInput placeholder="Seguro *" [formControl]="this.form.controls['seguro']"
+                 maxlength="100">
+        </mat-form-field>
+      </div>
+      <div [fxFlex]="33" class="h-padding-5">
+        <mat-form-field>
+          <input matInput placeholder="Código de Seguro *" [formControl]="this.form.controls['codigoSeguro']"
+                 maxlength="100">
+        </mat-form-field>
+      </div>
     </div>
-    <div [fxFlex]="33" class="h-padding-5">
-      <button mat-icon-button matTooltip="Ver Ubicación">
-        <i class="fa fa-map-o"></i>
-        <a href="{{this.form.controls['ubicacion']}}" [target]="'_blank'">
-          {{ 'Ver ubicación' }}
-        </a>
+
+    <!--    <div fxFlex="33" class="p-l-10" *ngIf="this.form.controls['genero'].value === 'FEMENINO'">-->
+
+    <!--      {{ this.form.controls['gestacion'] ? 'SI' : 'NO' }}-->
+    <!--      &nbsp;&nbsp;-->
+    <!--      <mat-slide-toggle [color]="'primary'" [formControl]="this.form.controls['tiempoGestacion']"-->
+    <!--                        class="example-margin">-->
+    <!--        ¿ Gestación ?-->
+    <!--      </mat-slide-toggle>-->
+    <!--    </div>-->
+
+
+    <div fxLayout="row wrap" fxLayoutAlign="start start">
+      <button mat-flat-button color="accent" (click)="this.updateDataPaciente()" class="m-r-10">Guardar Datos
+        Paciente
       </button>
+      <button mat-flat-button color="accent">Generar Reporte</button>
     </div>
-  </div>
-  <div fxLayout="row wrap">
-    <div fxFlex="33" class="h-padding-5" *ngIf="this.form.controls['genero'].value === 'FEMENINO'">
-
-      {{ this.form.controls['gestacion'].value ? 'SI' : 'NO' }}
-      &nbsp;&nbsp;
-      <mat-slide-toggle [color]="'primary'" [formControl]="this.form.controls['gestacion']"
-                        class="example-margin">
-        ¿ Gestación ?
-      </mat-slide-toggle>
-    </div>
-    <div [fxFlex]="33" class="h-padding-5" *ngIf="this.form.controls['gestacion'].value">
-      <mat-form-field>
-        <input matInput placeholder="Tiempo de Gestación *" [formControl]="this.form.controls['tiempoGestacion']"
-               maxlength="100">
-      </mat-form-field>
-    </div>
-    <div [fxFlex]="33" class="h-padding-5">
-      <mat-form-field>
-        <input matInput placeholder="Seguro *" [formControl]="this.form.controls['seguro']"
-               maxlength="100">
-      </mat-form-field>
-    </div>
-    <div [fxFlex]="33" class="h-padding-5">
-      <mat-form-field>
-        <input matInput placeholder="Código de Seguro *" [formControl]="this.form.controls['codigoSeguro']"
-               maxlength="100">
-      </mat-form-field>
-    </div>
-  </div>
-
-  <!--    <div fxFlex="33" class="p-l-10" *ngIf="this.form.controls['genero'].value === 'FEMENINO'">-->
-
-  <!--      {{ this.form.controls['gestacion'] ? 'SI' : 'NO' }}-->
-  <!--      &nbsp;&nbsp;-->
-  <!--      <mat-slide-toggle [color]="'primary'" [formControl]="this.form.controls['tiempoGestacion']"-->
-  <!--                        class="example-margin">-->
-  <!--        ¿ Gestación ?-->
-  <!--      </mat-slide-toggle>-->
-  <!--    </div>-->
-
-
-  <div fxLayout="row wrap" fxLayoutAlign="start start">
-    <button mat-flat-button color="accent" (click)="this.updateDataPaciente()" class="m-r-10">Guardar Datos Paciente
-    </button>
-    <button mat-flat-button color="accent">Generar Reporte</button>
-  </div>
-
-
-  <div fxLayout="row wrap">
+  <div fxLayout="row wrap" class="p-t-10">
     <!--    <div fxFlex="40" class="h-padding-5">-->
     <!--      <div fxFlex="40" fxLayoutAlign="center center" class="h-padding-5">-->
     <!--        <label><strong>DIAGNOSTICO</strong></label>-->
     <!--      </div>-->
     <!--    </div>-->
-    <div fxFlex="40" class="p-5 p-t-10">
+    <div fxFlex="40" class="p-5 p-t-20">
       <div fxLayoutAlign="center center" class="h-padding-5">
         <label><strong>ENFERMEDADES DE BASE</strong></label>
       </div>
@@ -225,16 +229,12 @@
     </div>
   </div>
   <div fxLayout="row wrap">
-
-    <div fxFlex="100" class="h-padding-5">
+    <div fxFlex="100" class="h-padding-5" >
       <div fxFlex="100" fxLayoutAlign="center center" class="h-padding-5">
         <label><strong>DIAGNOSTICO</strong></label>
       </div>
-
     </div>
-
     <div fxFlex="100" class="p-5">
-
       <ngx-datatable #table class="material" [messages]="this.tableMessages()"
                      [columnMode]="'force'"
                      [headerHeight]="35"
@@ -272,32 +272,33 @@
           <ng-template let-row="row" ngx-datatable-cell-template>
             <mat-form-field>
               <mat-select [(value)]="row.clasificacion" (selectionChange)="this.selectedState($event, row)">
-                <mat-option *ngFor="let estado of estados" [value]="estado.key" >
+                <mat-option *ngFor="let estado of estados" [value]="estado.key">
                   {{estado.value}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Valoración" [maxWidth]="100" [draggable]="false" [resizeable]="false" cellClass="cell-align-rigth">
+        <ngx-datatable-column name="Valoración" [maxWidth]="100" [draggable]="false" [resizeable]="false"
+                              cellClass="cell-align-rigth">
           <ng-template let-row="row" ngx-datatable-cell-template>
             {{row.valoracion}}
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Médico Responsable" [maxWidth]="300" [draggable]="false" [resizeable]="false" >
+        <ngx-datatable-column name="Médico Responsable" [maxWidth]="300" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
             {{row.responsable}}
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="Observación" [draggable]="false" [resizeable]="false" >
+        <ngx-datatable-column name="Observación" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
             {{row.observacion}}
           </ng-template>
         </ngx-datatable-column>
       </ngx-datatable>
     </div>
-    <div fxFlex="100" class="h-padding-5">
+    <div fxFlex="100" class="h-padding-5 p-t-10">
       <div fxFlex="100" fxLayoutAlign="center center" class="h-padding-5">
         <label><strong>CONTACTANOS</strong></label>
       </div>
@@ -346,7 +347,8 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Edad" [maxWidth]="100"  [draggable]="false" [resizeable]="false" cellClass="cell-align-rigth">
+      <ngx-datatable-column name="Edad" [maxWidth]="100" [draggable]="false" [resizeable]="false"
+                            cellClass="cell-align-rigth">
         <ng-template let-row="row" ngx-datatable-cell-template>
           {{row.edad}}
         </ng-template>
@@ -364,7 +366,7 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Código de Seguro" [draggable]="false" [resizeable]="false" >
+      <ngx-datatable-column name="Código de Seguro" [draggable]="false" [resizeable]="false">
         <ng-template let-row="row" ngx-datatable-cell-template>
           {{row.codigoSeguro}}
         </ng-template>
