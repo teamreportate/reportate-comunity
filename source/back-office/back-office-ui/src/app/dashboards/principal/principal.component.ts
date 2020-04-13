@@ -10,7 +10,7 @@ import { NotifierService } from 'angular-notifier';
 import { Page } from '../../core/utils/paginator/page';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { CustomOptions } from '../../core/models/dto/custom-options';
-import { Filter, Basic, Data, DataTotal } from '../dashboard.type.js';
+import { Filter, Basic, Data, DataTotal, DataTotalNumber } from '../dashboard.type.js';
 import { Department, Municipaly, SaludCentre } from 'src/app/access/users/user.type.js';
 import { AccessService } from 'src/app/access/access.service.js';
 import { EnfermedadService } from 'src/app/core/services/http-services/enfermedad.service';
@@ -53,20 +53,13 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
 
   totalsList: DataTotal = new DataTotal();
 
-  total = {
-    sospechosos: 150,
-    descartados: 100,
-    confirmados: 70,
-    recuperados: 50,
-    fallecidos: 10,
-    total: 380
-  };
+  total: DataTotalNumber = new DataTotalNumber();
 
-  percentSospechosos = (this.total.sospechosos * 100) / this.total.total;
-  percentDescartados = (this.total.descartados * 100) / this.total.total;
-  percentConfirmados = (this.total.confirmados * 100) / this.total.total;
-  percentRecuperados = (this.total.recuperados * 100) / this.total.total;
-  percentFallecidos = (this.total.fallecidos * 100) / this.total.total;
+  percentSospechosos = 0;
+  percentDescartados = 0;
+  percentConfirmados = 0;
+  percentRecuperados = 0;
+  percentFallecidos = 0;
 
   @ViewChild(ResumeComponent) resumeComponent: ResumeComponent;
   @ViewChild(ConfirmadoComponent) confirmadoComponent: ConfirmadoComponent;
@@ -152,7 +145,12 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
     this.blockUI.start('Actualizando totales');
     this.service.reportTotalNumbers(this.filter).subscribe(response => {
 
-      console.log(response.body);
+      this.total = response.body;
+      this.percentSospechosos = (this.total.sospechosos * 100) / this.total.total;
+      this.percentDescartados = (this.total.descartados * 100) / this.total.total;
+      this.percentConfirmados = (this.total.confirmados * 100) / this.total.total;
+      this.percentRecuperados = (this.total.recuperados * 100) / this.total.total;
+      this.percentFallecidos = (this.total.fallecidos * 100) / this.total.total;
 
       this.blockUI.stop();
     }, error => {

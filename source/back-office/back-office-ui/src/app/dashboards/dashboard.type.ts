@@ -42,3 +42,14 @@ export class DataTotalItem {
     public fallecido: number = 0
     ) { }
 }
+
+export class DataTotalNumber {
+  constructor(
+    public sospechosos: number = 0,
+    public descartados: number = 0,
+    public confirmados: number = 0,
+    public recuperados: number = 0,
+    public fallecidos: number = 0,
+    public total: number = 0
+    ) { }
+}
