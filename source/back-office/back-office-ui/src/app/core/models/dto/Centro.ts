@@ -1,6 +1,6 @@
 import { AbstractAuditable } from '../abstract-auditable';
 
-export class Centro extends AbstractAuditable<number>{
+export class Centro extends AbstractAuditable<number> {
     id: number;
     nombre: string;
     latitud: number;

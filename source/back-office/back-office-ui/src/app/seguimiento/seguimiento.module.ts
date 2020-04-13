@@ -19,7 +19,8 @@ import {
   MatSelectModule,
   MatSlideToggleModule, MatSortModule,
   MatTabsModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatExpansionModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
@@ -36,14 +37,15 @@ import {AddPaisViajadoComponent} from './seguimiento-enfermedad/ficha-epidemiolo
 import {PacienteService} from '../core/services/http-services/paciente.service';
 import {PaisService} from '../core/services/http-services/pais.service';
 import {EnfermedadService} from '../core/services/http-services/enfermedad.service';
+import { GeolocalizacionCasosComponent } from './geolocalizacion-casos/geolocalizacion-casos.component';
 import {ListSintomasComponent} from './seguimiento-enfermedad/ficha-epidemiologica/dialogs/list-sintomas/list-sintomas.component';
 import {DiagnosticoService} from '../core/services/http-services/diagnostico.service';
 import {AddObservacionComponent} from './seguimiento-enfermedad/ficha-epidemiologica/dialogs/add-observacion/add-observacion.component';
 
 @NgModule({
-  declarations: [SeguimientoEnfermedadComponent, FichaEpidemiologicaComponent, AddContactoComponent, AddEnfermedadComponent, AddPaisViajadoComponent, ListSintomasComponent, AddObservacionComponent],
+  // tslint:disable-next-line:max-line-length
+  declarations: [SeguimientoEnfermedadComponent, FichaEpidemiologicaComponent, AddContactoComponent, AddEnfermedadComponent, AddPaisViajadoComponent, ListSintomasComponent, GeolocalizacionCasosComponent, AddObservacionComponent],
   imports: [
-    CommonModule,
     RouterModule.forChild(SeguimientoRoute),
     CommonModule,
     MatCardModule,
@@ -71,7 +73,9 @@ import {AddObservacionComponent} from './seguimiento-enfermedad/ficha-epidemiolo
     DragDropModule,
     CommonsModule,
     SharedModule,
-    MatSortModule
+    MatExpansionModule,
+    MatSortModule,
+  // tslint:disable-next-line:max-line-length
   ], entryComponents: [AddContactoComponent, AddPaisViajadoComponent, AddEnfermedadComponent, ListSintomasComponent, AddObservacionComponent],
   providers: [PacienteService, PaisService, EnfermedadService, DiagnosticoService]
 })

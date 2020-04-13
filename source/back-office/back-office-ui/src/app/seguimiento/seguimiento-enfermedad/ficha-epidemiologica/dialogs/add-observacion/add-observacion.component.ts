@@ -35,7 +35,10 @@ export class AddObservacionComponent extends ClicComponent implements OnInit {
   ngOnInit() {
     console.warn(this.data);
     this.form = this.builder.group({
-      estadoDiagnostico: new FormControl(this.data.estado, Validators.compose([Validators.required, Validators.maxLength(100)])),
+      estadoDiagnostico: new FormControl({
+        disabled: true,
+        value: this.data.estado
+      }, Validators.compose([Validators.required, Validators.maxLength(100)])),
       observacion: new FormControl(this.data.observacion, Validators.compose([Validators.required, Validators.maxLength(4000)])),
     });
 
@@ -48,7 +51,7 @@ export class AddObservacionComponent extends ClicComponent implements OnInit {
   save() {
     if (this.form.valid) {
       this.blockUi.start('Procesando solicitud...');
-      this.service.updateDiagnosticoState(this.data.idDiagnostico, this.form.value).subscribe(response => {
+      this.service.updateDiagnosticoState(this.data.idDiagnostico, this.form.getRawValue()).subscribe(response => {
         this.blockUi.stop();
         const msg = {title: 'Actualizar Diagnostico', detail: 'Diagnostico actualizado satisfactoriamente.', object: response.body};
         this.dialogRef.close(msg);
