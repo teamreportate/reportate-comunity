@@ -312,9 +312,14 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
   selectedState(event: any, row: any) {
     const temporal: any = {};
     temporal.idDiagnostico = row.id;
-    temporal.estado = event.value;
+    temporal.estado = event.value
     temporal.observacion = null;
-    const dialogRef = this.dialog.open(AddObservacionComponent, this.dialogConfig(temporal));
+    const dialogRef = this.dialog.open(AddObservacionComponent, {
+      width: '40%',
+      minWidth: this.dialogWidth,
+      panelClass: ['zero-padding', 'scroll-x-hidden'],
+      data: temporal
+    });
     dialogRef.afterClosed()
       .subscribe(result => {
         if (result) {

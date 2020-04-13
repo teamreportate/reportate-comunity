@@ -12,7 +12,7 @@
     </div>
     <div [fxFlex]="33" class="h-padding-5">
       <mat-form-field>
-        <mat-select placeholder="Pais" [formControl]="this.form.controls['genero']">
+        <mat-select placeholder="Sexo" [formControl]="this.form.controls['genero']">
           <mat-option *ngFor="let genero of this.generos" [value]="genero.key">
             {{genero.value}}
           </mat-option>
@@ -46,7 +46,7 @@
     </div>
     <div [fxFlex]="33" class="h-padding-5">
       <mat-form-field>
-        <input matInput placeholder="Ciudad *" [formControl]="this.form.controls['ciudad']" maxlength="100">
+        <input matInput placeholder="Zona *" [formControl]="this.form.controls['zona']" maxlength="100">
       </mat-form-field>
     </div>
     <div [fxFlex]="33" class="h-padding-5">
@@ -135,7 +135,7 @@
     <!--    </div>-->
     <div fxFlex="40" class="p-5 p-t-10">
       <div fxLayoutAlign="center center" class="h-padding-5">
-        <label><strong>Enfermedades Base</strong></label>
+        <label><strong>ENFERMEDADES DE BASE</strong></label>
       </div>
       <div class="p-5">
         <button mat-flat-button color="accent" (click)="this.openDialogEnfermedad(null)">Agregar</button>
@@ -170,7 +170,7 @@
     </div>
     <div fxFlex="60" class="p-5 p-t-10">
       <div fxLayoutAlign="center center" class="h-padding-5">
-        <label><strong>Paises Viajados</strong></label>
+        <label><strong>PAISES VIAJADO</strong></label>
       </div>
       <div class="p-5">
         <button mat-flat-button color="accent" (click)="this.openDialogPaisesViaje(null)">Agregar</button>
@@ -200,13 +200,7 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="Fecha" [maxWidth]="250" [draggable]="false" [resizeable]="false">
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            {{row.fecha | date: "dd/MM/yyyy H:mm"}}
-          </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column name="Pais" [maxWidth]="300" [draggable]="false" [resizeable]="false">
+        <ngx-datatable-column name="País" [maxWidth]="300" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
             {{row.pais }}
           </ng-template>
@@ -262,7 +256,7 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="Fecha Registro" [maxWidth]="250" [draggable]="false" [resizeable]="false">
+        <ngx-datatable-column name="Fecha de Registro" [maxWidth]="250" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
             {{row.fechaRegistro | date: "dd/MM/yyyy H:mm"}}
           </ng-template>
@@ -274,7 +268,7 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="Clasificacion" [maxWidth]="300" [draggable]="false" [resizeable]="false">
+        <ngx-datatable-column name="Clasificación" [maxWidth]="300" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
             <mat-form-field>
               <mat-select [(value)]="row.clasificacion" (selectionChange)="this.selectedState($event, row)">
@@ -285,7 +279,7 @@
             </mat-form-field>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Valoracion" [maxWidth]="300" [draggable]="false" [resizeable]="false">
+        <ngx-datatable-column name="Valoración" [maxWidth]="300" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
             {{row.valoracion}}
           </ng-template>
@@ -348,7 +342,7 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Genero" [draggable]="false" [resizeable]="false">
+      <ngx-datatable-column name="Sexo" [draggable]="false" [resizeable]="false">
         <ng-template let-row="row" ngx-datatable-cell-template>
           {{row.genero}}
         </ng-template>
