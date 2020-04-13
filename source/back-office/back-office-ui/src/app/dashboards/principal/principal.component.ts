@@ -148,6 +148,19 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
     }
   }
 
+  getTotalNumbers() {
+    this.blockUI.start('Actualizando totales');
+    this.service.reportTotalNumbers(this.filter).subscribe(response => {
+
+      console.log(response.body);
+
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
+    });
+  }
+
   getByValorationRequest() {
     this.blockUI.start('Actualizando los datos');
     if (this.form.valid) {
@@ -206,6 +219,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
   }
 
   updateData() {
+    this.getTotalNumbers();
     this.getByValorationRequest();
     this.reportResumenWithFiltersRequest();
     this.getReportWithFiltersRequest();
