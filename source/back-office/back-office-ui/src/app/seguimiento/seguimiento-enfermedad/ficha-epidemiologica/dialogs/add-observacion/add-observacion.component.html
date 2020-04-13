@@ -6,6 +6,12 @@
   <mat-card-content>
 
     <div fxLayout="row wrap" [formGroup]="this.form">
+      <div  fxFlex="100" class="h-padding-5">
+        <mat-form-field>
+          <input matInput placeholder="Estado *" [formControl]="this.form.controls['estadoDiagnostico']"
+                 maxlength="100">
+        </mat-form-field>
+      </div>
       <div fxFlex="100">
         <mat-form-field appearance="fill"  >
           <textarea matInput placeholder="Observaciones *"  [formControl]="this.form.controls['observacion']" cols="40" rows="15"></textarea>
