@@ -28,6 +28,7 @@ public class DiagnosticoDto implements Serializable {
     private String enfermedad;
     private BigDecimal valoracion;
     private String responsable;
+    private String observacion;
 
     public DiagnosticoDto(Diagnostico diagnostico){
         this.id = diagnostico.getId();
@@ -35,6 +36,11 @@ public class DiagnosticoDto implements Serializable {
         this.clasificacion = diagnostico.getEstadoDiagnostico().name();
         this.enfermedad=diagnostico.getEnfermedad().getNombre();
         this.valoracion=diagnostico.getResultadoValoracion();
-        this.responsable=diagnostico.getCreatedBy();
+        if(diagnostico.getMedico() != null){
+            this.responsable=diagnostico.getMedico().getUsername();
+        }else {
+            this.responsable = "";
+        }
+        this.observacion = diagnostico.getObservacion();
     }
 }

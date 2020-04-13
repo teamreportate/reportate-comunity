@@ -39,7 +39,7 @@ public class FichaEpidemiologicaResponse implements Serializable {
     private String Ubicacion;
 
     private String ci;
-    private Date fechaNacimineto;
+    private Date fechaNacimiento;
     private String seguro;
     private String codigoSeguro;
     private String ocupacion;

@@ -111,6 +111,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
 
             addPermisos();
         }
+//        addPermisos();
         log.info("************************* Fin de cargar usuarios por defecto *************************");
     }
     private void addPermisos(){
