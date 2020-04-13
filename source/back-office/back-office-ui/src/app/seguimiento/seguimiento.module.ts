@@ -75,6 +75,7 @@ import {AddObservacionComponent} from './seguimiento-enfermedad/ficha-epidemiolo
     SharedModule,
     MatExpansionModule,
     MatSortModule,
+  // tslint:disable-next-line:max-line-length
   ], entryComponents: [AddContactoComponent, AddPaisViajadoComponent, AddEnfermedadComponent, ListSintomasComponent, AddObservacionComponent],
   providers: [PacienteService, PaisService, EnfermedadService, DiagnosticoService]
 })
