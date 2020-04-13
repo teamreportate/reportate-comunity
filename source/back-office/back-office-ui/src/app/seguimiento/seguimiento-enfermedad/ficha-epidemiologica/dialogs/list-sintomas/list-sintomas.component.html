@@ -14,7 +14,7 @@
           <tr *ngFor="let data of listSintomas">
             <td>{{data.sintoma}}</td>
             <td>{{'   '}}</td>
-              <td>{{data.valoracion}}</td>
+              <td class="number">{{data.valoracion}}</td>
           </tr>
         </table>
       </div>
@@ -27,4 +27,3 @@
 <ng-template #customNotification let-notificationData="notification">
   <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
 </ng-template>
-1

@@ -20,7 +20,7 @@ import {
   MatSlideToggleModule, MatSortModule,
   MatTabsModule,
   MatTooltipModule,
-  MatExpansionModule
+  MatExpansionModule, MatDividerModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
@@ -75,6 +75,7 @@ import {AddObservacionComponent} from './seguimiento-enfermedad/ficha-epidemiolo
     SharedModule,
     MatExpansionModule,
     MatSortModule,
+    MatDividerModule
   // tslint:disable-next-line:max-line-length
   ], entryComponents: [AddContactoComponent, AddPaisViajadoComponent, AddEnfermedadComponent, ListSintomasComponent, AddObservacionComponent],
   providers: [PacienteService, PaisService, EnfermedadService, DiagnosticoService]
