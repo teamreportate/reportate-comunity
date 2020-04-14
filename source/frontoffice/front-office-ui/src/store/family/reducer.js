@@ -54,7 +54,8 @@ const familyReducer = (state = initialState, action) => {
 						sex          : paciente.genero,
 						gestation    : paciente.gestacion,
 						gestationTime: paciente.tiempoGestacion,
-						firstControl : paciente.controlInicial
+						firstControl : paciente.controlInicial,
+						occupation   : paciente.ocupacion
 					});
 				});
 			return newState;
@@ -62,7 +63,7 @@ const familyReducer = (state = initialState, action) => {
 		case FAMILY_ADD_MEMBER: {
 			return {
 				...state,
-				members: [
+				members : [
 					...state.members, {
 						id           : action.data.id,
 						name         : action.data.nombre,
@@ -70,8 +71,17 @@ const familyReducer = (state = initialState, action) => {
 						sex          : action.data.genero,
 						gestation    : action.data.gestacion,
 						gestationTime: action.data.tiempoGestacion,
-						firstControl : action.data.controlInicial
-					}]
+						firstControl : false
+					}],
+				toUpdate: {
+					id           : action.data.id,
+					name         : action.data.nombre,
+					age          : action.data.edad,
+					sex          : action.data.genero,
+					gestation    : action.data.gestacion,
+					gestationTime: action.data.tiempoGestacion,
+					firstControl : false
+				}
 			};
 		}
 		case FAMILY_UPDATE_MEMBER: {

@@ -33,6 +33,44 @@
         </mat-form-field>
       </div>
     </div>
+    <div class="h-padding-5" *ngIf="this.form.controls['genero'].value === 'FEMENINO'">
+
+      {{ this.form.controls['gestacion'].value ? 'SI' : 'NO' }}
+      &nbsp;&nbsp;
+      <mat-slide-toggle [color]="'primary'" [formControl]="this.form.controls['gestacion']"
+                        class="example-margin">
+        ¿ Gestación ?
+      </mat-slide-toggle>
+    </div>
+    <div  class="h-padding-5" *ngIf="this.form.controls['gestacion'].value">
+      <mat-form-field>
+        <input matInput placeholder="Tiempo Gestación *" [formControl]="this.form.controls['tiempoGestacion']"
+               maxlength="100">
+      </mat-form-field>
+    </div>
+    <div  class="h-padding-5">
+      <mat-form-field>
+        <input matInput placeholder="Seguro *" [formControl]="this.form.controls['seguro']"
+               maxlength="100">
+      </mat-form-field>
+    </div>
+    <div  class="h-padding-5">
+      <mat-form-field>
+        <input matInput placeholder="Codigo Seguro *" [formControl]="this.form.controls['codigoSeguro']"
+               maxlength="100">
+      </mat-form-field>
+    </div>
+    <div  class="h-padding-5">
+      <mat-form-field>
+        <input matInput placeholder="CI/PASAPORTE *" [formControl]="this.form.controls['ci']"
+               maxlength="100">
+      </mat-form-field>
+    </div>
+    <div class="h-padding-5">
+      <mat-form-field>
+        <input matInput placeholder="Ocupacion *" [formControl]="this.form.controls['ocupacion']" maxlength="100">
+      </mat-form-field>
+    </div>
 
     <mat-card-actions fxLayoutAlign="end center" fxLayoutGap="5px" >
       <button mat-stroked-button color="warn" type="button" (click)="this.cancel()">Cancelar</button>

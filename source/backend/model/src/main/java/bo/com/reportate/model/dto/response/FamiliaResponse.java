@@ -51,7 +51,7 @@ public class FamiliaResponse implements Serializable {
                 assert paciente.getControlDiarios() != null;
                 pacientes.add(new PacienteResponse(paciente.getId(),
                         paciente.getNombre(), paciente.getEdad(), paciente.getGenero(), paciente.getGestacion(),
-                        paciente.getTiempoGestacion(), (paciente.getControlDiarios() != null && !paciente.getControlDiarios().isEmpty())));
+                        paciente.getTiempoGestacion(), (paciente.getControlDiarios() != null && !paciente.getControlDiarios().isEmpty()), paciente.getOcupacion()));
             });
         }
 

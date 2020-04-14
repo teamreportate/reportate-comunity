@@ -20,5 +20,5 @@ public interface PaisService {
     Pais save(PaisDto paisDto);
     Pais findById(Long paisId);
     Pais update(Long id, PaisDto paisDto);
-    boolean cambiarEstado(Long id);
+    boolean eliminar(Long id);
 }

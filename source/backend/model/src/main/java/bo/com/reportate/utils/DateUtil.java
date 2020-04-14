@@ -19,6 +19,7 @@ public class DateUtil {
     public static final String FORMAT_FILE = "yyyy-MM-dd HHmmss";
     public static final String FORMAT_FECHA_ESTADISTICA = "yyyy-MM-dd HH:mm:ss";
     public static final String FORMAT_DATE_TIME = "dd/MM/yyyy HH:mm:ss";
+    public static final String FORMAT_DATE_MINUTE = "dd/MM/yyyy HH:mm";
     public static final String FORMAT_DATE = "dd/MM/yyyy";
     public static final String FORMAT_TIME = "HH:mm:ss";
     public static final String FORMAT_DATE_PARAM_URL = "dd/MM/yyyy";
@@ -81,7 +82,7 @@ public class DateUtil {
             SimpleDateFormat sdf = new SimpleDateFormat(format);
             return sdf.format(valor);
         } catch (Exception ex) {
-            log.error("Error", ex);
+            log.error("Error al convertir a fecha", ex);
             return null;
         }
     }

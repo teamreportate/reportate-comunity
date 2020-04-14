@@ -15,10 +15,11 @@ import { ResumeComponent } from './resume/resume.component';
 import { SospechosoComponent } from './sospechoso/sospechoso.component';
 import { ConfirmadoComponent } from './confirmado/confirmado.component';
 import { RecuperadosComponent } from './recuperados/recuperados.component';
-import { MuertosComponent } from './muertos/muertos.component';
+import { FallecidosComponent } from './fallecidos/fallecidos.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  declarations: [PrincipalComponent, ResumeComponent, SospechosoComponent, ConfirmadoComponent, RecuperadosComponent, MuertosComponent],
+  declarations: [PrincipalComponent, ResumeComponent, SospechosoComponent, ConfirmadoComponent, RecuperadosComponent, FallecidosComponent],
   imports: [
     CommonModule,
     CommonsModule,
@@ -32,7 +33,8 @@ import { MuertosComponent } from './muertos/muertos.component';
     FormsModule,
     ReactiveFormsModule,
     ChartsModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    SharedModule
   ]
 })
 export class DashboardsModule { }

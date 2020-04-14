@@ -84,22 +84,19 @@ public class PaisController {
         }
     }
 
-    @DeleteMapping("/{id}/cambiar-estado")
+    @PutMapping("/{id}/eliminar")
     public ResponseEntity cambiarEstado(@PathVariable("id") Long id) {
         try{
-            boolean estado = paisService.cambiarEstado(id);
+            boolean estado = paisService.eliminar(id);
             if(estado){
                 return ok().build();
-            }
-            else {
+            } else {
                 return noContent().build();
             }
-        }
-        catch (OperationException e){
+        } catch (OperationException e){
             log.error("Error al cambiar de estado el País: {}", e.getMessage());
             return CustomErrorType.badRequest(FormatUtil.MSG_TITLE_ERROR, e.getMessage());
-        }
-        catch (Exception e){
+        } catch (Exception e){
             log.error("Error no controlado al cambiar de estado el País.", e);
             return CustomErrorType.badRequest(FormatUtil.MSG_TITLE_ERROR, FormatUtil.defaultError());
         }

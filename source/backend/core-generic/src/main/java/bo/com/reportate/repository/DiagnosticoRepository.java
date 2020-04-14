@@ -9,6 +9,7 @@ import bo.com.reportate.model.Paciente;
 import bo.com.reportate.model.*;
 import bo.com.reportate.model.dto.DiagnosticoDto;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
+import bo.com.reportate.model.dto.response.MapResponse;
 import bo.com.reportate.model.dto.response.NivelValoracionDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
@@ -82,8 +83,8 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
 
 
     @Query("SELECT count(1) " +
-            "FROM Diagnostico d INNER JOIN d.enfermedad enf INNER JOIN d.controlDiario cd INNER JOIN cd.paciente p " +
-            "WHERE (:valoracionInicio IS NULL OR d.resultadoValoracion >= :valoracionInicio) AND (:valoracionFin IS NULL OR d.resultadoValoracion <= :valoracionFin) AND "
+            "FROM Paciente p INNER JOIN p.diagnostico d INNER JOIN d.enfermedad enf " +
+            "WHERE "
             + "p.genero IN :generos AND "
             + "((:edadInicial IS NULL OR p.edad >= :edadInicial) AND (:edadFinal IS NULL OR p.edad <= :edadFinal)) AND "
             + "d.departamento IN (:departamentos) AND "
@@ -92,8 +93,6 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
             + "d.estadoDiagnostico IN (:diagnosticos) AND "
             + "enf IN (:enfermedades)")
     Integer cantidadDiagnosticoPorFiltros(
-            @Param("valoracionInicio") BigDecimal valoracionInicio,
-            @Param("valoracionFin") BigDecimal valoracionFin,
             @Param("departamentos") List<Departamento> departamentos,
             @Param("municipios") List<Municipio> municipios,
             @Param("centrosSalud") List<CentroSalud> centrosSalud,
@@ -115,4 +114,18 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
             @Param("fechaFin") Date to);
 
     Optional<Diagnostico> findByIdAndEstado(Long id, EstadoEnum estadoEnum);
+
+
+    @Query("SELECT  new bo.com.reportate.model.dto.response.MapResponse(p)  FROM Paciente p INNER JOIN p.diagnostico d INNER JOIN p.familia f " +
+            "WHERE d.createdDate BETWEEN :fechaInicio AND :fechaFin ANd d.departamento in (:departamentos) AND d.municipio IN (:municipios) " +
+            "AND d.centroSalud IN (:centrosSalud) AND d.estadoDiagnostico IN (:diagnosticos) " +
+            "AND d.enfermedad IN (:enfermedades) ")
+    List<MapResponse> listarPacientesParaMapa(
+            @Param("fechaInicio") Date date,
+            @Param("fechaFin") Date to,
+            @Param("departamentos") List<Departamento> departamentos,
+            @Param("municipios") List<Municipio> municipios,
+            @Param("centrosSalud") List<CentroSalud> centrosSalud,
+            @Param("diagnosticos") List<EstadoDiagnosticoEnum> diagnosticos,
+            @Param("enfermedades") List<Enfermedad> enfermedades);
 }

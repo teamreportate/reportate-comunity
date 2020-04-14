@@ -14,7 +14,7 @@ export default () => {
 	
 	return (
 		<div>
-			<p>Introduce la informacion basica de tu familia</p>
+			<p>Ingresa la informacion básica de tu familia</p>
 			<Form
 				form={form}
 				layout='vertical'

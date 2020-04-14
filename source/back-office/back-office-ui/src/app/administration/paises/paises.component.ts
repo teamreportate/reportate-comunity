@@ -83,7 +83,6 @@ export class PaisesComponent extends ClicComponent implements OnInit  {
     });
   }
   onChangePaisState(row: any) {
-    const target = row.estado === MuState.ACTIVO ? MuState.INACTIVO : MuState.ACTIVO;
     const textContent: String = `Confirma eliminar el País: ${row.nombre}`;
     this.dialog.open(ConfirmDialogComponent, this.confirmConfig({textContent, title: 'Eliminar País'}))
       .afterClosed()

@@ -22,7 +22,7 @@ export class AdministrationService {
     return this.http.post<any>( Constantes.baseUri + Constants.paisApi, JSON.stringify(object));
   }
   requestChangePaisStatus(id: number): Observable<any> {
-    return this.http.delete<any>( Constantes.baseUri + Constants.paisApi + '/' + id + '/cambiar-estado');
+    return this.http.put<any>( Constantes.baseUri + Constants.paisApi + '/' + id + '/eliminar', JSON.stringify(null));
   }
 
   requestSintomaList(): Observable<HttpResponse<any>> {
@@ -38,7 +38,7 @@ export class AdministrationService {
     return this.http.post<any>( Constantes.baseUri + Constants.sintomasApi, JSON.stringify(object));
   }
   requestChangeSintomaStatus(id: number): Observable<any> {
-    return this.http.delete<any>( Constantes.baseUri + Constants.sintomasApi + '/' + id + '/cambiar-estado');
+    return this.http.put<any>( Constantes.baseUri + Constants.sintomasApi + '/' + id + '/eliminar',JSON.stringify(null));
   }
 
   requestEnfermedadList(): Observable<HttpResponse<any>> {
@@ -54,7 +54,7 @@ export class AdministrationService {
     return this.http.post<any>( Constantes.baseUri + Constants.enfermedadApi, JSON.stringify(object));
   }
   requestChangeEnfermedadStatus(id: number): Observable<any> {
-    return this.http.delete<any>( Constantes.baseUri + Constants.enfermedadApi + '/' + id + '/cambiar-estado');
+    return this.http.put<any>( Constantes.baseUri + Constants.enfermedadApi + '/' + id + '/eliminar',JSON.stringify(null));
   }
   requestDepartamentoList(): Observable<HttpResponse<any>> {
     let url = Constantes.baseUri + Constants.departamentosApi;

@@ -111,6 +111,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
 
             addPermisos();
         }
+//        addPermisos();
         log.info("************************* Fin de cargar usuarios por defecto *************************");
     }
     private void addPermisos(){
@@ -140,6 +141,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
 
         recPadre("Seguimiento", "Interfaz para seguimiento de diagnosticos", "seguimiento", 1, "menu", rolAdmin);
         recHijo("Diagnostico", "seguimiento", "Interfaz para seguimiento de interfaces", "diagnostico", 1, "code", rolAdmin);
+        recHijo("Geolocalización", "seguimiento", "Interfaz para localizar los casos", "localizacion", 2, "code", rolAdmin);
         log.info("************************* Fin de cargar permisos por defecto *************************");
     }
 
@@ -173,6 +175,44 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         parametro = new MuParametro(null, Constants.Parameters.MAIL_FROM, "Dirección de correo electronico desde la que se va a enviar los correos.", "no-reply@mc4.com.bo", null, null, null, ParamTipoDato.CADENA, false,null, mailParams);
         this.paramService.saveParametro(parametro);
 
+
+
+        MuGrupoParametro diagnostico = this.grupoParametroRepository.findByGrupo("Parámetros de diagnostico").orElse(MuGrupoParametro.builder()
+                .grupo("Parámetros de diagnostico")
+                .descripcion("Parámetros de diagnostico")
+                .build());
+        this.grupoParametroRepository.save(diagnostico);
+        parametro = new MuParametro(null, Constants.Parameters.INDICADOR_SOSPECHOSO, "Indicador para clasificar como sospechoso un diagnostico", null, null, new BigDecimal("5"), null, ParamTipoDato.NUMERICO, false,null, diagnostico);
+        this.paramService.saveParametro(parametro);
+
+        parametro = new MuParametro(null, Constants.Parameters.MENSAJE_SINTOMAS_SOSPECHOSO, "Mensaje que se enviará al paciente cuando el diagnostico sea SOPECHOSO para alguna enfermedad",
+                "Gracias por registrar tus síntomas. Hemos informado a los médicos de tu centro de salud más cercana; espera la llamada de un médico autorizado.", null, null, null, ParamTipoDato.CADENA, false,null, diagnostico);
+        this.paramService.saveParametro(parametro);
+
+        parametro = new MuParametro(null, Constants.Parameters.MENSAJE_SIN_SINTOMAS, "Mensaje que se enviará al paciente cuando no registre ningún síntoma",
+                "Gracias por realizar tu control díario. Al parecer estas muy bíen de salud.", null, null, null, ParamTipoDato.CADENA, false,null, diagnostico);
+        this.paramService.saveParametro(parametro);
+
+        parametro = new MuParametro(null, Constants.Parameters.MENSAJE_SINTOMAS_LEVES, "Mensaje que se enviará al paciente cuando el diagnóstico sea NEGATIVO. ",
+                "Gracias por registrar tus síntomas. Recuerda registras todos los días.", null, null, null, ParamTipoDato.CADENA, false,null, diagnostico);
+        this.paramService.saveParametro(parametro);
+
+        parametro = new MuParametro(null, Constants.Parameters.MENSAJE_SINTOMAS_ACTIVO, "Mensaje que se enviará al paciente cuando el diagnóstico sea ACTIVO. ",
+                "Gracias por registrar tus síntomas. Recuerda registras todos los días para realizar el control correcto", null, null, null, ParamTipoDato.CADENA, false,null, diagnostico);
+        this.paramService.saveParametro(parametro);
+
+        parametro = new MuParametro(null, Constants.Parameters.MENSAJE_DEFECTO, "Mensaje por defecto que se enviará al paciente ",
+                "Gracias por registrar tus síntomas. Recuerda registras todos los días", null, null, null, ParamTipoDato.CADENA, false,null, diagnostico);
+        this.paramService.saveParametro(parametro);
+
+        parametro = new MuParametro(null, Constants.Parameters.MENSAJE_CANTIDAD_MAXIMA_REGISTRO, "Mensaje para el paciente cuando sobrepasa la cantidad de controles diarios ",
+                "La cantidad de controles recomendados es ${CANTIDAD}, le sugerimos realizar los controles en la mañana y en la tarde.", null, null, null, ParamTipoDato.CADENA, false,null, diagnostico);
+        this.paramService.saveParametro(parametro);
+
+        parametro = new MuParametro(null, Constants.Parameters.CANTIDAD_MAXIMA_CONTROL, "Parámetro que indica la cantidad máxima de veces que un paciente puede realizar controles ",
+                null, null, new BigDecimal("2"), null, ParamTipoDato.NUMERICO, false,null, diagnostico);
+        this.paramService.saveParametro(parametro);
+
         log.info("************************* Fin Cargando parametros *************************");
     }
 
@@ -194,10 +234,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         this.dominioService.saveValorDominio(valorDominio);
         valorDominio = MuValorDominio.builder().dominio(dominio).valor("Personal de Laboratorio").descripcion("Personal de Salud").build();
         this.dominioService.saveValorDominio(valorDominio);
-        valorDominio = MuValorDominio.builder().dominio(dominio).valor("Ingeniero").descripcion("Ingeniero").build();
-        this.dominioService.saveValorDominio(valorDominio);
 
-        
         log.info("************************* Fin Cargando dominios *************************");
     }
 

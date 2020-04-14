@@ -1,14 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import echarts from '../../../assets/js/echarts.min.js';
+import { Data } from '../dashboard.type.js';
 
 @Component({
   selector: 'app-resume',
   templateUrl: './resume.component.html'
 })
 export class ResumeComponent implements OnInit {
-
-  @Input() data = [];
 
   mostrar: boolean;
   option: any;
@@ -21,21 +20,10 @@ export class ResumeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.draw();
   }
 
-  draw() {
-    const data = {
-      dia: ['06/04/2020', '07/04/2020', '08/04/2020', '08/04/2020', '09/04/2020', '10/04/2020', '11/04/2020', '12/04/2020'],
-      sospechoso: [100, 150, 20, 10, 45, 55, 90, 55],
-      confirmado: [52, 50, 50, 80, 15, 35, 90, 36],
-      recuperados: [80, 35, 20, 20, 15, 55, 70, 25],
-      muerto: [10, 5, 0, 2, 4, 5, 8, 12]
-    };
+  draw(data: Data) {
     this.option = {
-      title: {
-        text: 'RESUMEN'
-      },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -46,7 +34,7 @@ export class ResumeComponent implements OnInit {
         }
       },
       legend: {
-        data: []
+        data: ['Sospechosos', 'Descartados', 'Confirmados', 'Recuperados', 'Fallecidos']
       },
       toolbox: {
         feature: {
@@ -63,7 +51,7 @@ export class ResumeComponent implements OnInit {
         {
           type: 'category',
           boundaryGap: false,
-          data: data.dia
+          data: data.dias
         }
       ],
       yAxis: [
@@ -73,32 +61,89 @@ export class ResumeComponent implements OnInit {
       ],
       series: [
         {
-          name: 'Sospechoso',
+          name: 'Sospechosos',
           type: 'line',
-          stack: '总量',
-          areaStyle: {},
-          data: data.sospechoso
+          areaStyle: {
+            color: {
+              colorStops: [{
+                offset: 0, color: '#01C0C8'
+              }]
+            }
+          },
+          color: {
+            colorStops: [{
+              offset: 0, color: '#01C0C8'
+            }]
+          },
+          data: data.sospechosos
         },
         {
-          name: 'Confirmado',
+          name: 'Descartados',
           type: 'line',
-          stack: '总量',
-          areaStyle: {},
-          data: data.confirmado
+          areaStyle: {
+            color: {
+              colorStops: [{
+                offset: 0, color: '#C777DB'
+              }]
+            }
+          },
+          color: {
+            colorStops: [{
+              offset: 0, color: '#C777DB'
+            }]
+          },
+          data: data.negativos
         },
         {
-          name: 'Recuperado',
+          name: 'Confirmados',
           type: 'line',
-          stack: '总量',
-          areaStyle: {},
-          data: data.recuperados
+          areaStyle: {
+            color: {
+              colorStops: [{
+                offset: 0, color: '#F4D03F'
+              }]
+            }
+          },
+          color: {
+            colorStops: [{
+              offset: 0, color: '#F4D03F'
+            }]
+          },
+          data: data.confirmados
         },
         {
-          name: 'Muerto',
+          name: 'Recuperados',
           type: 'line',
-          stack: '总量',
-          areaStyle: {},
-          data: data.muerto
+          areaStyle: {
+            color: {
+              colorStops: [{
+                offset: 0, color: '#2ECC71'
+              }]
+            }
+          },
+          color: {
+            colorStops: [{
+              offset: 0, color: '#2ECC71'
+            }]
+          },
+          data: data.curados
+        },
+        {
+          name: 'Fallecidos',
+          type: 'line',
+          areaStyle: {
+            color: {
+              colorStops: [{
+                offset: 0, color: '#FB9678'
+              }]
+            }
+          },
+          color: {
+            colorStops: [{
+              offset: 0, color: '#FB9678'
+            }]
+          },
+          data: data.fallecidos
         }
       ]
     };

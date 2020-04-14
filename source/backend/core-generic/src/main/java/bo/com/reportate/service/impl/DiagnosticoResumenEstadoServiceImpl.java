@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import bo.com.reportate.model.dto.response.MapResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,9 @@ import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.Enfermedad;
 import bo.com.reportate.model.MuUsuario;
 import bo.com.reportate.model.Municipio;
+import bo.com.reportate.model.dto.response.ItemDto;
 import bo.com.reportate.model.dto.response.ResumenDto;
+import bo.com.reportate.model.dto.response.TablaResponse;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.repository.CentroSaludRepository;
@@ -50,6 +53,7 @@ public class DiagnosticoResumenEstadoServiceImpl implements DiagnosticoResumenEs
 	private CentroSaludUsuarioRepository centroSaludUsuarioRepository;
 	@Autowired
 	private CentroSaludRepository centroSaludRepository;
+	
 	@Override
 	@Transactional(readOnly = true)
 	public List<ResumenDto> cantidadDiagnosticoPorFiltros(Authentication authentication,Date from, Date to, Long departamentoId,
@@ -89,7 +93,22 @@ public class DiagnosticoResumenEstadoServiceImpl implements DiagnosticoResumenEs
 		} else {
 			enfermedads.addAll(enfermedadRepository.findByEnfermedadBaseFalseAndEstado(EstadoEnum.ACTIVO));
 		}
-		return diagnosticoResumenDiarioRepository.listarPorRangoFechas(DateUtil.formatToStart(from), DateUtil.formatToEnd(to), departamentos, municipios, centroSaluds, enfermedads);
+		
+		List<ResumenDto> resumen= diagnosticoResumenDiarioRepository.listarPorRangoFechas(DateUtil.formatToStart(from), DateUtil.formatToEnd(to), departamentos, municipios, centroSaluds, enfermedads);
+		List<ResumenDto> resumenAux = new ArrayList<>();
+		for (ResumenDto resumenDto : resumen) {
+			if(!resumenAux.contains(resumenDto)) {
+				resumenAux.add(resumenDto);
+			}else {
+				ResumenDto resumenDtoAux = resumenAux.get(resumenAux.indexOf(resumenDto));
+				resumenDtoAux.setConfirmado(resumenDto.getConfirmado()+resumenDtoAux.getConfirmado());
+				resumenDtoAux.setCurado(resumenDto.getCurado()+resumenDtoAux.getCurado());
+				resumenDtoAux.setFallecido(resumenDto.getFallecido()+resumenDtoAux.getFallecido());
+				resumenDtoAux.setNegativo(resumenDto.getNegativo()+resumenDtoAux.getNegativo());
+				resumenDtoAux.setSospechoso(resumenDto.getSospechoso()+resumenDtoAux.getSospechoso());
+			}
+		}
+		return resumenAux;
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,4 +20,30 @@ public class ResumenDto implements Serializable{
 	private Long confirmado;
 	private Long curado;
 	private Long fallecido;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ResumenDto other = (ResumenDto) obj;
+		if (nombreGrafico == null) {
+			if (other.nombreGrafico != null)
+				return false;
+		} else if (!nombreGrafico.equals(other.nombreGrafico))
+			return false;
+		return true;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((nombreGrafico == null) ? 0 : nombreGrafico.hashCode());
+		return result;
+	}
+	
+	
+	
 }

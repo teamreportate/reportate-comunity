@@ -23,9 +23,10 @@ public interface EnfermedadService {
      * @return
      */
     List<EnfermedadResponse> listNoBase();
+    List<EnfermedadResponse> listBase();
     List<EnfermedadDto> listActivos();
     Enfermedad save(EnfermedadDto enfermedadDto);
     Enfermedad findById(Long enfermedadId);
     Enfermedad update(Long id, EnfermedadDto enfermedadDto);
-    boolean cambiarEstado(Long id);
+    boolean eliminar(Long id);
 }

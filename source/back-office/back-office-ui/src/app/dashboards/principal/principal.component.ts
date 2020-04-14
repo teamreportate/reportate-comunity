@@ -1,7 +1,5 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { MatDialog, throwMatDialogContentAlreadyAttachedError } from '@angular/material';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 
 import echarts from '../../../assets/js/echarts.min.js';
 
@@ -12,12 +10,20 @@ import { NotifierService } from 'angular-notifier';
 import { Page } from '../../core/utils/paginator/page';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { CustomOptions } from '../../core/models/dto/custom-options';
+import { Filter, Basic, Data, DataTotal, DataTotalNumber } from '../dashboard.type.js';
+import { Department, Municipaly, SaludCentre } from 'src/app/access/users/user.type.js';
+import { AccessService } from 'src/app/access/access.service.js';
+import { EnfermedadService } from 'src/app/core/services/http-services/enfermedad.service';
+import { ResumeComponent } from '../resume/resume.component';
+import { ConfirmadoComponent } from '../confirmado/confirmado.component';
+import { RecuperadosComponent } from '../recuperados/recuperados.component';
+import { SospechosoComponent } from '../sospechoso/sospechoso.component';
+import { FallecidosComponent } from '../fallecidos/fallecidos.component';
 
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
-  styleUrls: ['./principal.component.sass'],
-  providers: [DashboardService]
+  providers: [DashboardService, AccessService, EnfermedadService]
 })
 export class PrincipalComponent extends ClicComponent implements OnInit, AfterViewInit {
   @BlockUI() blockUI: NgBlockUI;
@@ -28,33 +34,46 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
 
   from = new Date();
   to = new Date();
+  filter: Filter = new Filter();
 
   echarts = echarts;
-  echarts1 = echarts;
   myChart: any;
-  myChart1: any;
 
-  data = [];
-  data1 = [];
+  searchValue = '';
+
+  data: Data = new Data();
+  resumen: Data = new Data();
 
   option: any;
-  option1: any;
 
-  list = [
-    { departamento: 'Santa Cruz', sospechoso: 150, confirmado: 20, recuperado: 8, muerto: 1 },
-    { departamento: 'Cochabamba', sospechoso: 90, confirmado: 15, recuperado: 5, muerto: 0 },
-    { departamento: 'Beni', sospechoso: 88, confirmado: 10, recuperado: 3, muerto: 0 },
-    { departamento: 'Pando', sospechoso: 85, confirmado: 10, recuperado: 3, muerto: 0 },
-    { departamento: 'La paz', sospechoso: 79, confirmado: 9, recuperado: 4, muerto: 0 },
-    { departamento: 'Tarija', sospechoso: 55, confirmado: 5, recuperado: 2, muerto: 0 },
-    { departamento: 'Sucre', sospechoso: 55, confirmado: 6, recuperado: 2, muerto: 0 },
-    { departamento: 'Potosí', sospechoso: 30, confirmado: 3, recuperado: 2, muerto: 0 },
-    { departamento: 'Oruro', sospechoso: 20, confirmado: 1, recuperado: 1, muerto: 0 },
-  ];
+  departments: Department[] = [];
+  municipalities: Municipaly[] = [];
+  saludCentres: SaludCentre[] = [];
+  enfermedades: Basic[] = [];
 
+  totalsList: DataTotal = new DataTotal();
 
-  constructor(private dialog: MatDialog, private service: DashboardService,
-    private changeDetector: ChangeDetectorRef, private media: MediaMatcher, private router: Router, private notifier: NotifierService) {
+  total: DataTotalNumber = new DataTotalNumber();
+
+  percentSospechosos = 0;
+  percentDescartados = 0;
+  percentConfirmados = 0;
+  percentRecuperados = 0;
+  percentFallecidos = 0;
+
+  @ViewChild(ResumeComponent) resumeComponent: ResumeComponent;
+  @ViewChild(ConfirmadoComponent) confirmadoComponent: ConfirmadoComponent;
+  @ViewChild(RecuperadosComponent) recuperadosComponent: RecuperadosComponent;
+  @ViewChild(SospechosoComponent) sospechosoComponent: SospechosoComponent;
+  @ViewChild(FallecidosComponent) fallecidosComponent: FallecidosComponent;
+
+  constructor(
+    private service: DashboardService,
+    private accessService: AccessService,
+    private enfermedadService: EnfermedadService,
+    private changeDetector: ChangeDetectorRef,
+    private media: MediaMatcher,
+    private notifier: NotifierService) {
     super();
     this.mostrar = false;
   }
@@ -63,6 +82,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
 
   ngOnInit() {
     this.initialListener(this.changeDetector, this.media);
+    this.getSetting();
     this.initForm();
   }
 
@@ -73,23 +93,46 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
       to: new FormControl(this.to, Validators.compose([Validators.required])),
     }, {
     });
-    this.getByValorationRequest();
-
-    setTimeout(() => {
-      this.getByValorationRequest();
-    }, 500);
+    this.updateData();
   }
 
-  getByValorationRequest() {
+  getSetting() {
+    this.blockUI.start('Recuperando lista de departamentos y municipios');
+    this.accessService.requestCompleteDepartmentsList().subscribe(response => {
+      this.departments = response.body.departamentos;
+      this.municipalities = response.body.municipios;
+      this.saludCentres = response.body.centrosSalud;
+      this.getEnfermedades();
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
+    });
+  }
+
+  getEnfermedades() {
+    this.blockUI.start('Recuperando lista de enfermedades');
+    this.enfermedadService.getEnfermedades().subscribe(response => {
+      this.enfermedades = response.body;
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
+    });
+  }
+
+
+  getTotals() {
+    this.blockUI.start('Actualizando totales');
     if (this.form.valid) {
       const formValue = this.form.value;
       const from = formValue.from.getDate() + '%2F' + (formValue.from.getMonth() + 1) + '%2F' + formValue.from.getFullYear();
       const to = formValue.to.getDate() + '%2F' + (formValue.to.getMonth() + 1) + '%2F' + formValue.to.getFullYear();
-      this.service.byValorationRequest(from, to).subscribe(response => {
 
-        this.data = response.body.datas;
-        this.draw(this.data);
-        this.draw1(this.data);
+      this.service.reportTotals(from, to, this.filter).subscribe(response => {
+
+        this.totalsList = response.body;
+
         this.blockUI.stop();
       }, error => {
         this.blockUI.stop();
@@ -98,109 +141,137 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
     }
   }
 
-  draw(data1: any) {
-    const data = {
-      dia: ['06/04/2020', '07/04/2020', '08/04/2020', '08/04/2020', '09/04/2020', '10/04/2020', '11/04/2020', '12/04/2020'],
-      sospechoso: [100, 150, 20, 10, 45, 55, 90, 55],
-      confirmado: [52, 50, 50, 80, 15, 35, 90, 36],
-      recuperados: [80, 35, 20, 20, 15, 55, 70, 25],
-      muerto: [10, 5, 0, 2, 4, 5, 8, 12]
-    };
-    this.option = {
-      title: {
-        text: 'RESUMEN'
-      },
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'cross',
-          label: {
-            backgroundColor: '#6a7985'
-          }
-        }
-      },
-      legend: {
-        data: []
-      },
-      toolbox: {
-        feature: {
-          saveAsImage: {}
-        }
-      },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-      },
-      xAxis: [
-        {
-          type: 'category',
-          boundaryGap: false,
-          data: data.dia
-        }
-      ],
-      yAxis: [
-        {
-          type: 'value'
-        }
-      ],
-      series: [
-        {
-          name: 'Sospechoso',
-          type: 'line',
-          stack: '总量',
-          areaStyle: {},
-          data: data.sospechoso
-        },
-        {
-          name: 'Confirmado',
-          type: 'line',
-          stack: '总量',
-          areaStyle: {},
-          data: data.confirmado
-        },
-        {
-          name: 'Recuperado',
-          type: 'line',
-          stack: '总量',
-          areaStyle: {},
-          data: data.recuperados
-        },
-        {
-          name: 'Muerto',
-          type: 'line',
-          stack: '总量',
-          areaStyle: {},
-          data: data.muerto
-        }
-      ]
-    };
+  getTotalNumbers() {
+    this.blockUI.start('Actualizando totales');
+    this.service.reportTotalNumbers(this.filter).subscribe(response => {
 
-    this.myChart = this.echarts.init(document.getElementById('main'));
-    this.myChart.setOption(this.option);
+      this.total = response.body;
+      this.percentSospechosos = (this.total.sospechosos * 100) / this.total.total;
+      this.percentDescartados = (this.total.descartados * 100) / this.total.total;
+      this.percentConfirmados = (this.total.confirmados * 100) / this.total.total;
+      this.percentRecuperados = (this.total.recuperados * 100) / this.total.total;
+      this.percentFallecidos = (this.total.fallecidos * 100) / this.total.total;
+
+      this.blockUI.stop();
+    }, error => {
+      this.blockUI.stop();
+      if (error) this.notifierError(error);
+    });
   }
 
-  draw1(data1: any) {
-    this.option1 = {
+  getByValorationRequest() {
+    this.blockUI.start('Actualizando los datos');
+    if (this.form.valid) {
+      const formValue = this.form.value;
+      const from = formValue.from.getDate() + '%2F' + (formValue.from.getMonth() + 1) + '%2F' + formValue.from.getFullYear();
+      const to = formValue.to.getDate() + '%2F' + (formValue.to.getMonth() + 1) + '%2F' + formValue.to.getFullYear();
+      this.service.byValorationRequest(from, to).subscribe(response => {
+
+        this.draw(response.body.datas);
+        this.blockUI.stop();
+      }, error => {
+        this.blockUI.stop();
+        if (error) this.notifierError(error);
+      });
+    }
+  }
+
+  getReportWithFiltersRequest() {
+    this.blockUI.start('Actualizando gráficos...');
+    if (this.form.valid) {
+      const formValue = this.form.value;
+      const from = formValue.from.getDate() + '%2F' + (formValue.from.getMonth() + 1) + '%2F' + formValue.from.getFullYear();
+      const to = formValue.to.getDate() + '%2F' + (formValue.to.getMonth() + 1) + '%2F' + formValue.to.getFullYear();
+
+      this.service.reportWithFiltersRequest(from, to, this.filter).subscribe(response => {
+        this.data = response.body;
+        this.confirmadoComponent.draw(this.data);
+        this.sospechosoComponent.draw(this.data);
+        this.recuperadosComponent.draw(this.data);
+        this.fallecidosComponent.draw(this.data);
+
+        this.blockUI.stop();
+      }, error => {
+        this.blockUI.stop();
+        if (error) this.notifierError(error);
+      });
+    }
+  }
+
+  reportResumenWithFiltersRequest() {
+    this.blockUI.start('Actualizando gráficos...');
+    if (this.form.valid) {
+      const formValue = this.form.value;
+      const from = formValue.from.getDate() + '%2F' + (formValue.from.getMonth() + 1) + '%2F' + formValue.from.getFullYear();
+      const to = formValue.to.getDate() + '%2F' + (formValue.to.getMonth() + 1) + '%2F' + formValue.to.getFullYear();
+
+      this.service.reportResumenWithFiltersRequest(from, to, this.filter).subscribe(response => {
+        this.resumen = response.body;
+        this.resumeComponent.draw(this.resumen);
+        this.blockUI.stop();
+      }, error => {
+        this.blockUI.stop();
+        if (error) this.notifierError(error);
+      });
+    }
+  }
+
+  updateData() {
+    this.getTotalNumbers();
+    this.getByValorationRequest();
+    this.reportResumenWithFiltersRequest();
+    this.getReportWithFiltersRequest();
+    this.getTotals();
+  }
+
+  draw(data: any[]) {
+    this.option = {
       legend: {},
       tooltip: {},
       dataset: {
         dimensions: ['registrado', 'alto', 'medio', 'bajo'],
-        source: data1
+        source: data
       },
       xAxis: { type: 'category' },
       yAxis: {},
       series: [
-        { type: 'bar' },
-        { type: 'bar' },
-        { type: 'bar' }
+        {
+          type: 'bar',
+          color: {
+            colorStops: [{
+              offset: 0, color: '#FB9678'
+            }]
+          }
+        },
+        {
+          type: 'bar',
+          color: {
+            colorStops: [{
+              offset: 0, color: '#F4D03F'
+            }]
+          }
+        },
+        {
+          type: 'bar',
+          color: {
+            colorStops: [{
+              offset: 0, color: '#2ECC71'
+            }]
+          }
+        }
       ]
     };
-
-    this.myChart1 = this.echarts1.init(document.getElementById('main1'));
-    this.myChart1.setOption(this.option1);
+    this.myChart = this.echarts.init(document.getElementById('main'));
+    this.myChart.setOption(this.option);
   }
+
+  print() {
+    window.print();
+  }
+
+
+
+
 
 
 
