@@ -1,5 +1,8 @@
 package bo.com.reportate.service.impl;
 
+import bo.com.reportate.model.DiagnosticoSintoma;
+import bo.com.reportate.model.Paciente;
+import bo.com.reportate.model.dto.PacienteEmailDto;
 import bo.com.reportate.service.EmailService;
 import bo.com.reportate.service.NotificacionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +34,10 @@ public class NotificacionServiceImpl implements NotificacionService {
     @Async
     public void notificacionSospechosoSintomas(String paciente, String to, String asunto, String mensaje, List<String> sintomas){
         emailService.sentMessageEmail(paciente,asunto,to, sintomas, mensaje);
+    }
+
+    @Override
+    public void notidicacionMedico(String subject, String to, PacienteEmailDto paciente, List<DiagnosticoSintoma> sintomas) {
+        emailService.notidicacionMedico(subject, to,paciente,sintomas);
     }
 }

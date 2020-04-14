@@ -3,6 +3,9 @@ package bo.com.reportate.service.impl;
 import bo.com.reportate.cache.CacheService;
 import bo.com.reportate.config.MailContentBuilder;
 import bo.com.reportate.model.Constants;
+import bo.com.reportate.model.DiagnosticoSintoma;
+import bo.com.reportate.model.Paciente;
+import bo.com.reportate.model.dto.PacienteEmailDto;
 import bo.com.reportate.service.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +73,21 @@ public class EmailServiceImpl implements EmailService {
             messageHelper.addInline("bannerreportate", new ClassPathResource(BANNER_PNG) );
         };
 
+        emailSender.send(messagePreparator);
+    }
+
+    @Override
+    public void notidicacionMedico(String subject, String to, PacienteEmailDto paciente, List<DiagnosticoSintoma> sintomas) {
+        MimeMessagePreparator messagePreparator = mimeMessage -> {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true /* multipart */, "UTF-8");
+            messageHelper.setTo(to);
+            messageHelper.setFrom(new InternetAddress(cacheService.getStringParam(Constants.Parameters.MAIL_FROM), cacheService.getStringParam(Constants.Parameters.MAIL_FROM)));
+            messageHelper.setReplyTo(new InternetAddress(cacheService.getStringParam(Constants.Parameters.MAIL_FROM), false));
+            messageHelper.setSubject(subject);
+            String message = mailContentBuilder.notidicacionMedico(paciente, sintomas);
+            messageHelper.setText(message,true);
+//            messageHelper.addInline("bannerreportate", new ClassPathResource(BANNER_PNG) );
+        };
         emailSender.send(messagePreparator);
     }
 }

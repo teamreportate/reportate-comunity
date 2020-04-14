@@ -6,6 +6,7 @@ import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.*;
 import bo.com.reportate.model.dto.DiagnosticoDto;
 import bo.com.reportate.model.dto.PacienteDto;
+import bo.com.reportate.model.dto.PacienteEmailDto;
 import bo.com.reportate.model.dto.PaisVisitadoDto;
 import bo.com.reportate.model.dto.request.EnfermedadRequest;
 import bo.com.reportate.model.dto.request.PaisRequest;
@@ -325,9 +326,12 @@ public class PacienteServiceImpl implements PacienteService {
                 EstadoDiagnosticoEnum estadoDiagnostico = EstadoDiagnosticoEnum.NEGATIVO;
                 if (valoracion.compareTo(cacheService.getNumberParam(Constants.Parameters.INDICADOR_SOSPECHOSO)) > 0) {
                     estadoDiagnostico = EstadoDiagnosticoEnum.SOSPECHOSO;
+                    PacienteEmailDto pacienteEmailDto = PacienteEmailDto.builder().
+                            id(pacienteId).nombre(paciente.getNombre()).sexo(paciente.getGenero().name()).telefono(paciente.getFamilia().getTelefono()).enfermedad(enfermedad.getNombre()).valoracion(valoracion.intValue()).build();
                     List<MuUsuario> medicos = this.usuarioRepository.obtenerMedicoPordepartamento(controlDiario.getPaciente().getFamilia().getDepartamento());
                     for (MuUsuario medico : medicos) {
-                        notificacionService.notificacionSospechosoSintomas("Dr. " + medico.getNombre(), medico.getEmail(), "Caso sospechoso " + enfermedad.getNombre(), "Existe un nuevo caso sospechoso de " + enfermedad.getNombre() + " con una valoración de " + valoracion.toPlainString(), sintomasMail);
+//                        notificacionService.notificacionSospechosoSintomas("Dr. " + medico.getNombre(), medico.getEmail(), "Caso sospechoso " + enfermedad.getNombre(), "Existe un nuevo caso sospechoso de " + enfermedad.getNombre() + " con una valoración de " + valoracion.toPlainString(), sintomasMail);
+                        notificacionService.notidicacionMedico("Caso sospechoso " + enfermedad.getNombre(),medico.getEmail(),pacienteEmailDto,sintomasDignostico);
                     }
                 }
 
