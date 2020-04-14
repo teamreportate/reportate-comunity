@@ -3,6 +3,7 @@ package bo.com.reportate.service.impl;
 import bo.com.reportate.model.DiagnosticoSintoma;
 import bo.com.reportate.model.Paciente;
 import bo.com.reportate.model.dto.PacienteEmailDto;
+import bo.com.reportate.model.dto.response.DiagnosticoSintomaResponse;
 import bo.com.reportate.service.EmailService;
 import bo.com.reportate.service.NotificacionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,8 @@ public class NotificacionServiceImpl implements NotificacionService {
     }
 
     @Override
-    public void notidicacionMedico(String subject, String to, PacienteEmailDto paciente, List<DiagnosticoSintoma> sintomas) {
+    @Async
+    public void notidicacionMedico(String subject, String to, PacienteEmailDto paciente, List<DiagnosticoSintomaResponse> sintomas) {
         emailService.notidicacionMedico(subject, to,paciente,sintomas);
     }
 }

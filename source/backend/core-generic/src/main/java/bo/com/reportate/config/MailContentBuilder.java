@@ -2,6 +2,7 @@ package bo.com.reportate.config;
 
 import bo.com.reportate.model.DiagnosticoSintoma;
 import bo.com.reportate.model.dto.PacienteEmailDto;
+import bo.com.reportate.model.dto.response.DiagnosticoSintomaResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
@@ -58,13 +59,13 @@ public class MailContentBuilder {
         return this.templateEngine.process("mailTemplate2", ctx);
     }
 
-    public String notidicacionMedico(PacienteEmailDto paciente, List<DiagnosticoSintoma> sintomas) {
+    public String notidicacionMedico(PacienteEmailDto paciente, List<DiagnosticoSintomaResponse> sintomas) {
         // Prepare the evaluation context
         final Context ctx = new Context();
         ctx.setVariable("paciente", paciente);
         ctx.setVariable("sintomas", sintomas);
 //        ctx.setVariable("imageResourceName", imageResourceName); // so that we can reference it from HTML
-        return this.templateEngine.process("mailTemplate2", ctx);
+        return this.templateEngine.process("mailTemplate3", ctx);
     }
 
 

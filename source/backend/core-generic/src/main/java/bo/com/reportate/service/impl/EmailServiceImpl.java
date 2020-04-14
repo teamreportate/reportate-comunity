@@ -6,6 +6,7 @@ import bo.com.reportate.model.Constants;
 import bo.com.reportate.model.DiagnosticoSintoma;
 import bo.com.reportate.model.Paciente;
 import bo.com.reportate.model.dto.PacienteEmailDto;
+import bo.com.reportate.model.dto.response.DiagnosticoSintomaResponse;
 import bo.com.reportate.service.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +78,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void notidicacionMedico(String subject, String to, PacienteEmailDto paciente, List<DiagnosticoSintoma> sintomas) {
+    public void notidicacionMedico(String subject, String to, PacienteEmailDto paciente, List<DiagnosticoSintomaResponse> sintomas) {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true /* multipart */, "UTF-8");
             messageHelper.setTo(to);

@@ -11,10 +11,7 @@ import bo.com.reportate.model.dto.PaisVisitadoDto;
 import bo.com.reportate.model.dto.request.EnfermedadRequest;
 import bo.com.reportate.model.dto.request.PaisRequest;
 import bo.com.reportate.model.dto.request.SintomaRequest;
-import bo.com.reportate.model.dto.response.EnfermedadResponse;
-import bo.com.reportate.model.dto.response.FichaEpidemiologicaResponse;
-import bo.com.reportate.model.dto.response.MovilControlDiario;
-import bo.com.reportate.model.dto.response.SintomaResponse;
+import bo.com.reportate.model.dto.response.*;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
@@ -308,7 +305,7 @@ public class PacienteServiceImpl implements PacienteService {
         List<Enfermedad> enfermedades = this.matrizDiagnosticoRepository.listarEnfermedades();
         for (Enfermedad enfermedad : enfermedades) {
             List<MatrizDiagnostico> matrizDiagnosticos = this.matrizDiagnosticoRepository.findByEnfermedadAndEstado(enfermedad, EstadoEnum.ACTIVO);
-            List<String> sintomasMail = new ArrayList<>();
+            List<DiagnosticoSintomaResponse> sintomasMail = new ArrayList<>();
             List<DiagnosticoSintoma> sintomasDignostico = new ArrayList<>();
 
             Diagnostico diagnostico = Diagnostico.builder().controlDiario(controlDiario).enfermedad(enfermedad).departamento(paciente.getFamilia().getDepartamento()).municipio(paciente.getFamilia().getMunicipio()).centroSalud(paciente.getFamilia().getCentroSalud()).build();
@@ -316,7 +313,7 @@ public class PacienteServiceImpl implements PacienteService {
             for (MatrizDiagnostico matrizDiagnostico : matrizDiagnosticos) {
                 if (sintomasRecibidos.contains(matrizDiagnostico.getSintoma())) {
                     valoracion = valoracion.add(matrizDiagnostico.getPeso());
-                    sintomasMail.add(matrizDiagnostico.getSintoma().getNombre());
+                    sintomasMail.add(new DiagnosticoSintomaResponse(matrizDiagnostico.getSintoma().getNombre(), matrizDiagnostico.getPeso()));
                     sintomasDignostico.add(DiagnosticoSintoma.builder().diagnostico(diagnostico).sintoma(matrizDiagnostico.getSintoma()).valoracion(matrizDiagnostico.getPeso()).build());
                 }
             }
@@ -327,11 +324,13 @@ public class PacienteServiceImpl implements PacienteService {
                 if (valoracion.compareTo(cacheService.getNumberParam(Constants.Parameters.INDICADOR_SOSPECHOSO)) > 0) {
                     estadoDiagnostico = EstadoDiagnosticoEnum.SOSPECHOSO;
                     PacienteEmailDto pacienteEmailDto = PacienteEmailDto.builder().
-                            id(pacienteId).nombre(paciente.getNombre()).sexo(paciente.getGenero().name()).telefono(paciente.getFamilia().getTelefono()).enfermedad(enfermedad.getNombre()).valoracion(valoracion.intValue()).build();
+                            id(pacienteId).edad(paciente.getEdad()).nombre(paciente.getNombre()).sexo(paciente.getGenero().name()).telefono(paciente.getFamilia().getTelefono()).enfermedad(enfermedad.getNombre()).valoracion(valoracion.intValue()).build();
+
                     List<MuUsuario> medicos = this.usuarioRepository.obtenerMedicoPordepartamento(controlDiario.getPaciente().getFamilia().getDepartamento());
                     for (MuUsuario medico : medicos) {
 //                        notificacionService.notificacionSospechosoSintomas("Dr. " + medico.getNombre(), medico.getEmail(), "Caso sospechoso " + enfermedad.getNombre(), "Existe un nuevo caso sospechoso de " + enfermedad.getNombre() + " con una valoración de " + valoracion.toPlainString(), sintomasMail);
-                        notificacionService.notidicacionMedico("Caso sospechoso " + enfermedad.getNombre(),medico.getEmail(),pacienteEmailDto,sintomasDignostico);
+                        notificacionService.notidicacionMedico("Caso sospechoso " + enfermedad.getNombre(),"rllayus@gmail.com",pacienteEmailDto,sintomasMail);
+                        log.info("notificacion enviada");
                     }
                 }
 

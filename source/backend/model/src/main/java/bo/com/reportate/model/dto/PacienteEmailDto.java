@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
  * @Created by :MC4
  * @Autor :Ricardo Laredo
@@ -14,7 +16,7 @@ import lombok.Setter;
  * @Copyright :MC4
  */
 @Getter @Setter @Builder
-public class PacienteEmailDto {
+public class PacienteEmailDto implements Serializable {
     private Long id;
     private String nombre;
     private String telefono;

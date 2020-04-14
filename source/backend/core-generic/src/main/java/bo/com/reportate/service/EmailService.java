@@ -3,6 +3,7 @@ package bo.com.reportate.service;
 import bo.com.reportate.model.DiagnosticoSintoma;
 import bo.com.reportate.model.Paciente;
 import bo.com.reportate.model.dto.PacienteEmailDto;
+import bo.com.reportate.model.dto.response.DiagnosticoSintomaResponse;
 
 import java.util.List;
 import java.util.Locale;
@@ -20,5 +21,5 @@ import java.util.Locale;
 public interface EmailService {
     void sendSimpleMessage(String to, String subject, String text);
     void sentMessageEmail(String nombrePaciente, String subject, String to, List<String> sintomas,  String mensaje);
-    void notidicacionMedico(String subject, String to, PacienteEmailDto paciente, List<DiagnosticoSintoma> sintomas);
+    void notidicacionMedico(String subject, String to, PacienteEmailDto paciente, List<DiagnosticoSintomaResponse> sintomas);
 }
