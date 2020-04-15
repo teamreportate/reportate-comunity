@@ -195,10 +195,6 @@ public class DiagnosticoController {
     @Operation(summary = "Agrupar los diagnosticos por estado y lugar", description = "Agrupar los diagnosticos por estado y lugar", tags = { "grupos de diagnosticos por estado y lugar" })
     public ResponseEntity<TablaResponse> listarTotalPorLugar(
     		@AuthenticationPrincipal Authentication authentication,
-    		@Parameter(description = "Fecha inicio para el filtro", required = true)
-            @RequestParam("from") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_PARAM_URL) Date from,
-            @Parameter(description = "Fecha fin para el filtro", required = true)
-            @RequestParam("to") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_PARAM_URL) Date to,
             @Parameter(description = "Identificador de Departamento", required = true)
     		@RequestParam("departamentoId") Long departamentoId,
             @Parameter(description = "Identificador de Municipio", required = true)
