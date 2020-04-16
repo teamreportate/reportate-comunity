@@ -7,6 +7,7 @@ import bo.com.reportate.model.Sintoma;
 import bo.com.reportate.model.dto.EnfermedadDto;
 import bo.com.reportate.model.dto.PacienteDto;
 import bo.com.reportate.model.dto.PaisVisitadoDto;
+import bo.com.reportate.model.dto.request.DiagnosticoRequest;
 import bo.com.reportate.model.dto.request.EnfermedadRequest;
 import bo.com.reportate.model.dto.request.PaisRequest;
 import bo.com.reportate.model.dto.request.SintomaRequest;
@@ -43,4 +44,6 @@ public interface PacienteService {
     void eliminarPais(Long pacienteId, Long paisId);
     void eliminarContacto(Long contactoId);
     List<MovilControlDiario> getControlDiario(Long pacienteId);
+
+    void agregarDiagnosticoMedico(Authentication userDetails,Long pacienteId, DiagnosticoRequest diagnosticoRequest);
 }
