@@ -329,8 +329,7 @@ public class PacienteServiceImpl implements PacienteService {
                     List<MuUsuario> medicos = this.usuarioRepository.obtenerMedicoPordepartamento(controlDiario.getPaciente().getFamilia().getDepartamento());
                     for (MuUsuario medico : medicos) {
 //                        notificacionService.notificacionSospechosoSintomas("Dr. " + medico.getNombre(), medico.getEmail(), "Caso sospechoso " + enfermedad.getNombre(), "Existe un nuevo caso sospechoso de " + enfermedad.getNombre() + " con una valoración de " + valoracion.toPlainString(), sintomasMail);
-                        notificacionService.notidicacionMedico("Caso sospechoso " + enfermedad.getNombre(),"rllayus@gmail.com",pacienteEmailDto,sintomasMail);
-                        log.info("notificacion enviada");
+                        notificacionService.notidicacionMedico("Caso sospechoso de " + enfermedad.getNombre(),medico.getEmail(),pacienteEmailDto,sintomasMail);
                     }
                 }
 
