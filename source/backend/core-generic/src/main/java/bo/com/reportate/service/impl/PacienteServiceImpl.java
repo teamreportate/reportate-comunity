@@ -8,6 +8,7 @@ import bo.com.reportate.model.dto.DiagnosticoDto;
 import bo.com.reportate.model.dto.PacienteDto;
 import bo.com.reportate.model.dto.PacienteEmailDto;
 import bo.com.reportate.model.dto.PaisVisitadoDto;
+import bo.com.reportate.model.dto.request.DiagnosticoRequest;
 import bo.com.reportate.model.dto.request.EnfermedadRequest;
 import bo.com.reportate.model.dto.request.PaisRequest;
 import bo.com.reportate.model.dto.request.SintomaRequest;
@@ -23,6 +24,8 @@ import bo.com.reportate.util.ValidationUtil;
 import bo.com.reportate.utils.DateUtil;
 import bo.com.reportate.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.implementation.bytecode.Throw;
+import org.jfree.util.Log;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -497,7 +500,6 @@ public class PacienteServiceImpl implements PacienteService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void eliminarContacto(Long contactoId) {
         this.pacienteRepository.eliminarContacto(contactoId);
-
     }
 
     @Override
@@ -521,5 +523,41 @@ public class PacienteServiceImpl implements PacienteService {
             list.add(resp);
         }
         return list;
+    }
+
+    @Override
+    public void agregarDiagnosticoMedico(Authentication userDetails, Long pacienteId, DiagnosticoRequest diagnosticoRequest) {
+        if(diagnosticoRequest.getSintomas().isEmpty())
+            throw new NotDataFoundException("NO existe listado de sintomas");
+
+        MuUsuario medico = (MuUsuario)userDetails.getPrincipal();
+
+        Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId, EstadoEnum.ACTIVO).orElseThrow(() -> new NotDataFoundException("No existe el paciente registrado"));
+        ControlDiario controlDiario = ControlDiario.builder()
+                .paciente(paciente)
+                .recomendacion(diagnosticoRequest.getRecomendacion())
+                .primerControl(!this.controlDiarioRepository.existsByPrimerControlTrueAndPaciente(paciente))
+                .build();
+
+        this.controlDiarioRepository.save(controlDiario);
+
+        log.info("Registrando sintomas...");
+        for(SintomaRequest sintomaRequest: diagnosticoRequest.getSintomas()){
+            Sintoma sintoma = this.sintomaRepository.findByIdAndEstado(sintomaRequest.getId(), EstadoEnum.ACTIVO).orElseThrow(() -> new NotDataFoundException("No se encontro el sintoma que quiere registrar"));
+            this.controlDiarioSintomaRepository.save(ControlDiarioSintoma.builder()
+                    .controlDiario(controlDiario)
+                    .respuesta(sintomaRequest.getRespuesta())
+                    .observacion(sintomaRequest.getObservacion())
+                    .sintoma(sintoma).build());
+        }
+
+        log.info("Obteniendo enfermedad...");
+        Enfermedad enfermedad = this.enfermedadRepository.findByIdAndEstado(diagnosticoRequest.getEnfermedadId(), EstadoEnum.ACTIVO).orElseThrow(() -> new NotDataFoundException("No se encontro la enfermedad que quiere reportar"));
+
+        log.info("Registrando diagnostico...");
+        Diagnostico diagnostico = Diagnostico.builder().controlDiario(controlDiario).enfermedad(enfermedad).estadoDiagnostico(diagnosticoRequest.getClasificacion()).observacion(diagnosticoRequest.getRecomendacion()).medico(medico).departamento(paciente.getFamilia().getDepartamento()).municipio(paciente.getFamilia().getMunicipio()).centroSalud(paciente.getFamilia().getCentroSalud()).build();
+        this.diagnosticoRepository.save(diagnostico);
+        paciente.setDiagnostico(diagnostico);
+        this.pacienteRepository.save(paciente);
     }
 }

@@ -16,6 +16,10 @@ import java.util.HashMap;
 
 @Slf4j
 public class JasperReporUtil {
+
+
+    public static final String ReporteFichaEpidemiologica = "reports/ficha.jrxml";
+
     public static byte[] generarReporte(HashMap parametros, Collection<?> lista, String path) {
         byte[] byteArray = null;
         try {
