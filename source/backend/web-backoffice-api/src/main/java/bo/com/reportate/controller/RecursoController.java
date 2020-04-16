@@ -1,7 +1,6 @@
 package bo.com.reportate.controller;
 
 import bo.com.reportate.exception.OperationException;
-import bo.com.reportate.model.MuRecurso;
 import bo.com.reportate.model.dto.RecursoDto;
 import bo.com.reportate.service.RecursoService;
 import bo.com.reportate.util.CustomErrorType;
@@ -12,11 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
-import static org.springframework.http.ResponseEntity.*;
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.ok;
 
 @Slf4j
 @RestController

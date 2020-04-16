@@ -72,6 +72,12 @@ public interface DepartamentoUsuarioRepository extends JpaRepository<Departament
     @Query(" UPDATE DepartamentoUsuario du SET du.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE du.muUsuario =:usuario AND du.departamento.id NOT IN(:departamentos)")
     void eliminaDepartamentosNoAsignados(@Param("usuario") MuUsuario muUsuario, @Param("departamentos") List<Long> departamentoIds);
 
+    @Modifying
+    @Query(" UPDATE DepartamentoUsuario du SET du.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO " +
+            "WHERE du.muUsuario =:usuario ")
+    void eliminaDepartamentosAsignados(@Param("usuario") MuUsuario muUsuario);
+
+
     @Query(" SELECT d FROM DepartamentoUsuario du INNER JOIN du.departamento d" +
             " WHERE du.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO" +
             " AND d.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO" +

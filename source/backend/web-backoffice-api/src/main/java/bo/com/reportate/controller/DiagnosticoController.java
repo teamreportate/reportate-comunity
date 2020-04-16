@@ -2,14 +2,12 @@ package bo.com.reportate.controller;
 
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
-import bo.com.reportate.model.Diagnostico;
 import bo.com.reportate.model.dto.DiagnosticoDto;
 import bo.com.reportate.model.dto.response.*;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.service.DiagnosticoResumenEstadoService;
 import bo.com.reportate.service.DiagnosticoResumenTotalEstadoService;
 import bo.com.reportate.service.DiagnosticoService;
-import bo.com.reportate.service.ParamService;
 import bo.com.reportate.util.CustomErrorType;
 import bo.com.reportate.utils.DateUtil;
 import bo.com.reportate.web.ActualizacionDiagnosticoRequest;
@@ -48,7 +46,6 @@ import static org.springframework.http.ResponseEntity.ok;
 @Tag(name = "diagnostico", description = "API de diagnosticos")
 public class DiagnosticoController {
     @Autowired private DiagnosticoService diagnosticoService;
-    @Autowired private ParamService paramService;
     @Autowired private DiagnosticoResumenEstadoService diagnosticoResumenEstadoService;
     @Autowired private DiagnosticoResumenTotalEstadoService diagnosticoResumenTotalEstadoService;
 

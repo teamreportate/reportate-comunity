@@ -1,22 +1,15 @@
 package bo.com.reportate.repository;
 
-import java.util.Date;
-import java.util.List;
-
+import bo.com.reportate.model.*;
+import bo.com.reportate.model.dto.response.ItemDto;
+import bo.com.reportate.model.dto.response.ResumenDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
-import bo.com.reportate.model.CentroSalud;
-import bo.com.reportate.model.Departamento;
-import bo.com.reportate.model.DiagnosticosResumenDiario;
-import bo.com.reportate.model.DiagnosticosResumenTotalDiario;
-import bo.com.reportate.model.Enfermedad;
-import bo.com.reportate.model.Municipio;
-import bo.com.reportate.model.dto.response.ItemDto;
-import bo.com.reportate.model.dto.response.ResumenDto;
-import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
+import java.util.Date;
+import java.util.List;
 
 public interface DiagnosticoResumenTotalDiarioRepository extends JpaRepository<DiagnosticosResumenTotalDiario, Long> , PagingAndSortingRepository<DiagnosticosResumenTotalDiario, Long>{
 	@Query("SELECT d " +

@@ -1,9 +1,11 @@
 package bo.com.reportate.repository;
 
-import bo.com.reportate.model.*;
+import bo.com.reportate.model.ControlDiario;
+import bo.com.reportate.model.ControlDiarioPais;
+import bo.com.reportate.model.Paciente;
+import bo.com.reportate.model.Pais;
 import bo.com.reportate.model.dto.PaisVisitadoDto;
 import bo.com.reportate.model.enums.EstadoEnum;
-import org.hibernate.validator.constraints.ParameterScriptAssert;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

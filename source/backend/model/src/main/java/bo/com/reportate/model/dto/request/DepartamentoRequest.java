@@ -1,13 +1,10 @@
 package bo.com.reportate.model.dto.request;
 
-import bo.com.reportate.model.Departamento;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Created by :MC4

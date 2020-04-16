@@ -11,10 +11,15 @@ import bo.com.reportate.util.CustomErrorType;
 import bo.com.reportate.utils.DateUtil;
 import bo.com.reportate.utils.FormatUtil;
 import bo.com.reportate.utils.StringUtil;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +50,26 @@ public class UsuarioController {
     public ResponseEntity<List<UsuarioDto>> listar() {
         try {
             return ok(this.usuarioService.listar());
+        } catch (OperationException e) {
+            log.error("Error al listar usuarios habilitados");
+            return CustomErrorType.badRequest("Listar Usuarios", e.getMessage());
+        } catch (Exception e) {
+            log.error("Error no controlado al listar Usuarios habilitados", e);
+            return CustomErrorType.badRequest("Listar Usuarios", "Ocurrió un error interno al listar los usuarios.");
+        }
+    }
+
+    @RequestMapping(value = "/usuarios-pacientes/{page}/{size}",produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    public ResponseEntity<Page<UsuarioDto>> listarUsuarioPacientes(
+            @AuthenticationPrincipal Authentication authentication,
+            @Parameter(description = "Indice de página", required = true)
+            @PathVariable("page") Integer page,
+            @Parameter(description = "Tamaño de página", required = true)
+            @PathVariable("size") Integer size) {
+        try {
+            log.info("El usuario {} esta consultando el listado de clientes", authentication.getName());
+            Pageable pageable = PageRequest.of(page, size);
+            return ok(this.usuarioService.listarUsuarioPacientes(pageable));
         } catch (OperationException e) {
             log.error("Error al listar usuarios habilitados");
             return CustomErrorType.badRequest("Listar Usuarios", e.getMessage());

@@ -1,6 +1,5 @@
 package bo.com.reportate.config;
 
-import bo.com.reportate.model.DiagnosticoSintoma;
 import bo.com.reportate.model.dto.PacienteEmailDto;
 import bo.com.reportate.model.dto.response.DiagnosticoSintomaResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,12 +58,12 @@ public class MailContentBuilder {
         return this.templateEngine.process("mailTemplate2", ctx);
     }
 
-    public String notidicacionMedico(PacienteEmailDto paciente, List<DiagnosticoSintomaResponse> sintomas) {
+    public String notidicacionMedico(PacienteEmailDto paciente, List<DiagnosticoSintomaResponse> sintomas, String imageResourceName) {
         // Prepare the evaluation context
         final Context ctx = new Context();
         ctx.setVariable("paciente", paciente);
         ctx.setVariable("sintomas", sintomas);
-//        ctx.setVariable("imageResourceName", imageResourceName); // so that we can reference it from HTML
+        ctx.setVariable("imageResourceName", imageResourceName); // so that we can reference it from HTML
         return this.templateEngine.process("mailTemplate3", ctx);
     }
 

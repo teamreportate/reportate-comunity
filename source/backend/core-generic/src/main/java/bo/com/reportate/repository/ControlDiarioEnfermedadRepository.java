@@ -1,6 +1,9 @@
 package bo.com.reportate.repository;
 
-import bo.com.reportate.model.*;
+import bo.com.reportate.model.ControlDiario;
+import bo.com.reportate.model.ControlDiarioEnfermedad;
+import bo.com.reportate.model.Enfermedad;
+import bo.com.reportate.model.Paciente;
 import bo.com.reportate.model.dto.response.EnfermedadResponse;
 import bo.com.reportate.model.enums.EstadoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;

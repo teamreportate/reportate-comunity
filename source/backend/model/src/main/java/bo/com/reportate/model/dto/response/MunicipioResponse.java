@@ -1,6 +1,5 @@
 package bo.com.reportate.model.dto.response;
 
-import bo.com.reportate.model.Municipio;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

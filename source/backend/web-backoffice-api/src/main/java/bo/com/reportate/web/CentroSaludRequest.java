@@ -1,6 +1,5 @@
 package bo.com.reportate.web;
 
-import bo.com.reportate.model.CentroSalud;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

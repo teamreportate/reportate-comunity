@@ -3,7 +3,6 @@ package bo.com.reportate.controller;
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.Departamento;
-import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.dto.DepartamentoDto;
 import bo.com.reportate.model.dto.DepartamentoUsuarioDto;
 import bo.com.reportate.model.dto.MunicipioDto;
@@ -21,7 +20,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

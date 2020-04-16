@@ -1,12 +1,9 @@
 package bo.com.reportate.service;
 
-import bo.com.reportate.model.DiagnosticoSintoma;
-import bo.com.reportate.model.Paciente;
 import bo.com.reportate.model.dto.PacienteEmailDto;
 import bo.com.reportate.model.dto.response.DiagnosticoSintomaResponse;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by :MC4

@@ -7,12 +7,10 @@ import bo.com.reportate.model.dto.response.MapResponse;
 import bo.com.reportate.model.dto.response.NivelValoracionDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 

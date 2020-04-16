@@ -1,13 +1,13 @@
 package bo.com.reportate.model.dto.response;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import bo.com.reportate.utils.DateUtil;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.io.Serializable;
+import java.util.Date;
 
 @Getter @Setter @NoArgsConstructor @Data
 public class NivelValoracionDto implements Serializable{

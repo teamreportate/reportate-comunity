@@ -1,11 +1,5 @@
 package bo.com.reportate.repository;
 
-import bo.com.reportate.model.Departamento;
-import bo.com.reportate.model.Diagnostico;
-import bo.com.reportate.model.Enfermedad;
-
-import bo.com.reportate.model.Municipio;
-import bo.com.reportate.model.Paciente;
 import bo.com.reportate.model.*;
 import bo.com.reportate.model.dto.DiagnosticoDto;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
@@ -14,7 +8,6 @@ import bo.com.reportate.model.dto.response.NivelValoracionDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,7 +15,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;

@@ -2,9 +2,7 @@ package bo.com.reportate.repository;
 
 import bo.com.reportate.model.ControlDiario;
 import bo.com.reportate.model.Paciente;
-import bo.com.reportate.model.dto.response.MovilControlDiario;
 import bo.com.reportate.model.enums.EstadoEnum;
-import bo.com.reportate.service.EmailService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

@@ -8,7 +8,6 @@ import bo.com.reportate.service.ReportesService;
 import bo.com.reportate.sign.utils.FileUtil;
 import bo.com.reportate.utils.DateUtil;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.jasperreports.engine.JasperReport;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 

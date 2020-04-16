@@ -1,14 +1,9 @@
 package bo.com.reportate.model.dto.response;
 
+import lombok.*;
+
 import java.io.Serializable;
 import java.util.Date;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Data
 public class ResumenDto implements Serializable{

@@ -8,14 +8,11 @@ import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.repository.SintomaRepository;
 import bo.com.reportate.service.SintomaService;
 import bo.com.reportate.util.ValidationUtil;
-import bo.com.reportate.utils.FormatUtil;
-import org.jfree.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

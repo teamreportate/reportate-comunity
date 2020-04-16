@@ -1,7 +1,5 @@
 package bo.com.reportate.service.impl;
 
-import bo.com.reportate.model.DiagnosticoSintoma;
-import bo.com.reportate.model.Paciente;
 import bo.com.reportate.model.dto.PacienteEmailDto;
 import bo.com.reportate.model.dto.response.DiagnosticoSintomaResponse;
 import bo.com.reportate.service.EmailService;
@@ -10,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**

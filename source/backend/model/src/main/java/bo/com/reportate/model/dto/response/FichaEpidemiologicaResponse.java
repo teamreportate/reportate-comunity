@@ -1,13 +1,8 @@
 package bo.com.reportate.model.dto.response;
 
-import bo.com.reportate.model.Familia;
 import bo.com.reportate.model.dto.DiagnosticoDto;
 import bo.com.reportate.model.dto.PacienteDto;
-import bo.com.reportate.model.dto.PaisDto;
 import bo.com.reportate.model.dto.PaisVisitadoDto;
-import bo.com.reportate.model.dto.request.EnfermedadRequest;
-import bo.com.reportate.model.dto.request.PaisRequest;
-import bo.com.reportate.model.dto.request.SintomaRequest;
 import bo.com.reportate.model.enums.GeneroEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

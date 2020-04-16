@@ -8,11 +8,8 @@ import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
 import bo.com.reportate.model.dto.response.DiagnosticoSintomaResponse;
 import bo.com.reportate.model.dto.response.MapResponse;
 import bo.com.reportate.model.dto.response.NivelValoracionDto;
-import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
-import bo.com.reportate.model.enums.EstadoEnum;
-import bo.com.reportate.model.enums.GeneroEnum;
 import bo.com.reportate.model.enums.Process;
-import bo.com.reportate.model.enums.TipoUsuarioEnum;
+import bo.com.reportate.model.enums.*;
 import bo.com.reportate.repository.*;
 import bo.com.reportate.service.DiagnosticoService;
 import bo.com.reportate.service.LogService;
@@ -27,7 +24,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -91,12 +87,14 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
 					.orElseThrow(() -> new NotDataFoundException("No se encontro el municipio seleccionado")));
 
 		} else {
+			if(!departamentos.isEmpty())
 			municipios.addAll(this.municipioUsuarioRepository.listarMunicipiosAsignados(usuario, departamentos));
 		}
 		if (centroSaludId > 0L) {
 			centroSaluds.add(this.centroSaludRepository.findByIdAndEstado(municipioId, EstadoEnum.ACTIVO)
 					.orElseThrow(() -> new NotDataFoundException("No se encontro el centro de salud seleccionad")));
 		} else {
+			if(!municipios.isEmpty())
 			centroSaluds.addAll(this.centroSaludUsuarioRepository.listarCentrosSaludAsignados(usuario, municipios));
 		}
 		if (enfermedadId > 0L) {
@@ -111,6 +109,23 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
 		} else {
 			diagnosticoEnums.add(estadoDiagnostico);
 		}
+		if(departamentos.isEmpty()){
+			throw new OperationException("No tiene permisos para acceder a la información solicitada");
+		}
+		if(municipios.isEmpty()){
+			throw new OperationException("No tiene permisos para acceder a la información solicitada");
+		}
+
+		if(centroSaluds.isEmpty()){
+			throw new OperationException("No tiene permisos para acceder a la información solicitada");
+		}
+		if(enfermedads.isEmpty()){
+			throw new OperationException("No existen enfermedades activos para buscar");
+		}
+		if(diagnosticoEnums.isEmpty()){
+			throw new OperationException("No existen criterios de clasificación de diagnosticos para buscar");
+		}
+
 		if (!StringUtil.isEmptyOrNull(nomprePaciente)) {
 			return diagnosticoRepository.listarDiagnostico(from, to, departamentos, municipios, centroSaluds,
 					diagnosticoEnums, enfermedads, nomprePaciente.toLowerCase(), pageable);
@@ -153,12 +168,14 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
 					.orElseThrow(() -> new NotDataFoundException("No se encontro el municipio seleccionado")));
 
 		} else {
+			if(!departamentos.isEmpty())
 			municipios.addAll(this.municipioUsuarioRepository.listarMunicipiosAsignados(usuario, departamentos));
 		}
 		if (centroSaludId > 0L) {
 			centroSaluds.add(this.centroSaludRepository.findByIdAndEstado(municipioId, EstadoEnum.ACTIVO)
 					.orElseThrow(() -> new NotDataFoundException("No se encontro el centro de salud seleccionad")));
 		} else {
+			if(!municipios.isEmpty())
 			centroSaluds.addAll(this.centroSaludUsuarioRepository.listarCentrosSaludAsignados(usuario, municipios));
 		}
 		if (enfermedadId > 0L) {
@@ -178,7 +195,23 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
 			generoEnums.addAll(Arrays.asList(GeneroEnum.values()));
 		} else {
 			generoEnums.add(genero);
-		};
+		}
+		if(departamentos.isEmpty()){
+			throw new OperationException("No tiene permisos para acceder a la información solicitada");
+		}
+		if(municipios.isEmpty()){
+			throw new OperationException("No tiene permisos para acceder a la información solicitada");
+		}
+
+		if(centroSaluds.isEmpty()){
+			throw new OperationException("No tiene permisos para acceder a la información solicitada");
+		}
+		if(enfermedads.isEmpty()){
+			throw new OperationException("No existen enfermedades activos para buscar");
+		}
+		if(diagnosticoEnums.isEmpty()){
+			throw new OperationException("No existen criterios de clasificación de diagnosticos para buscar");
+		}
 		return diagnosticoRepository.cantidadDiagnosticoPorFiltros(departamentos,
 				municipios, centroSaluds, diagnosticoEnums, enfermedads, generoEnums, edadInicial, edadFinal);
 	}
@@ -214,7 +247,6 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
         if (municipioId > 0L) {
             municipios.add(this.municipioRepository.findByIdAndEstado(municipioId, EstadoEnum.ACTIVO)
                     .orElseThrow(() -> new NotDataFoundException("No se encontro el municipio seleccionado")));
-
         } else {
             municipios.addAll(this.municipioUsuarioRepository.listarMunicipiosAsignados(usuario, departamentos));
         }
@@ -236,6 +268,22 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
         } else {
             diagnosticoEnums.add(estadoDiagnostico);
         }
+        if(departamentos.isEmpty()){
+        	throw new OperationException("No tiene permisos para acceder a la información solicitada");
+		}
+		if(municipios.isEmpty()){
+			throw new OperationException("No tiene permisos para acceder a la información solicitada");
+		}
+
+		if(centroSaluds.isEmpty()){
+			throw new OperationException("No tiene permisos para acceder a la información solicitada");
+		}
+		if(enfermedads.isEmpty()){
+			throw new OperationException("No existen enfermedades activos para buscar");
+		}
+		if(diagnosticoEnums.isEmpty()){
+			throw new OperationException("No existen criterios de clasificación de diagnosticos para buscar");
+		}
         return diagnosticoRepository.listarPacientesParaMapa(from, to, departamentos, municipios, centroSaluds, diagnosticoEnums, enfermedads);
     }
 
@@ -244,10 +292,10 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
 		MuUsuario usuario = (MuUsuario) authentication.getPrincipal();
 		ValidationUtil.throwExceptionIfInvalidNumber("diagnostico",diagnosticoId,true ,0L);
 		ValidationUtil.throwExceptionIfInvalidText("observación", observacion, false, 4000);
-//		if(!usuario.getTipoUsuario().equals(TipoUsuarioEnum.MEDICO)){
-//			log.error("El usuario {} no es medico para actualizar el estado de un diagnostico", usuario.getUsername());
-//			throw new OperationException("Esta opción sólo está permitido para médicos.");
-//		}
+		if(!usuario.getTipoUsuario().equals(TipoUsuarioEnum.MEDICO)){
+			log.error("El usuario {} no es medico para actualizar el estado de un diagnostico", usuario.getUsername());
+			throw new OperationException("Esta opción sólo está permitido para médicos.");
+		}
 		Diagnostico diagnostico = this.diagnosticoRepository.findByIdAndEstado(diagnosticoId,EstadoEnum.ACTIVO).orElseThrow(()->new OperationException("No se encontró el diagnóstico"));
 		log.info("El usuario [{}] esta procediendo a actualizar diagnostico del paciente [{}] a estado {} ", usuario.getUsername(), diagnostico.getControlDiario().getPaciente().getNombre(), estadoDiagnosticoEnum);
 		logService.info(Process.DIAGNOSTICO,"El usuario [{}] esta procediendo a actualizar diagnostico del paciente [{}] a estado {} ", usuario.getUsername(), diagnostico.getControlDiario().getPaciente().getNombre(), estadoDiagnosticoEnum);

@@ -1,40 +1,23 @@
 package bo.com.reportate.service.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
-import bo.com.reportate.model.dto.response.MapResponse;
+import bo.com.reportate.exception.NotDataFoundException;
+import bo.com.reportate.model.*;
+import bo.com.reportate.model.dto.response.ItemDto;
+import bo.com.reportate.model.dto.response.ResumenDto;
+import bo.com.reportate.model.dto.response.TablaResponse;
+import bo.com.reportate.model.enums.EstadoEnum;
+import bo.com.reportate.repository.*;
+import bo.com.reportate.service.DiagnosticoResumenTotalEstadoService;
+import bo.com.reportate.util.ValidationUtil;
+import bo.com.reportate.utils.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import bo.com.reportate.exception.NotDataFoundException;
-import bo.com.reportate.model.CentroSalud;
-import bo.com.reportate.model.Departamento;
-import bo.com.reportate.model.Enfermedad;
-import bo.com.reportate.model.MuUsuario;
-import bo.com.reportate.model.Municipio;
-import bo.com.reportate.model.dto.response.ItemDto;
-import bo.com.reportate.model.dto.response.ResumenDto;
-import bo.com.reportate.model.dto.response.TablaResponse;
-import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
-import bo.com.reportate.model.enums.EstadoEnum;
-import bo.com.reportate.repository.CentroSaludRepository;
-import bo.com.reportate.repository.CentroSaludUsuarioRepository;
-import bo.com.reportate.repository.DepartamentoRepository;
-import bo.com.reportate.repository.DepartamentoUsuarioRepository;
-import bo.com.reportate.repository.DiagnosticoResumenDiarioRepository;
-import bo.com.reportate.repository.DiagnosticoResumenTotalDiarioRepository;
-import bo.com.reportate.repository.EnfermedadRepository;
-import bo.com.reportate.repository.MunicipioRepository;
-import bo.com.reportate.repository.MunicipioUsuarioRepository;
-import bo.com.reportate.service.DiagnosticoResumenEstadoService;
-import bo.com.reportate.service.DiagnosticoResumenTotalEstadoService;
-import bo.com.reportate.util.ValidationUtil;
-import bo.com.reportate.utils.DateUtil;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class DiagnosticoResumenTotalEstadoServiceImpl implements DiagnosticoResumenTotalEstadoService{

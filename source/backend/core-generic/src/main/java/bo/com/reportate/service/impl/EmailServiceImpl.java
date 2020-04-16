@@ -3,8 +3,6 @@ package bo.com.reportate.service.impl;
 import bo.com.reportate.cache.CacheService;
 import bo.com.reportate.config.MailContentBuilder;
 import bo.com.reportate.model.Constants;
-import bo.com.reportate.model.DiagnosticoSintoma;
-import bo.com.reportate.model.Paciente;
 import bo.com.reportate.model.dto.PacienteEmailDto;
 import bo.com.reportate.model.dto.response.DiagnosticoSintomaResponse;
 import bo.com.reportate.service.EmailService;
@@ -20,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.internet.InternetAddress;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by :MC4
@@ -38,8 +35,6 @@ public class EmailServiceImpl implements EmailService {
     @Autowired private JavaMailSender emailSender;
     @Autowired private CacheService cacheService;
     @Autowired private MailContentBuilder mailContentBuilder;
-    @Autowired
-    private ApplicationContext applicationContext;
 
     public void sendSimpleMessage(String to, String subject, String text) {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
@@ -51,7 +46,6 @@ public class EmailServiceImpl implements EmailService {
 
             String content = mailContentBuilder.build(text);
             messageHelper.setText(content, true);
-            log.info("Mensaje enviado correctamente.");
         };
         try {
             emailSender.send(messagePreparator);
@@ -85,9 +79,9 @@ public class EmailServiceImpl implements EmailService {
             messageHelper.setFrom(new InternetAddress(cacheService.getStringParam(Constants.Parameters.MAIL_FROM), cacheService.getStringParam(Constants.Parameters.MAIL_FROM)));
             messageHelper.setReplyTo(new InternetAddress(cacheService.getStringParam(Constants.Parameters.MAIL_FROM), false));
             messageHelper.setSubject(subject);
-            String message = mailContentBuilder.notidicacionMedico(paciente, sintomas);
+            String message = mailContentBuilder.notidicacionMedico(paciente, sintomas, "banner");
             messageHelper.setText(message,true);
-//            messageHelper.addInline("bannerreportate", new ClassPathResource(BANNER_PNG) );
+            messageHelper.addInline("banner", new ClassPathResource(BANNER_PNG) );
         };
         emailSender.send(messagePreparator);
     }

@@ -4,7 +4,6 @@ import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.MuUsuario;
 import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.MunicipioUsuario;
-import bo.com.reportate.model.dto.DepartamentoUsuarioDto;
 import bo.com.reportate.model.dto.MunicipioUsuarioDto;
 import bo.com.reportate.model.enums.EstadoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -73,6 +72,12 @@ public interface MunicipioUsuarioRepository extends JpaRepository<MunicipioUsuar
     List<MunicipioUsuarioDto> listarMunicipiosNoAsignados(@Param("userId") Long userId);
 
     @Modifying
-    @Query(" UPDATE MunicipioUsuario du SET du.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE du.muUsuario =:usuario AND du.municipio.id NOT IN(:municipios)")
+    @Query(" UPDATE MunicipioUsuario du SET du.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO " +
+            "WHERE du.muUsuario =:usuario AND du.municipio.id NOT IN(:municipios)")
     void eliminaMunicipiosNoAsignados(@Param("usuario") MuUsuario muUsuario, @Param("municipios") List<Long> municipiosIds);
+
+    @Modifying
+    @Query(" UPDATE MunicipioUsuario du SET du.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO " +
+            "WHERE du.muUsuario =:usuario ")
+    void eliminaMunicipiosAsignados(@Param("usuario") MuUsuario muUsuario);
 }

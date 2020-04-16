@@ -24,8 +24,6 @@ import bo.com.reportate.util.ValidationUtil;
 import bo.com.reportate.utils.DateUtil;
 import bo.com.reportate.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.implementation.bytecode.Throw;
-import org.jfree.util.Log;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;

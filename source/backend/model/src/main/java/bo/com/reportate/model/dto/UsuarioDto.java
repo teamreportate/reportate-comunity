@@ -1,9 +1,6 @@
 package bo.com.reportate.model.dto;
 
 import bo.com.reportate.model.MuUsuario;
-import bo.com.reportate.model.dto.request.CentroSaludRequest;
-import bo.com.reportate.model.dto.request.DepartamentoRequest;
-import bo.com.reportate.model.dto.request.MunicipioRequest;
 import bo.com.reportate.model.enums.AuthTypeEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.TipoUsuarioEnum;

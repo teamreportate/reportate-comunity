@@ -1,7 +1,6 @@
 package bo.com.reportate.service;
 
 import bo.com.reportate.model.Municipio;
-import bo.com.reportate.model.MunicipioUsuario;
 import bo.com.reportate.model.dto.MunicipioDto;
 import bo.com.reportate.model.dto.MunicipioUsuarioDto;
 
