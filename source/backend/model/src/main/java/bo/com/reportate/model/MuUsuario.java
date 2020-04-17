@@ -56,6 +56,9 @@ public class MuUsuario extends AbstractAuditableEntity implements UserDetails {
     @Column(name = "PASSWORD_GENERADO")
     private Boolean passwordGenerado = false;
 
+    @Column(name = "CONTADOR_INTENTO_AUTENTICACION", nullable = true)
+    private Integer contadorIntentoAutenticacion = 0;
+
     @Transient
     private String token;
     @Transient

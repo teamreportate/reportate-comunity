@@ -33,39 +33,19 @@ export class AddContactoComponent  extends ClicComponent  implements OnInit {
     moment.locale('es-BO');
 
   }
-/*
-    "id": 0,
-    "nombre": "string",
-    "edad": 0,
-    "genero": "FEMENINO",
-    "gestacion": true,
-    "tiempoGestacion": 0,
-    "ocupacion": "string",
-    "ci": "string",
-    "fechaNacimiento": "string",
-    "seguro": "string",
-    "codigoSeguro": "string"
- */
   ngOnInit() {
     this.form = this.builder.group({
       id: new FormControl(this.data.id),
       nombre: new FormControl(this.data.nombre, Validators.compose([Validators.required, Validators.maxLength(100)])),
       edad: new FormControl(this.data.edad, Validators.compose([Validators.required, Validators.maxLength(100)])),
       genero: new FormControl(this.data.genero, Validators.compose([Validators.required])),
-      // telefono: new FormControl(this.data.telefono, Validators.compose([Validators.required])),
       gestacion: new FormControl(this.data.gestacion, Validators.compose([])),
       tiempoGestacion: new FormControl(this.data.tiempoGestacion, Validators.compose([])),
-      ocupacion: new FormControl(this.data.ocupacion, Validators.compose([Validators.required])),
-      ci: new FormControl(this.data.ci, Validators.compose([Validators.required])),
-      fechaNacimiento: new FormControl(new Date(this.data.fechaNacimiento), Validators.compose([Validators.required])),
+      ocupacion: new FormControl(this.data.ocupacion, Validators.compose([])),
+      ci: new FormControl(this.data.ci, Validators.compose([])),
+      fechaNacimiento: new FormControl(new Date(this.data.fechaNacimiento), Validators.compose([])),
       seguro: new FormControl(this.data.seguro, Validators.compose([])),
       codigoSeguro: new FormControl(this.data.codigoSeguro, Validators.compose([])),
-
-      // departamento: new FormControl(this.data.departamento, Validators.compose([Validators.required])),
-      // municipio: new FormControl(this.data.municipio, Validators.compose([Validators.required])),
-      // ciudad: new FormControl(this.data.ciudad, Validators.compose([Validators.required])),
-      // direccion: new FormControl(this.data.direccion, Validators.compose([Validators.required])),
-      // ubicacion: new FormControl(this.data.ubicacion, Validators.compose([Validators.required])),
     });
   }
   close(): void {

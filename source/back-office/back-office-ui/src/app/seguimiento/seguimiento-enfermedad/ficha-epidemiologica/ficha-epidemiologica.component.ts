@@ -30,7 +30,6 @@ interface Food {
 export class FichaEpidemiologicaComponent extends ClicComponent implements OnInit {
   idPaciente = this.route.snapshot.paramMap.get('idPaciente');
   public form: FormGroup;
-  private message: string;
   listEnfermedadesBase = [];
   listPaisesVisitados = [];
   listDiagnosticos = [];

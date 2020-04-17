@@ -135,11 +135,15 @@ public class PacienteServiceImpl implements PacienteService {
         if (this.pacienteRepository.existsByFamiliaAndNombreIgnoreCaseAndEstado(paciente.getFamilia(), nombre, EstadoEnum.ACTIVO)) {
             throw new OperationException("Ya existe un miembro de tu familia con el nombre: " + nombre);
         }
+        Boolean gestacionAux = false;
+        if(genero.equals(GeneroEnum.MASCULINO)){
+            gestacionAux = false;
+        }
         Paciente contacto = Paciente.builder()
                 .nombre(nombre)
                 .edad(edad)
                 .genero(genero)
-                .gestacion(gestacion)
+                .gestacion(gestacionAux)
                 .tiempoGestacion(tiempoGestacion)
                 .ocupacion(ocupacion)
                 .fechaNacimiento(fechNacimient)

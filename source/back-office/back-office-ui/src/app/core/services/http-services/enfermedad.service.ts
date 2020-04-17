@@ -24,5 +24,10 @@ export class EnfermedadService {
     return this.httpClient.get<HttpResponse<any>>(this.endPoint, {observe: 'response'});
   }
 
+  getEnfermedadesDeBase(): Observable<HttpResponse<any>> {
+    this.endPoint = Constantes.baseUri + Constants.enfermedadApi + '/enfermedades-base';
+    return this.httpClient.get<HttpResponse<any>>(this.endPoint, {observe: 'response'});
+  }
+
 
 }

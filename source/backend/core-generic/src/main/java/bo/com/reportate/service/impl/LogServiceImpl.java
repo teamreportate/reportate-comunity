@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -100,8 +101,7 @@ public class LogServiceImpl implements LogService {
     }
 
     @Override
-    public List<ProcessDto> listProcesos() {
-        List<ProcessDto> listProcess = new ArrayList<>();
-       return listProcess;
+    public List<Process> listProcesos() {
+       return Arrays.asList(Process.values());
     }
 }

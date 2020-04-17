@@ -87,6 +87,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
                     .passwordGenerado(false)
                     .authType(AuthTypeEnum.SISTEMA)
                     .tipoUsuario(TipoUsuarioEnum.ADMINISTRATIVO)
+                    .contadorIntentoAutenticacion(0)
                     .build();
             userAdmin = this.usuarioRepository.save(userAdmin);
 
@@ -211,6 +212,28 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
 
         parametro = new MuParametro(null, Constants.Parameters.CANTIDAD_MAXIMA_CONTROL, "Parámetro que indica la cantidad máxima de veces que un paciente puede realizar controles ",
                 null, null, new BigDecimal("2"), null, ParamTipoDato.NUMERICO, false,null, diagnostico);
+        this.paramService.saveParametro(parametro);
+
+        MuGrupoParametro jwt = this.grupoParametroRepository.findByGrupo("Parámetros de JWT").orElse(MuGrupoParametro.builder()
+                .grupo("Parámetros de JWT")
+                .descripcion("Parámetros de JWT")
+                .build());
+        this.grupoParametroRepository.save(jwt);
+        parametro = new MuParametro(null, Constants.Parameters.JWT_TIEMPO_VALIDES_BACKEND, "Tiempo de validez del token para la web de BACK-END en horas.", null, null, new BigDecimal("8"), null, ParamTipoDato.NUMERICO, false,null, jwt);
+        this.paramService.saveParametro(parametro);
+
+        parametro = new MuParametro(null, Constants.Parameters.JWT_TIEMPO_VALIDES_FRONTEND, "Tiempo de validez del token para la web de FRONT-END en días", null, null, new BigDecimal("7"), null, ParamTipoDato.NUMERICO, false,null, jwt);
+        this.paramService.saveParametro(parametro);
+
+        parametro = new MuParametro(null, Constants.Parameters.JWT_LLAVE_PRIVADA, "Llave privada para cifrado de JWT", Crypt.getInstance().crypt("changeit"), null, null, null, ParamTipoDato.CADENA, true,null, jwt);
+        this.paramService.saveParametro(parametro);
+
+        MuGrupoParametro seguridad = this.grupoParametroRepository.findByGrupo("Parámetros de seguridad").orElse(MuGrupoParametro.builder()
+                .grupo("Parámetros de seguridad")
+                .descripcion("Parámetros de seguridad")
+                .build());
+        this.grupoParametroRepository.save(seguridad);
+        parametro = new MuParametro(null, Constants.Parameters.CANTIDAD_INTENTO_AUTENTICACION, "Cantidad de Intentos de autenticación antes de que se bloque el usuario", null, null, new BigDecimal("3"), null, ParamTipoDato.NUMERICO, false,null, seguridad);
         this.paramService.saveParametro(parametro);
 
         log.info("************************* Fin Cargando parametros *************************");

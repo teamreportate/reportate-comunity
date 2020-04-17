@@ -1,7 +1,9 @@
 package bo.com.reportate.controller;
 
+import bo.com.reportate.cache.CacheService;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.jwt.JwtTokenProvider;
+import bo.com.reportate.model.Constants;
 import bo.com.reportate.model.MuUsuario;
 import bo.com.reportate.model.enums.AuthTypeEnum;
 import bo.com.reportate.model.enums.Process;
@@ -46,20 +48,28 @@ public class AuthController {
     @Autowired private TokenService tokenService;
     @Autowired private LogService logService;
     @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired private CacheService cacheService;
 
     @PostMapping(value = "/signin",consumes =  MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity signin(@RequestBody AuthenticationRequest data) {
+    public ResponseEntity signin(
+            @RequestBody AuthenticationRequest data,
+            @RequestHeader Map<String, String> headers) {
         try {
+
+            headers.forEach((key, value) -> {
+                log.info(String.format("Header '%s' = %s", key, value));
+            });
+
             String token = validateAuthData(data);
             Map<Object, Object> model = new HashMap<>();
             model.put("username", data.getUsername());
             model.put("token", token);
+            logService.info(Process.SESION,"El usuario [{}] inició sesión", data.getUsername());
             return ok(model);
-        }catch (OperationException e){
+        }catch (OperationException | BadCredentialsException e){
             return CustomErrorType.badRequest("Login", e.getMessage());
-        }catch (BadCredentialsException e){
-                return CustomErrorType.badRequest("Login", e.getMessage());
-        }catch (Exception e){
+        } catch (Exception e){
+            log.error("Se genero un error al autentificar al usuario {}", data.getUsername(),e);
             return CustomErrorType.serverError(FormatUtil.MSG_TITLE_ERROR, FormatUtil.defaultError());
         }
     }
@@ -71,11 +81,9 @@ public class AuthController {
             model.put("username", data.getName());
             model.put("token", validateAuthDataUserMovil(data));
             return ok(model);
-        }catch (OperationException e){
+        }catch (OperationException | BadCredentialsException e){
             return CustomErrorType.badRequest("Login", e.getMessage());
-        }catch (BadCredentialsException e){
-            return CustomErrorType.badRequest("Login", e.getMessage());
-        }catch (Exception e){
+        } catch (Exception e){
             return CustomErrorType.serverError(FormatUtil.MSG_TITLE_ERROR, FormatUtil.defaultError());
         }
     }
@@ -118,11 +126,30 @@ public class AuthController {
         } else{
             if( authUsuario.getEstadoUsuario() == UserStatusEnum.BLOQUEADO){
                 log.warn("[{}] Usuario bloqueado",data.getUsername());
+                logService.warning(Process.SESION,"[{}] Usuario bloqueado",data.getUsername());
                 throw new OperationException("Cuenta bloqueada. Por favor comuníquese con el aministrador del sistema.");
             }
         }
         if (authUsuario.getAuthType().equals(AuthTypeEnum.SISTEMA)) {
-            return this.dbLogin(data.getUsername(),data.getPassword(), authUsuario);
+            try {
+                String token = this.dbLogin(data.getUsername(), data.getPassword(), authUsuario);
+                authUsuario.setContadorIntentoAutenticacion(0);
+                this.userService.save(authUsuario);
+                return token;
+            }catch (BadCredentialsException e){
+                int contadorActual = 0;
+                if(authUsuario.getContadorIntentoAutenticacion() != null){
+                    contadorActual = authUsuario.getContadorIntentoAutenticacion();
+                }
+                authUsuario.setContadorIntentoAutenticacion(contadorActual+ 1);
+                int cantidadMaxIntento = cacheService.getIntegerParam(Constants.Parameters.CANTIDAD_INTENTO_AUTENTICACION);
+                if(authUsuario.getContadorIntentoAutenticacion() >= cantidadMaxIntento){
+                    authUsuario.setEstadoUsuario(UserStatusEnum.BLOQUEADO);
+                }
+                this.userService.save(authUsuario);
+
+                throw e;
+            }
         }
         throw new OperationException("Tipo de autenticación no válida");
     }
@@ -161,18 +188,22 @@ public class AuthController {
         throw new OperationException("Tipo de autenticación no válida");
     }
 
-
-
     private String dbLogin(String username, String password, MuUsuario authUsuario) {
         try{
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            return jwtTokenProvider.createToken(username, authUsuario);
+            if(authUsuario.getTipoUsuario().equals(TipoUsuarioEnum.PACIENTE)){
+                return jwtTokenProvider.createTokenMovil(username, authUsuario);
+            }else {
+                return jwtTokenProvider.createToken(username, authUsuario);
+            }
         } catch (AuthenticationException e) {
-            log.warn("Las credenciales son incorrectas del usuario: {} ", authUsuario.getUsername());
+            log.warn("Credenciales incorrectas de usuario: {} ", authUsuario.getUsername());
+            logService.warning(Process.SESION,"Credenciales incorrectas de usuario: {} ", authUsuario.getUsername());
             throw new BadCredentialsException("Las credenciales son incorrectas.");
         }catch (Exception e){
-            log.error("Error de autentificacion: ",e);
+            log.error("Error de autentificacion del usuario {} ", authUsuario.getUsername(),e);
+            logService.error(Process.SESION,"Error de autentificacion del usuario {} ", authUsuario.getUsername());
             throw e;
         }
     }

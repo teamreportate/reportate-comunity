@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,12 +25,14 @@ public class LogController {
     @Autowired
     private LogService logService;
 
-    @GetMapping("/listar/{page}/{size}")
-    public ResponseEntity listPageableByDates(@PathVariable("page") Integer page, @PathVariable("size") Integer size,
-                                              @RequestParam("fechaInicio") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_PARAM_URL) Date from,
-                                              @RequestParam("fechaFin") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_PARAM_URL) Date to,
-                                              @RequestParam("q") String q,
-                                              @RequestParam("proceso") String proceso) {
+    @GetMapping(value = "/listar/{page}/{size}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity listPageableByDates(
+            @PathVariable("page") Integer page,
+            @PathVariable("size") Integer size,
+            @RequestParam("from") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_PARAM_URL) Date from,
+            @RequestParam("to") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_PARAM_URL) Date to,
+            @RequestParam("q") String q,
+            @RequestParam("proceso") String proceso) {
         try {
             Pageable pageable = PageRequest.of(page, size);
             return ok(logService.listPageableByDatesAndType(DateUtil.formatToStart(from), DateUtil.formatToEnd(to), q, proceso ,pageable));

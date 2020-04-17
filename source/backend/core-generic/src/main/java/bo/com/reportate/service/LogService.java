@@ -34,5 +34,5 @@ public interface LogService {
 
     Page<MuBitacora> listPageableByDatesAndType(Date from, Date to, String mensaje, String proceso, Pageable pageable);
 
-    List<ProcessDto> listProcesos();
+    List<Process> listProcesos();
 }

@@ -102,28 +102,17 @@
       </div>
       <div [fxFlex]="33" class="h-padding-5">
         <mat-form-field>
-          <input matInput placeholder="Seguro *" [formControl]="this.form.controls['seguro']"
+          <input matInput placeholder="Seguro " [formControl]="this.form.controls['seguro']"
                  maxlength="100">
         </mat-form-field>
       </div>
       <div [fxFlex]="33" class="h-padding-5">
         <mat-form-field>
-          <input matInput placeholder="Código de Seguro *" [formControl]="this.form.controls['codigoSeguro']"
+          <input matInput placeholder="Código de Seguro " [formControl]="this.form.controls['codigoSeguro']"
                  maxlength="100">
         </mat-form-field>
       </div>
     </div>
-
-    <!--    <div fxFlex="33" class="p-l-10" *ngIf="this.form.controls['genero'].value === 'FEMENINO'">-->
-
-    <!--      {{ this.form.controls['gestacion'] ? 'SI' : 'NO' }}-->
-    <!--      &nbsp;&nbsp;-->
-    <!--      <mat-slide-toggle [color]="'primary'" [formControl]="this.form.controls['tiempoGestacion']"-->
-    <!--                        class="example-margin">-->
-    <!--        ¿ Gestación ?-->
-    <!--      </mat-slide-toggle>-->
-    <!--    </div>-->
-
 
     <div fxLayout="row wrap" fxLayoutAlign="start start">
       <button mat-flat-button color="accent" (click)="this.updateDataPaciente()" class="m-r-10">Guardar Datos
@@ -174,7 +163,7 @@
     </div>
     <div fxFlex="60" class="p-5 p-t-10">
       <div fxLayoutAlign="center center" class="h-padding-5">
-        <label><strong>PAISES VIAJADO</strong></label>
+        <label><strong>PAÍSES VISITADOS</strong></label>
       </div>
       <div class="p-5">
         <button mat-flat-button color="accent" (click)="this.openDialogPaisesViaje(null)">Agregar</button>
@@ -192,10 +181,10 @@
           <ng-template let-row="row" ngx-datatable-cell-template>
             <div fxLayout="row" fxFlexAlign="start start">
               <div fxFlex="100" fxFlexAlign="center top">
-                <button mat-icon-button matTooltip="Editar Pais Viajado" (click)="this.openDialogPaisesViaje(row)">
+                <button mat-icon-button matTooltip="Editar País Visitado" (click)="this.openDialogPaisesViaje(row)">
                   <mat-icon color="accent">edit</mat-icon>
                 </button>
-                <button mat-icon-button matTooltip="Eliminar Pais Viajado" (click)="this.deletePais(row)">
+                <button mat-icon-button matTooltip="Eliminar País Visitado" (click)="this.deletePais(row)">
                   <mat-icon color="accent">delete</mat-icon>
                 </button>
               </div>
@@ -231,7 +220,7 @@
   <div fxLayout="row wrap">
     <div fxFlex="100" class="h-padding-5" >
       <div fxFlex="100" fxLayoutAlign="center center" class="h-padding-5">
-        <label><strong>DIAGNOSTICO</strong></label>
+        <label><strong>DIAGNÓSTICO</strong></label>
       </div>
     </div>
     <div fxFlex="100" class="p-5">
@@ -300,7 +289,7 @@
     </div>
     <div fxFlex="100" class="h-padding-5 p-t-10">
       <div fxFlex="100" fxLayoutAlign="center center" class="h-padding-5">
-        <label><strong>CONTACTANOS</strong></label>
+        <label><strong>CONTACTOS</strong></label>
       </div>
 
     </div>

@@ -38,7 +38,7 @@ export class AddEnfermedadComponent extends ClicComponent implements OnInit {
     this.form = this.builder.group({
       enfermedadId: new FormControl(this.data.id, Validators.compose([Validators.required, Validators.maxLength(100)])),
     });
-    this.enfermedadService.getEnfermedades().subscribe(response => {
+    this.enfermedadService.getEnfermedadesDeBase().subscribe(response => {
       this.enfermedades = response.body;
     });
   }

@@ -14,7 +14,7 @@ export const environment = {
     baseUri: 'https://localhost:9443/',
     // baseUri: 'https://dev.mc4.com.bo:9443/',
 
-    baseUriFact: 'https://localhost:9443/f' +
+    baseUriFact: 'https://localhost:9443/' +
       'acturacion-core/',
   }
 

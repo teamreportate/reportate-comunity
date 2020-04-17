@@ -9,5 +9,6 @@
 
 export enum SfeProcess {
   ADMINISTRACION = 'ADMINISTRACION',
-  GRUPO = 'PROCESS'
+  GRUPO = 'PROCESS',
+  SESION ='SESION',
 }

@@ -199,7 +199,7 @@ export class GeolocalizacionCasosComponent extends ClicComponent implements OnIn
     this.listCovidConfirmado = [];
     this.listCovidNegativo = [];
     this.listUbicaciones = [];
-    this.blockUI.start('Recuperando Ubicación de los diagnósticos...');
+    this.blockUI.start('Recuperando ubicación de los diagnósticos...');
     // tslint:disable-next-line:max-line-length
     this.seguimientoEnfermedadService.filterLocalisacion(this.centroSaludId, this.municipioId, this.enfermedadId, this.clasificacion, this.departamentoId, this.startDate.format('DD/MM/YYYY'), this.endDate.format('DD/MM/YYYY')).subscribe(response => {
       this.listUbicaciones = response.body;
@@ -219,9 +219,9 @@ export class GeolocalizacionCasosComponent extends ClicComponent implements OnIn
             this.listCovidNegativo.push(dtoMapFortma);
           }
         }
-        this.marcarPuntos(this.listCovidConfirmado, 'CONFIRMADO', 'green');
+        this.marcarPuntos(this.listCovidConfirmado, 'CONFIRMADO', 'red');
         this.marcarPuntos(this.listCovidSospechoso, 'SOSPECHOSO', 'yellow');
-        this.marcarPuntos(this.listCovidNegativo, 'NEGATIVO', 'red');
+        this.marcarPuntos(this.listCovidNegativo, 'NEGATIVO', 'green');
       }
       this.render = true;
       this.blockUI.stop();

@@ -34,21 +34,22 @@ export class Constants {
   static listDiagnostico = 'api/departamentos/departamento-municipio-centro-salud-asignados';
 
 // CLASIFICACION ENFERMEDAD
-  static CLASIFICACION_ENFERMEDAD = [{key: 'TODOS', value: 'Todos'}, {key: 'SOSPECHOSO', value: 'SOSPECHOSO'},
-    {key: 'NEGATIVO', value: 'NEGATIVO'}, {
-    key: 'CONFIRMADO',
-    value: 'CONFIRMADO'
-
-  }];
+  static CLASIFICACION_ENFERMEDAD = [
+    {key: 'TODOS', value: 'Todos'},
+    {key: 'SOSPECHOSO', value: 'SOSPECHOSO'},
+    {key: 'NEGATIVO', value: 'NEGATIVO'},
+    {key: 'CONFIRMADO', value: 'CONFIRMADO'},
+    {key: 'ACTIVO', value: 'ACTIVO'},
+    {key: 'CURADO', value: 'CURADO'}];
   static SOS: 'SOSPECHOSO';
   static NEG: 'NEGATIVO';
   static CONF: 'CONFIRMADO';
-  static CLASIFICACION_ENFERMEDAD2 = [{key: 'SOSPECHOSO', value: 'SOSPECHOSO'},
-    {key: 'NEGATIVO', value: 'NEGATIVO'}, {
-      key: 'CONFIRMADO',
-      value: 'CONFIRMADO'
-
-    }];
+  static CLASIFICACION_ENFERMEDAD2 = [
+    {key: 'SOSPECHOSO', value: 'SOSPECHOSO'},
+    {key: 'NEGATIVO', value: 'NEGATIVO'},
+    {key: 'CONFIRMADO', value: 'CONFIRMADO'},
+    {key: 'ACTIVO', value: 'ACTIVO'},
+    {key: 'CURADO', value: 'CURADO'}];
 
   static SEXOS = [{key: 'MASCULINO', value: 'MASCULINO'},
     {key: 'FEMENINO', value: 'FEMENINO'}];
