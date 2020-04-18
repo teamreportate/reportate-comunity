@@ -17,7 +17,7 @@ export class AuthUser extends AbstractAuditable<number>{
   authType: any;
   tokenExpired: string;
   token: string;
-  grupo: any;
+  grupos: any;
   tipoUsuario: string;
   departamentos: any;
   municipios: any;

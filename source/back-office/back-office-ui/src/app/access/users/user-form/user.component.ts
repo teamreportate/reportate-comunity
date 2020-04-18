@@ -19,6 +19,7 @@ import { CustomOptions } from 'src/app/core/models/dto/custom-options';
 
 import { Department, SaludCentre, Municipaly } from '../user.type';
 import { element } from 'protractor';
+import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 
 @Component({
   selector: 'app-user',
@@ -39,7 +40,7 @@ export class UserComponent extends ClicComponent implements OnInit {
   userId: number;
 
   groups: AuthGroup[] = [];
-  selected = [];
+  selected: number[] = [];
 
   departments: Department[] = [];
   municipalities: Municipaly[] = [];
@@ -157,8 +158,10 @@ export class UserComponent extends ClicComponent implements OnInit {
     this.blockUI.start('Recuperando lista de grupos');
     this.accessService.requestUserGroups(this.userId.toString()).subscribe(response => {
       response.body.forEach(elemento => {
-        this.selected.push(elemento);
+        this.selected.push(elemento.id);
+        console.log(this.selected);
       });
+      this.form.get('grupos').setValue(this.selected);
 
       this.blockUI.stop();
     }, error => {
@@ -209,6 +212,7 @@ export class UserComponent extends ClicComponent implements OnInit {
       user.departamentos = this.enableDepartments.filter(x => x.asignado == true);
       user.municipios = this.enableMunicipalities.filter(x => x.asignado == true);
       user.centroSaluds = this.enableSaludCentres.filter(x => x.asignado == true);
+      user.grupos = this.mapGroups(this.form.get('grupos').value);
       const confirm: string = this.form.get('passwordConfirm').value;
       if (user.password !== confirm) {
         this.confirm = false;
@@ -238,6 +242,7 @@ export class UserComponent extends ClicComponent implements OnInit {
       user.departamentos = this.enableDepartments.filter(x => x.asignado == true);
       user.municipios = this.enableMunicipalities.filter(x => x.asignado == true);
       user.centroSaluds = this.enableSaludCentres.filter(x => x.asignado == true);
+      user.grupos = this.mapGroups(this.form.get('grupos').value);
       const confirm: string = this.form.get('passwordConfirm').value;
       if (user.password !== confirm) {
         this.confirm = false;
@@ -256,6 +261,17 @@ export class UserComponent extends ClicComponent implements OnInit {
           this.form.controls[controlsKey].markAsTouched({ onlySelf: true });
       }
     }
+  }
+
+  mapGroups(groups: number[]) {
+    let list = [];
+    groups.forEach(e => {
+      let item = this.groups.find(x => x.id == e);
+      if (item) {
+        list.push(item);
+      }
+    });
+    return list;
   }
 
   goBack(): void {
