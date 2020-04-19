@@ -91,7 +91,7 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
 			municipios.addAll(this.municipioUsuarioRepository.listarMunicipiosAsignados(usuario, departamentos));
 		}
 		if (centroSaludId > 0L) {
-			centroSaluds.add(this.centroSaludRepository.findByIdAndEstado(municipioId, EstadoEnum.ACTIVO)
+			centroSaluds.add(this.centroSaludRepository.findByIdAndEstado(centroSaludId, EstadoEnum.ACTIVO)
 					.orElseThrow(() -> new NotDataFoundException("No se encontro el centro de salud seleccionad")));
 		} else {
 			if(!municipios.isEmpty())
@@ -172,7 +172,7 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
 			municipios.addAll(this.municipioUsuarioRepository.listarMunicipiosAsignados(usuario, departamentos));
 		}
 		if (centroSaludId > 0L) {
-			centroSaluds.add(this.centroSaludRepository.findByIdAndEstado(municipioId, EstadoEnum.ACTIVO)
+			centroSaluds.add(this.centroSaludRepository.findByIdAndEstado(centroSaludId, EstadoEnum.ACTIVO)
 					.orElseThrow(() -> new NotDataFoundException("No se encontro el centro de salud seleccionad")));
 		} else {
 			if(!municipios.isEmpty())
@@ -251,7 +251,7 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
             municipios.addAll(this.municipioUsuarioRepository.listarMunicipiosAsignados(usuario, departamentos));
         }
         if (centroSaludId > 0L) {
-            centroSaluds.add(this.centroSaludRepository.findByIdAndEstado(municipioId, EstadoEnum.ACTIVO)
+            centroSaluds.add(this.centroSaludRepository.findByIdAndEstado(centroSaludId, EstadoEnum.ACTIVO)
                     .orElseThrow(() -> new NotDataFoundException("No se encontro el centro de salud seleccionad")));
         } else {
             centroSaluds.addAll(this.centroSaludUsuarioRepository.listarCentrosSaludAsignados(usuario, municipios));
