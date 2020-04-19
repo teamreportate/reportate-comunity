@@ -52,13 +52,8 @@ public class AuthController {
 
     @PostMapping(value = "/signin",consumes =  MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity signin(
-            @RequestBody AuthenticationRequest data,
-            @RequestHeader Map<String, String> headers) {
+            @RequestBody AuthenticationRequest data) {
         try {
-
-            headers.forEach((key, value) -> {
-                log.info(String.format("Header '%s' = %s", key, value));
-            });
 
             String token = validateAuthData(data);
             Map<Object, Object> model = new HashMap<>();
