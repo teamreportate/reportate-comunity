@@ -64,7 +64,12 @@
 
       <div [fxFlex]="33" class="h-padding-5">
         <mat-form-field>
-          <input matInput placeholder="Ocupación" [formControl]="this.form.controls['ocupacion']" maxlength="100">
+          <mat-select placeholder="Ocupación" [formControl]="this.form.controls['ocupacion']">
+            <mat-option [value]="''">Ninguna</mat-option>
+            <mat-option *ngFor="let dto of this.listaOcupacion" [value]="dto.valor">
+              {{dto.valor}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
       <div [fxFlex]="33" class="h-padding-5">
@@ -229,7 +234,7 @@
                      [headerHeight]="35"
                      [footerHeight]="35"
                      [scrollbarH]="this.scrollH"
-                     [rowHeight]="50"
+                     [rowHeight]="'auto'"
                      [limit]="'4'"
                      [rows]="this.listDiagnosticos">
 
@@ -280,7 +285,7 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="Observación" [draggable]="false" [resizeable]="false">
+        <ngx-datatable-column name="Observación" [width]="350" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
             {{row.observacion}}
           </ng-template>
