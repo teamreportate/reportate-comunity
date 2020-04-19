@@ -214,6 +214,18 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
                 null, null, new BigDecimal("2"), null, ParamTipoDato.NUMERICO, false,null, diagnostico);
         this.paramService.saveParametro(parametro);
 
+        parametro = new MuParametro(null, Constants.Parameters.VALORACION_ENFERMEDAD_BASE, "Parámetro que indica el peso (Valoración) que tiene el hecho de tener una enfermedad de base ",
+                null, null, new BigDecimal("3"), null, ParamTipoDato.NUMERICO, false,null, diagnostico);
+        this.paramService.saveParametro(parametro);
+
+        parametro = new MuParametro(null, Constants.Parameters.VALORACION_PAIS_VISITADO, "Parámetro que indica el peso(Valoración) que tiene el hecho de haber visitado algún país endémico.",
+                null, null, new BigDecimal("0"), null, ParamTipoDato.NUMERICO, false,null, diagnostico);
+        this.paramService.saveParametro(parametro);
+
+        parametro = new MuParametro(null, Constants.Parameters.ASUNTO_CORREO_NOTIFICACION_MEDICO, "Asunto del correo de Notificación al médico",
+                "Nuevo caso de ${ENFERMEDAD}", null, null, null, ParamTipoDato.CADENA, false,null, diagnostico);
+        this.paramService.saveParametro(parametro);
+
         MuGrupoParametro jwt = this.grupoParametroRepository.findByGrupo("Parámetros de JWT").orElse(MuGrupoParametro.builder()
                 .grupo("Parámetros de JWT")
                 .descripcion("Parámetros de JWT")

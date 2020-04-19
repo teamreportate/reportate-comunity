@@ -15,6 +15,7 @@ import bo.com.reportate.service.DiagnosticoService;
 import bo.com.reportate.service.LogService;
 import bo.com.reportate.util.ValidationUtil;
 import bo.com.reportate.utils.DateUtil;
+import bo.com.reportate.utils.LongUtil;
 import bo.com.reportate.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,8 +128,14 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
 		}
 
 		if (!StringUtil.isEmptyOrNull(nomprePaciente)) {
-			return diagnosticoRepository.listarDiagnostico(from, to, departamentos, municipios, centroSaluds,
-					diagnosticoEnums, enfermedads, nomprePaciente.toLowerCase(), pageable);
+			if(LongUtil.isLong(nomprePaciente)){
+				log.info("Ccodigo de paciente: {}",nomprePaciente);
+				return diagnosticoRepository.listarDiagnosticoPorCodigo(from, to, departamentos, municipios, centroSaluds,
+						diagnosticoEnums, enfermedads, LongUtil.toLong(nomprePaciente), pageable);
+			}else {
+				return diagnosticoRepository.listarDiagnostico(from, to, departamentos, municipios, centroSaluds,
+						diagnosticoEnums, enfermedads, nomprePaciente.toLowerCase(), pageable);
+			}
 		} else {
 			return diagnosticoRepository.listarDiagnostico(from, to, departamentos, municipios, centroSaluds,
 					diagnosticoEnums, enfermedads, pageable);

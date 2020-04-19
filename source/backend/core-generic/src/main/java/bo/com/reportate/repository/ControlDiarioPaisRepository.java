@@ -31,7 +31,9 @@ public interface ControlDiarioPaisRepository extends JpaRepository<ControlDiario
             " AND cdp.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
             " AND cdp.pais.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO" )
     List<PaisVisitadoDto> listarPaisesVisitados(@Param("paciente") Paciente paciente);
+
     boolean existsByControlDiarioAndPaisAndEstado(ControlDiario controlDiario, Pais pais, EstadoEnum estadoEnum);
+    boolean existsByControlDiarioPacienteAndEstado(Paciente paciente, EstadoEnum estadoEnum);
 
     @Modifying
     @Query( " UPDATE ControlDiarioPais  cdp " +

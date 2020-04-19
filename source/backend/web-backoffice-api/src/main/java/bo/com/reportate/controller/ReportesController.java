@@ -45,9 +45,8 @@ public class ReportesController {
         try {
             List list =new ArrayList();
             FichaEpidemiologicaResponse obj = this.pacienteService.getFichaEpidemiologica(pacienteId);
-            if(list.size() !=0) {
-                ArchivoPojo pdf = generarReporte(list, NroReportes.RP01, obj);
-                return ok(pdf);
+            if(!list.isEmpty()) {
+                return ok(generarReporte(list, NroReportes.RP01, obj));
             }
             return ok().build();
         }catch (OperationException e){

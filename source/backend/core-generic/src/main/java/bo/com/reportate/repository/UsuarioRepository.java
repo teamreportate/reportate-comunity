@@ -1,9 +1,6 @@
 package bo.com.reportate.repository;
 
-import bo.com.reportate.model.Departamento;
-import bo.com.reportate.model.MuAlarma;
-import bo.com.reportate.model.MuGrupo;
-import bo.com.reportate.model.MuUsuario;
+import bo.com.reportate.model.*;
 import bo.com.reportate.model.dto.UsuarioDto;
 import bo.com.reportate.model.enums.AuthTypeEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
@@ -93,5 +90,23 @@ public interface UsuarioRepository extends JpaRepository<MuUsuario, Long> {
             "AND d.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
             "AND d=:departamento")
     List<MuUsuario> obtenerMedicoPordepartamento(@Param("departamento")Departamento departamento);
+
+    @Query(" SELECT m.email FROM MunicipioUsuario du INNER JOIN du.muUsuario m INNER JOIN du.municipio d " +
+            "WHERE m.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND m.estadoUsuario = bo.com.reportate.model.enums.UserStatusEnum.ACTIVO " +
+            "AND m.tipoUsuario = bo.com.reportate.model.enums.TipoUsuarioEnum.MEDICO " +
+            "AND du.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND d.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND d=:municipio AND m.email IS NOT NULL")
+    List<String> obtenerMedicoPorMunicipio(@Param("municipio") Municipio municipio);
+
+    @Query(" SELECT m.email FROM CentroSaludUsuario du INNER JOIN du.muUsuario m INNER JOIN du.centroSalud d " +
+            "WHERE m.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND m.estadoUsuario = bo.com.reportate.model.enums.UserStatusEnum.ACTIVO " +
+            "AND m.tipoUsuario = bo.com.reportate.model.enums.TipoUsuarioEnum.MEDICO " +
+            "AND du.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND d.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO " +
+            "AND d=:centroSalud AND m.email IS NOT NULL")
+    List<String> obtenerMedicoPorCentroSalud(@Param("centroSalud") CentroSalud centroSalud);
 
 }

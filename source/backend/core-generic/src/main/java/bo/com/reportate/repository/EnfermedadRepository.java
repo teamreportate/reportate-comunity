@@ -40,8 +40,6 @@ public interface EnfermedadRepository extends JpaRepository<Enfermedad, Long> {
     boolean existsByNombreIgnoreCaseAndEstado(String nombre, EstadoEnum estadoEnum);
     boolean existsByIdNotAndNombreIgnoreCaseAndEstado(Long id, String nombre, EstadoEnum estadoEnum);
 
-    Optional<Enfermedad> findByNombreAndEstado(String nombre, EstadoEnum estadoEnum);
-
     @Query(" SELECT e FROM Enfermedad e" +
             " order by e.id desc")
     List<Enfermedad> listAll();

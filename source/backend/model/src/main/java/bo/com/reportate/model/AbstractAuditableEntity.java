@@ -22,34 +22,29 @@ import java.util.Date;
 public abstract class AbstractAuditableEntity implements Serializable, Cloneable {
 
     @Version
-    //@Column(name="VERSION",columnDefinition = "NUMBER(19) default 0")
     @Column(name="VERSION")
     private Long version;
 
     @CreatedDate
-    //@Column(name = "FECHA_REGISTRO",columnDefinition = "TIMESTAMP (6) default TO_TIMESTAMP('2020-01-01 01:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF')")
     @Column(name = "FECHA_REGISTRO")
     Date createdDate;
 
     @LastModifiedDate
-    //@Column(name = "FECHA_ACTUALIZACION",columnDefinition = "TIMESTAMP (6) default TO_TIMESTAMP('2020-01-01 01:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF')")
     @Column(name = "FECHA_ACTUALIZACION")
     Date lastModifiedDate;
 
     @CreatedBy
-    //@Column(name = "USUARIO_REGISTRO",columnDefinition = "VARCHAR2(255) default 'SISTEMA'")
     @Column(name = "USUARIO_REGISTRO")
     String createdBy;
 
     @LastModifiedBy
-    //@Column(name = "USUARIO_ACTUALIZACION",columnDefinition = "VARCHAR2(255) default 'SISTEMA'")
     @Column(name = "USUARIO_ACTUALIZACION")
     String lastModifiedBy;
 
 
     @Column(name = "ESTADO", nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    EstadoEnum estado = EstadoEnum.ACTIVO; // 1: habilitado, 0: deshabilitado, 2: eliminado
+    EstadoEnum estado = EstadoEnum.ACTIVO;
 
     public Object clone()throws CloneNotSupportedException{
         return (AbstractAuditableEntity)super.clone();

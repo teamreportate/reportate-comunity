@@ -79,10 +79,10 @@ public class DiagnosticoController {
                     departamentoId, municipioId, centroSaludId, nombrePaciente, clasificacion, enfermedadId, pageable));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al listar los diagnosticos: Causa. {}",e.getMessage());
-            return CustomErrorType.badRequest("Listar Diagnostico", e.getMessage());
+            return CustomErrorType.badRequest("Listar Diagnóstico", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al listar los diagnosticos:",e);
-            return CustomErrorType.serverError("Listar Diagnostico", "Se genero un error al listar los diagnosticos");
+            return CustomErrorType.serverError("Listar Diagnóstico", "Se genero un error al listar los diagnósticos");
         }
     }
     @RequestMapping(value = "/tacometro-por-clasificacion",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -98,8 +98,6 @@ public class DiagnosticoController {
             @Parameter(description = "Identificador de Enfermedad", required = true)
             @RequestParam("enfermedadId") Long enfermedadId){
         try {
-        	//Authentication authentication,BigDecimal valoracionInicio, BigDecimal valoracionFin, Long departamentoId,Long municipioId, Long centroSaludId,
-    		//String genero, Integer edadInicial, Integer edadFinal,EstadoDiagnosticoEnum estadoDiagnostico, Long enfermedadId
         	Integer sospechosos =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication,departamentoId, municipioId,centroSaludId,null,
             		null,null,EstadoDiagnosticoEnum.SOSPECHOSO, enfermedadId);
         	Integer confirmados =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication, departamentoId, municipioId,centroSaludId,null,

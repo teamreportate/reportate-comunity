@@ -135,7 +135,7 @@ public class PacienteServiceImpl implements PacienteService {
         if (this.pacienteRepository.existsByFamiliaAndNombreIgnoreCaseAndEstado(paciente.getFamilia(), nombre, EstadoEnum.ACTIVO)) {
             throw new OperationException("Ya existe un miembro de tu familia con el nombre: " + nombre);
         }
-        Boolean gestacionAux = false;
+        boolean gestacionAux = gestacion;
         if(genero.equals(GeneroEnum.MASCULINO)){
             gestacionAux = false;
         }
@@ -245,7 +245,6 @@ public class PacienteServiceImpl implements PacienteService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public String controlDiario(Long pacienteId, List<EnfermedadRequest> enfermedadesBase, List<PaisRequest> paisesVisitados, List<SintomaRequest> sintomas) {
-        log.info("Inician el registro del control diario.");
         ValidationUtil.throwExceptionIfInvalidNumber("paciente", pacienteId, true, 0L);
         Paciente paciente = this.pacienteRepository.findByIdAndEstado(pacienteId, EstadoEnum.ACTIVO).orElseThrow(() -> new NotDataFoundException("No existe el paciente registrado"));
 
@@ -264,7 +263,6 @@ public class PacienteServiceImpl implements PacienteService {
                 .primerControl(!this.controlDiarioRepository.existsByPrimerControlTrueAndPaciente(paciente))
                 .build();
 
-
         if (sintomas == null || sintomas.isEmpty()) {
             log.error("No existe sintomas para registrar en el control diario");
             controlDiario.setRecomendacion(cacheService.getStringParam(Constants.Parameters.MENSAJE_SIN_SINTOMAS));
@@ -274,11 +272,10 @@ public class PacienteServiceImpl implements PacienteService {
 
         this.controlDiarioRepository.saveAndFlush(controlDiario);
 
-        log.info("Registrando sintomas...");
         List<Sintoma> sintomasRecibidos = new ArrayList<>();
         for (SintomaRequest sintAux : sintomas) {
             ValidationUtil.throwExceptionIfInvalidNumber("sintoma", sintAux.getId(), true, 0L);
-            Sintoma sintoma = this.sintomaRepository.findByIdAndEstado(sintAux.getId(), EstadoEnum.ACTIVO).orElseThrow(() -> new NotDataFoundException("No se encontro el sintoma que quiere registrar"));
+            Sintoma sintoma = this.sintomaRepository.findByIdAndEstado(sintAux.getId(), EstadoEnum.ACTIVO).orElseThrow(() -> new NotDataFoundException("No se encontró el sintoma que quiere registrar"));
             this.controlDiarioSintomaRepository.save(ControlDiarioSintoma.builder()
                     .controlDiario(controlDiario)
                     .respuesta(sintAux.getRespuesta())
@@ -287,9 +284,7 @@ public class PacienteServiceImpl implements PacienteService {
             sintomasRecibidos.add(sintoma);
         }
 
-
         if (enfermedadesBase != null && !enfermedadesBase.isEmpty()) {
-            log.info("Registrando enfermedades..");
             for (EnfermedadRequest enferAux : enfermedadesBase) {
                 ValidationUtil.throwExceptionIfInvalidNumber("enfermedad", enferAux.getId(), true, 0L);
                 Enfermedad enfermedad = this.enfermedadRepository.findByIdAndEstado(enferAux.getId(), EstadoEnum.ACTIVO).orElseThrow(() -> new NotDataFoundException("No se encontro la enfermedad que quiere reportar"));
@@ -298,7 +293,6 @@ public class PacienteServiceImpl implements PacienteService {
         }
 
         if (paisesVisitados != null && !paisesVisitados.isEmpty()) {
-            log.info("Registrando paises..");
             for (PaisRequest paisAux : paisesVisitados) {
                 ValidationUtil.throwExceptionIfInvalidNumber("pais", paisAux.getId(), true, 0L);
                 Pais pais = this.paisRepository.findByIdAndEstado(paisAux.getId(), EstadoEnum.ACTIVO).orElseThrow(() -> new NotDataFoundException("No se encontro el pais que quiere reportar"));
@@ -306,7 +300,6 @@ public class PacienteServiceImpl implements PacienteService {
             }
         }
 
-        log.info("Calculando diagnostico ...");
         List<Enfermedad> enfermedades = this.matrizDiagnosticoRepository.listarEnfermedades();
         for (Enfermedad enfermedad : enfermedades) {
             List<MatrizDiagnostico> matrizDiagnosticos = this.matrizDiagnosticoRepository.findByEnfermedadAndEstado(enfermedad, EstadoEnum.ACTIVO);
@@ -326,16 +319,29 @@ public class PacienteServiceImpl implements PacienteService {
             if (valoracion.compareTo(BigDecimal.ZERO) > 0) {// Sintomas de la enfermedad
                 log.info("Resultado enfermedad:{}  del calculo:{}", enfermedad.getNombre(), valoracion);
                 EstadoDiagnosticoEnum estadoDiagnostico = EstadoDiagnosticoEnum.NEGATIVO;
+
+                if((enfermedadesBase != null && !enfermedadesBase.isEmpty()) ||
+                        this.controlDiarioEnfermedadRepository.existsByControlDiarioPacienteAndEstado(paciente, EstadoEnum.ACTIVO)){
+                    log.info("El paciente tiene enferdad de base");
+                    valoracion = valoracion.add(cacheService.getNumberParam(Constants.Parameters.VALORACION_ENFERMEDAD_BASE));
+                }
+                if((paisesVisitados != null && !paisesVisitados.isEmpty()) ||
+                        this.controlDiarioPaisRepository.existsByControlDiarioPacienteAndEstado(paciente,EstadoEnum.ACTIVO)){
+                    log.info("El paciente visito paises endemicos");
+                    valoracion = valoracion.add(cacheService.getNumberParam(Constants.Parameters.VALORACION_PAIS_VISITADO));
+                }
                 if (valoracion.compareTo(cacheService.getNumberParam(Constants.Parameters.INDICADOR_SOSPECHOSO)) > 0) {
                     estadoDiagnostico = EstadoDiagnosticoEnum.SOSPECHOSO;
+
                     PacienteEmailDto pacienteEmailDto = PacienteEmailDto.builder().
                             id(pacienteId).edad(paciente.getEdad()).nombre(paciente.getNombre()).sexo(paciente.getGenero().name()).telefono(paciente.getFamilia().getTelefono()).enfermedad(enfermedad.getNombre()).valoracion(valoracion.intValue()).build();
-
-                    List<MuUsuario> medicos = this.usuarioRepository.obtenerMedicoPordepartamento(controlDiario.getPaciente().getFamilia().getDepartamento());
-                    for (MuUsuario medico : medicos) {
-//                        notificacionService.notificacionSospechosoSintomas("Dr. " + medico.getNombre(), medico.getEmail(), "Caso sospechoso " + enfermedad.getNombre(), "Existe un nuevo caso sospechoso de " + enfermedad.getNombre() + " con una valoración de " + valoracion.toPlainString(), sintomasMail);
-                        notificacionService.notidicacionMedico("Caso sospechoso de " + enfermedad.getNombre(),medico.getEmail(),pacienteEmailDto,sintomasMail);
+                    List<String> correoMedicos = this.usuarioRepository.obtenerMedicoPorCentroSalud(paciente.getFamilia().getCentroSalud());
+                    if(!correoMedicos.isEmpty()) {
+                        log.info("Notificando al médico ...");
+                        String asunto = cacheService.getStringParam(Constants.Parameters.ASUNTO_CORREO_NOTIFICACION_MEDICO).replace("${ENFERMEDAD}",enfermedad.getNombre());
+                        notificacionService.notidicacionMedico(asunto, correoMedicos.get(0), correoMedicos.subList(0, correoMedicos.size()), pacienteEmailDto, sintomasMail);
                     }
+
                 }
 
                 log.info("Registrando diagnostico del paciente {} con estado {}  de la enfermedad {} con {} sintomas.", paciente.getNombre(), estadoDiagnostico, enfermedad.getNombre(), sintomasDignostico.size());

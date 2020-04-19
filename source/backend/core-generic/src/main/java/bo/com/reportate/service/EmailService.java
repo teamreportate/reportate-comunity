@@ -19,4 +19,6 @@ public interface EmailService {
     void sendSimpleMessage(String to, String subject, String text);
     void sentMessageEmail(String nombrePaciente, String subject, String to, List<String> sintomas,  String mensaje);
     void notidicacionMedico(String subject, String to, PacienteEmailDto paciente, List<DiagnosticoSintomaResponse> sintomas);
+    void notidicacionMedico(String subject, List<String> to, PacienteEmailDto paciente, List<DiagnosticoSintomaResponse> sintomas);
+    void notidicacionMedico(String subject, String to, List<String> cc, PacienteEmailDto paciente, List<DiagnosticoSintomaResponse> sintomas);
 }
