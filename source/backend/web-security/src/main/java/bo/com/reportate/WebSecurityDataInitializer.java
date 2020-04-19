@@ -118,6 +118,9 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
     private void addPermisos(){
         log.info("************************* Cargando permisos por defecto *************************");
         MuRol rolAdmin = rolRepository.findByName("Administrador");
+        recPadre("Dashboards", "Pantalla de reportes", "dashboards", 1, "menu", rolAdmin);
+        recHijo("Principal", "dashboards", "Interfaz para vista de reportes del sistema", "principal", 1, "code", rolAdmin);
+
         recPadre("Accesos", "Interfaces para gestión del módulo de usuario ", "accesos", 1, "menu", rolAdmin);
         recHijo("Recursos", "accesos", "Interfaz para administración de Recursos del sistema", "resources", 1, "insert_link", rolAdmin);
         recHijo("Roles", "accesos", "Interfaz para administración de Roles", "roles", 2, "border_color", rolAdmin);

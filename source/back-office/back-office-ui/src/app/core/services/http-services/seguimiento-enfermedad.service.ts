@@ -42,4 +42,8 @@ export class SeguimientoEnfermedadService {
     return this.httpClient.get(url, {observe: 'response'});
   }
 
+  getReporteFichaEpidemiologica(id): Observable<HttpResponse<any>> {
+    const url = Constantes.baseUri + Constants.reporteApi + id + '/ficha-epidemiologica';
+    return this.httpClient.get<HttpResponse<any>>(url, {observe: 'response'});
+  }
 }
