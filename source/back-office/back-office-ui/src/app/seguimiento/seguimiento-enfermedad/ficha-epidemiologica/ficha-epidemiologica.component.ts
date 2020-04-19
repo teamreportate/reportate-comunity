@@ -15,6 +15,9 @@ import {AddContactoComponent} from './dialogs/add-contacto/add-contacto.componen
 import * as moment from 'moment';
 import {ListSintomasComponent} from './dialogs/list-sintomas/list-sintomas.component';
 import {AddObservacionComponent} from './dialogs/add-observacion/add-observacion.component';
+import { ReporteModule } from 'src/app/core/reports/generateReport.module';
+import { DtoFileModel } from 'src/app/core/models/dto/dto-file.model';
+import { SeguimientoEnfermedadService } from 'src/app/core/services/http-services/seguimiento-enfermedad.service';
 
 interface Food {
   value: string;
@@ -25,7 +28,7 @@ interface Food {
   selector: 'app-ficha-epidemiologica',
   templateUrl: './ficha-epidemiologica.component.html',
   styleUrls: ['./ficha-epidemiologica.component.sass', './ficha-epidemiologica.component.scss'],
-  providers: []
+  providers: [SeguimientoEnfermedadService]
 })
 export class FichaEpidemiologicaComponent extends ClicComponent implements OnInit {
   idPaciente = this.route.snapshot.paramMap.get('idPaciente');
@@ -37,7 +40,9 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
   public filterFlex;
   @BlockUI() blockUI: NgBlockUI;
 
-  constructor(private route: ActivatedRoute, public dialog: MatDialog, private pacienteService: PacienteService, private formBuilder: FormBuilder, private notifier: NotifierService) {
+  // tslint:disable-next-line:max-line-length
+  constructor(private route: ActivatedRoute, public dialog: MatDialog, private pacienteService: PacienteService, private formBuilder: FormBuilder, private notifier: NotifierService,
+    private reporteFormato: ReporteModule, private seguimiento: SeguimientoEnfermedadService) {
     super();
     this.form = this.initial();
     moment.locale('es-BO');
@@ -114,6 +119,32 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
         template: this.customNotificationTmpl
       };
       this.notifier.show(customOptions);
+    }
+  }
+
+  recuperarReporte() {
+    this.blockUI.start('Generando reporte...');
+    this.seguimiento.getReporteFichaEpidemiologica(this.idPaciente).subscribe(respuesta => {
+      this.generarDocumento(respuesta.body);
+      this.blockUI.stop();
+      // this.ngOnInit();
+      // tslint:disable-next-line:max-line-length
+      const notif = {error: {title: 'Generación de Reporte', detail: 'Reporte generado satisfactoriamente.'}};
+      this.notifierError(notif, 'info');
+    }, error => {
+      this.blockUI.stop();
+      if (error) {
+        this.notifierError(error);
+      }
+    });
+  }
+
+  generarDocumento(reporte: DtoFileModel) {
+    if (reporte.tipo === '.pdf') {
+      this.reporteFormato.impresionPdf(reporte.nombre, reporte.archivoBase64);
+    }
+    if (reporte.tipo === '.xls' || reporte.tipo === '.xlsx') {
+      this.reporteFormato.impresionExcel(reporte.nombre, reporte.archivoBase64);
     }
   }
 

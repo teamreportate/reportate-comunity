@@ -32,6 +32,7 @@ export class Constants {
   static municipiosApi = 'api/municipios';
   static centrosApi = 'api/centros-de-salud';
   static listDiagnostico = 'api/departamentos/departamento-municipio-centro-salud-asignados';
+  static reporteApi = 'api/reportes/';
 
 // CLASIFICACION ENFERMEDAD
   static CLASIFICACION_ENFERMEDAD = [
