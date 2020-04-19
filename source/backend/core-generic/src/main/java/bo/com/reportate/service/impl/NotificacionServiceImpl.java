@@ -46,7 +46,8 @@ public class NotificacionServiceImpl implements NotificacionService {
     }
 
     @Override
+    @Async
     public void notidicacionMedico(String subject, String to, List<String> cc, PacienteEmailDto paciente, List<DiagnosticoSintomaResponse> sintomas) {
-
+        emailService.notidicacionMedico(subject,to,cc,paciente,sintomas);
     }
 }

@@ -82,7 +82,7 @@
                 </div>
                 <div [fxFlex]="this.filterFlex" class="h-padding-5">
                   <mat-form-field>
-                    <input matInput maxlength="50" placeholder="Nombre del Paciente (Opcional)"
+                    <input matInput maxlength="50" placeholder="Nombre del Paciente ó Código (Opcional)"
                            [formControl]="this.form.get('nombrePaciente')">
                   </mat-form-field>
                 </div>
@@ -124,6 +124,12 @@
         <ngx-datatable-column name="Fecha Registro" [maxWidth]="250" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
             {{row.fechaRegistro | date: "dd/MM/yyyy H:mm"}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Código" [maxWidth]="150" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.pacienteId}}
           </ng-template>
         </ngx-datatable-column>
 

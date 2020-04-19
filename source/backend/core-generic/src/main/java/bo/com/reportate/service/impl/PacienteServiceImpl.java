@@ -325,7 +325,7 @@ public class PacienteServiceImpl implements PacienteService {
                     log.info("El paciente tiene enferdad de base");
                     valoracion = valoracion.add(cacheService.getNumberParam(Constants.Parameters.VALORACION_ENFERMEDAD_BASE));
                 }
-                if((paisesVisitados != null && paisesVisitados.isEmpty()) ||
+                if((paisesVisitados != null && !paisesVisitados.isEmpty()) ||
                         this.controlDiarioPaisRepository.existsByControlDiarioPacienteAndEstado(paciente,EstadoEnum.ACTIVO)){
                     log.info("El paciente visito paises endemicos");
                     valoracion = valoracion.add(cacheService.getNumberParam(Constants.Parameters.VALORACION_PAIS_VISITADO));
@@ -337,6 +337,7 @@ public class PacienteServiceImpl implements PacienteService {
                             id(pacienteId).edad(paciente.getEdad()).nombre(paciente.getNombre()).sexo(paciente.getGenero().name()).telefono(paciente.getFamilia().getTelefono()).enfermedad(enfermedad.getNombre()).valoracion(valoracion.intValue()).build();
                     List<String> correoMedicos = this.usuarioRepository.obtenerMedicoPorCentroSalud(paciente.getFamilia().getCentroSalud());
                     if(!correoMedicos.isEmpty()) {
+                        log.info("Notificando al médico ...");
                         String asunto = cacheService.getStringParam(Constants.Parameters.ASUNTO_CORREO_NOTIFICACION_MEDICO).replace("${ENFERMEDAD}",enfermedad.getNombre());
                         notificacionService.notidicacionMedico(asunto, correoMedicos.get(0), correoMedicos.subList(0, correoMedicos.size()), pacienteEmailDto, sintomasMail);
                     }
