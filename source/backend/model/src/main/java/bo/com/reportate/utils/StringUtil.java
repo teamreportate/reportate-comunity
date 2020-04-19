@@ -38,14 +38,13 @@ public class StringUtil {
         return txt.split("\\|");
     }
 
-    public static String byteToBase64(byte[] byteArray){
+    private static String byteToBase64(byte[] byteArray){
         byte[] encoded = Base64.getEncoder().encode(byteArray);
         return new String(encoded);
     }
 
-    public static byte[] base64ToByte(String base64){
-        byte[] decoded = Base64.getDecoder().decode(base64);
-        return decoded;
+    private static byte[] base64ToByte(String base64){
+        return Base64.getDecoder().decode(base64);
     }
 
 }

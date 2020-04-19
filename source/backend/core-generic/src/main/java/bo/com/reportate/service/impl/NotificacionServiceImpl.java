@@ -39,4 +39,14 @@ public class NotificacionServiceImpl implements NotificacionService {
     public void notidicacionMedico(String subject, String to, PacienteEmailDto paciente, List<DiagnosticoSintomaResponse> sintomas) {
         emailService.notidicacionMedico(subject, to,paciente,sintomas);
     }
+    @Override
+    @Async
+    public void notidicacionMedico(String subject, List<String> to, PacienteEmailDto paciente, List<DiagnosticoSintomaResponse> sintomas) {
+        emailService.notidicacionMedico(subject, to,paciente,sintomas);
+    }
+
+    @Override
+    public void notidicacionMedico(String subject, String to, List<String> cc, PacienteEmailDto paciente, List<DiagnosticoSintomaResponse> sintomas) {
+
+    }
 }

@@ -98,8 +98,6 @@ public class DiagnosticoController {
             @Parameter(description = "Identificador de Enfermedad", required = true)
             @RequestParam("enfermedadId") Long enfermedadId){
         try {
-        	//Authentication authentication,BigDecimal valoracionInicio, BigDecimal valoracionFin, Long departamentoId,Long municipioId, Long centroSaludId,
-    		//String genero, Integer edadInicial, Integer edadFinal,EstadoDiagnosticoEnum estadoDiagnostico, Long enfermedadId
         	Integer sospechosos =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication,departamentoId, municipioId,centroSaludId,null,
             		null,null,EstadoDiagnosticoEnum.SOSPECHOSO, enfermedadId);
         	Integer confirmados =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication, departamentoId, municipioId,centroSaludId,null,
