@@ -32,6 +32,7 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
   listPaisesVisitados = [];
   listDiagnosticos = [];
   listContactos = [];
+  listaOcupacion = [];
   public filterFlex;
   @BlockUI() blockUI: NgBlockUI;
 
@@ -48,6 +49,7 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
   generos = Constants.SEXOS;
 
   ngOnInit() {
+    this.recuperarOcupacion();
     this.pacienteService.getFichaEpidemiologica(this.idPaciente).subscribe(response => {
       this.form = this.initialForm(response.body);
       this.listPaisesVisitados = response.body.paisesVisitados;
@@ -94,7 +96,7 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       ocupacion: new FormControl(data.ocupacion, Validators.compose([])),
       gestacion: new FormControl(data.gestacion, Validators.compose([])),
       tiempoGestacion: new FormControl(data.tiempoGestacion, Validators.compose([])),
-      fechaNacimiento: new FormControl(new Date(data.fechaNacimiento), Validators.compose([])),
+      fechaNacimiento: new FormControl(data.fechaNacimiento, Validators.compose([])),
       seguro: new FormControl(data.seguro, Validators.compose([])),
       codigoSeguro: new FormControl(data.codigoSeguro, Validators.compose([])),
       ubicacion: new FormControl(data.ubicacion, Validators.compose([Validators.required])),
@@ -140,6 +142,18 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
     if (reporte.tipo === '.xls' || reporte.tipo === '.xlsx') {
       this.reporteFormato.impresionExcel(reporte.nombre, reporte.archivoBase64);
     }
+  }
+  recuperarOcupacion() {
+    this.blockUI.start('Generando reporte...');
+    this.seguimiento.getOcupaciones().subscribe(respuesta => {
+      this.blockUI.stop();
+      this.listaOcupacion = respuesta.body;
+    }, error => {
+      this.blockUI.stop();
+      if (error) {
+        this.notifierError(error);
+      }
+    });
   }
 
   onXsScreen() {
