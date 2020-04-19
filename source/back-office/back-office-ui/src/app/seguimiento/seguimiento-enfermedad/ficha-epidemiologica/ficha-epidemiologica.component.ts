@@ -16,11 +16,6 @@ import * as moment from 'moment';
 import {ListSintomasComponent} from './dialogs/list-sintomas/list-sintomas.component';
 import {AddObservacionComponent} from './dialogs/add-observacion/add-observacion.component';
 
-interface Food {
-  value: string;
-  viewValue: string;
-}
-
 @Component({
   selector: 'app-ficha-epidemiologica',
   templateUrl: './ficha-epidemiologica.component.html',
@@ -50,7 +45,6 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
   ngOnInit() {
     this.pacienteService.getFichaEpidemiologica(this.idPaciente).subscribe(response => {
       this.form = this.initialForm(response.body);
-      console.warn(response.body);
       this.listPaisesVisitados = response.body.paisesVisitados;
       this.listEnfermedadesBase = response.body.enfermedadesBase;
       this.listDiagnosticos = response.body.diagnosticos;
@@ -282,7 +276,6 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       });
   }
 
-
   updateDataPaciente() {
     if (this.form.valid) {
       this.blockUI.start('Procesando solicitud...');
@@ -311,7 +304,7 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
   selectedState(event: any, row: any) {
     const temporal: any = {};
     temporal.idDiagnostico = row.id;
-    temporal.estado = event.value
+    temporal.estado = event.value;
     temporal.observacion = null;
     const dialogRef = this.dialog.open(AddObservacionComponent, {
       width: '40%',

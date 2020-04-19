@@ -37,15 +37,7 @@
           ¿ Gestación ?
         </mat-slide-toggle>
       </div>
-
-      <div fxFlex="100">
-        <mat-form-field>
-          <input maxlength="500" matInput placeholder="Edad" formControlName="edad" [formControl]="this.form.get('edad')">
-        </mat-form-field>
-      </div>
     </div>
-
-
 
     <div  class="h-padding-5" *ngIf="this.form.controls['gestacion'].value">
       <mat-form-field>
@@ -53,6 +45,13 @@
                maxlength="100">
       </mat-form-field>
     </div>
+
+    <div class="h-padding-5">
+      <mat-form-field>
+        <input maxlength="500" matInput placeholder="Edad" formControlName="edad" [formControl]="this.form.get('edad')">
+      </mat-form-field>
+    </div>
+
     <div  class="h-padding-5">
       <mat-form-field>
         <input matInput placeholder="Seguro " [formControl]="this.form.controls['seguro']"

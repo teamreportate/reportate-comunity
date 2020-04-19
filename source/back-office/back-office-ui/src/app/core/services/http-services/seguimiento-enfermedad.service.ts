@@ -35,4 +35,11 @@ export class SeguimientoEnfermedadService {
     const url = Constantes.baseUri + Constants.diagnosticoApi + `/listar-mapa?from=${initial}&to=${final}&departamentoId=${departamentoId}&municipioId=${municipioId}&centroSaludId=${centroSaludId}&clasificacion=${clasificacion}&enfermedadId=${enfermedadId}`;
     return this.httpClient.get(url, {observe: 'response'});
   }
+
+  getOcupaciones(): Observable<HttpResponse<any>> {
+    // tslint:disable-next-line:max-line-length
+    const url = Constantes.baseUri + Constants.ocupaciones + `/dominio-ocupaciones`;
+    return this.httpClient.get(url, {observe: 'response'});
+  }
+
 }
