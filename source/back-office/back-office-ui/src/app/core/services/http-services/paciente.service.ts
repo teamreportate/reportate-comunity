@@ -24,6 +24,12 @@ export class PacienteService {
     return this.httpClient.get<HttpResponse<any>>(this.endPoint, {observe: 'response'});
   }
 
+
+  createDiagnostico(idPaciente: string, data: any): Observable<HttpResponse<any>> {
+    this.endPoint = Constantes.baseUri + Constants.pacienteApi + '/' + idPaciente + '/diagnostico-medico';
+    return this.httpClient.post<HttpResponse<any>>(this.endPoint, data,{observe: 'response'});
+  }
+
   updatePaciente(data: any) {
     const url = Constantes.baseUri + Constants.pacienteApi;
     return this.httpClient.put(url, JSON.stringify(data), {observe: 'response'});
