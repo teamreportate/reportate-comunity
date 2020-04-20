@@ -14,7 +14,10 @@ import {Departamento} from '../../core/models/departamento';
 import {Constants} from '../../core/constants';
 import {Municipio} from 'src/app/core/models/dto/Municipio';
 import {Centro} from 'src/app/core/models/dto/Centro';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AddContactoComponent} from './ficha-epidemiologica/dialogs/add-contacto/add-contacto.component';
+import {MatDialog} from '@angular/material';
+import {NuevoDianosticoComponent} from './nuevo-dianostico/nuevo-dianostico.component';
 
 
 @Component({
@@ -29,7 +32,7 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
   constructor(private seguimientoEnfermedadService: SeguimientoEnfermedadService,
               private enfermedadService: EnfermedadService,
               private formBuilder: FormBuilder, public changeDetector: ChangeDetectorRef, public media: MediaMatcher,
-              private notifier: NotifierService, private router: Router) {
+              private notifier: NotifierService, private router: Router, public dialog: MatDialog) {
     super();
     this.clasificacionList = Constants.CLASIFICACION_ENFERMEDAD;
     moment.locale('es-BO');
@@ -115,6 +118,26 @@ export class SeguimientoEnfermedadComponent extends ClicComponent implements OnI
   fichaEpidemiologica(row: any) {
     this.router.navigate(['seguimiento/ficha-epidemiologica', row.pacienteId]);
   }
+
+  openDialogDianostico(row: any) {
+    let temporal: any;
+    if (row !== null) {
+      temporal = row;
+    } else {
+      temporal = {};
+    }
+
+    const dialogRef = this.dialog.open(NuevoDianosticoComponent, this.dialogConfig(temporal));
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result) {
+          const notif = {error: {title: result.title, detail: result.detail}};
+          this.notifierError(notif, 'info');
+          this.ngOnInit();
+        }
+      });
+  }
+
 
   private initialForm(): FormGroup {
     this.startDate = moment().subtract(30, 'days').subtract(4, 'hour');

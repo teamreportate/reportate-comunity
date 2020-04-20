@@ -20,7 +20,7 @@ import {
   MatSlideToggleModule, MatSortModule,
   MatTabsModule,
   MatTooltipModule,
-  MatExpansionModule, MatDividerModule
+  MatExpansionModule, MatDividerModule, MatAutocompleteModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
@@ -41,10 +41,12 @@ import { GeolocalizacionCasosComponent } from './geolocalizacion-casos/geolocali
 import {ListSintomasComponent} from './seguimiento-enfermedad/ficha-epidemiologica/dialogs/list-sintomas/list-sintomas.component';
 import {DiagnosticoService} from '../core/services/http-services/diagnostico.service';
 import {AddObservacionComponent} from './seguimiento-enfermedad/ficha-epidemiologica/dialogs/add-observacion/add-observacion.component';
+import { NuevoDianosticoComponent } from './seguimiento-enfermedad/nuevo-dianostico/nuevo-dianostico.component';
+import {SintomaService} from '../core/services/http-services/sintoma.service';
 
 @NgModule({
   // tslint:disable-next-line:max-line-length
-  declarations: [SeguimientoEnfermedadComponent, FichaEpidemiologicaComponent, AddContactoComponent, AddEnfermedadComponent, AddPaisViajadoComponent, ListSintomasComponent, GeolocalizacionCasosComponent, AddObservacionComponent],
+  declarations: [SeguimientoEnfermedadComponent, FichaEpidemiologicaComponent, AddContactoComponent, AddEnfermedadComponent, AddPaisViajadoComponent, ListSintomasComponent, GeolocalizacionCasosComponent, AddObservacionComponent, NuevoDianosticoComponent],
   imports: [
     RouterModule.forChild(SeguimientoRoute),
     CommonModule,
@@ -75,10 +77,11 @@ import {AddObservacionComponent} from './seguimiento-enfermedad/ficha-epidemiolo
     SharedModule,
     MatExpansionModule,
     MatSortModule,
-    MatDividerModule
-  // tslint:disable-next-line:max-line-length
-  ], entryComponents: [AddContactoComponent, AddPaisViajadoComponent, AddEnfermedadComponent, ListSintomasComponent, AddObservacionComponent],
-  providers: [PacienteService, PaisService, EnfermedadService, DiagnosticoService]
+    MatDividerModule,
+    MatAutocompleteModule,
+    // tslint:disable-next-line:max-line-length
+  ], entryComponents: [AddContactoComponent, AddPaisViajadoComponent, AddEnfermedadComponent, ListSintomasComponent, AddObservacionComponent, NuevoDianosticoComponent],
+  providers: [PacienteService, PaisService, EnfermedadService, DiagnosticoService, SintomaService]
 })
 export class SeguimientoModule {
 }

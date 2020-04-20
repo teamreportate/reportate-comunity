@@ -1,0 +1,101 @@
+<mat-dialog-content>
+
+  <mat-card>
+    <mat-card-header class="bg-primary-theme text-white">
+      <mat-card-title>{{"Nuevo Diagnostico"}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div fxLayout="row wrap" [formGroup]="this.form">
+        <div fxFlex="100">
+          <mat-form-field>
+            <label>
+              <input maxlength="100" matInput placeholder="Nombre del Paciente:" value="{{this.data.nombrePaciente}}"
+                     disabled>
+            </label>
+          </mat-form-field>
+        </div>
+        <br>
+        <div fxFlex="100">
+          <mat-form-field>
+            <input maxlength="100" matInput placeholder="Edad:" value="{{this.data.edad}}" disabled>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100">
+          <mat-form-field>
+            <input maxlength="100" matInput placeholder="Sexo:" value="{{this.data.genero}}" disabled>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxLayoutAlign="center center" class="h-padding-5">
+          <label><strong>Síntomas</strong></label>
+        </div>
+        <div fxFlex="100">
+          <ngx-datatable #table class="material" [messages]="this.tableMessages()"
+                         [columnMode]="'force'"
+                         [selectionType]="'checkbox'"
+                         [headerHeight]="40"
+                         [footerHeight]="35"
+                         [rowHeight]="50"
+                         [limit]="10"
+                         [scrollbarH]="this.scrollH"
+                         [rows]="this.listSintomas"
+                         [selected]="this.selected"
+                         (select)="this.onSelect($event)">
+
+            <ngx-datatable-column
+              [sortable]="false"
+              [draggable]="false"
+              [resizeable]="false"
+              [checkboxable]="true"
+              [headerCheckboxable]="true"
+              [maxWidth]="100"
+              [minWidth]="100">
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Nombre" [maxWidth]="300" [draggable]="false" [resizeable]="false">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.nombre}}
+              </ng-template>
+            </ngx-datatable-column>
+
+          </ngx-datatable>
+        </div>
+        <div [fxFlex]="100" class="h-padding-5">
+
+          <div fxFlex="100">
+            <mat-form-field class="example-full-width">
+              <mat-label>ENFERMEDADES BASE</mat-label>
+              <input type="text" matInput [formControl]="this.form.controls['enfermedadId']" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of this.filteredOptions | async" [value]="option.nombre" (onSelectionChange)="selectedOption($event)">
+                  {{option.nombre}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-form-field appearance="fill">
+            <textarea matInput placeholder="Observaciones *" [formControl]="this.form.controls['recomendacion']"
+                      cols="40" rows="15"></textarea>
+        </mat-form-field>
+        <div [fxFlex]="100" class="h-padding-5">
+          <mat-form-field>
+            <mat-select placeholder="Clasificación" [formControl]="this.form.controls['clasificacion']">
+              <mat-option *ngFor="let clasifiacion of this.clasificiacion" [value]="clasifiacion.key">
+                {{clasifiacion.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <mat-card-actions fxLayoutAlign="end center" fxLayoutGap="5px">
+        <button mat-stroked-button color="warn" type="button" (click)="this.cancel()">Cancelar</button>
+        <button mat-flat-button color="accent" type="button"  [disabled]="!this.form.valid || !this.enfermedadId || !this.selected"  (click)="this.save()">
+          Guardar
+        </button>
+      </mat-card-actions>
+    </mat-card-content>
+  </mat-card>
+  <ng-template #customNotification let-notificationData="notification">
+    <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
+  </ng-template>
+</mat-dialog-content>
