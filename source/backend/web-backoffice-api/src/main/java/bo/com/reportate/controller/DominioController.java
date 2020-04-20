@@ -38,7 +38,10 @@ public class DominioController {
     @Operation(summary = "Lista todos los dominios", description = "Lista todos los dominios del sistema.", tags = { "dominio" })
     public ResponseEntity<List<DominioDto>> listarDominios() {
         try {
-            return ok(dominioService.findAll());
+            log.info("Iniciando listando dominios");
+            List<DominioDto> dominioDtos = dominioService.findAll();
+            log.info("Fin listado doccumentos");
+            return ok(dominioDtos);
         } catch (OperationException e){
             log.error("Se genero un error al listar dominios: Causa. {}", e.getMessage());
             return CustomErrorType.badRequest("Listar Dominios", e.getMessage());

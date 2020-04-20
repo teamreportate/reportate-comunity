@@ -5,8 +5,6 @@ import bo.com.reportate.model.CentroSaludUsuario;
 import bo.com.reportate.model.MuUsuario;
 import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.dto.CentroSaludUsuarioDto;
-import bo.com.reportate.model.dto.DepartamentoUsuarioDto;
-import bo.com.reportate.model.dto.MunicipioUsuarioDto;
 import bo.com.reportate.model.enums.EstadoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -84,4 +82,9 @@ public interface CentroSaludUsuarioRepository extends JpaRepository<CentroSaludU
     @Modifying
     @Query(" UPDATE CentroSaludUsuario du SET du.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE du.muUsuario =:usuario AND du.centroSalud.id NOT IN(:centros)")
     void eliminaCentrosNoAsignados(@Param("usuario") MuUsuario muUsuario, @Param("centros") List<Long> centrosIds);
+
+    @Modifying
+    @Query(" UPDATE CentroSaludUsuario du SET du.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO " +
+            "WHERE du.muUsuario =:usuario")
+    void eliminaCentrosAsignados(@Param("usuario") MuUsuario muUsuario);
 }

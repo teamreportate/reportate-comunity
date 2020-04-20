@@ -1,9 +1,8 @@
 package bo.com.reportate;
 
-import java.time.ZoneId;
-import java.util.Optional;
-import java.util.TimeZone;
-
+import bo.com.reportate.model.MuUsuario;
+import bo.com.reportate.model.enums.TipoUsuarioEnum;
+import bo.com.reportate.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,9 +21,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import bo.com.reportate.model.MuUsuario;
-import bo.com.reportate.model.enums.TipoUsuarioEnum;
-import bo.com.reportate.service.EmailService;
+import java.time.ZoneId;
+import java.util.Optional;
+import java.util.TimeZone;
 
 @EnableJpaRepositories(basePackages = {"bo.com.reportate.repository"})
 @EntityScan(basePackages = {"bo.com.reportate.model"})

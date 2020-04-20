@@ -82,7 +82,7 @@
                 </div>
                 <div [fxFlex]="this.filterFlex" class="h-padding-5">
                   <mat-form-field>
-                    <input matInput maxlength="50" placeholder="Nombre del Paciente (Opcional)"
+                    <input matInput maxlength="50" placeholder="Nombre del Paciente ó Código (Opcional)"
                            [formControl]="this.form.get('nombrePaciente')">
                   </mat-form-field>
                 </div>
@@ -129,6 +129,12 @@
         <ngx-datatable-column name="Fecha Registro" [maxWidth]="250" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
             {{row.fechaRegistro | date: "dd/MM/yyyy H:mm"}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Código" [maxWidth]="150" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.pacienteId}}
           </ng-template>
         </ngx-datatable-column>
 
@@ -182,11 +188,9 @@
         <ngx-datatable-column name="Clasificación" [maxWidth]="250" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
             <div *ngIf="row.clasificacion==='NEGATIVO'" class="color-green">{{row.clasificacion}}</div>
-
-            <div *ngIf="row.clasificacion==='CONFIRMADO'" class="color-red">{{row.clasificacion}}
-            </div>
-            <div *ngIf="row.clasificacion==='SOSPECHOSO'" class="color-yellow" >{{row.clasificacion}}
-            </div>
+            <div *ngIf="row.clasificacion==='CONFIRMADO'" class="color-red">{{row.clasificacion}}</div>
+            <div *ngIf="row.clasificacion==='SOSPECHOSO'" class="color-yellow" >{{row.clasificacion}}</div>
+            <div *ngIf="row.clasificacion==='ACTIVO'" class="color-orange" >{{row.clasificacion}}</div>
           </ng-template>
         </ngx-datatable-column>
 
@@ -195,7 +199,6 @@
             {{row.enfermedad}}
           </ng-template>
         </ngx-datatable-column>
-
       </ngx-datatable>
     </div>
   </div>

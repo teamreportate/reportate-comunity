@@ -1,35 +1,14 @@
 package bo.com.reportate.config;
 
+import bo.com.reportate.model.dto.PacienteEmailDto;
+import bo.com.reportate.model.dto.response.DiagnosticoSintomaResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import java.util.*;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Locale;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.InputStreamSource;
-import org.springframework.core.io.Resource;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
+import java.util.List;
 
 
 /**
@@ -73,10 +52,19 @@ public class MailContentBuilder {
         // Prepare the evaluation context
         final Context ctx = new Context();
         ctx.setVariable("paciente", paciente);
-        ctx.setVariable("sintomas", sintomas);
+//        ctx.setVariable("sintomas", sintomas);
         ctx.setVariable("mensaje",mensaje);
         ctx.setVariable("imageResourceName", imageResourceName); // so that we can reference it from HTML
         return this.templateEngine.process("mailTemplate2", ctx);
+    }
+
+    public String notidicacionMedico(PacienteEmailDto paciente, List<DiagnosticoSintomaResponse> sintomas, String imageResourceName) {
+        // Prepare the evaluation context
+        final Context ctx = new Context();
+        ctx.setVariable("paciente", paciente);
+        ctx.setVariable("sintomas", sintomas);
+        ctx.setVariable("imageResourceName", imageResourceName); // so that we can reference it from HTML
+        return this.templateEngine.process("mailTemplate3", ctx);
     }
 
 
@@ -88,8 +76,8 @@ public class MailContentBuilder {
             throws MessagingException {
         // Prepare the evaluation context
         final Context ctx = new Context();
-        ctx.setVariable("name", recipientName);
-        ctx.setVariable("sintomas", sintomas);
+//        ctx.setVariable("name", recipientName);
+//        ctx.setVariable("sintomas", sintomas);
         // Create the HTML body using Thymeleaf
         return this.templateEngine.process(htmlContent, ctx);
     }

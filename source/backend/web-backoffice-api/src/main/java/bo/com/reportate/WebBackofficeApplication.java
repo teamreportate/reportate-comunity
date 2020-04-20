@@ -1,7 +1,6 @@
 package bo.com.reportate;
 
 import bo.com.reportate.model.MuUsuario;
-import bo.com.reportate.model.enums.AuthTypeEnum;
 import bo.com.reportate.model.enums.TipoUsuarioEnum;
 import bo.com.reportate.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;

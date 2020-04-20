@@ -14,9 +14,10 @@ import lombok.Getter;
 @Getter
 public enum Process {
     // Administracion...
+    SESION("SESION"),
     ADMINISTRACION("ADMINISTRACION"),
     // Grupo
-    GRUPO("PROCESS"), SESION("SESION"),
+    GRUPO("PROCESS"),
     REGISTRO_FAMILIA("REGISTRO_FAMILIA"),
     REGISTRO_PACIENTE("REGISTRO_PACIENTE"),
     CONTROL_DIARIO("CONTROL_DIARIO"),

@@ -1,13 +1,9 @@
 package bo.com.reportate.service;
 
-import bo.com.reportate.model.CentroSalud;
-import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.MuUsuario;
-import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.dto.*;
-import bo.com.reportate.model.dto.request.CentroSaludRequest;
-import bo.com.reportate.model.dto.request.DepartamentoRequest;
-import bo.com.reportate.model.dto.request.MunicipioRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -26,6 +22,7 @@ public interface UsuarioService {
      * @return
      */
     List<UsuarioDto> listar();
+    Page<UsuarioDto> listarUsuarioPacientes(Pageable pageable);
 
     /**
      * Realiza el listado del objeto segun el criterio de busqueda

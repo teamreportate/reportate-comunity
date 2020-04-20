@@ -1,14 +1,10 @@
 package bo.com.reportate.web;
 
-import bo.com.reportate.model.Departamento;
-import bo.com.reportate.model.dto.MunicipioDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Created by :MC4

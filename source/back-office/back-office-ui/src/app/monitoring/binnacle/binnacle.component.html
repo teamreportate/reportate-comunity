@@ -1,4 +1,4 @@
-<clic-page [title]="'Logs'" (reloadEmitter)="this.ngOnInit()">
+<clic-page [title]="'Bitácora'" (reloadEmitter)="this.ngOnInit()">
   <div fxLayout="row wrap">
     <div [fxFlex]="this.filterFlex" class="h-padding-5">
       <mat-form-field class="picker-date-filter">
@@ -16,8 +16,9 @@
       </mat-form-field>
     </div>
   </div>
-  <div fxLayout="row wrap">
-    <div [fxFlex]="this.filterFlex" class="h-padding-5">
+  <div fxLayout="row wrap" >
+
+    <div [fxFlex]="this.filterFlex" class="h-padding-5" fxFlex="50">
       <mat-form-field>
         <mat-select placeholder="Tipo de Proceso" [formControl]="this.form.get('tipoProceso')" (selectionChange)="this.onProcessChange($event)">
           <mat-option *ngFor="let process of this.processList" [value]="process">
@@ -26,21 +27,18 @@
         </mat-select>
       </mat-form-field>
     </div>
-  </div>
-  <div fxLayout="row wrap">
-    <div [fxFlex]="this.filterFlex" class="h-padding-5">
+
+    <div [fxFlex]="this.filterFlex" class="h-padding-5" fxFlex="50">
       <mat-form-field>
         <input matInput type='text' placeholder='Texto de coincidencia' maxlength="100" [formControl]="this.form.get('message')"/>
       </mat-form-field>
     </div>
-    <div fxFlex="100" class="h-padding-5">
+    <div fxFlex="10" class="h-padding-5">
       <button mat-flat-button color="accent" (click)="this.onSearch()">Buscar</button>
     </div>
-<!--    <div fxFlex="100" *ngIf="this.render" class="p-10">-->
-<!--      <mat-form-field>-->
-<!--        <input matInput type='text' placeholder='Buscar...' maxlength="30" (keyup.enter)="this.onLogFilter($event.target.value)"/>-->
-<!--      </mat-form-field>-->
-<!--    </div>-->
+  </div>
+
+  <div fxLayout="row wrap">
     <div fxFlex="100" class="p-5">
       <ngx-datatable #table class="material" [messages]="this.tableMessages()"
                      [columnMode]="'force'"
@@ -55,17 +53,17 @@
                      [rows]="this.pageControl.content"
                      (page)='this.setPage($event)'>
 
-        <!--<ngx-datatable-column name="Acciones" [maxWidth]="80" [draggable]="false" [resizeable]="false">-->
-          <!--<ng-template let-row="row" ngx-datatable-cell-template>-->
-            <!--<div fxLayout="row" fxFlexAlign="start start">-->
-              <!--<div fxFlex="100" fxFlexAlign="center top">-->
-                <!--<button mat-icon-button matTooltip="Detalles">-->
-                  <!--<mat-icon color="accent" >info</mat-icon>-->
-                <!--</button>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</ng-template>-->
-        <!--</ngx-datatable-column>-->
+        <ngx-datatable-column name="Acciones" [maxWidth]="120" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div fxLayout="row" fxFlexAlign="start start">
+              <div fxFlex="100" fxFlexAlign="center top">
+                <button mat-icon-button matTooltip="Detalles">
+                  <mat-icon color="accent" >info</mat-icon>
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
 
         <ngx-datatable-column name="Fecha Registro" [maxWidth]="250"  [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>

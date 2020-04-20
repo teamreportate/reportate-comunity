@@ -4,7 +4,10 @@ import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.dto.PacienteDto;
 import bo.com.reportate.model.dto.PaisVisitadoDto;
-import bo.com.reportate.model.dto.response.*;
+import bo.com.reportate.model.dto.request.DiagnosticoRequest;
+import bo.com.reportate.model.dto.response.EnfermedadResponse;
+import bo.com.reportate.model.dto.response.FichaEpidemiologicaResponse;
+import bo.com.reportate.model.dto.response.MovilControlDiario;
 import bo.com.reportate.model.enums.Process;
 import bo.com.reportate.service.LogService;
 import bo.com.reportate.service.PacienteService;
@@ -310,6 +313,32 @@ public class PacienteController {
             log.error("Se genero un error al obtener la familia del usuario",e);
             logService.error(Process.REGISTRO_FAMILIA,"Se genero un error al obtener la familia del usuario");
             return CustomErrorType.serverError("Obtener Familia", "Se genero un error al obtener la familia del usuario");
+        }
+    }
+
+
+    @RequestMapping(value = "/{pacienteId}/diagnostico-medico", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Crea un registro de Diagnotico", description = "Guarda un registro de Diagnostico ingresado por un médico", tags = { "paciente" })
+    public ResponseEntity<PacienteDto> diagnosticoMedico(
+            @AuthenticationPrincipal Authentication userDetails,
+            @Parameter(description = "Identificador de paciente", required = true)
+            @PathVariable("pacienteId") Long pacienteId,
+            @Parameter(description = "Objeto sintomas para registrar", required = true)
+            @RequestBody DiagnosticoRequest diagnosticoRequest) {
+        try {
+            this.pacienteService.agregarDiagnosticoMedico(userDetails,pacienteId,diagnosticoRequest);
+
+            log.info("Se registro de manera correcta el diagnostico para el paciente: {}",pacienteId);
+
+            return ok().build();
+        }catch (NotDataFoundException | OperationException e){
+            log.error("Se genero un error al guardar el diagnostico del paciente: {}. Causa. {}",pacienteId,e.getMessage());
+            logService.error(Process.DIAGNOSTICO,"Se genero un error al guardar el diagnostico del paciente: {}. Causa. {}",pacienteId,e.getMessage());
+            return CustomErrorType.badRequest("Diagnostico Medico", e.getMessage());
+        }catch (Exception e){
+            log.error("Se genero un error al guardar el diagnostico del paciente : {}",pacienteId,e);
+            logService.error(Process.DIAGNOSTICO,"Se genero un error al guardar el diagnostico del paciente : {}",pacienteId);
+            return CustomErrorType.serverError("Diagnostico Medico", "Ocurrió un error al guardar el diagnostico del paciente: "+pacienteId);
         }
     }
 

@@ -1,22 +1,12 @@
 package bo.com.reportate.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "DIAGNOSTICO_RESUMEN_TOTAL_DIARIO")
@@ -55,26 +45,26 @@ public class DiagnosticosResumenTotalDiario extends AbstractAuditableEntity {
 
 	@Column(name = "SOSPECHOSO", nullable = false)
 	private Long sospechoso;
-	@Column(name = "NEGATIVO", nullable = false)
-	private Long negativo;
-	@Column(name = "CONFIRMADO", nullable = false)
-	private Long confirmado;
-	@Column(name = "CURADO", nullable = false)
-	private Long curado;
-	@Column(name = "FALLECIDO", nullable = false)
-	private Long fallecido;
+	@Column(name = "DESCARTADO", nullable = false)
+	private Long descartado;
+	@Column(name = "POSITIVO", nullable = false)
+	private Long positivo;
+	@Column(name = "RECUPERADO", nullable = false)
+	private Long recuperado;
+	@Column(name = "DECESO", nullable = false)
+	private Long deceso;
 	public DiagnosticosResumenTotalDiario(Enfermedad enfermedad, Departamento departamento, Municipio municipio,
-			CentroSalud centroSalud, Long sospechoso, Long negativo, Long confirmado, Long curado, Long fallecido) {
+			CentroSalud centroSalud, Long sospechoso, Long descartado, Long positivo, Long recuperado, Long deceso) {
 		super();
 		this.enfermedad = enfermedad;
 		this.departamento = departamento;
 		this.municipio = municipio;
 		this.centroSalud = centroSalud;
 		this.sospechoso = sospechoso;
-		this.negativo = negativo;
-		this.confirmado = confirmado;
-		this.curado = curado;
-		this.fallecido = fallecido;
+		this.descartado = descartado;
+		this.positivo = positivo;
+		this.recuperado = recuperado;
+		this.deceso = deceso;
 	}
 	
 	

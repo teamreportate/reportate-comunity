@@ -1,11 +1,5 @@
 package bo.com.reportate.repository;
 
-import bo.com.reportate.model.Departamento;
-import bo.com.reportate.model.Diagnostico;
-import bo.com.reportate.model.Enfermedad;
-
-import bo.com.reportate.model.Municipio;
-import bo.com.reportate.model.Paciente;
 import bo.com.reportate.model.*;
 import bo.com.reportate.model.dto.DiagnosticoDto;
 import bo.com.reportate.model.dto.response.DiagnosticoResponseDto;
@@ -14,7 +8,6 @@ import bo.com.reportate.model.dto.response.NivelValoracionDto;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,7 +15,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -54,6 +46,25 @@ public interface DiagnosticoRepository extends JpaRepository<Diagnostico, Long> 
             @Param("diagnosticos") List<EstadoDiagnosticoEnum> diagnosticos,
             @Param("enfermedades") List<Enfermedad> enfermedades,
             @Param("nombre") String nombre,
+            Pageable pageable);
+
+    @Query("SELECT new bo.com.reportate.model.dto.response.DiagnosticoResponseDto(d) " +
+            "FROM Diagnostico d INNER JOIN d.enfermedad enf INNER JOIN d.controlDiario cd " +
+            "INNER JOIN cd.paciente p INNER JOIN p.familia f  " +
+            " WHERE d.createdDate BETWEEN :fechaInicio AND :fechaFin AND d.departamento IN (:departamentos) " +
+            " AND d.municipio in (:municipios) AND d.centroSalud IN (:centrosSalud)" +
+            " AND d.estadoDiagnostico IN (:diagnosticos) " +
+            " AND enf IN (:enfermedades) " +
+            " AND p.id=:codigo ORDER BY d.id DESC")
+    Page<DiagnosticoResponseDto> listarDiagnosticoPorCodigo(
+            @Param("fechaInicio") Date date,
+            @Param("fechaFin") Date to,
+            @Param("departamentos") List<Departamento> departamentos,
+            @Param("municipios") List<Municipio> municipios,
+            @Param("centrosSalud") List<CentroSalud> centrosSalud,
+            @Param("diagnosticos") List<EstadoDiagnosticoEnum> diagnosticos,
+            @Param("enfermedades") List<Enfermedad> enfermedades,
+            @Param("codigo") Long codigo,
             Pageable pageable);
 
     @Query("SELECT new bo.com.reportate.model.dto.response.DiagnosticoResponseDto(d) " +

@@ -83,7 +83,7 @@ export default ({newMember}) => {
 		<div>
 			{
 				newMember
-				? <p>Ingresa la información básica del integrante de tú familia</p>
+				? <p>Ingresa la información básica del integrante de tu familia</p>
 				: <p>Información de <b>{member.name}</b></p>
 			}
 			
@@ -108,7 +108,7 @@ export default ({newMember}) => {
 				</Form.Item>
 				<Form.Item label="Edad"
 									 name="age"
-									 rules={[{required: true, message: 'Ingresa la edad'}]}>
+									 rules={[{required: true, message: 'Ingrese su edad'}]}>
 					<InputNumber
 						style={{width: '100%'}}
 						min={0}
@@ -118,7 +118,7 @@ export default ({newMember}) => {
 				</Form.Item>
 				<Form.Item label="Sexo"
 									 name="sex"
-									 rules={[{required: true, message: 'Ingresa el genero'}]}>
+									 rules={[{required: true, message: 'Seleccione una opción'}]}>
 					<Select
 						showSearch
 						placeholder="Seleccione una opción"

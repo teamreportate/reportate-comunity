@@ -74,4 +74,12 @@ export class PacienteService {
     const url = Constantes.baseUri + Constants.pacienteApi + '/' + idPaciente + '/' + enfermedad + '/agregar-enfermedad-base';
     return this.httpClient.put<HttpResponse<any>>(url, null, {observe: 'response'});
   }
+
+  /**
+   * Listar las ocupaciones
+   */
+  getOcupaciones(): Observable<HttpResponse<any>> {
+    const url = Constantes.baseUri + Constants.ocupaciones + `/dominio-ocupaciones`;
+    return this.httpClient.get(url, {observe: 'response'});
+  }
 }

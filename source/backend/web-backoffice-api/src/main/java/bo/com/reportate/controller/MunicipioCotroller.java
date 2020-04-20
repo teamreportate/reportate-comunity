@@ -2,12 +2,8 @@ package bo.com.reportate.controller;
 
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
-import bo.com.reportate.model.CentroSalud;
-import bo.com.reportate.model.Departamento;
 import bo.com.reportate.model.Municipio;
 import bo.com.reportate.model.dto.CentroSaludDto;
-import bo.com.reportate.model.dto.DepartamentoDto;
-import bo.com.reportate.model.dto.MunicipioDto;
 import bo.com.reportate.service.CentroSaludService;
 import bo.com.reportate.service.MunicipioService;
 import bo.com.reportate.util.CustomErrorType;

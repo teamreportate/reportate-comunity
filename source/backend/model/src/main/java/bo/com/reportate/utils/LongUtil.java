@@ -6,10 +6,7 @@ public class LongUtil {
         if(valor==null){
             return true;
         }
-        if(valor.equals(new Long("0"))){
-            return true;
-        }
-        return false;
+        return valor.equals(new Long("0"));
     }
 
     public static boolean isLong(String valor){
@@ -23,8 +20,7 @@ public class LongUtil {
 
     public static Long toLong(String valor){
         try {
-            Long valorLong=new Long(valor);
-            return valorLong;
+            return new Long(valor);
         } catch (Exception e){
             return null;
         }
@@ -35,8 +31,7 @@ public class LongUtil {
             if (valor == null)
                 return null;
 
-            Long valorInt = new Long(String.valueOf(valor));
-            return valorInt;
+            return new Long(String.valueOf(valor));
         } catch (Exception e) {
             return null;
         }

@@ -27,28 +27,31 @@ export class Constants {
   static pacienteApi = 'api/pacientes';
   static departmentApi = 'api/departamentos';
   static diagnosticoApi = 'api/diagnosticos';
+  static ocupaciones = 'api/dominios';
   static userApi = 'api/usuarios';
   static departamentosApi = 'api/departamentos';
   static municipiosApi = 'api/municipios';
   static centrosApi = 'api/centros-de-salud';
   static listDiagnostico = 'api/departamentos/departamento-municipio-centro-salud-asignados';
+  static reporteApi = 'api/reportes/';
 
 // CLASIFICACION ENFERMEDAD
-  static CLASIFICACION_ENFERMEDAD = [{key: 'TODOS', value: 'Todos'}, {key: 'SOSPECHOSO', value: 'SOSPECHOSO'},
-    {key: 'NEGATIVO', value: 'NEGATIVO'}, {
-    key: 'CONFIRMADO',
-    value: 'CONFIRMADO'
-
-  }];
+  static CLASIFICACION_ENFERMEDAD = [
+    {key: 'TODOS', value: 'Todos'},
+    {key: 'SOSPECHOSO', value: 'SOSPECHOSO'},
+    {key: 'NEGATIVO', value: 'NEGATIVO'},
+    {key: 'CONFIRMADO', value: 'CONFIRMADO'},
+    {key: 'ACTIVO', value: 'ACTIVO'},
+    {key: 'CURADO', value: 'CURADO'}];
   static SOS: 'SOSPECHOSO';
   static NEG: 'NEGATIVO';
   static CONF: 'CONFIRMADO';
-  static CLASIFICACION_ENFERMEDAD2 = [{key: 'SOSPECHOSO', value: 'SOSPECHOSO'},
-    {key: 'NEGATIVO', value: 'NEGATIVO'}, {
-      key: 'CONFIRMADO',
-      value: 'CONFIRMADO'
-
-    }];
+  static CLASIFICACION_ENFERMEDAD2 = [
+    {key: 'SOSPECHOSO', value: 'SOSPECHOSO'},
+    {key: 'NEGATIVO', value: 'NEGATIVO'},
+    {key: 'CONFIRMADO', value: 'CONFIRMADO'},
+    {key: 'ACTIVO', value: 'ACTIVO'},
+    {key: 'CURADO', value: 'CURADO'}];
 
   static SEXOS = [{key: 'MASCULINO', value: 'MASCULINO'},
     {key: 'FEMENINO', value: 'FEMENINO'}];

@@ -15,30 +15,30 @@ import {AddContactoComponent} from './dialogs/add-contacto/add-contacto.componen
 import * as moment from 'moment';
 import {ListSintomasComponent} from './dialogs/list-sintomas/list-sintomas.component';
 import {AddObservacionComponent} from './dialogs/add-observacion/add-observacion.component';
-
-interface Food {
-  value: string;
-  viewValue: string;
-}
+import { ReporteModule } from 'src/app/core/reports/generateReport.module';
+import { DtoFileModel } from 'src/app/core/models/dto/dto-file.model';
+import { SeguimientoEnfermedadService } from 'src/app/core/services/http-services/seguimiento-enfermedad.service';
 
 @Component({
   selector: 'app-ficha-epidemiologica',
   templateUrl: './ficha-epidemiologica.component.html',
   styleUrls: ['./ficha-epidemiologica.component.sass', './ficha-epidemiologica.component.scss'],
-  providers: []
+  providers: [SeguimientoEnfermedadService]
 })
 export class FichaEpidemiologicaComponent extends ClicComponent implements OnInit {
   idPaciente = this.route.snapshot.paramMap.get('idPaciente');
   public form: FormGroup;
-  private message: string;
   listEnfermedadesBase = [];
   listPaisesVisitados = [];
   listDiagnosticos = [];
   listContactos = [];
+  listaOcupacion = [];
   public filterFlex;
   @BlockUI() blockUI: NgBlockUI;
 
-  constructor(private route: ActivatedRoute, public dialog: MatDialog, private pacienteService: PacienteService, private formBuilder: FormBuilder, private notifier: NotifierService) {
+  // tslint:disable-next-line:max-line-length
+  constructor(private route: ActivatedRoute, public dialog: MatDialog, private pacienteService: PacienteService, private formBuilder: FormBuilder, private notifier: NotifierService,
+    private reporteFormato: ReporteModule, private seguimiento: SeguimientoEnfermedadService) {
     super();
     this.form = this.initial();
     moment.locale('es-BO');
@@ -49,9 +49,9 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
   generos = Constants.SEXOS;
 
   ngOnInit() {
+    this.recuperarOcupacion();
     this.pacienteService.getFichaEpidemiologica(this.idPaciente).subscribe(response => {
       this.form = this.initialForm(response.body);
-      console.warn(response.body);
       this.listPaisesVisitados = response.body.paisesVisitados;
       this.listEnfermedadesBase = response.body.enfermedadesBase;
       this.listDiagnosticos = response.body.diagnosticos;
@@ -96,7 +96,7 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       ocupacion: new FormControl(data.ocupacion, Validators.compose([])),
       gestacion: new FormControl(data.gestacion, Validators.compose([])),
       tiempoGestacion: new FormControl(data.tiempoGestacion, Validators.compose([])),
-      fechaNacimiento: new FormControl(new Date(data.fechaNacimiento), Validators.compose([])),
+      fechaNacimiento: new FormControl(data.fechaNacimiento, Validators.compose([])),
       seguro: new FormControl(data.seguro, Validators.compose([])),
       codigoSeguro: new FormControl(data.codigoSeguro, Validators.compose([])),
       ubicacion: new FormControl(data.ubicacion, Validators.compose([Validators.required])),
@@ -116,6 +116,44 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       };
       this.notifier.show(customOptions);
     }
+  }
+
+  recuperarReporte() {
+    this.blockUI.start('Generando reporte...');
+    this.seguimiento.getReporteFichaEpidemiologica(this.idPaciente).subscribe(respuesta => {
+      this.generarDocumento(respuesta.body);
+      this.blockUI.stop();
+      // this.ngOnInit();
+      // tslint:disable-next-line:max-line-length
+      const notif = {error: {title: 'Generación de Reporte', detail: 'Reporte generado satisfactoriamente.'}};
+      this.notifierError(notif, 'info');
+    }, error => {
+      this.blockUI.stop();
+      if (error) {
+        this.notifierError(error);
+      }
+    });
+  }
+
+  generarDocumento(reporte: DtoFileModel) {
+    if (reporte.tipo === '.pdf') {
+      this.reporteFormato.impresionPdf(reporte.nombre, reporte.archivoBase64);
+    }
+    if (reporte.tipo === '.xls' || reporte.tipo === '.xlsx') {
+      this.reporteFormato.impresionExcel(reporte.nombre, reporte.archivoBase64);
+    }
+  }
+  recuperarOcupacion() {
+    this.blockUI.start('Generando reporte...');
+    this.seguimiento.getOcupaciones().subscribe(respuesta => {
+      this.blockUI.stop();
+      this.listaOcupacion = respuesta.body;
+    }, error => {
+      this.blockUI.stop();
+      if (error) {
+        this.notifierError(error);
+      }
+    });
   }
 
   onXsScreen() {
@@ -283,7 +321,6 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       });
   }
 
-
   updateDataPaciente() {
     if (this.form.valid) {
       this.blockUI.start('Procesando solicitud...');
@@ -312,7 +349,7 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
   selectedState(event: any, row: any) {
     const temporal: any = {};
     temporal.idDiagnostico = row.id;
-    temporal.estado = event.value
+    temporal.estado = event.value;
     temporal.observacion = null;
     const dialogRef = this.dialog.open(AddObservacionComponent, {
       width: '40%',

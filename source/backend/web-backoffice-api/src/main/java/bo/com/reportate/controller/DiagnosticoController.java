@@ -2,14 +2,12 @@ package bo.com.reportate.controller;
 
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
-import bo.com.reportate.model.Diagnostico;
 import bo.com.reportate.model.dto.DiagnosticoDto;
 import bo.com.reportate.model.dto.response.*;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.service.DiagnosticoResumenEstadoService;
 import bo.com.reportate.service.DiagnosticoResumenTotalEstadoService;
 import bo.com.reportate.service.DiagnosticoService;
-import bo.com.reportate.service.ParamService;
 import bo.com.reportate.util.CustomErrorType;
 import bo.com.reportate.utils.DateUtil;
 import bo.com.reportate.web.ActualizacionDiagnosticoRequest;
@@ -48,7 +46,6 @@ import static org.springframework.http.ResponseEntity.ok;
 @Tag(name = "diagnostico", description = "API de diagnosticos")
 public class DiagnosticoController {
     @Autowired private DiagnosticoService diagnosticoService;
-    @Autowired private ParamService paramService;
     @Autowired private DiagnosticoResumenEstadoService diagnosticoResumenEstadoService;
     @Autowired private DiagnosticoResumenTotalEstadoService diagnosticoResumenTotalEstadoService;
 
@@ -82,10 +79,10 @@ public class DiagnosticoController {
                     departamentoId, municipioId, centroSaludId, nombrePaciente, clasificacion, enfermedadId, pageable));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al listar los diagnosticos: Causa. {}",e.getMessage());
-            return CustomErrorType.badRequest("Listar Diagnostico", e.getMessage());
+            return CustomErrorType.badRequest("Listar Diagnóstico", e.getMessage());
         }catch (Exception e){
             log.error("Se genero un error al listar los diagnosticos:",e);
-            return CustomErrorType.serverError("Listar Diagnostico", "Se genero un error al listar los diagnosticos");
+            return CustomErrorType.serverError("Listar Diagnóstico", "Se genero un error al listar los diagnósticos");
         }
     }
     @RequestMapping(value = "/tacometro-por-clasificacion",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -101,20 +98,18 @@ public class DiagnosticoController {
             @Parameter(description = "Identificador de Enfermedad", required = true)
             @RequestParam("enfermedadId") Long enfermedadId){
         try {
-        	//Authentication authentication,BigDecimal valoracionInicio, BigDecimal valoracionFin, Long departamentoId,Long municipioId, Long centroSaludId,
-    		//String genero, Integer edadInicial, Integer edadFinal,EstadoDiagnosticoEnum estadoDiagnostico, Long enfermedadId
         	Integer sospechosos =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication,departamentoId, municipioId,centroSaludId,null,
             		null,null,EstadoDiagnosticoEnum.SOSPECHOSO, enfermedadId);
-        	Integer confirmados =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication, departamentoId, municipioId,centroSaludId,null,
-            		null,null,EstadoDiagnosticoEnum.CONFIRMADO, enfermedadId);
+        	Integer positivos =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication, departamentoId, municipioId,centroSaludId,null,
+            		null,null,EstadoDiagnosticoEnum.POSITIVO, enfermedadId);
         	Integer recuperados =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication,departamentoId, municipioId,centroSaludId,null,
-            		null,null,EstadoDiagnosticoEnum.CURADO, enfermedadId);
+            		null,null,EstadoDiagnosticoEnum.RECUPERADO, enfermedadId);
         	Integer fallecidos =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication, departamentoId, municipioId,centroSaludId,null,
-            		null,null,EstadoDiagnosticoEnum.FALLECIDO, enfermedadId);
+            		null,null,EstadoDiagnosticoEnum.DECESO, enfermedadId);
         	Integer negativos =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication, departamentoId, municipioId,centroSaludId,null,
-            		null,null,EstadoDiagnosticoEnum.NEGATIVO, enfermedadId);
+            		null,null,EstadoDiagnosticoEnum.DESCARTADO, enfermedadId);
         	
-        	TotalResponse totalResponse = new TotalResponse(sospechosos,negativos,confirmados,recuperados,fallecidos,sospechosos+confirmados+recuperados+fallecidos+negativos);
+        	TotalResponse totalResponse = new TotalResponse(sospechosos,negativos,positivos,recuperados,fallecidos,positivos+recuperados+fallecidos);
             return ok(totalResponse);
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al contabilizar los diagnosticos: Causa. {}",e.getMessage());
@@ -195,10 +190,6 @@ public class DiagnosticoController {
     @Operation(summary = "Agrupar los diagnosticos por estado y lugar", description = "Agrupar los diagnosticos por estado y lugar", tags = { "grupos de diagnosticos por estado y lugar" })
     public ResponseEntity<TablaResponse> listarTotalPorLugar(
     		@AuthenticationPrincipal Authentication authentication,
-    		@Parameter(description = "Fecha inicio para el filtro", required = true)
-            @RequestParam("from") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_PARAM_URL) Date from,
-            @Parameter(description = "Fecha fin para el filtro", required = true)
-            @RequestParam("to") @DateTimeFormat(pattern = DateUtil.FORMAT_DATE_PARAM_URL) Date to,
             @Parameter(description = "Identificador de Departamento", required = true)
     		@RequestParam("departamentoId") Long departamentoId,
             @Parameter(description = "Identificador de Municipio", required = true)
@@ -208,7 +199,7 @@ public class DiagnosticoController {
             @Parameter(description = "Identificador de Enfermedad", required = true)
             @RequestParam("enfermedadId") Long enfermedadId) {
         try {
-            return ok(this.diagnosticoResumenTotalEstadoService.cantidadDiagnosticoPorLugar(authentication, from, to, departamentoId, municipioId, centroSaludId, enfermedadId));
+            return ok(this.diagnosticoResumenTotalEstadoService.cantidadDiagnosticoPorLugar(authentication, new Date(), new Date(), departamentoId, municipioId, centroSaludId, enfermedadId));
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al listar por estado los diagnosticos: Causa. {}",e.getMessage());
             return CustomErrorType.badRequest("Listar por estado Diagnosticos", e.getMessage());

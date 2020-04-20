@@ -19,7 +19,7 @@ export class BinnacleComponent extends ClicComponent implements OnInit {
   public render: boolean;
   public processList: string[];
   public form: FormGroup;
-  private proceso: SfeProcess = SfeProcess.ADMINISTRACION;
+  private proceso: SfeProcess = SfeProcess.SESION;
   private startDate: any;
   private endDate: any;
   private message: string;
@@ -36,9 +36,13 @@ export class BinnacleComponent extends ClicComponent implements OnInit {
     this.today = moment().toDate();
     this.render = false;
     this.initializePage(15, true);
-    this.processList = [];
-    for (let sfeProcessKey in SfeProcess) this.processList.push(sfeProcessKey);
-    this.processList.sort((a, b) => a.localeCompare(b));
+    this.binnacleService.requestProcesos().subscribe(response => {
+      this.processList = response.body;
+    }, error => {
+      if (error) this.notifierError(error);
+    });
+
+    // this.processList.sort((a, b) => a.localeCompare(b));
   }
 
   onProcessChange(param: any) {
@@ -63,7 +67,7 @@ export class BinnacleComponent extends ClicComponent implements OnInit {
     this.endDate = moment();
     this.message = '';
     return this.formBuilder.group({
-      tipoProceso: new FormControl(SfeProcess.ADMINISTRACION, Validators.compose([Validators.required])),
+      tipoProceso: new FormControl(SfeProcess.SESION, Validators.compose([Validators.required])),
       fechaInicial: new FormControl(this.startDate.toDate(), Validators.compose([Validators.required])),
       fechaFinal: new FormControl(this.endDate.toDate(), Validators.compose([Validators.required])),
       message: new FormControl(null)
@@ -74,7 +78,7 @@ export class BinnacleComponent extends ClicComponent implements OnInit {
     this.pageControl.number = pageInfo.offset;
 
     this.blockUI.start('Recuperando lista de bitacora...');
-    this.binnacleService.requestLogs(this.startDate.format('DD-MM-YYYY'), this.endDate.format('DD-MM-YYYY'), this.proceso,this.message, this.pageControl.number, this.pageControl.size).subscribe(response => {
+    this.binnacleService.requestLogs(this.startDate.format('DD/MM/YYYY'), this.endDate.format('DD/MM/YYYY'), this.proceso,this.message, this.pageControl.number, this.pageControl.size).subscribe(response => {
       this.pageControl = response.body;
       this.render = true;
       this.blockUI.stop();

@@ -19,7 +19,12 @@ export class BinnacleService {
   constructor(private httpClient: HttpClient) {}
 
   requestLogs(initial: string, final: string, process: SfeProcess, query: string, page: number, size: number): Observable<HttpResponse<any>> {
-    const url = Constantes.baseUri + Constants.logApi + `/listar/${page}/${size}?proceso=${process}&fechaInicio=${initial}&fechaFin=${final}&q=${query}`;
+    const url = Constantes.baseUri + Constants.logApi + `/listar/${page}/${size}?proceso=${process}&from=${initial}&to=${final}&q=${query}`;
+    return this.httpClient.get(url, {observe: 'response'});
+  }
+
+  requestProcesos(): Observable<HttpResponse<any>> {
+    const url = Constantes.baseUri + Constants.logApi + `/listar/procesos`;
     return this.httpClient.get(url, {observe: 'response'});
   }
 

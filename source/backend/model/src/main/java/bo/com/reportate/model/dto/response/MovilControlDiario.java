@@ -1,15 +1,12 @@
 package bo.com.reportate.model.dto.response;
 
 import bo.com.reportate.model.ControlDiario;
-import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.utils.DateUtil;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

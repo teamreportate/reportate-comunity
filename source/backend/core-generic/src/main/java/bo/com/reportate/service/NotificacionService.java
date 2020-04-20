@@ -1,5 +1,8 @@
 package bo.com.reportate.service;
 
+import bo.com.reportate.model.dto.PacienteEmailDto;
+import bo.com.reportate.model.dto.response.DiagnosticoSintomaResponse;
+
 import java.util.List;
 
 /**
@@ -13,5 +16,7 @@ import java.util.List;
 public interface NotificacionService {
     void notificacionSospechoso(String to, String asunto, String mensaje);
     void notificacionSospechosoSintomas(String paciente,String to, String asunto, String mensaje, List<String> sintomas);
-
+    void notidicacionMedico(String subject, String to, PacienteEmailDto paciente, List<DiagnosticoSintomaResponse> sintomas);
+    void notidicacionMedico(String subject, List<String> to, PacienteEmailDto paciente, List<DiagnosticoSintomaResponse> sintomas);
+    void notidicacionMedico(String subject, String to, List<String> cc, PacienteEmailDto paciente, List<DiagnosticoSintomaResponse> sintomas);
 }

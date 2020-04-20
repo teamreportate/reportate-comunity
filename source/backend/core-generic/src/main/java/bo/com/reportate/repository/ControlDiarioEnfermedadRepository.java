@@ -1,6 +1,9 @@
 package bo.com.reportate.repository;
 
-import bo.com.reportate.model.*;
+import bo.com.reportate.model.ControlDiario;
+import bo.com.reportate.model.ControlDiarioEnfermedad;
+import bo.com.reportate.model.Enfermedad;
+import bo.com.reportate.model.Paciente;
 import bo.com.reportate.model.dto.response.EnfermedadResponse;
 import bo.com.reportate.model.enums.EstadoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,6 +33,12 @@ public interface ControlDiarioEnfermedadRepository extends JpaRepository<Control
             "   AND cd.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO) " +
             " AND cde.estado = bo.com.reportate.model.enums.EstadoEnum.ACTIVO")
     List<EnfermedadResponse> listarEnfermedadesByPaciente(@Param("paciente") Paciente paciente);
+
+    @Query("SELECT count(cde) FROM ControlDiarioEnfermedad cde INNER JOIN cde.controlDiario cd INNER JOIN cd.paciente p " +
+            "WHERE p=:paciente")
+    int cantidadEnfermedadBase(@Param("paciente") Paciente paciente);
+
+    boolean existsByControlDiarioPacienteAndEstado(Paciente paciente, EstadoEnum estadoEnum);
 
     boolean existsByControlDiarioAndEnfermedadAndEstado(ControlDiario controlDiario, Enfermedad enfermedad, EstadoEnum estadoEnum);
 

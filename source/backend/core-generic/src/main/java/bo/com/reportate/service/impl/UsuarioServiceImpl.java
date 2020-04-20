@@ -1,15 +1,12 @@
 package bo.com.reportate.service.impl;
 
-import bo.com.reportate.model.CentroSalud;
 import bo.com.reportate.exception.NotDataFoundException;
 import bo.com.reportate.exception.OperationException;
 import bo.com.reportate.model.*;
 import bo.com.reportate.model.dto.*;
-import bo.com.reportate.model.dto.request.CentroSaludRequest;
-import bo.com.reportate.model.dto.request.DepartamentoRequest;
-import bo.com.reportate.model.dto.request.MunicipioRequest;
 import bo.com.reportate.model.enums.AuthTypeEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
+import bo.com.reportate.model.enums.TipoUsuarioEnum;
 import bo.com.reportate.model.enums.UserStatusEnum;
 import bo.com.reportate.repository.*;
 import bo.com.reportate.service.UsuarioService;
@@ -19,6 +16,8 @@ import bo.com.reportate.utils.LongUtil;
 import bo.com.reportate.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -53,7 +52,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public List<UsuarioDto> listar() {
-        return usuarioRepository.findAllByEstadoOrderByNombreAsc(EstadoEnum.ACTIVO);
+        return usuarioRepository.findAllByEstadoAndTipoUsuarioNotOrderByNombreAsc(EstadoEnum.ACTIVO, TipoUsuarioEnum.PACIENTE);
+    }
+
+    @Override
+    public Page<UsuarioDto> listarUsuarioPacientes(Pageable pageable) {
+        return usuarioRepository.findByEstadoAndTipoUsuarioOrderByNombreAsc(EstadoEnum.ACTIVO,TipoUsuarioEnum.PACIENTE, pageable);
     }
 
     @Override
@@ -90,14 +94,9 @@ public class UsuarioServiceImpl implements UsuarioService {
                 throw new OperationException("Ya existe un usuario: " + muUsuario.getUsername());
             }
         }
-        exist = this.usuarioRepository.findByEstadoAndEmail(EstadoEnum.ACTIVO, data.getEmail().trim()).orElse(null);
-        if (exist != null) {
-            if (!muUsuario.getId().equals(exist.getId())) {
-                String correo = muUsuario.getEmail();
-                if (muUsuario.getEmail().length() > 25)
-                    correo = "xxxxxxxxx@xxx.xxxx";
-                throw new OperationException("Ya se registró el correo electrónico " + correo);
-            }
+
+        if(this.usuarioRepository.existsByIdNotAndEstadoAndEmailAndTipoUsuarioNot(id,EstadoEnum.ACTIVO,data.getEmail(), TipoUsuarioEnum.PACIENTE)){
+            throw new OperationException("Ya se registró el correo electrónico");
         }
 
         muUsuario.setEmail(data.getEmail().trim());
@@ -192,19 +191,11 @@ public class UsuarioServiceImpl implements UsuarioService {
             if (!usuario.getPassword().equals(passwordConfirm))
                 throw new OperationException("Las contraseñas no coinciden");
         }
+        if (this.usuarioRepository.existsByEstadoAndUsername(EstadoEnum.ACTIVO,usuario.getUsername()))
+            throw new OperationException("Ya existe un Usuario: " + usuario.getUsername());
 
-        MuUsuario exist = this.usuarioRepository.findByEstadoAndUsername(EstadoEnum.ACTIVO, usuario.getUsername().toUpperCase().trim()).orElse(null);
-        if (exist != null) throw new OperationException("Ya existe un Usuario: " + usuario.getUsername());
-
-        if (!usuario.getEmail().equals(" ")) {
-            exist = this.usuarioRepository.findByEstadoAndEmail(EstadoEnum.ACTIVO, usuario.getEmail()).orElse(null);
-        }
-        if (exist != null) {
-            String correo = usuario.getEmail();
-            if (usuario.getEmail().length() > 50)
-                correo = "xxxxxxxxx@xxx.xxxx";
-            throw new OperationException("Ya se registró el correo electrónico " + correo);
-        }
+        if(this.usuarioRepository.existsByEstadoAndEmailAndTipoUsuarioNot(EstadoEnum.ACTIVO,usuario.getEmail(), TipoUsuarioEnum.PACIENTE))
+            throw new OperationException("Ya se existe otro usuario el correo electrónico");
 
         MuUsuario userToSave = MuUsuario.builder()
                 .nombre(usuario.getNombre().trim())
@@ -261,7 +252,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     public void agregarDepartamento(MuUsuario muUsuario, List<DepartamentoUsuarioDto> departamentos) {
         List<Long> depIds = new ArrayList<>();
         departamentos.forEach(departamentoDto -> depIds.add(departamentoDto.getId()));
-        this.departamentoUsuarioRepository.eliminaDepartamentosNoAsignados(muUsuario,depIds);
+        if(departamentos.isEmpty()){
+            this.departamentoUsuarioRepository.eliminaDepartamentosAsignados(muUsuario);
+        }else {
+            this.departamentoUsuarioRepository.eliminaDepartamentosNoAsignados(muUsuario, depIds);
+        }
         for (DepartamentoUsuarioDto auxDep : departamentos) {
             Departamento departamento = this.departamentoRepository.findById(auxDep.getId()).orElseThrow(()->new NotDataFoundException("No se encontro un departamento con ID: "+auxDep.getId()));
             if(!departamentoUsuarioRepository.existsByMuUsuarioAndDepartamentoAndEstado(muUsuario,departamento,EstadoEnum.ACTIVO)){
@@ -274,7 +269,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     public void agregarCentroSalud(MuUsuario muUsuario, List<CentroSaludUsuarioDto> centroSaluds) {
         List<Long> ceIds = new ArrayList<>();
         centroSaluds.forEach(centroSaludDto -> ceIds.add(centroSaludDto.getId()));
-        this.centroSaludUsuarioRepository.eliminaCentrosNoAsignados(muUsuario, ceIds);
+        if(ceIds.isEmpty()){
+            this.centroSaludUsuarioRepository.eliminaCentrosAsignados(muUsuario);
+        }else{
+            this.centroSaludUsuarioRepository.eliminaCentrosNoAsignados(muUsuario, ceIds);
+        }
         for (CentroSaludUsuarioDto auxCentro:centroSaluds) {
             CentroSalud centroSalud = this.centroSaludRepository.findById(auxCentro.getId()).orElseThrow(()->new NotDataFoundException("No se encontro ningún centro de salud con ID: "+auxCentro.getId()));
             if(!centroSaludUsuarioRepository.existsByMuUsuarioAndCentroSaludAndEstado(muUsuario,centroSalud,EstadoEnum.ACTIVO)){
@@ -288,7 +287,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     public void agregarMunicipio(MuUsuario muUsuario, List<MunicipioUsuarioDto> municipios) {
         List<Long> muIds = new ArrayList<>();
         municipios.forEach(municipioDto -> muIds.add(municipioDto.getId()));
-        this.municipioUsuarioRepository.eliminaMunicipiosNoAsignados(muUsuario, muIds);
+        if(muIds.isEmpty()){
+            this.municipioUsuarioRepository.eliminaMunicipiosAsignados(muUsuario);
+        }else {
+            this.municipioUsuarioRepository.eliminaMunicipiosNoAsignados(muUsuario, muIds);
+        }
         for (MunicipioUsuarioDto auxMunic : municipios) {
             Municipio municipio = this.municipioRepository.findById(auxMunic.getId()).orElseThrow(()->new NotDataFoundException("No se encontro ningún municipio con ID:"+auxMunic.getId()));
             if(!this.municipioUsuarioRepository.existsByMuUsuarioAndMunicipioAndEstado(muUsuario, municipio,EstadoEnum.ACTIVO)){

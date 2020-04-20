@@ -1,12 +1,12 @@
 
-<div fxLayout="row wrap">
-<!--  <div fxFlex="100" fxLayoutAlign="center center" class="p-t-30">-->
-<!--    <img src="assets/images/background/login-back.png" alt="X" width="75%">-->
-<!--  </div>-->
+<!-- <div fxLayout="row wrap">
+ <div fxFlex="100" fxLayoutAlign="center center" class="p-t-30">
+   <img src="assets/images/background/login-back.png" alt="X" width="75%">
+ </div>
   <div fxFlex="100" class="p-t-30">
     <mat-divider></mat-divider>
   </div>
-</div>
+</div> -->
 <mat-nav-list appAccordion>
     <mat-list-item appAccordionLink *ngFor="let menuitem of menuItems.items" routerLinkActive="selected" group="{{menuitem.state}}">
         <a class="" appAccordionToggle [routerLink]="['/', menuitem.parent, menuitem.state]" *ngIf="menuitem.type === 'link' && menuitem.enable">

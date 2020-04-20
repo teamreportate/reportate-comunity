@@ -1,6 +1,5 @@
 package bo.com.reportate.model.dto.response;
 
-import bo.com.reportate.model.Diagnostico;
 import bo.com.reportate.model.Paciente;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import lombok.AllArgsConstructor;

@@ -23,6 +23,7 @@ import { FallecidosComponent } from '../fallecidos/fallecidos.component';
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
+  styleUrls: ['./principal.component.scss'],
   providers: [DashboardService, AccessService, EnfermedadService]
 })
 export class PrincipalComponent extends ClicComponent implements OnInit, AfterViewInit {

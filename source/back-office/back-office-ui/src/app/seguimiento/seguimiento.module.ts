@@ -43,6 +43,7 @@ import {DiagnosticoService} from '../core/services/http-services/diagnostico.ser
 import {AddObservacionComponent} from './seguimiento-enfermedad/ficha-epidemiologica/dialogs/add-observacion/add-observacion.component';
 import { NuevoDianosticoComponent } from './seguimiento-enfermedad/nuevo-dianostico/nuevo-dianostico.component';
 import {SintomaService} from '../core/services/http-services/sintoma.service';
+import { ReporteModule } from '../core/reports/generateReport.module';
 
 @NgModule({
   // tslint:disable-next-line:max-line-length
@@ -81,7 +82,9 @@ import {SintomaService} from '../core/services/http-services/sintoma.service';
     MatAutocompleteModule,
     // tslint:disable-next-line:max-line-length
   ], entryComponents: [AddContactoComponent, AddPaisViajadoComponent, AddEnfermedadComponent, ListSintomasComponent, AddObservacionComponent, NuevoDianosticoComponent],
-  providers: [PacienteService, PaisService, EnfermedadService, DiagnosticoService, SintomaService]
+  providers: [PacienteService, PaisService, EnfermedadService, DiagnosticoService, SintomaService,ReporteModule]
+
+
 })
 export class SeguimientoModule {
 }

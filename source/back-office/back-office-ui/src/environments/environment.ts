@@ -11,10 +11,10 @@ export const environment = {
   services: {
     // baseUri : 'https://reportate.mc4.com.bo:8443/reportate-api/',
     apiKeyMaps: 'pk.eyJ1IjoicmxhcmVkbyIsImEiOiJjazh4bDV5ZG8weWQ4M2xsZHh4NWh2ZmY5In0.LVSLJJhRrkULhFV0Nq6A0Q',
-    // baseUri: 'https://localhost:9443/',
-    baseUri: 'https://dev.mc4.com.bo:9443/',
+    baseUri: 'https://localhost:9443/',
+    // baseUri: 'https://dev.mc4.com.bo:9443/',
 
-    baseUriFact: 'https://localhost:9443/f' +
+    baseUriFact: 'https://localhost:9443/' +
       'acturacion-core/',
   }
 

@@ -10,17 +10,19 @@ import {ClicComponent} from '../../../../../core/utils/clic-component';
 import * as moment from 'moment';
 import {Constants} from '../../../../../core/constants';
 import {PacienteService} from '../../../../../core/services/http-services/paciente.service';
+import { SeguimientoEnfermedadService } from 'src/app/core/services/http-services/seguimiento-enfermedad.service';
 
 @Component({
   selector: 'app-add-contacto',
   templateUrl: './add-contacto.component.html',
-  styleUrls: ['./add-contacto.component.sass']
+  styleUrls: ['./add-contacto.component.sass'],
+  providers: [SeguimientoEnfermedadService]
 })
 export class AddContactoComponent  extends ClicComponent  implements OnInit {
   @Output() operacion;
   @BlockUI() blockUi: NgBlockUI;
 
-
+  listaOcupacion = [];
   sexos = Constants.SEXOS;
   public form: FormGroup;
   public today: Date;
@@ -28,44 +30,26 @@ export class AddContactoComponent  extends ClicComponent  implements OnInit {
   constructor(private service: PacienteService, private builder: FormBuilder,
               private dialogRef: MatDialogRef<AddContactoComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any, private notifier: NotifierService,
+              private seguimiento: SeguimientoEnfermedadService,
               private changeDetector: ChangeDetectorRef, private media: MediaMatcher) {
     super();
     moment.locale('es-BO');
 
   }
-/*
-    "id": 0,
-    "nombre": "string",
-    "edad": 0,
-    "genero": "FEMENINO",
-    "gestacion": true,
-    "tiempoGestacion": 0,
-    "ocupacion": "string",
-    "ci": "string",
-    "fechaNacimiento": "string",
-    "seguro": "string",
-    "codigoSeguro": "string"
- */
   ngOnInit() {
+    this.recuperarOcupacion();
     this.form = this.builder.group({
       id: new FormControl(this.data.id),
       nombre: new FormControl(this.data.nombre, Validators.compose([Validators.required, Validators.maxLength(100)])),
       edad: new FormControl(this.data.edad, Validators.compose([Validators.required, Validators.maxLength(100)])),
       genero: new FormControl(this.data.genero, Validators.compose([Validators.required])),
-      // telefono: new FormControl(this.data.telefono, Validators.compose([Validators.required])),
       gestacion: new FormControl(this.data.gestacion, Validators.compose([])),
       tiempoGestacion: new FormControl(this.data.tiempoGestacion, Validators.compose([])),
-      ocupacion: new FormControl(this.data.ocupacion, Validators.compose([Validators.required])),
-      ci: new FormControl(this.data.ci, Validators.compose([Validators.required])),
-      fechaNacimiento: new FormControl(new Date(this.data.fechaNacimiento), Validators.compose([Validators.required])),
+      ocupacion: new FormControl(this.data.ocupacion, Validators.compose([])),
+      ci: new FormControl(this.data.ci, Validators.compose([])),
+      fechaNacimiento: new FormControl(new Date(this.data.fechaNacimiento), Validators.compose([])),
       seguro: new FormControl(this.data.seguro, Validators.compose([])),
       codigoSeguro: new FormControl(this.data.codigoSeguro, Validators.compose([])),
-
-      // departamento: new FormControl(this.data.departamento, Validators.compose([Validators.required])),
-      // municipio: new FormControl(this.data.municipio, Validators.compose([Validators.required])),
-      // ciudad: new FormControl(this.data.ciudad, Validators.compose([Validators.required])),
-      // direccion: new FormControl(this.data.direccion, Validators.compose([Validators.required])),
-      // ubicacion: new FormControl(this.data.ubicacion, Validators.compose([Validators.required])),
     });
   }
   close(): void {
@@ -108,6 +92,16 @@ export class AddContactoComponent  extends ClicComponent  implements OnInit {
   }
 
   cancel = () => this.dialogRef.close(null);
+
+  recuperarOcupacion() {
+    this.seguimiento.getOcupaciones().subscribe(respuesta => {
+      this.listaOcupacion = respuesta.body;
+    }, error => {
+      if (error) {
+        this.notifierError(error);
+      }
+    });
+  }
 
   notifierError(error: any, type?: string) {
     if (error && error.error) {
