@@ -96,7 +96,7 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       ocupacion: new FormControl(data.ocupacion, Validators.compose([])),
       gestacion: new FormControl(data.gestacion, Validators.compose([])),
       tiempoGestacion: new FormControl(data.tiempoGestacion, Validators.compose([])),
-      fechaNacimiento: new FormControl(data.fechaNacimiento, Validators.compose([])),
+      fechaNacimiento: new FormControl(new Date(data.fechaNacimiento), Validators.compose([])),
       seguro: new FormControl(data.seguro, Validators.compose([])),
       codigoSeguro: new FormControl(data.codigoSeguro, Validators.compose([])),
       ubicacion: new FormControl(data.ubicacion, Validators.compose([Validators.required])),
@@ -326,7 +326,9 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       this.blockUI.start('Procesando solicitud...');
 
       const value = this.form.controls['fechaNacimiento'].value;
-      this.form.controls['fechaNacimiento'].setValue(moment(this.form.controls['fechaNacimiento'].value).format('DD/MM/YYYY'));
+
+      this.form.controls['fechaNacimiento'].setValue(moment(value).format('DD/MM/YYYY'));
+      console.log(this.form.value);
       this.pacienteService.updatePacienteId(this.idPaciente, this.form.value).subscribe(response => {
         this.blockUI.stop();
         // this.ngOnInit();

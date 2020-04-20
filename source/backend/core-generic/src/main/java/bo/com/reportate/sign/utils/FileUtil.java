@@ -14,33 +14,6 @@ import java.util.Base64;
 @Slf4j
 public class FileUtil {
 
-    public static byte[] toByte(String pathFile){
-        try {
-            Path path = Paths.get(pathFile);
-            byte[] byteArray = Files.readAllBytes(path);
-            return byteArray ;
-        }
-        catch (Exception e){
-            log.error("error",e);
-        }
-        return null;
-    }
-
-    private static void printContent(File file) throws Exception {
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        String line;
-        try {
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
-            }
-        } catch (Exception e) {
-            log.error("error",e);
-        } finally {
-            br.close();
-        }
-
-    }
-
 
     public static File getFileFromResources(String path) throws IOException {
         ClassLoader classLoader = FileUtil.class.getClassLoader();
