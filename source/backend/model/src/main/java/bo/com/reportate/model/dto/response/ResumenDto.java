@@ -11,10 +11,10 @@ public class ResumenDto implements Serializable{
 	private static final long serialVersionUID = -1309913681813311507L;
 	private Date nombreGrafico;
 	private Long sospechoso;
-	private Long negativo;
-	private Long confirmado;
-	private Long curado;
-	private Long fallecido;
+	private Long descartado;
+	private Long positivo;
+	private Long recuperado;
+	private Long deceso;
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

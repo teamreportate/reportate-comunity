@@ -86,10 +86,10 @@ public class DiagnosticoResumenTotalEstadoServiceImpl implements DiagnosticoResu
 				resumenAux.add(resumenDto);
 			}else {
 				ResumenDto resumenDtoAux = resumenAux.get(resumenAux.indexOf(resumenDto));
-				resumenDtoAux.setConfirmado(resumenDto.getConfirmado()+resumenDtoAux.getConfirmado());
-				resumenDtoAux.setCurado(resumenDto.getCurado()+resumenDtoAux.getCurado());
-				resumenDtoAux.setFallecido(resumenDto.getFallecido()+resumenDtoAux.getFallecido());
-				resumenDtoAux.setNegativo(resumenDto.getNegativo()+resumenDtoAux.getNegativo());
+				resumenDtoAux.setPositivo(resumenDto.getPositivo()+resumenDtoAux.getPositivo());
+				resumenDtoAux.setRecuperado(resumenDto.getRecuperado()+resumenDtoAux.getRecuperado());
+				resumenDtoAux.setDeceso(resumenDto.getDeceso()+resumenDtoAux.getDeceso());
+				resumenDtoAux.setDescartado(resumenDto.getDescartado()+resumenDtoAux.getDescartado());
 				resumenDtoAux.setSospechoso(resumenDto.getSospechoso()+resumenDtoAux.getSospechoso());
 			}
 		}

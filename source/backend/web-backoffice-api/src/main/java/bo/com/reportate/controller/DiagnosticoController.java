@@ -174,7 +174,7 @@ public class DiagnosticoController {
         	List<ResumenDto> resumenDtos= this.diagnosticoResumenEstadoService.cantidadDiagnosticoPorFiltros(authentication, from, to, departamentoId, municipioId, centroSaludId, enfermedadId);
         	
         	for (ResumenDto resumenDto : resumenDtos) {
-				response.add(DateUtil.toString(DateUtil.FORMAT_DATE, resumenDto.getNombreGrafico()), resumenDto.getSospechoso(), resumenDto.getNegativo(),resumenDto.getConfirmado(),resumenDto.getCurado(),resumenDto.getFallecido());
+				response.add(DateUtil.toString(DateUtil.FORMAT_DATE, resumenDto.getNombreGrafico()), resumenDto.getSospechoso(), resumenDto.getDescartado(),resumenDto.getPositivo(),resumenDto.getRecuperado(),resumenDto.getDeceso());
 			}
             return ok(response);
         }catch (NotDataFoundException | OperationException e){
@@ -260,7 +260,7 @@ public class DiagnosticoController {
         	List<ResumenDto> resumenDtos= this.diagnosticoResumenTotalEstadoService.cantidadDiagnosticoPorFiltros(authentication, from, to, departamentoId, municipioId, centroSaludId, enfermedadId);
         	
         	for (ResumenDto resumenDto : resumenDtos) {
-				response.add(DateUtil.toString(DateUtil.FORMAT_DATE, resumenDto.getNombreGrafico()), resumenDto.getSospechoso(), resumenDto.getNegativo(),resumenDto.getConfirmado(),resumenDto.getCurado(),resumenDto.getFallecido());
+				response.add(DateUtil.toString(DateUtil.FORMAT_DATE, resumenDto.getNombreGrafico()), resumenDto.getSospechoso(), resumenDto.getDescartado(),resumenDto.getPositivo(),resumenDto.getRecuperado(),resumenDto.getDeceso());
 			}
             return ok(response);
         }catch (NotDataFoundException | OperationException e){

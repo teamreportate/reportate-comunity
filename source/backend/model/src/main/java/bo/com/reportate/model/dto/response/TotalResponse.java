@@ -10,9 +10,9 @@ public class TotalResponse implements Serializable{
 	private static final long serialVersionUID = 8896814117952763756L;
 	private Integer sospechosos;
 	private Integer descartados;
-	private Integer confirmados;
+	private Integer positivos;
 	private Integer recuperados;
-	private Integer fallecidos;
-	private Integer total;
+	private Integer decesos;
+	private Integer confirmados;
 	
 }

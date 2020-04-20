@@ -7,7 +7,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Data
 public class ItemDto implements Serializable {
 
@@ -15,8 +14,19 @@ public class ItemDto implements Serializable {
 
 	private String nombre;
 	private Long sospechoso;
-	private Long negativo;
-	private Long confirmado;
-	private Long curado;
-	private Long fallecido;
+	private Long descartado;
+	private Long positivo;
+	private Long recuperado;
+	private Long deceso;
+	public ItemDto(String nombre, Long sospechoso, Long descartado, Long positivo, Long recuperado, Long deceso) {
+		super();
+		this.nombre = nombre;
+		this.sospechoso = sospechoso;
+		this.descartado = descartado;
+		this.positivo = positivo;
+		this.recuperado = recuperado;
+		this.deceso = deceso;
+	}
+	
+	
 }
