@@ -52,9 +52,9 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
             @Param("fechaFin") Date to,
             @Param("sospechoso") EstadoDiagnosticoEnum sospechoso,
             @Param("descartado") EstadoDiagnosticoEnum descartado,
-            @Param("confirmado") EstadoDiagnosticoEnum confirmado,
-            @Param("curado") EstadoDiagnosticoEnum curado,
-            @Param("fallecido") EstadoDiagnosticoEnum fallecido);
+            @Param("positivo") EstadoDiagnosticoEnum positivo,
+            @Param("recuperado") EstadoDiagnosticoEnum recuperado,
+            @Param("deceso") EstadoDiagnosticoEnum deceso);
 
     @Modifying
     @Query(" UPDATE Paciente p SET p.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE p.id =:contactoId")

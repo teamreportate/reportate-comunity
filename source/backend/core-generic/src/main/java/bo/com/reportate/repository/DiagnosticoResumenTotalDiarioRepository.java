@@ -28,10 +28,10 @@ public interface DiagnosticoResumenTotalDiarioRepository extends JpaRepository<D
 	
     @Query("SELECT new bo.com.reportate.model.dto.response.ResumenDto(cast(t.createdDate as date) as nombreGrafico, "
     		+ "SUM(t.sospechoso) AS sospechoso, "
-    		+ "SUM(t.negativo) AS negativo, "
-    		+ "SUM(t.confirmado) AS confirmado, "
-    		+ "SUM(t.curado) AS curado, "
-    		+ "SUM(t.fallecido) AS fallecido) "
+    		+ "SUM(t.descartado) AS descartado, "
+    		+ "SUM(t.positivo) AS positivo, "
+    		+ "SUM(t.recuperado) AS recuperado, "
+    		+ "SUM(t.deceso) AS deceso) "
             + "FROM DiagnosticosResumenTotalDiario t WHERE t.createdDate BETWEEN :fechaInicio AND :fechaFin AND "
             + "t.departamento IN (:departamentos) AND "
             + "t.municipio in (:municipios) AND "
@@ -49,17 +49,17 @@ public interface DiagnosticoResumenTotalDiarioRepository extends JpaRepository<D
     
     @Query("SELECT new bo.com.reportate.model.dto.response.ItemDto(d.nombre as nombreGrafico, "
     		+ "SUM(t.sospechoso) AS sospechoso, "
-    		+ "SUM(t.negativo) AS negativo, "
-    		+ "SUM(t.confirmado) AS confirmado, "
-    		+ "SUM(t.curado) AS curado, "
-    		+ "SUM(t.fallecido) AS fallecido) "
+    		+ "SUM(t.descartado) AS descartado, "
+    		+ "SUM(t.positivo) AS positivo, "
+    		+ "SUM(t.recuperado) AS recuperado, "
+    		+ "SUM(t.deceso) AS deceso) "
             + "FROM DiagnosticosResumenTotalDiario t INNER JOIN t.departamento d WHERE t.createdDate BETWEEN :fechaInicio AND :fechaFin AND "
             + "t.departamento IN (:departamentos) AND "
             + "t.municipio in (:municipios) AND "
             + "t.centroSalud IN (:centrosSalud) AND "
             + "t.enfermedad IN (:enfermedades) "
             + "GROUP BY d.nombre "
-            + "ORDER BY confirmado DESC")
+            + "ORDER BY positivo DESC")
     List<ItemDto> listarPorRangoFechasDepartamento(
             @Param("fechaInicio") Date from,
             @Param("fechaFin") Date to,
@@ -70,17 +70,17 @@ public interface DiagnosticoResumenTotalDiarioRepository extends JpaRepository<D
     
     @Query("SELECT new bo.com.reportate.model.dto.response.ItemDto(d.nombre as nombreGrafico, "
     		+ "SUM(t.sospechoso) AS sospechoso, "
-    		+ "SUM(t.negativo) AS negativo, "
-    		+ "SUM(t.confirmado) AS confirmado, "
-    		+ "SUM(t.curado) AS curado, "
-    		+ "SUM(t.fallecido) AS fallecido) "
+    		+ "SUM(t.descartado) AS descartado, "
+    		+ "SUM(t.positivo) AS positivo, "
+    		+ "SUM(t.recuperado) AS recuperado, "
+    		+ "SUM(t.deceso) AS deceso) "
             + "FROM DiagnosticosResumenTotalDiario t INNER JOIN t.municipio d WHERE t.createdDate BETWEEN :fechaInicio AND :fechaFin AND "
             + "t.departamento IN (:departamentos) AND "
             + "t.municipio in (:municipios) AND "
             + "t.centroSalud IN (:centrosSalud) AND "
             + "t.enfermedad IN (:enfermedades) "
             + "GROUP BY d.nombre "
-            + "ORDER BY confirmado DESC")
+            + "ORDER BY positivo DESC")
     List<ItemDto> listarPorRangoFechasMunicipio(
             @Param("fechaInicio") Date from,
             @Param("fechaFin") Date to,
@@ -91,17 +91,17 @@ public interface DiagnosticoResumenTotalDiarioRepository extends JpaRepository<D
     
     @Query("SELECT new bo.com.reportate.model.dto.response.ItemDto(d.nombre as nombreGrafico, "
     		+ "SUM(t.sospechoso) AS sospechoso, "
-    		+ "SUM(t.negativo) AS negativo, "
-    		+ "SUM(t.confirmado) AS confirmado, "
-    		+ "SUM(t.curado) AS curado, "
-    		+ "SUM(t.fallecido) AS fallecido) "
+    		+ "SUM(t.descartado) AS descartado, "
+    		+ "SUM(t.positivo) AS positivo, "
+    		+ "SUM(t.recuperado) AS recuperado, "
+    		+ "SUM(t.deceso) AS deceso) "
             + "FROM DiagnosticosResumenTotalDiario t INNER JOIN t.centroSalud d WHERE t.createdDate BETWEEN :fechaInicio AND :fechaFin AND "
             + "t.departamento IN (:departamentos) AND "
             + "t.municipio in (:municipios) AND "
             + "t.centroSalud IN (:centrosSalud) AND "
             + "t.enfermedad IN (:enfermedades) "
             + "GROUP BY d.nombre "
-            + "ORDER BY confirmado DESC")
+            + "ORDER BY positivo DESC")
     List<ItemDto> listarPorRangoFechasCentroSalud(
             @Param("fechaInicio") Date from,
             @Param("fechaFin") Date to,
