@@ -41,7 +41,7 @@ public class SumarizadorEstadistica {
     public void updateTime() {
         try {
         	Date dateSystem = new Date();
-            List<DiagnosticosResumenDiario> diagnosticosResumenDiarios= pacienteRepository.resumenPorPacienteEstadoDiagnostico(DateUtil.formatToStart(dateSystem), DateUtil.formatToEnd(dateSystem), EstadoDiagnosticoEnum.SOSPECHOSO, EstadoDiagnosticoEnum.NEGATIVO, EstadoDiagnosticoEnum.CONFIRMADO, EstadoDiagnosticoEnum.CURADO, EstadoDiagnosticoEnum.FALLECIDO);
+            List<DiagnosticosResumenDiario> diagnosticosResumenDiarios= pacienteRepository.resumenPorPacienteEstadoDiagnostico(DateUtil.formatToStart(dateSystem), DateUtil.formatToEnd(dateSystem), EstadoDiagnosticoEnum.SOSPECHOSO, EstadoDiagnosticoEnum.DESCARTADO, EstadoDiagnosticoEnum.POSITIVO, EstadoDiagnosticoEnum.RECUPERADO, EstadoDiagnosticoEnum.DECESO);
             for (DiagnosticosResumenDiario diagnosticosResumenDiario : diagnosticosResumenDiarios) {
             	diagnosticosResumenDiario.setEstado(EstadoEnum.ACTIVO);
             	try {
@@ -63,7 +63,7 @@ public class SumarizadorEstadistica {
 				}
 			}
             
-            diagnosticosResumenDiarios= pacienteRepository.resumenPorPacienteEstadoDiagnostico(DateUtil.formatToStart(DateUtil.toDate("dd/MM/yyyy", "10/04/2020")), DateUtil.formatToEnd(dateSystem), EstadoDiagnosticoEnum.SOSPECHOSO, EstadoDiagnosticoEnum.NEGATIVO, EstadoDiagnosticoEnum.CONFIRMADO, EstadoDiagnosticoEnum.CURADO, EstadoDiagnosticoEnum.FALLECIDO);
+            diagnosticosResumenDiarios= pacienteRepository.resumenPorPacienteEstadoDiagnostico(DateUtil.formatToStart(DateUtil.toDate("dd/MM/yyyy", "10/04/2020")), DateUtil.formatToEnd(dateSystem), EstadoDiagnosticoEnum.SOSPECHOSO, EstadoDiagnosticoEnum.DESCARTADO, EstadoDiagnosticoEnum.POSITIVO, EstadoDiagnosticoEnum.RECUPERADO, EstadoDiagnosticoEnum.DECESO);
             for (DiagnosticosResumenDiario diagnosticosResumenDiario : diagnosticosResumenDiarios) {
             	diagnosticosResumenDiario.setEstado(EstadoEnum.ACTIVO);
             	try {

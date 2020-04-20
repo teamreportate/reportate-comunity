@@ -197,7 +197,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
                 "Gracias por realizar tu control díario. Al parecer estas muy bíen de salud.", null, null, null, ParamTipoDato.CADENA, false,null, diagnostico);
         this.paramService.saveParametro(parametro);
 
-        parametro = new MuParametro(null, Constants.Parameters.MENSAJE_SINTOMAS_LEVES, "Mensaje que se enviará al paciente cuando el diagnóstico sea NEGATIVO. ",
+        parametro = new MuParametro(null, Constants.Parameters.MENSAJE_SINTOMAS_LEVES, "Mensaje que se enviará al paciente cuando el diagnóstico sea DESCARTADO. ",
                 "Gracias por registrar tus síntomas. Recuerda registras todos los días.", null, null, null, ParamTipoDato.CADENA, false,null, diagnostico);
         this.paramService.saveParametro(parametro);
 
