@@ -316,7 +316,7 @@ public class PacienteServiceImpl implements PacienteService {
 
             if (valoracion.compareTo(BigDecimal.ZERO) > 0) {// Sintomas de la enfermedad
                 log.info("Resultado enfermedad:{}  del calculo:{}", enfermedad.getNombre(), valoracion);
-                EstadoDiagnosticoEnum estadoDiagnostico = EstadoDiagnosticoEnum.NEGATIVO;
+                EstadoDiagnosticoEnum estadoDiagnostico = EstadoDiagnosticoEnum.DESCARTADO;
 
                 if((enfermedadesBase != null && !enfermedadesBase.isEmpty()) ||
                         this.controlDiarioEnfermedadRepository.existsByControlDiarioPacienteAndEstado(paciente, EstadoEnum.ACTIVO)){
@@ -345,9 +345,8 @@ public class PacienteServiceImpl implements PacienteService {
                 log.info("Registrando diagnostico del paciente {} con estado {}  de la enfermedad {} con {} sintomas.", paciente.getNombre(), estadoDiagnostico, enfermedad.getNombre(), sintomasDignostico.size());
                 diagnostico.setResultadoValoracion(valoracion);
                 //Si el diagnostico actual del paciente es CONFIRMADO ó ACTIVO el diagnostico actual será ACTIVO
-                if (paciente.getDiagnostico() != null && (paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.CONFIRMADO) ||
-                        paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.ACTIVO))) {
-                    diagnostico.setEstadoDiagnostico(EstadoDiagnosticoEnum.ACTIVO);
+                if (paciente.getDiagnostico() != null && (paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.POSITIVO))) {
+                    diagnostico.setEstadoDiagnostico(EstadoDiagnosticoEnum.POSITIVO);
                     diagnostico.setObservacion(cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_ACTIVO));
                     this.diagnosticoRepository.save(diagnostico);
                 } else {
@@ -365,7 +364,7 @@ public class PacienteServiceImpl implements PacienteService {
                     paciente.setDiagnostico(diagnostico);
                     this.pacienteRepository.save(paciente);
                 } else if (!(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.SOSPECHOSO) &&
-                        diagnostico.getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.NEGATIVO))) {
+                        diagnostico.getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.DESCARTADO))) {
                     paciente.setDiagnostico(diagnostico);
                     this.pacienteRepository.save(paciente);
 
@@ -380,13 +379,13 @@ public class PacienteServiceImpl implements PacienteService {
             controlDiario.setRecomendacion(recomendacion);
             return recomendacion;
         }
-        if(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.NEGATIVO)){
+        if(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.DESCARTADO)){
             recomendacion = cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_LEVES);
             this.controlDiarioRepository.agregarRecomendacion(controlDiario,recomendacion);
             controlDiario.setRecomendacion(recomendacion);
             return recomendacion;
         }
-        if(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.ACTIVO)){
+        if(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.POSITIVO)){
             recomendacion = cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_ACTIVO);
             this.controlDiarioRepository.agregarRecomendacion(controlDiario,recomendacion);
             controlDiario.setRecomendacion(recomendacion);
