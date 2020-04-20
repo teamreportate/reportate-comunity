@@ -48,10 +48,10 @@ public class SumarizadorEstadistica {
 				DiagnosticosResumenDiario diagnosticosResumenDiarioAux = diagnosticoResumenDiarioRepository.buscarPorFiltros(dateSystem,
 						diagnosticosResumenDiario.getDepartamento(),diagnosticosResumenDiario.getMunicipio(),diagnosticosResumenDiario.getCentroSalud(),diagnosticosResumenDiario.getEnfermedad());
 				if(diagnosticosResumenDiarioAux!=null) {
-				diagnosticosResumenDiarioAux.setConfirmado(diagnosticosResumenDiario.getConfirmado());
-				diagnosticosResumenDiarioAux.setCurado(diagnosticosResumenDiario.getCurado());
-				diagnosticosResumenDiarioAux.setFallecido(diagnosticosResumenDiario.getFallecido());
-				diagnosticosResumenDiarioAux.setNegativo(diagnosticosResumenDiario.getNegativo());
+				diagnosticosResumenDiarioAux.setPositivo(diagnosticosResumenDiario.getPositivo());
+				diagnosticosResumenDiarioAux.setRecuperado(diagnosticosResumenDiario.getRecuperado());
+				diagnosticosResumenDiarioAux.setDeceso(diagnosticosResumenDiario.getDeceso());
+				diagnosticosResumenDiarioAux.setDescartado(diagnosticosResumenDiario.getDescartado());
 				diagnosticosResumenDiarioAux.setSospechoso(diagnosticosResumenDiario.getSospechoso());
 				diagnosticoResumenDiarioRepository.save(diagnosticosResumenDiarioAux);
 				}else {
@@ -74,10 +74,10 @@ public class SumarizadorEstadistica {
 					diagnosticosResumenTotalDiarioAux.setEnfermedad(diagnosticosResumenDiario.getEnfermedad());
 					diagnosticosResumenTotalDiarioAux.setDepartamento(diagnosticosResumenDiario.getDepartamento());
 					diagnosticosResumenTotalDiarioAux.setMunicipio(diagnosticosResumenDiario.getMunicipio());
-					diagnosticosResumenTotalDiarioAux.setConfirmado(diagnosticosResumenDiario.getConfirmado());
-					diagnosticosResumenTotalDiarioAux.setCurado(diagnosticosResumenDiario.getCurado());
-					diagnosticosResumenTotalDiarioAux.setFallecido(diagnosticosResumenDiario.getFallecido());
-					diagnosticosResumenTotalDiarioAux.setNegativo(diagnosticosResumenDiario.getNegativo());
+					diagnosticosResumenTotalDiarioAux.setPositivo(diagnosticosResumenDiario.getPositivo());
+					diagnosticosResumenTotalDiarioAux.setRecuperado(diagnosticosResumenDiario.getRecuperado());
+					diagnosticosResumenTotalDiarioAux.setDeceso(diagnosticosResumenDiario.getDeceso());
+					diagnosticosResumenTotalDiarioAux.setDescartado(diagnosticosResumenDiario.getDescartado());
 					diagnosticosResumenTotalDiarioAux.setSospechoso(diagnosticosResumenDiario.getSospechoso());
 					diagnosticoResumenTotalDiarioRepository.save(diagnosticosResumenTotalDiarioAux);
 				}else {
@@ -86,10 +86,10 @@ public class SumarizadorEstadistica {
 					diagnosticosResumenTotalDiarioAux.setEnfermedad(diagnosticosResumenDiario.getEnfermedad());
 					diagnosticosResumenTotalDiarioAux.setDepartamento(diagnosticosResumenDiario.getDepartamento());
 					diagnosticosResumenTotalDiarioAux.setMunicipio(diagnosticosResumenDiario.getMunicipio());
-					diagnosticosResumenTotalDiarioAux.setConfirmado(diagnosticosResumenDiario.getConfirmado());
-					diagnosticosResumenTotalDiarioAux.setCurado(diagnosticosResumenDiario.getCurado());
-					diagnosticosResumenTotalDiarioAux.setFallecido(diagnosticosResumenDiario.getFallecido());
-					diagnosticosResumenTotalDiarioAux.setNegativo(diagnosticosResumenDiario.getNegativo());
+					diagnosticosResumenTotalDiarioAux.setPositivo(diagnosticosResumenDiario.getPositivo());
+					diagnosticosResumenTotalDiarioAux.setRecuperado(diagnosticosResumenDiario.getRecuperado());
+					diagnosticosResumenTotalDiarioAux.setDeceso(diagnosticosResumenDiario.getDeceso());
+					diagnosticosResumenTotalDiarioAux.setDescartado(diagnosticosResumenDiario.getDescartado());
 					diagnosticosResumenTotalDiarioAux.setSospechoso(diagnosticosResumenDiario.getSospechoso());
 					diagnosticoResumenTotalDiarioRepository.save(diagnosticosResumenTotalDiarioAux);
 				}
@@ -100,10 +100,10 @@ public class SumarizadorEstadistica {
 					diagnosticosResumenTotalDiarioAux.setEnfermedad(diagnosticosResumenDiario.getEnfermedad());
 					diagnosticosResumenTotalDiarioAux.setDepartamento(diagnosticosResumenDiario.getDepartamento());
 					diagnosticosResumenTotalDiarioAux.setMunicipio(diagnosticosResumenDiario.getMunicipio());
-					diagnosticosResumenTotalDiarioAux.setConfirmado(diagnosticosResumenDiario.getConfirmado());
-					diagnosticosResumenTotalDiarioAux.setCurado(diagnosticosResumenDiario.getCurado());
-					diagnosticosResumenTotalDiarioAux.setFallecido(diagnosticosResumenDiario.getFallecido());
-					diagnosticosResumenTotalDiarioAux.setNegativo(diagnosticosResumenDiario.getNegativo());
+					diagnosticosResumenTotalDiarioAux.setPositivo(diagnosticosResumenDiario.getPositivo());
+					diagnosticosResumenTotalDiarioAux.setRecuperado(diagnosticosResumenDiario.getRecuperado());
+					diagnosticosResumenTotalDiarioAux.setDeceso(diagnosticosResumenDiario.getDeceso());
+					diagnosticosResumenTotalDiarioAux.setDescartado(diagnosticosResumenDiario.getDescartado());
 					diagnosticosResumenTotalDiarioAux.setSospechoso(diagnosticosResumenDiario.getSospechoso());
             		diagnosticoResumenTotalDiarioRepository.save(diagnosticosResumenTotalDiarioAux);
 				}

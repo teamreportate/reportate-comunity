@@ -100,7 +100,7 @@ public class DiagnosticoController {
         try {
         	Integer sospechosos =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication,departamentoId, municipioId,centroSaludId,null,
             		null,null,EstadoDiagnosticoEnum.SOSPECHOSO, enfermedadId);
-        	Integer confirmados =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication, departamentoId, municipioId,centroSaludId,null,
+        	Integer positivos =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication, departamentoId, municipioId,centroSaludId,null,
             		null,null,EstadoDiagnosticoEnum.POSITIVO, enfermedadId);
         	Integer recuperados =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication,departamentoId, municipioId,centroSaludId,null,
             		null,null,EstadoDiagnosticoEnum.RECUPERADO, enfermedadId);
@@ -109,7 +109,7 @@ public class DiagnosticoController {
         	Integer negativos =this.diagnosticoService.cantidadDiagnosticoPorFiltros(authentication, departamentoId, municipioId,centroSaludId,null,
             		null,null,EstadoDiagnosticoEnum.DESCARTADO, enfermedadId);
         	
-        	TotalResponse totalResponse = new TotalResponse(sospechosos,negativos,confirmados,recuperados,fallecidos,sospechosos+confirmados+recuperados+fallecidos+negativos);
+        	TotalResponse totalResponse = new TotalResponse(sospechosos,negativos,positivos,recuperados,fallecidos,positivos+recuperados+fallecidos);
             return ok(totalResponse);
         }catch (NotDataFoundException | OperationException e){
             log.error("Se genero un error al contabilizar los diagnosticos: Causa. {}",e.getMessage());
