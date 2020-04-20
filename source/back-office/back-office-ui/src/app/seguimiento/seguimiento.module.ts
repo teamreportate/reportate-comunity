@@ -41,6 +41,7 @@ import { GeolocalizacionCasosComponent } from './geolocalizacion-casos/geolocali
 import {ListSintomasComponent} from './seguimiento-enfermedad/ficha-epidemiologica/dialogs/list-sintomas/list-sintomas.component';
 import {DiagnosticoService} from '../core/services/http-services/diagnostico.service';
 import {AddObservacionComponent} from './seguimiento-enfermedad/ficha-epidemiologica/dialogs/add-observacion/add-observacion.component';
+import { ReporteModule } from '../core/reports/generateReport.module';
 
 @NgModule({
   // tslint:disable-next-line:max-line-length
@@ -78,7 +79,7 @@ import {AddObservacionComponent} from './seguimiento-enfermedad/ficha-epidemiolo
     MatDividerModule
   // tslint:disable-next-line:max-line-length
   ], entryComponents: [AddContactoComponent, AddPaisViajadoComponent, AddEnfermedadComponent, ListSintomasComponent, AddObservacionComponent],
-  providers: [PacienteService, PaisService, EnfermedadService, DiagnosticoService]
+  providers: [PacienteService, PaisService, EnfermedadService, DiagnosticoService, ReporteModule]
 })
 export class SeguimientoModule {
 }

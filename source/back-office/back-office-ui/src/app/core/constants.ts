@@ -27,11 +27,13 @@ export class Constants {
   static pacienteApi = 'api/pacientes';
   static departmentApi = 'api/departamentos';
   static diagnosticoApi = 'api/diagnosticos';
+  static ocupaciones = 'api/dominios';
   static userApi = 'api/usuarios';
   static departamentosApi = 'api/departamentos';
   static municipiosApi = 'api/municipios';
   static centrosApi = 'api/centros-de-salud';
   static listDiagnostico = 'api/departamentos/departamento-municipio-centro-salud-asignados';
+  static reporteApi = 'api/reportes/';
 
 // CLASIFICACION ENFERMEDAD
   static CLASIFICACION_ENFERMEDAD = [

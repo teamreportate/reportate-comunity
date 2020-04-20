@@ -10,17 +10,19 @@ import {ClicComponent} from '../../../../../core/utils/clic-component';
 import * as moment from 'moment';
 import {Constants} from '../../../../../core/constants';
 import {PacienteService} from '../../../../../core/services/http-services/paciente.service';
+import { SeguimientoEnfermedadService } from 'src/app/core/services/http-services/seguimiento-enfermedad.service';
 
 @Component({
   selector: 'app-add-contacto',
   templateUrl: './add-contacto.component.html',
-  styleUrls: ['./add-contacto.component.sass']
+  styleUrls: ['./add-contacto.component.sass'],
+  providers: [SeguimientoEnfermedadService]
 })
 export class AddContactoComponent  extends ClicComponent  implements OnInit {
   @Output() operacion;
   @BlockUI() blockUi: NgBlockUI;
 
-
+  listaOcupacion = [];
   sexos = Constants.SEXOS;
   public form: FormGroup;
   public today: Date;
@@ -28,12 +30,14 @@ export class AddContactoComponent  extends ClicComponent  implements OnInit {
   constructor(private service: PacienteService, private builder: FormBuilder,
               private dialogRef: MatDialogRef<AddContactoComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any, private notifier: NotifierService,
+              private seguimiento: SeguimientoEnfermedadService,
               private changeDetector: ChangeDetectorRef, private media: MediaMatcher) {
     super();
     moment.locale('es-BO');
 
   }
   ngOnInit() {
+    this.recuperarOcupacion();
     this.form = this.builder.group({
       id: new FormControl(this.data.id),
       nombre: new FormControl(this.data.nombre, Validators.compose([Validators.required, Validators.maxLength(100)])),
@@ -88,6 +92,16 @@ export class AddContactoComponent  extends ClicComponent  implements OnInit {
   }
 
   cancel = () => this.dialogRef.close(null);
+
+  recuperarOcupacion() {
+    this.seguimiento.getOcupaciones().subscribe(respuesta => {
+      this.listaOcupacion = respuesta.body;
+    }, error => {
+      if (error) {
+        this.notifierError(error);
+      }
+    });
+  }
 
   notifierError(error: any, type?: string) {
     if (error && error.error) {

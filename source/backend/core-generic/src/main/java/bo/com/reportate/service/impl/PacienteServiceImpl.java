@@ -55,8 +55,6 @@ public class PacienteServiceImpl implements PacienteService {
     @Autowired
     private PacienteRepository pacienteRepository;
     @Autowired
-    private LogService logService;
-    @Autowired
     private ControlDiarioRepository controlDiarioRepository;
     @Autowired
     private ControlDiarioSintomaRepository controlDiarioSintomaRepository;

@@ -10,10 +10,7 @@ import bo.com.reportate.util.CustomErrorType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +36,7 @@ public class ReportesController {
     @Autowired private PacienteService pacienteService;
 
 
-    @PostMapping("/{pacienteId}/ficha-epidemiologica")
+    @GetMapping("/{pacienteId}/ficha-epidemiologica")
     public ResponseEntity fichaEpidemiologica(
             @PathVariable("pacienteId") Long pacienteId) {
         try {
