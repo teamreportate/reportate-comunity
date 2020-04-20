@@ -42,10 +42,8 @@ public class ReportesController {
         try {
             List list =new ArrayList();
             FichaEpidemiologicaResponse obj = this.pacienteService.getFichaEpidemiologica(pacienteId);
-            if(!list.isEmpty()) {
-                return ok(generarReporte(list, NroReportes.RP01, obj));
-            }
-            return ok().build();
+            return ok(generarReporte(list, NroReportes.RP01, obj));
+//            return ok().build();
         }catch (OperationException e){
             log.error("Error al generar la ficha epidemiológica. Causa {}", e.getMessage());
             return CustomErrorType.badRequest("Ficha Epidemiológica", e.getMessage());

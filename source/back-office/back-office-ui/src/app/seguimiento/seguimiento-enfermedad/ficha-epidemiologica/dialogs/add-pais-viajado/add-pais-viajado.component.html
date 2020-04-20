@@ -1,11 +1,11 @@
 <mat-card>
   <mat-card-header class="bg-primary-theme text-white">
-    <mat-card-title>{{form.controls['id'].value?"Actualizar Pais Viajado":"Registro de Pais viajado"}}</mat-card-title></mat-card-header>
+    <mat-card-title>{{form.controls['id'].value?"Actualizar país visitado":"Registro de país visitado"}}</mat-card-title></mat-card-header>
   <mat-card-content>
     <div fxLayout="row wrap" [formGroup]="this.form">
       <div fxFlex="100" *ngIf="!this.data.id">
         <mat-form-field>
-          <mat-select placeholder="Pais" [formControl]="this.form.get('paisId')">
+          <mat-select placeholder="País" [formControl]="this.form.get('paisId')">
             <mat-option *ngFor="let pais of this.paises" [value]="pais.id">
               {{pais.nombre}}
             </mat-option>
@@ -14,27 +14,17 @@
       </div>
       <div fxFlex="100" *ngIf="this.data.id">
           <mat-form-field>
-            <input maxlength="100" readonly matInput placeholder="Pais" formControlName="pais" [formControl]="this.form.get('pais')">
+            <input maxlength="100" readonly matInput placeholder="País" formControlName="pais" [formControl]="this.form.get('pais')">
         </mat-form-field>
       </div>
       <div fxFlex="100">
         <mat-form-field>
-          <input maxlength="100" matInput placeholder="Ciudad" formControlName="ciudad">
-<!--          <mat-hint align="end">-->
-<!--            {{this.form.get('ciudad').value? this.form.get('ciudad').value.length:0}} / 100-->
-<!--          </mat-hint>-->
-<!--          <mat-error-->
-<!--            *ngIf="this.form.get('nombre').hasError('required') && this.form.get('nombre').touched"-->
-<!--            class="text-danger font-11">Este campo es <strong>requerido</strong>.</mat-error>-->
-<!--          <mat-error-->
-<!--            *ngIf="this.form.get('nombre').hasError('maxlength') && this.form.get('nombre').touched"-->
-<!--            class="text-danger font-11">Sólo se permite <strong>100 caracteres</strong>.-->
-<!--          </mat-error>-->
+          <input maxlength="50" matInput placeholder="Ciudad" formControlName="ciudad">
         </mat-form-field>
       </div>
       <div fxFlex="100">
         <mat-form-field class="picker-date-filter">
-          <input matInput [matDatepicker]="fechaSalida"  placeholder="Fecha De Viaje Salida"
+          <input matInput [matDatepicker]="fechaSalida"  placeholder="Fecha de salida"
                  [formControl]="this.form.get('fechaSalida')" readonly>
           <mat-datepicker-toggle matSuffix [for]="fechaSalida"></mat-datepicker-toggle>
           <mat-datepicker #fechaSalida></mat-datepicker>
@@ -42,7 +32,7 @@
       </div>
       <div fxFlex="100">
         <mat-form-field class="picker-date-filter">
-          <input matInput [matDatepicker]="fechaLlegada"  placeholder="Fecha De Viaje Llegada"
+          <input matInput [matDatepicker]="fechaLlegada"  placeholder="Fecha de retorno"
                  [formControl]="this.form.get('fechaLlegada')" readonly>
           <mat-datepicker-toggle matSuffix [for]="fechaLlegada"></mat-datepicker-toggle>
           <mat-datepicker #fechaLlegada></mat-datepicker>

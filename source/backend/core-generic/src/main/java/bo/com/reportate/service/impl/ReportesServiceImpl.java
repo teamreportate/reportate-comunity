@@ -37,12 +37,9 @@ public class ReportesServiceImpl implements ReportesService {
             //Genera Parametros por Defecto
             // HashMap parametros = generateParamsStandar(escenario, planta, reporteTipo);
             HashMap parametros = new HashMap();
-            switch(nRep) {
-                case RP01:
-                    tipoReporte= JasperReporUtil.ReporteFichaEpidemiologica;
-
-                    break;
-            }
+//            if (nRep == NroReportes.RP01) {
+                tipoReporte = JasperReporUtil.ReporteFichaEpidemiologica;
+//            }
             byteArray= JasperReporUtil.generarReporte(parametros, list, tipoReporte);
 
         }
@@ -51,8 +48,8 @@ public class ReportesServiceImpl implements ReportesService {
             log.error("No se pudo generar el reporte:" + list, e);
         } finally {
             archivoPojo.setNombre(DateUtil.toString(DateUtil.FORMAT_FILE, new Date()) + " Reportate" + JasperReportMime.pdfType);
-            archivoPojo.setLongitud(byteArray==null?0:byteArray.length);
-            archivoPojo.setArchivoBase64(byteArray==null?null: FileUtil.byteToBase64(byteArray));
+            archivoPojo.setLongitud(byteArray == null ? 0:byteArray.length);
+            archivoPojo.setArchivoBase64(byteArray==null ? null: FileUtil.byteToBase64(byteArray));
             archivoPojo.setTipo(JasperReportMime.pdfType);
             archivoPojo.setTipoMime(MediaType.APPLICATION_PDF.toString());
         }

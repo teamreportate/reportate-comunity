@@ -30,7 +30,7 @@
       <div [fxFlex]="33" class="h-padding-5">
         <mat-form-field>
           <input matInput placeholder="CI/Pasaporte " [formControl]="this.form.controls['ci']"
-                 maxlength="100">
+                 maxlength="15">
         </mat-form-field>
       </div>
       <div [fxFlex]="33" class="h-padding-5">
@@ -75,7 +75,7 @@
       <div [fxFlex]="33" class="h-padding-5">
         <mat-form-field class="picker-date-filter">
           <input matInput [matDatepicker]="fechaNacimiento" placeholder="Fecha de Nacimiento"
-                 [formControl]="this.form.get('fechaNacimiento')" readonly>
+                 [formControl]="this.form.controls['fechaNacimiento']" readonly>
           <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
           <mat-datepicker #fechaNacimiento></mat-datepicker>
         </mat-form-field>
@@ -101,20 +101,20 @@
       </div>
       <div [fxFlex]="33" class="h-padding-5" *ngIf="this.form.controls['gestacion'].value">
         <mat-form-field>
-          <input matInput placeholder="Tiempo de Gestación *" [formControl]="this.form.controls['tiempoGestacion']"
-                 maxlength="100">
+          <input matInput placeholder="Tiempo de Gestación en semanas *" [formControl]="this.form.controls['tiempoGestacion']"
+                 maxlength="2">
         </mat-form-field>
       </div>
       <div [fxFlex]="33" class="h-padding-5">
         <mat-form-field>
           <input matInput placeholder="Seguro " [formControl]="this.form.controls['seguro']"
-                 maxlength="100">
+                 maxlength="50">
         </mat-form-field>
       </div>
       <div [fxFlex]="33" class="h-padding-5">
         <mat-form-field>
           <input matInput placeholder="Código de Seguro " [formControl]="this.form.controls['codigoSeguro']"
-                 maxlength="100">
+                 maxlength="30">
         </mat-form-field>
       </div>
     </div>
@@ -136,7 +136,7 @@
         <label><strong>ENFERMEDADES DE BASE</strong></label>
       </div>
       <div class="p-5">
-        <button mat-flat-button color="accent" (click)="this.openDialogEnfermedad(null)">Agregar</button>
+        <button mat-flat-button color="accent" (click)="this.openDialogEnfermedad(null)">Agregar Enfermedad de Base</button>
       </div>
       <ngx-datatable #table class="material" [messages]="this.tableMessages()"
                      [columnMode]="'force'"
@@ -171,7 +171,7 @@
         <label><strong>PAÍSES VISITADOS</strong></label>
       </div>
       <div class="p-5">
-        <button mat-flat-button color="accent" (click)="this.openDialogPaisesViaje(null)">Agregar</button>
+        <button mat-flat-button color="accent" (click)="this.openDialogPaisesViaje(null)">Agregar País Visitado</button>
       </div>
       <ngx-datatable #table class="material" [messages]="this.tableMessages()"
                      [columnMode]="'force'"
@@ -186,10 +186,10 @@
           <ng-template let-row="row" ngx-datatable-cell-template>
             <div fxLayout="row" fxFlexAlign="start start">
               <div fxFlex="100" fxFlexAlign="center top">
-                <button mat-icon-button matTooltip="Editar País Visitado" (click)="this.openDialogPaisesViaje(row)">
+                <button mat-icon-button matTooltip="Editar país visitado" (click)="this.openDialogPaisesViaje(row)">
                   <mat-icon color="accent">edit</mat-icon>
                 </button>
-                <button mat-icon-button matTooltip="Eliminar País Visitado" (click)="this.deletePais(row)">
+                <button mat-icon-button matTooltip="Eliminar país visitado" (click)="this.deletePais(row)">
                   <mat-icon color="accent">delete</mat-icon>
                 </button>
               </div>
@@ -214,7 +214,7 @@
             {{row.fechaSalida | date: "dd/MM/yyyy"}}
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Fecha Llegada" [maxWidth]="250" [draggable]="false" [resizeable]="false">
+        <ngx-datatable-column name="Fecha Retorno" [maxWidth]="250" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
             {{row.fechaLlegada | date: "dd/MM/yyyy"}}
           </ng-template>
@@ -242,7 +242,7 @@
           <ng-template let-row="row" ngx-datatable-cell-template>
             <div fxLayout="row" fxFlexAlign="start start">
               <div fxFlex="100" fxFlexAlign="center top">
-                <button mat-icon-button matTooltip="Ver Sintomas" (click)="openDialogSintomas(row)">
+                <button mat-icon-button matTooltip="Ver Síntomas" (click)="openDialogSintomas(row)">
                   <mat-icon color="accent">visibility</mat-icon>
                 </button>
               </div>
@@ -299,7 +299,7 @@
 
     </div>
     <div fxFlex="100" class="p-5">
-      <button mat-flat-button color="accent" (click)="this.openDialogContactos(null)">Agregar</button>
+      <button mat-flat-button color="accent" (click)="this.openDialogContactos(null)">Agregar Contacto</button>
     </div>
     <ngx-datatable #table class="material" [messages]="this.tableMessages()"
                    [columnMode]="'force'"
@@ -335,7 +335,7 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="CI" [maxWidth]="250" [draggable]="false" [resizeable]="false">
+      <ngx-datatable-column name="CI/Pasaporte" [maxWidth]="250" [draggable]="false" [resizeable]="false">
         <ng-template let-row="row" ngx-datatable-cell-template>
           {{row.ci }}
         </ng-template>

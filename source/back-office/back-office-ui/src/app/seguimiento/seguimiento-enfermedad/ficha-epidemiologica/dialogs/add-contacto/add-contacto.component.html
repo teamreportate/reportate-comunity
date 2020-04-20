@@ -42,32 +42,32 @@
     <div  class="h-padding-5" *ngIf="this.form.controls['gestacion'].value">
       <mat-form-field>
         <input matInput placeholder="Tiempo Gestación " [formControl]="this.form.controls['tiempoGestacion']"
-               maxlength="100">
+               maxlength="3">
       </mat-form-field>
     </div>
 
     <div class="h-padding-5">
       <mat-form-field>
-        <input maxlength="500" matInput placeholder="Edad" formControlName="edad" [formControl]="this.form.get('edad')">
+        <input maxlength="3" matInput placeholder="Edad" formControlName="edad" [formControl]="this.form.get('edad')">
       </mat-form-field>
     </div>
 
     <div  class="h-padding-5">
       <mat-form-field>
         <input matInput placeholder="Seguro " [formControl]="this.form.controls['seguro']"
-               maxlength="100">
+               maxlength="50">
       </mat-form-field>
     </div>
     <div  class="h-padding-5">
       <mat-form-field>
         <input matInput placeholder="Código de Seguro " [formControl]="this.form.controls['codigoSeguro']"
-               maxlength="100">
+               maxlength="30">
       </mat-form-field>
     </div>
     <div  class="h-padding-5">
       <mat-form-field>
         <input matInput placeholder="CI/Pasaporte " [formControl]="this.form.controls['ci']"
-               maxlength="100">
+               maxlength="15">
       </mat-form-field>
     </div>
     <div class="h-padding-5">

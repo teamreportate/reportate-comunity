@@ -1,6 +1,7 @@
 package bo.com.reportate.model.dto.response;
 
 import bo.com.reportate.model.Diagnostico;
+import bo.com.reportate.model.enums.GeneroEnum;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,10 +36,14 @@ public class DiagnosticoResponseDto implements Serializable {
     private String clasificacion;
     private String enfermedad;
     private BigDecimal valoracion;
+    private GeneroEnum genero;
+    private Integer edad;
 
     public DiagnosticoResponseDto(Diagnostico diagnostico){
         this.id = diagnostico.getId();
         this.pacienteId = diagnostico.getControlDiario().getPaciente().getId();
+        this.genero = diagnostico.getControlDiario().getPaciente().getGenero();
+        this.edad = diagnostico.getControlDiario().getPaciente().getEdad();
         this.fechaRegistro = diagnostico.getCreatedDate();
         this.nombrePaciente = diagnostico.getControlDiario().getPaciente().getNombre();
         this.telefono = diagnostico.getControlDiario().getPaciente().getFamilia().getTelefono();
