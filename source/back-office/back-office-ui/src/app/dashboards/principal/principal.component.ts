@@ -147,8 +147,6 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
     this.service.reportTotalNumbers(this.filter).subscribe(response => {
 
       this.total = response.body;
-      this.percentSospechosos = (this.total.sospechosos * 100) / this.total.total;
-      this.percentDescartados = (this.total.descartados * 100) / this.total.total;
       this.percentConfirmados = (this.total.confirmados * 100) / this.total.total;
       this.percentRecuperados = (this.total.recuperados * 100) / this.total.total;
       this.percentFallecidos = (this.total.fallecidos * 100) / this.total.total;

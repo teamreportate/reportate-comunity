@@ -50,7 +50,7 @@ export class FallecidosComponent implements OnInit {
       }]
     };
 
-    this.myChart = this.echarts.init(document.getElementById('muerto'));
+    this.myChart = this.echarts.init(document.getElementById('deceso'));
     this.myChart.setOption(this.option);
   }
 

@@ -45,9 +45,10 @@ export class DataTotalItem {
 
 export class DataTotalNumber {
   constructor(
+    public confirmados: number = 0,
+    public positivos: number = 0,
     public sospechosos: number = 0,
     public descartados: number = 0,
-    public confirmados: number = 0,
     public recuperados: number = 0,
     public fallecidos: number = 0,
     public total: number = 0
