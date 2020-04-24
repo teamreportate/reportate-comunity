@@ -112,7 +112,7 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
 
             addPermisos();
         }
-//        addPermisos();
+        addPermisos();
         log.info("************************* Fin de cargar usuarios por defecto *************************");
     }
     private void addPermisos(){
@@ -121,31 +121,31 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         recPadre("Dashboards", "Pantalla de reportes", "dashboards", 1, "menu", rolAdmin);
         recHijo("Principal", "dashboards", "Interfaz para vista de reportes del sistema", "principal", 1, "code", rolAdmin);
 
-        recPadre("Accesos", "Interfaces para gestión del módulo de usuario ", "accesos", 1, "menu", rolAdmin);
-        recHijo("Recursos", "accesos", "Interfaz para administración de Recursos del sistema", "resources", 1, "insert_link", rolAdmin);
-        recHijo("Roles", "accesos", "Interfaz para administración de Roles", "roles", 2, "border_color", rolAdmin);
-        recHijo("Grupos", "accesos", "Interfaz para administración de Grupos", "groups", 3, "group_work", rolAdmin);
-        recHijo("Usuarios", "accesos", "Interfaz para administración de usuarios.", "users", 5, "group_add", rolAdmin);
-
-        recPadre("Monitoreo", "Interfaces para monitoreo del sistema", "monitoreo", 1, "menu", rolAdmin);
-        recHijo("Bitácora", "monitoreo", "Interfaz para monitoreo de logs", "bitacora", 1, "flag", rolAdmin);
-
-        recPadre("Configuración", "Interfaces para configuración de parámetros y dominios", "configuracion", 1, "menu", rolAdmin);
-        recHijo("Parámetros", "configuracion", "Interfaz para administración de parámetros", "parameters", 1, "code", rolAdmin);
-        recHijo("Dominios", "configuracion", "Interfaz para administración de dominios", "dominios", 2, "code", rolAdmin);
-        recHijo("Alarmas", "configuracion", "Interfaz para administración de Alarmas", "alarmas", 3, "code", rolAdmin);
-
-        recPadre("Administración", "Configuraciones de los escenarios", "administracion", 1, "menu", rolAdmin);
-        recHijo("Países", "administracion", "Gestión de Países", "paises", 1, "code", rolAdmin);
-        recHijo("Síntomas", "administracion", "Gestión de Sintomas", "sintomas", 2, "code", rolAdmin);
-        recHijo("Enfermedades", "administracion", "Gestión de Enfermedades", "enfermedades", 3, "code", rolAdmin);
-        recHijo("Municipios", "administracion", "Gestión de Municipios", "municipios", 4, "code", rolAdmin);
-        recHijo("Centros de Salud", "administracion", "Gestión de Centros", "centros", 5, "code", rolAdmin);
-        recHijo("Departamentos", "administracion", "Gestión de Departamentos", "departamentos", 6, "code", rolAdmin);
-
-        recPadre("Seguimiento", "Interfaz para seguimiento de diagnosticos", "seguimiento", 1, "menu", rolAdmin);
-        recHijo("Diagnostico", "seguimiento", "Interfaz para seguimiento de interfaces", "diagnostico", 1, "code", rolAdmin);
-        recHijo("Geolocalización", "seguimiento", "Interfaz para localizar los casos", "localizacion", 2, "code", rolAdmin);
+//        recPadre("Accesos", "Interfaces para gestión del módulo de usuario ", "accesos", 1, "menu", rolAdmin);
+//        recHijo("Recursos", "accesos", "Interfaz para administración de Recursos del sistema", "resources", 1, "insert_link", rolAdmin);
+//        recHijo("Roles", "accesos", "Interfaz para administración de Roles", "roles", 2, "border_color", rolAdmin);
+//        recHijo("Grupos", "accesos", "Interfaz para administración de Grupos", "groups", 3, "group_work", rolAdmin);
+//        recHijo("Usuarios", "accesos", "Interfaz para administración de usuarios.", "users", 5, "group_add", rolAdmin);
+//
+//        recPadre("Monitoreo", "Interfaces para monitoreo del sistema", "monitoreo", 1, "menu", rolAdmin);
+//        recHijo("Bitácora", "monitoreo", "Interfaz para monitoreo de logs", "bitacora", 1, "flag", rolAdmin);
+//
+//        recPadre("Configuración", "Interfaces para configuración de parámetros y dominios", "configuracion", 1, "menu", rolAdmin);
+//        recHijo("Parámetros", "configuracion", "Interfaz para administración de parámetros", "parameters", 1, "code", rolAdmin);
+//        recHijo("Dominios", "configuracion", "Interfaz para administración de dominios", "dominios", 2, "code", rolAdmin);
+//        recHijo("Alarmas", "configuracion", "Interfaz para administración de Alarmas", "alarmas", 3, "code", rolAdmin);
+//
+//        recPadre("Administración", "Configuraciones de los escenarios", "administracion", 1, "menu", rolAdmin);
+//        recHijo("Países", "administracion", "Gestión de Países", "paises", 1, "code", rolAdmin);
+//        recHijo("Síntomas", "administracion", "Gestión de Sintomas", "sintomas", 2, "code", rolAdmin);
+//        recHijo("Enfermedades", "administracion", "Gestión de Enfermedades", "enfermedades", 3, "code", rolAdmin);
+//        recHijo("Municipios", "administracion", "Gestión de Municipios", "municipios", 4, "code", rolAdmin);
+//        recHijo("Centros de Salud", "administracion", "Gestión de Centros", "centros", 5, "code", rolAdmin);
+//        recHijo("Departamentos", "administracion", "Gestión de Departamentos", "departamentos", 6, "code", rolAdmin);
+//
+//        recPadre("Seguimiento", "Interfaz para seguimiento de diagnosticos", "seguimiento", 1, "menu", rolAdmin);
+//        recHijo("Diagnostico", "seguimiento", "Interfaz para seguimiento de interfaces", "diagnostico", 1, "code", rolAdmin);
+//        recHijo("Geolocalización", "seguimiento", "Interfaz para localizar los casos", "localizacion", 2, "code", rolAdmin);
         log.info("************************* Fin de cargar permisos por defecto *************************");
     }
 

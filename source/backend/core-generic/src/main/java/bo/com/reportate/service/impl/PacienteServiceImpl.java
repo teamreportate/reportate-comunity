@@ -551,7 +551,7 @@ public class PacienteServiceImpl implements PacienteService {
             Sintoma sintoma = this.sintomaRepository.findByIdAndEstado(sintomaRequest.getId(), EstadoEnum.ACTIVO).orElseThrow(() -> new NotDataFoundException("No se encontro el sintoma que quiere registrar"));
             this.controlDiarioSintomaRepository.save(ControlDiarioSintoma.builder()
                     .controlDiario(controlDiario)
-                    .respuesta(sintomaRequest.getRespuesta())
+                    .respuesta(true)
                     .observacion(sintomaRequest.getObservacion())
                     .sintoma(sintoma).build());
         }

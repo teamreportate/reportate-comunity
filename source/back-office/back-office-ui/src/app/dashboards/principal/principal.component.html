@@ -90,24 +90,24 @@
     <div fxFlex="19">
       <label>TOTAL CONFIRMADOS</label>
       <h2>{{total.confirmados}}</h2>
-      <span style="color: #F4D03F;">{{percentConfirmados | number: '2.1-2'}} %</span>
+      <span style="color: #FF0000;">{{percentConfirmados | number: '2.1-2'}} %</span>
     </div>
     <div fxFlex="19">
       <label>TOTAL ACTIVOS</label>
       <h2>{{total.positivos}}</h2>
-      <span style="color: #01C0C8;">{{percentSospechosos | number: '2.1-2'}} %</span>
+      <span style="color: #FFA500;">{{percentActivos | number: '2.1-2'}} %</span>
     </div>
 
     <div fxFlex="19">
       <label>TOTAL RECUPERADOS</label>
       <h2>{{total.recuperados}}</h2>
-      <span style="color: #2ECC71;">{{percentRecuperados | number: '2.1-2'}} %</span>
+      <span style="color: #008000;">{{percentRecuperados | number: '2.1-2'}} %</span>
     </div>
 
     <div fxFlex="19">
-      <label>TOTAL FALLECIDOS</label>
-      <h2>{{total.fallecidos}}</h2>
-      <span style="color: #FB9678;">{{percentFallecidos | number: '2.1-2'}} %</span>
+      <label>TOTAL DECESOS</label>
+      <h2>{{total.decesos}}</h2>
+      <span style="color: #000000;">{{percentFallecidos | number: '2.1-2'}} %</span>
     </div>
 
     <div fxFlex="19">
@@ -152,13 +152,13 @@
 
         <ngx-datatable-column name="Confirmados" [draggable]="false" [resizeable]="false" >
           <ng-template let-row="row" ngx-datatable-cell-template>
-            {{row.confirmado }}
+            {{row.positivo + row.recuperado + row.deceso }}
           </ng-template>
         </ngx-datatable-column>
 
         <ngx-datatable-column name="Activos" [draggable]="false" [resizeable]="false" >
           <ng-template let-row="row" ngx-datatable-cell-template>
-            {{row.activos}}
+            {{row.positivo}}
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Recuperados" [draggable]="false" [resizeable]="false" >
@@ -199,26 +199,29 @@
 <div fxLayout="row wrap" fxLayoutAlign="space-around">
   <div fxFlex="48">
     <div class="card">
-      <h4 class="text-center m-0">SOSPECHOSOS</h4>
-      <app-sospechoso></app-sospechoso>
-    </div>
-  </div>
-  <div fxFlex="48">
-    <div class="card">
-      <h4 class="text-center m-0">CONFIRMADOS</h4>
+      <h4 class="text-center m-0">POSITIVOS POR DÍA</h4>
       <app-confirmado></app-confirmado>
     </div>
   </div>
+
   <div fxFlex="48">
     <div class="card">
-      <h4 class="text-center m-0">RECUPERADOS</h4>
+      <h4 class="text-center m-0">RECUPERADOS POR DÍA</h4>
       <app-recuperados></app-recuperados>
     </div>
   </div>
+
   <div fxFlex="48">
     <div class="card">
-      <h4 class="text-center m-0">FALLECIDOS</h4>
+      <h4 class="text-center m-0">DECESOS POR DÍA</h4>
       <app-fallecidos></app-fallecidos>
+    </div>
+  </div>
+
+  <div fxFlex="48">
+    <div class="card">
+      <h4 class="text-center m-0">SOSPECHOSOS POR DÍA</h4>
+      <app-sospechoso></app-sospechoso>
     </div>
   </div>
 </div>

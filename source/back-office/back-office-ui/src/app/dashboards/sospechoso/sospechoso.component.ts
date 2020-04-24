@@ -38,13 +38,13 @@ export class SospechosoComponent implements OnInit {
         areaStyle: {
           color: {
             colorStops: [{
-              offset: 0, color: '#01C0C8'
+              offset: 0, color: '#FFFF00'
             }]
           }
         },
         color: {
           colorStops: [{
-            offset: 0, color: '#01C0C8'
+            offset: 0, color: '#FFFF00'
           }]
         }
       }]

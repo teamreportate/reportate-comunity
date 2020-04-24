@@ -20,6 +20,7 @@ public class GraficoLineaResponse implements Serializable{
 	private List<Long> positivos;
 	private List<Long> recuperados;
 	private List<Long> decesos;
+	private List<Long> confirmados;
 	
 	public void add(String dia,Long sospechoso, Long descartado, Long positivo, Long recuperado, Long deceso) {
 		if(dias == null) {
@@ -29,6 +30,7 @@ public class GraficoLineaResponse implements Serializable{
 			positivos = new ArrayList<>();
 			recuperados = new ArrayList<>();
 			decesos = new ArrayList<>();
+			confirmados = new ArrayList<>();
 		}
 		dias.add(dia);
 		sospechosos.add(sospechoso);
@@ -36,5 +38,6 @@ public class GraficoLineaResponse implements Serializable{
 		positivos.add(positivo);
 		recuperados.add(recuperado);
 		decesos.add(deceso);
+		confirmados.add(positivo + recuperado + deceso);
 	}
 }

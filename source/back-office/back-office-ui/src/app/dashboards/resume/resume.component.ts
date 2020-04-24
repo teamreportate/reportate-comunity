@@ -34,7 +34,7 @@ export class ResumeComponent implements OnInit {
         }
       },
       legend: {
-        data: ['Sospechosos', 'Descartados', 'Confirmados', 'Recuperados', 'Fallecidos']
+        data: ['Confirmados', 'Activos', 'Recuperados', 'Decesos', 'Sospechosos',]
       },
       toolbox: {
         feature: {
@@ -61,55 +61,38 @@ export class ResumeComponent implements OnInit {
       ],
       series: [
         {
-          name: 'Sospechosos',
-          type: 'line',
-          areaStyle: {
-            color: {
-              colorStops: [{
-                offset: 0, color: '#01C0C8'
-              }]
-            }
-          },
-          color: {
-            colorStops: [{
-              offset: 0, color: '#01C0C8'
-            }]
-          },
-          data: data.sospechosos
-        },
-        {
-          name: 'Descartados',
-          type: 'line',
-          areaStyle: {
-            color: {
-              colorStops: [{
-                offset: 0, color: '#C777DB'
-              }]
-            }
-          },
-          color: {
-            colorStops: [{
-              offset: 0, color: '#C777DB'
-            }]
-          },
-          data: data.negativos
-        },
-        {
           name: 'Confirmados',
           type: 'line',
           areaStyle: {
             color: {
               colorStops: [{
-                offset: 0, color: '#F4D03F'
+                offset: 0, color: '#FF0000'
               }]
             }
           },
           color: {
             colorStops: [{
-              offset: 0, color: '#F4D03F'
+              offset: 0, color: '#FF0000'
             }]
           },
           data: data.confirmados
+        },
+        {
+          name: 'Activos',
+          type: 'line',
+          areaStyle: {
+            color: {
+              colorStops: [{
+                offset: 0, color: '#FFA500'
+              }]
+            }
+          },
+          color: {
+            colorStops: [{
+              offset: 0, color: '#FFA500'
+            }]
+          },
+          data: data.positivos
         },
         {
           name: 'Recuperados',
@@ -117,33 +100,50 @@ export class ResumeComponent implements OnInit {
           areaStyle: {
             color: {
               colorStops: [{
-                offset: 0, color: '#2ECC71'
+                offset: 0, color: '#008000'
               }]
             }
           },
           color: {
             colorStops: [{
-              offset: 0, color: '#2ECC71'
+              offset: 0, color: '#008000'
             }]
           },
-          data: data.curados
+          data: data.recuperados
         },
         {
-          name: 'Fallecidos',
+          name: 'Decesos',
           type: 'line',
           areaStyle: {
             color: {
               colorStops: [{
-                offset: 0, color: '#FB9678'
+                offset: 0, color: '#000000'
               }]
             }
           },
           color: {
             colorStops: [{
-              offset: 0, color: '#FB9678'
+              offset: 0, color: '#000000'
             }]
           },
-          data: data.fallecidos
+          data: data.decesos
+        },
+        {
+          name: 'Sospechosos',
+          type: 'line',
+          areaStyle: {
+            color: {
+              colorStops: [{
+                offset: 0, color: '#FFFF00'
+              }]
+            }
+          },
+          color: {
+            colorStops: [{
+              offset: 0, color: '#FFFF00'
+            }]
+          },
+          data: data.sospechosos
         }
       ]
     };
@@ -151,7 +151,6 @@ export class ResumeComponent implements OnInit {
     this.myChart = this.echarts.init(document.getElementById('resume'));
     this.myChart.setOption(this.option);
   }
-
 
 }
 
