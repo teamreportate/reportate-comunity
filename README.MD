@@ -1,14 +1,14 @@
 # PROYECTO - REPÓRTATE
 ----
 Autor: 
-*   Ing. Ruth Vargas 
-*   Ing. Luis Carlos
-*   Ing. Sergio Pilco 
-*   Ing. Leonardo Bozo
-*   Ing. Diana
-*   Ing. Daniel Yugar
-*   Vinx Junior Guzman Martinez
-*   Ing. Ricardo Laredo 
+* Ing. Ruth Vargas 
+* Ing. Luis Carlos
+* Ing. Sergio Pilco 
+* Ing. Leonardo Bozo
+* Ing. Diana
+* Ing. Daniel Yugar
+* Vinx Junior Guzman Martinez
+* Ing. Ricardo Laredo 
 
 ##   DESCRICIÓN
 Repórtate, es una aplicación de alerta temprana y control de riesgo de las personas más propensas a contraer COVID-19.
