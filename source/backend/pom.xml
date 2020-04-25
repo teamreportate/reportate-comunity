@@ -26,10 +26,8 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<project.lombok.version>1.16.16</project.lombok.version>
 		<project.lambdaj.version>2.3.3</project.lambdaj.version>
-		<axis2.version>1.6.2</axis2.version>
 		<slf4j.version>1.7.25</slf4j.version>
         <httpclient.version>4.5.4</httpclient.version>
-        <docker.image.prefix>springio</docker.image.prefix>
         <commons.compress.version>1.18</commons.compress.version>
         <poi.version>4.1.0</poi.version>
 	</properties>
