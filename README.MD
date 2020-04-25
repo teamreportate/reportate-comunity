@@ -1,8 +1,18 @@
-# REPORTATE - Proyecto
+# PROYECTO - REPÓRTATE
 ----
-Autor: Ing. Ricardo Laredo, Ing. Ruth Vargas, Ing. Carlos 
+Autor: 
+*   Ing. Ruth Vargas 
+*   Ing. Luis Carlos
+*   Ing. Sergio Pilco 
+*   Ing. Leonardo Bozo
+*   Ing. Diana
+*   Ing. Daniel Yugar
+*   Vinx Junior Guzman Martinez
+*   Ing. Ricardo Laredo 
 
-El proyecto actual contiene una template de proyecto con las siguientes tecnologias habilitadas:
+#   DESCRICIÓN
+
+El :
 * Spring Boot
 * Postgresql 9.6 sobre un contenedor docker
 

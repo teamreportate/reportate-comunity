@@ -6,9 +6,9 @@ pipeline {
     }
     environment {
 //         SERVER_DEV_SFE_CREDENTIAL = credentials('server.reportate.credential')
-        PATH_BACKEND_API_WS = "${WORKSPACE}/backend/"
-        PATH_FRONTEND = "${WORKSPACE}/back-office/"
-        PATH_FRONTOFFICE = "${WORKSPACE}/frontoffice/"
+        PATH_BACKEND_API_WS = "${WORKSPACE}/source/backend/"
+        PATH_FRONTEND = "${WORKSPACE}/source/back-office/"
+        PATH_FRONTOFFICE = "${WORKSPACE}/source/frontoffice/"
 
         PATH_WEB_FACTURACION = "${WORKSPACE}/backend/web-facturacion/"
         PATH_WEB_BACKOFFICE_API = "${WORKSPACE}/backend/web-backoffice-api/"
