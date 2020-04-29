@@ -1,10 +1,11 @@
-<mat-dialog-content>
 
   <mat-card>
     <mat-card-header class="bg-primary-theme text-white">
       <mat-card-title>{{"Nuevo Diagnostico"}}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
+      <mat-dialog-content>
+
       <div fxLayout="row wrap" [formGroup]="this.form">
         <div fxFlex="100">
           <mat-form-field>
@@ -74,7 +75,7 @@
         </div>
         <mat-form-field appearance="fill">
             <textarea matInput placeholder="Observaciones *" [formControl]="this.form.controls['recomendacion']"
-                      cols="40" rows="15"></textarea>
+                      cols="30" rows="10"></textarea>
         </mat-form-field>
         <div [fxFlex]="100" class="h-padding-5">
           <mat-form-field>
@@ -86,6 +87,7 @@
           </mat-form-field>
         </div>
       </div>
+</mat-dialog-content>
 
       <mat-card-actions fxLayoutAlign="end center" fxLayoutGap="5px">
         <button mat-stroked-button color="warn" type="button" (click)="this.cancel()">Cancelar</button>
@@ -98,4 +100,3 @@
   <ng-template #customNotification let-notificationData="notification">
     <app-custom-notification [notificationData]="notificationData"></app-custom-notification>
   </ng-template>
-</mat-dialog-content>

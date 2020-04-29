@@ -15,9 +15,11 @@ import {AddContactoComponent} from './dialogs/add-contacto/add-contacto.componen
 import * as moment from 'moment';
 import {ListSintomasComponent} from './dialogs/list-sintomas/list-sintomas.component';
 import {AddObservacionComponent} from './dialogs/add-observacion/add-observacion.component';
-import { ReporteModule } from 'src/app/core/reports/generateReport.module';
-import { DtoFileModel } from 'src/app/core/models/dto/dto-file.model';
-import { SeguimientoEnfermedadService } from 'src/app/core/services/http-services/seguimiento-enfermedad.service';
+import {ReporteModule} from 'src/app/core/reports/generateReport.module';
+import {DtoFileModel} from 'src/app/core/models/dto/dto-file.model';
+import {SeguimientoEnfermedadService} from 'src/app/core/services/http-services/seguimiento-enfermedad.service';
+import {DiagnosticoService} from '../../../core/services/http-services/diagnostico.service';
+import {NuevoDianosticoComponent} from '../nuevo-dianostico/nuevo-dianostico.component';
 
 @Component({
   selector: 'app-ficha-epidemiologica',
@@ -33,12 +35,16 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
   listDiagnosticos = [];
   listContactos = [];
   listaOcupacion = [];
+  listSintomas = [];
+  listSintomasMid = [];
+  listSintomasMidM = [];
+
   public filterFlex;
   @BlockUI() blockUI: NgBlockUI;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private route: ActivatedRoute, public dialog: MatDialog, private pacienteService: PacienteService, private formBuilder: FormBuilder, private notifier: NotifierService,
-    private reporteFormato: ReporteModule, private seguimiento: SeguimientoEnfermedadService) {
+  constructor(private diagnosticoService: DiagnosticoService, private route: ActivatedRoute, public dialog: MatDialog, private pacienteService: PacienteService, private formBuilder: FormBuilder, private notifier: NotifierService,
+              private reporteFormato: ReporteModule, private seguimiento: SeguimientoEnfermedadService) {
     super();
     this.form = this.initial();
     moment.locale('es-BO');
@@ -56,6 +62,18 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       this.listEnfermedadesBase = response.body.enfermedadesBase;
       this.listDiagnosticos = response.body.diagnosticos;
       this.listContactos = response.body.contactos;
+      if (this.listDiagnosticos) {
+        this.diagnosticoService.getDiagnostico(this.listDiagnosticos[0].id).subscribe(responseSintomas => {
+          if (responseSintomas.body) {
+            this.listSintomas = responseSintomas.body;
+            this.listSintomasMid = this.listSintomas.slice(0, Math.floor(this.listSintomas.length / 2));
+            if (this.listSintomas.length > 1) {
+              this.listSintomasMidM = this.listSintomas.slice(Math.floor(this.listSintomas.length / 2), this.listSintomas.length);
+            }
+          }
+          console.warn(this.listSintomas);
+        });
+      }
     });
   }
 
@@ -143,6 +161,7 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
       this.reporteFormato.impresionExcel(reporte.nombre, reporte.archivoBase64);
     }
   }
+
   recuperarOcupacion() {
     this.blockUI.start('Generando reporte...');
     this.seguimiento.getOcupaciones().subscribe(respuesta => {
@@ -367,6 +386,26 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
         }
         this.ngOnInit();
 
+      });
+  }
+
+
+  openDialogDianostico(row: any) {
+    let temporal: any;
+    if (row !== null) {
+      temporal = row;
+    } else {
+      temporal = {};
+    }
+
+    const dialogRef = this.dialog.open(NuevoDianosticoComponent, this.dialogConfig(temporal));
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result) {
+          const notif = {error: {title: result.title, detail: result.detail}};
+          this.notifierError(notif, 'info');
+          this.ngOnInit();
+        }
       });
   }
 }
