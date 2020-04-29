@@ -61,6 +61,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
   percentConfirmados = 0;
   percentRecuperados = 0;
   percentFallecidos = 0;
+  percentActivos = 0;
 
   @ViewChild(ResumeComponent) resumeComponent: ResumeComponent;
   @ViewChild(ConfirmadoComponent) confirmadoComponent: ConfirmadoComponent;
@@ -88,7 +89,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
   }
 
   initForm() {
-    this.from = new Date(this.from.setDate(this.from.getDate() - 3));
+    this.from = new Date(this.from.setDate(this.from.getDate() - 30));
     this.form = new FormGroup({
       from: new FormControl(this.from, Validators.compose([Validators.required])),
       to: new FormControl(this.to, Validators.compose([Validators.required])),
@@ -147,11 +148,11 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
     this.service.reportTotalNumbers(this.filter).subscribe(response => {
 
       this.total = response.body;
-      this.percentSospechosos = (this.total.sospechosos * 100) / this.total.total;
-      this.percentDescartados = (this.total.descartados * 100) / this.total.total;
-      this.percentConfirmados = (this.total.confirmados * 100) / this.total.total;
-      this.percentRecuperados = (this.total.recuperados * 100) / this.total.total;
-      this.percentFallecidos = (this.total.fallecidos * 100) / this.total.total;
+      this.percentConfirmados = (this.total.confirmados * 100) / this.total.confirmados;
+      this.percentActivos = (this.total.positivos * 100) / this.total.confirmados;
+      this.percentRecuperados = (this.total.recuperados * 100) / this.total.confirmados;
+      this.percentFallecidos = (this.total.decesos * 100) / this.total.confirmados;
+
 
       this.blockUI.stop();
     }, error => {
@@ -240,7 +241,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
           type: 'bar',
           color: {
             colorStops: [{
-              offset: 0, color: '#FB9678'
+              offset: 0, color: '#FF0000'
             }]
           }
         },
@@ -248,7 +249,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
           type: 'bar',
           color: {
             colorStops: [{
-              offset: 0, color: '#F4D03F'
+              offset: 0, color: '#FFA500'
             }]
           }
         },
@@ -256,7 +257,7 @@ export class PrincipalComponent extends ClicComponent implements OnInit, AfterVi
           type: 'bar',
           color: {
             colorStops: [{
-              offset: 0, color: '#2ECC71'
+              offset: 0, color: '#008000'
             }]
           }
         }

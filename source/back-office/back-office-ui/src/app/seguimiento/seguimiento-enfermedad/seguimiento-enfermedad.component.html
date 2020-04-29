@@ -117,6 +117,7 @@
                   <mat-icon color="accent">note</mat-icon>
                 </button>
               </div>
+
               <div fxFlex="50" fxFlexAlign="center top">
                 <button mat-icon-button matTooltip="Nuevo Diagnostico" (click)="openDialogDianostico(row)" >
                   <mat-icon color="accent">add</mat-icon>
@@ -187,10 +188,11 @@
 
         <ngx-datatable-column name="Clasificación" [maxWidth]="250" [draggable]="false" [resizeable]="false">
           <ng-template let-row="row" ngx-datatable-cell-template>
-            <div *ngIf="row.clasificacion==='NEGATIVO'" class="color-green">{{row.clasificacion}}</div>
-            <div *ngIf="row.clasificacion==='CONFIRMADO'" class="color-red">{{row.clasificacion}}</div>
+            <div *ngIf="row.clasificacion==='DESCARTADO'" class="color-green">{{row.clasificacion}}</div>
+            <div *ngIf="row.clasificacion==='POSITIVO'" class="color-red">{{row.clasificacion}}</div>
             <div *ngIf="row.clasificacion==='SOSPECHOSO'" class="color-yellow" >{{row.clasificacion}}</div>
-            <div *ngIf="row.clasificacion==='ACTIVO'" class="color-orange" >{{row.clasificacion}}</div>
+            <div *ngIf="row.clasificacion==='RECUPERADO'" class="color-green" >{{row.clasificacion}}</div>
+            <div *ngIf="row.clasificacion==='DECESO'" class="color-black" >{{row.clasificacion}}</div>
           </ng-template>
         </ngx-datatable-column>
 

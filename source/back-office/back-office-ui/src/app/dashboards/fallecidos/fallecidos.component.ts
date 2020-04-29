@@ -33,18 +33,18 @@ export class FallecidosComponent implements OnInit {
         type: 'value'
       },
       series: [{
-        data: data.fallecidos,
+        data: data.decesos,
         type: 'line',
         areaStyle: {
           color: {
             colorStops: [{
-              offset: 0, color: '#FB9678'
+              offset: 0, color: '#000000'
             }]
           }
         },
         color: {
           colorStops: [{
-            offset: 0, color: '#FB9678'
+            offset: 0, color: '#000000'
           }]
         }
       }]

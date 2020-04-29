@@ -33,18 +33,18 @@ export class RecuperadosComponent implements OnInit {
         type: 'value'
       },
       series: [{
-        data: data.curados,
+        data: data.recuperados,
         type: 'line',
         areaStyle: {
           color: {
             colorStops: [{
-              offset: 0, color: '#2ECC71'
+              offset: 0, color: '#008000'
             }]
           }
         },
         color: {
           colorStops: [{
-            offset: 0, color: '#2ECC71'
+            offset: 0, color: '#008000'
           }]
         }
       }]

@@ -209,19 +209,19 @@ export class GeolocalizacionCasosComponent extends ClicComponent implements OnIn
       } else {
         for (const object of this.listUbicaciones) {
           const dtoMapFortma: MapFormat = new MapFormat(object);
-          if (object.estadoDiagnostico === 'CONFIRMADO') {
+          if (object.estadoDiagnostico === 'POSITIVO') {
             this.listCovidConfirmado.push(dtoMapFortma);
           }
           if (object.estadoDiagnostico === 'SOSPECHOSO') {
             this.listCovidSospechoso.push(dtoMapFortma);
           }
-          if (object.estadoDiagnostico === 'NEGATIVO') {
+          if (object.estadoDiagnostico === 'DESCARTADO') {
             this.listCovidNegativo.push(dtoMapFortma);
           }
         }
-        this.marcarPuntos(this.listCovidConfirmado, 'CONFIRMADO', 'red');
+        this.marcarPuntos(this.listCovidConfirmado, 'POSITIVO', 'red');
         this.marcarPuntos(this.listCovidSospechoso, 'SOSPECHOSO', 'yellow');
-        this.marcarPuntos(this.listCovidNegativo, 'NEGATIVO', 'green');
+        this.marcarPuntos(this.listCovidNegativo, 'DESCARTADO', 'green');
       }
       this.render = true;
       this.blockUI.stop();

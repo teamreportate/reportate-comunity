@@ -17,11 +17,12 @@ export class Filter {
 export class Data {
   constructor(
     public dias: string[] = [],
-    public sospechosos: number[] = [],
-    public negativos: number[] = [],
     public confirmados: number[] = [],
-    public curados: number[] = [],
-    public fallecidos: number[] = []
+    public positivos: number[] = [],
+    public recuperados: number[] = [],
+    public decesos: number[] = [],
+    public sospechosos: number[] = [],
+    public descartado: number[] = []
     ) { }
 }
 
@@ -45,11 +46,11 @@ export class DataTotalItem {
 
 export class DataTotalNumber {
   constructor(
+    public confirmados: number = 0,
+    public positivos: number = 0,
     public sospechosos: number = 0,
     public descartados: number = 0,
-    public confirmados: number = 0,
     public recuperados: number = 0,
-    public fallecidos: number = 0,
-    public total: number = 0
+    public decesos: number = 0,
     ) { }
 }

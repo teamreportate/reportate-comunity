@@ -17,7 +17,6 @@ import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.GeneroEnum;
 import bo.com.reportate.repository.*;
-import bo.com.reportate.service.LogService;
 import bo.com.reportate.service.NotificacionService;
 import bo.com.reportate.service.PacienteService;
 import bo.com.reportate.util.ValidationUtil;
@@ -133,7 +132,7 @@ public class PacienteServiceImpl implements PacienteService {
         if (this.pacienteRepository.existsByFamiliaAndNombreIgnoreCaseAndEstado(paciente.getFamilia(), nombre, EstadoEnum.ACTIVO)) {
             throw new OperationException("Ya existe un miembro de tu familia con el nombre: " + nombre);
         }
-        boolean gestacionAux = gestacion;
+        boolean gestacionAux = gestacion == null? false:gestacion;
         if(genero.equals(GeneroEnum.MASCULINO)){
             gestacionAux = false;
         }
@@ -209,7 +208,7 @@ public class PacienteServiceImpl implements PacienteService {
         ValidationUtil.throwExceptionIfInvalidText("ci", ci, false, 20);
         ValidationUtil.throwExceptionIfInvalidText("fechaNamiento", fechaNacimiento, false, 10);
         Date fechNacimient = null;
-        if (StringUtil.isEmptyOrNull(fechaNacimiento)) {
+        if (!StringUtil.isEmptyOrNull(fechaNacimiento)) {
             fechNacimient = DateUtil.toDate(DateUtil.FORMAT_DATE, fechaNacimiento);
             if (fechNacimient == null) {
                 throw new OperationException("No se logró convertir a formato dd/mm/yyyy la fecha: " + fechaNacimiento);
@@ -316,7 +315,7 @@ public class PacienteServiceImpl implements PacienteService {
 
             if (valoracion.compareTo(BigDecimal.ZERO) > 0) {// Sintomas de la enfermedad
                 log.info("Resultado enfermedad:{}  del calculo:{}", enfermedad.getNombre(), valoracion);
-                EstadoDiagnosticoEnum estadoDiagnostico = EstadoDiagnosticoEnum.NEGATIVO;
+                EstadoDiagnosticoEnum estadoDiagnostico = EstadoDiagnosticoEnum.DESCARTADO;
 
                 if((enfermedadesBase != null && !enfermedadesBase.isEmpty()) ||
                         this.controlDiarioEnfermedadRepository.existsByControlDiarioPacienteAndEstado(paciente, EstadoEnum.ACTIVO)){
@@ -344,10 +343,10 @@ public class PacienteServiceImpl implements PacienteService {
 
                 log.info("Registrando diagnostico del paciente {} con estado {}  de la enfermedad {} con {} sintomas.", paciente.getNombre(), estadoDiagnostico, enfermedad.getNombre(), sintomasDignostico.size());
                 diagnostico.setResultadoValoracion(valoracion);
-                //Si el diagnostico actual del paciente es CONFIRMADO ó ACTIVO el diagnostico actual será ACTIVO
-                if (paciente.getDiagnostico() != null && (paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.CONFIRMADO) ||
-                        paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.ACTIVO))) {
-                    diagnostico.setEstadoDiagnostico(EstadoDiagnosticoEnum.ACTIVO);
+                //Si el diagnostico actual del paciente es POSITIVO ó ACTIVO el diagnostico actual será ACTIVO
+                if (paciente.getDiagnostico() != null && (paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.POSITIVO) ||
+                        paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.POSITIVO))) {
+                    diagnostico.setEstadoDiagnostico(EstadoDiagnosticoEnum.POSITIVO);
                     diagnostico.setObservacion(cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_ACTIVO));
                     this.diagnosticoRepository.save(diagnostico);
                 } else {
@@ -365,7 +364,7 @@ public class PacienteServiceImpl implements PacienteService {
                     paciente.setDiagnostico(diagnostico);
                     this.pacienteRepository.save(paciente);
                 } else if (!(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.SOSPECHOSO) &&
-                        diagnostico.getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.NEGATIVO))) {
+                        diagnostico.getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.DESCARTADO))) {
                     paciente.setDiagnostico(diagnostico);
                     this.pacienteRepository.save(paciente);
 
@@ -380,13 +379,13 @@ public class PacienteServiceImpl implements PacienteService {
             controlDiario.setRecomendacion(recomendacion);
             return recomendacion;
         }
-        if(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.NEGATIVO)){
+        if(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.DESCARTADO)){
             recomendacion = cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_LEVES);
             this.controlDiarioRepository.agregarRecomendacion(controlDiario,recomendacion);
             controlDiario.setRecomendacion(recomendacion);
             return recomendacion;
         }
-        if(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.ACTIVO)){
+        if(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.POSITIVO)){
             recomendacion = cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_ACTIVO);
             this.controlDiarioRepository.agregarRecomendacion(controlDiario,recomendacion);
             controlDiario.setRecomendacion(recomendacion);
@@ -552,7 +551,7 @@ public class PacienteServiceImpl implements PacienteService {
             Sintoma sintoma = this.sintomaRepository.findByIdAndEstado(sintomaRequest.getId(), EstadoEnum.ACTIVO).orElseThrow(() -> new NotDataFoundException("No se encontro el sintoma que quiere registrar"));
             this.controlDiarioSintomaRepository.save(ControlDiarioSintoma.builder()
                     .controlDiario(controlDiario)
-                    .respuesta(sintomaRequest.getRespuesta())
+                    .respuesta(true)
                     .observacion(sintomaRequest.getObservacion())
                     .sintoma(sintoma).build());
         }

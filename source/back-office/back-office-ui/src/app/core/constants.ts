@@ -39,21 +39,28 @@ export class Constants {
   static CLASIFICACION_ENFERMEDAD = [
     {key: 'TODOS', value: 'Todos'},
     {key: 'SOSPECHOSO', value: 'SOSPECHOSO'},
-    {key: 'NEGATIVO', value: 'NEGATIVO'},
-    {key: 'CONFIRMADO', value: 'CONFIRMADO'},
-    {key: 'ACTIVO', value: 'ACTIVO'},
-    {key: 'CURADO', value: 'CURADO'}];
+    {key: 'DESCARTADO', value: 'DESCARTADO'},
+    {key: 'POSITIVO', value: 'POSITIVO'},
+    {key: 'RECUPERADO', value: 'RECUPERADO'},
+    {key: 'DECESO', value: 'FALLECIDO'}];
   static SOS: 'SOSPECHOSO';
   static NEG: 'NEGATIVO';
   static CONF: 'CONFIRMADO';
   static CLASIFICACION_ENFERMEDAD2 = [
     {key: 'SOSPECHOSO', value: 'SOSPECHOSO'},
-    {key: 'NEGATIVO', value: 'NEGATIVO'},
-    {key: 'CONFIRMADO', value: 'CONFIRMADO'},
-    {key: 'ACTIVO', value: 'ACTIVO'},
-    {key: 'CURADO', value: 'CURADO'}];
+    {key: 'DESCARTADO', value: 'DESCARTADO'},
+    {key: 'POSITIVO', value: 'POSITIVO'},
+    {key: 'RECUPERADO', value: 'RECUPERADO'},
+    {key: 'DECESO', value: 'FALLECIDO'}];
 
   static SEXOS = [{key: 'MASCULINO', value: 'MASCULINO'},
     {key: 'FEMENINO', value: 'FEMENINO'}];
+
+  static COLOR_CONFIRMADO ='#FF0000';
+  static COLOR_ACTIVO = '#FFA500';
+  static COLOR_SOSPECHOSO = '#FFFF00';
+  static COLOR_RECUPERADO = '#008000';
+  static COLOR_DECESO = '#000000';
+  static COLOR_DESCARTADO = '#4682B4'
 }
 

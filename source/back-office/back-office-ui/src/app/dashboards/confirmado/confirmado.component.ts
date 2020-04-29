@@ -33,18 +33,18 @@ export class ConfirmadoComponent implements OnInit {
         type: 'value'
       },
       series: [{
-        data: data.confirmados,
+        data: data.positivos,
         type: 'line',
         areaStyle: {
           color: {
             colorStops: [{
-              offset: 0, color: '#F4D03F'
+              offset: 0, color: '#FF0000'
             }]
           }
         },
         color: {
           colorStops: [{
-            offset: 0, color: '#F4D03F'
+            offset: 0, color: '#FF0000'
           }]
         }
       }]

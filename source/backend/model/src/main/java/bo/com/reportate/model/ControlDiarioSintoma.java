@@ -31,7 +31,7 @@ public class ControlDiarioSintoma extends AbstractAuditableEntity{
     private Long id;
 
     @Column(name = "RESPUESTA", nullable = false)
-    private Boolean respuesta;
+    private Boolean respuesta = true;
     @Column(name = "OBSERVACION", length = 500)
     private String observacion;
 
