@@ -12,13 +12,17 @@ import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.repository.*;
 import bo.com.reportate.service.FamiliaService;
 import bo.com.reportate.util.ValidationUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @Created by :MC4
@@ -30,12 +34,15 @@ import java.util.Optional;
  * @Copyright :MC4
  */
 @Service
+@Slf4j
 public class FamiliaServiceImpl implements FamiliaService {
     @Autowired private FamiliaRepository familiaRepository;
     @Autowired private MunicipioRepository municipioRepository;
     @Autowired private UsuarioRepository usuarioRepository;
     @Autowired private DepartamentoRepository departamentoRepository;
     @Autowired private CentroSaludRepository centroSaludRepository;
+    @Autowired private PacienteRepository pacienteRepository;
+    @Autowired private ControlDiarioRepository controlDiarioRepository;
 
     @Override
     public void save(Familia familia) {
@@ -131,9 +138,10 @@ public class FamiliaServiceImpl implements FamiliaService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public FamiliaResponse getInfo(Authentication authentication) {
         MuUsuario user = (MuUsuario) authentication.getPrincipal();
-        Optional<Familia> familiaOptional = this.familiaRepository.findFirstByUsuarioIdAndEstadoOrderByIdDesc(user.getId(), EstadoEnum.ACTIVO);
-        return familiaOptional.map(FamiliaResponse::new).orElseGet(FamiliaResponse::new);
+        Optional<FamiliaResponse> familiaOptional = this.familiaRepository.getInfo(user);
+        return familiaOptional.orElseGet(FamiliaResponse::new);
     }
 }

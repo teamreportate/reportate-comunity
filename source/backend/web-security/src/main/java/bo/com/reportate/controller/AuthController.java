@@ -50,7 +50,7 @@ public class AuthController {
     @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private CacheService cacheService;
 
-    @PostMapping(value = "/signin",consumes =  MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/signin",consumes =  MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity signin(
             @RequestBody AuthenticationRequest data) {
         try {
@@ -69,7 +69,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping(value = "/movil-signin", consumes =  MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/movil-signin", consumes =  MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity movilSignin(@RequestBody MovilAuthenticationRequest data) {
         try {
             Map<Object, Object> model = new HashMap<>();

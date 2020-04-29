@@ -5,10 +5,7 @@ import bo.com.reportate.model.enums.EstadoEnum;
 import bo.com.reportate.model.enums.TipoUsuarioEnum;
 import bo.com.reportate.model.enums.UserStatusEnum;
 import bo.com.reportate.model.pojo.MenuPojo;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -19,7 +16,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "MU_USUARIO")
-@Data
+@Setter
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

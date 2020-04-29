@@ -1,10 +1,7 @@
 package bo.com.reportate.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,8 +17,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "DEPARTAMENTO")
-@Data
 @Builder
+@Setter @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @SequenceGenerator(name = "DEPARTAMENTO_ID_GENERATOR", sequenceName = "SEQ_DEPARTAMENTO_ID", allocationSize = 1)

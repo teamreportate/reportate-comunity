@@ -118,9 +118,9 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
     private void addPermisos(){
         log.info("************************* Cargando permisos por defecto *************************");
         MuRol rolAdmin = rolRepository.findByName("Administrador");
-        recPadre("Dashboards", "Pantalla de reportes", "dashboards", 1, "menu", rolAdmin);
-        recHijo("Principal", "dashboards", "Interfaz para vista de reportes del sistema", "principal", 1, "code", rolAdmin);
-
+//        recPadre("Dashboards", "Pantalla de reportes", "dashboards", 1, "menu", rolAdmin);
+//        recHijo("Principal", "dashboards", "Interfaz para vista de reportes del sistema", "principal", 1, "code", rolAdmin);
+//
 //        recPadre("Accesos", "Interfaces para gestión del módulo de usuario ", "accesos", 1, "menu", rolAdmin);
 //        recHijo("Recursos", "accesos", "Interfaz para administración de Recursos del sistema", "resources", 1, "insert_link", rolAdmin);
 //        recHijo("Roles", "accesos", "Interfaz para administración de Roles", "roles", 2, "border_color", rolAdmin);
@@ -142,6 +142,8 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
 //        recHijo("Municipios", "administracion", "Gestión de Municipios", "municipios", 4, "code", rolAdmin);
 //        recHijo("Centros de Salud", "administracion", "Gestión de Centros", "centros", 5, "code", rolAdmin);
 //        recHijo("Departamentos", "administracion", "Gestión de Departamentos", "departamentos", 6, "code", rolAdmin);
+        recHijo("Matriz de Diagnóstivo", "administracion", "Matriz de Diagnóstivo", "matriz-diagnostico", 7, "code", rolAdmin);
+
 //
 //        recPadre("Seguimiento", "Interfaz para seguimiento de diagnosticos", "seguimiento", 1, "menu", rolAdmin);
 //        recHijo("Diagnostico", "seguimiento", "Interfaz para seguimiento de interfaces", "diagnostico", 1, "code", rolAdmin);

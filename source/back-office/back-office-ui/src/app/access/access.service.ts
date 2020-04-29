@@ -187,8 +187,8 @@ export class AccessService {
     return this.http.put<HttpResponse<any>>(url, JSON.stringify(user), {observe: 'response', headers});
   }
 
-  requestUsernMenu(username: string) {
-    const url = Constantes.baseUri + Constants.userApi + `/obtener-menu/${username}`;
+  requestUsernMenu() {
+    const url = Constantes.baseUri + Constants.userApi + `/obtener-menu`;
     return this.http.get<any>(url, {observe: 'response'});
   }
 
@@ -202,30 +202,12 @@ export class AccessService {
     return this.http.post<HttpResponse<any>>(url, JSON.stringify(userList), {observe: 'response'});
   }
 
-  requestDepartmentList(): Observable<HttpResponse<any>> {
-    const url = Constantes.baseUri + Constants.departmentApi;
-    return this.http.get<HttpResponse<any>>(url, {observe: 'response'});
-  }
-
-  requestAsignedDepartmentsList(): Observable<HttpResponse<any>> {
-    const url = Constantes.baseUri + Constants.userApi + '/departamentos-asignados';
-    return this.http.get<HttpResponse<any>>(url, {observe: 'response'});
-  }
-
+  
   requestCompleteDepartmentsList(): Observable<HttpResponse<any>> {
     const url = Constantes.baseUri + Constants.departamentosApi + '/departamento-municipio-centro-salud';
     return this.http.get<HttpResponse<any>>(url, {observe: 'response'});
   }
 
-  requestAsignedMunicipalitiesList(): Observable<HttpResponse<any>> {
-    const url = Constantes.baseUri + Constants.userApi + '/municipios-asignados';
-    return this.http.get<HttpResponse<any>>(url, {observe: 'response'});
-  }
-
-  requestAsignedSaludCentreList(): Observable<HttpResponse<any>> {
-    const url = Constantes.baseUri + Constants.userApi + '/centro-salud-asignados';
-    return this.http.get<HttpResponse<any>>(url, {observe: 'response'});
-  }
 
   requestGetUserById(userId: number): Observable<HttpResponse<any>> {
     const url = Constantes.baseUri + Constants.userApi + '/' + userId;

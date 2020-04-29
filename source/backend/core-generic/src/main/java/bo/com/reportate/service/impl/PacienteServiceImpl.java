@@ -344,8 +344,7 @@ public class PacienteServiceImpl implements PacienteService {
                 log.info("Registrando diagnostico del paciente {} con estado {}  de la enfermedad {} con {} sintomas.", paciente.getNombre(), estadoDiagnostico, enfermedad.getNombre(), sintomasDignostico.size());
                 diagnostico.setResultadoValoracion(valoracion);
                 //Si el diagnostico actual del paciente es POSITIVO ó ACTIVO el diagnostico actual será ACTIVO
-                if (paciente.getDiagnostico() != null && (paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.POSITIVO) ||
-                        paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.POSITIVO))) {
+                if (paciente.getDiagnostico() != null && paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.POSITIVO) ) {
                     diagnostico.setEstadoDiagnostico(EstadoDiagnosticoEnum.POSITIVO);
                     diagnostico.setObservacion(cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_ACTIVO));
                     this.diagnosticoRepository.save(diagnostico);
@@ -358,28 +357,20 @@ public class PacienteServiceImpl implements PacienteService {
                     diagnostico.setEstadoDiagnostico(estadoDiagnostico);
                     this.diagnosticoRepository.save(diagnostico);
                 }
-                this.diagnosticoSintomaRepository.saveAll(sintomasDignostico);
 
-                if (paciente.getDiagnostico() == null) {
-                    paciente.setDiagnostico(diagnostico);
-                    this.pacienteRepository.save(paciente);
-                } else if (!(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.SOSPECHOSO) &&
+                this.diagnosticoSintomaRepository.saveAll(sintomasDignostico);
+                if (paciente.getDiagnostico() == null ||
+                        //Si el diagnostico actual del paciente es sospechoso y el nuevo diagnostico es descartado, prevalece el sospechoso
+                        !(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.SOSPECHOSO) &&
                         diagnostico.getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.DESCARTADO))) {
                     paciente.setDiagnostico(diagnostico);
                     this.pacienteRepository.save(paciente);
-
                 }
             }
         }
 
         String recomendacion;
-        if(paciente.getDiagnostico() == null){
-            recomendacion = cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_LEVES);
-            this.controlDiarioRepository.agregarRecomendacion(controlDiario,recomendacion);
-            controlDiario.setRecomendacion(recomendacion);
-            return recomendacion;
-        }
-        if(paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.DESCARTADO)){
+        if(paciente.getDiagnostico() == null || paciente.getDiagnostico().getEstadoDiagnostico().equals(EstadoDiagnosticoEnum.DESCARTADO)){
             recomendacion = cacheService.getStringParam(Constants.Parameters.MENSAJE_SINTOMAS_LEVES);
             this.controlDiarioRepository.agregarRecomendacion(controlDiario,recomendacion);
             controlDiario.setRecomendacion(recomendacion);

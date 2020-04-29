@@ -1,5 +1,6 @@
 package bo.com.reportate.model.dto.response;
 
+import bo.com.reportate.model.Paciente;
 import bo.com.reportate.model.enums.GeneroEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,4 +28,14 @@ public class PacienteResponse  implements Serializable {
     private Integer tiempoGestacion;
     private Boolean controlInicial;
     private String ocupacion;
+    public PacienteResponse(Paciente paciente){
+        this.id = paciente.getId();
+        this.nombre = paciente.getNombre();
+        this.edad = paciente.getEdad();
+        this.genero = paciente.getGenero();
+        this.gestacion = paciente.getGestacion();
+        this.tiempoGestacion = paciente.getTiempoGestacion();
+        this.controlInicial = (paciente.getControlDiarios() != null && !paciente.getControlDiarios().isEmpty());
+        this.ocupacion = paciente.getOcupacion();
+    }
 }

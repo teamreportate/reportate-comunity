@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -51,7 +52,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 
     @Override
-    public List<UsuarioDto> listar() {
+    public List<UsuarioDto> listar(Authentication authentication) {
+        MuUsuario  usuario = (MuUsuario) authentication.getPrincipal();
+        List<Departamento> departamentos = this.departamentoUsuarioRepository.listarDepartamentoAsignados(usuario);
+        List<Municipio> municipios = this.municipioUsuarioRepository.listarMunicipiosAsignados(usuario,departamentos);
+        List<CentroSalud> centroSaluds = this.centroSaludUsuarioRepository.listarCentrosSaludAsignados(usuario,municipios);
         return usuarioRepository.findAllByEstadoAndTipoUsuarioNotOrderByNombreAsc(EstadoEnum.ACTIVO, TipoUsuarioEnum.PACIENTE);
     }
 
@@ -81,7 +86,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, NotDataFoundException.class})
     public UsuarioDto actualizarUsuario(UsuarioDto data, Long id) {
-        log.info("Iniciando validaciones para crear Usuarios");
+        log.info("Iniciando validaciones para actualizar el usuario {}", data.getUsername());
         MuUsuario muUsuario = this.usuarioRepository.findById(id).orElseThrow(() -> new NotDataFoundException(FormatUtil.noRegistrado("Usuario", id)));
 
         String campoIvalido = ValidacionServicios.validarUsuarioEdit(data);
@@ -103,14 +108,16 @@ public class UsuarioServiceImpl implements UsuarioService {
         muUsuario.setNombre(data.getNombre().trim());
         this.usuarioRepository.save(muUsuario);
         List<GrupoDto> grupos = this.listarGruposAsignados(id);
+        grupos.forEach(grupoDto -> log.info("GRUPO: {}",grupoDto.getNombre()));
         this.removerGrupos(id, grupos);
         if (data.getGrupos() != null) {
+            data.getGrupos().forEach(grupoDto -> log.info("GRUPO NUEVO: {}",grupoDto.getNombre()));
             this.agregarGrupos(id, data.getGrupos());
         }
+
         this.agregarDepartamento(muUsuario,data.getDepartamentos());
         this.agregarMunicipio(muUsuario,data.getMunicipios());
         this.agregarCentroSalud(muUsuario,data.getCentroSaluds());
-
         return new UsuarioDto(muUsuario);
     }
 

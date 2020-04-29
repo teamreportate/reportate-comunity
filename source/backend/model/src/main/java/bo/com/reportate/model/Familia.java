@@ -1,10 +1,7 @@
 package bo.com.reportate.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,10 +17,10 @@ import java.util.List;
  */
 @Entity
 @Table(name = "FAMILIA")
-@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter @Getter
 @SequenceGenerator(name = "FAMILIA_ID_GENERATOR", sequenceName = "SEQ_FAMILIA_ID", allocationSize = 1)
 public class Familia extends AbstractAuditableEntity{
     @Id

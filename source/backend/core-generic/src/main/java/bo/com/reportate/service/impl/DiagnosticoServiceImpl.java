@@ -129,7 +129,7 @@ public class DiagnosticoServiceImpl implements DiagnosticoService {
 
 		if (!StringUtil.isEmptyOrNull(nomprePaciente)) {
 			if(LongUtil.isLong(nomprePaciente)){
-				log.info("Ccodigo de paciente: {}",nomprePaciente);
+				log.info("Codigo de paciente: {}",nomprePaciente);
 				return diagnosticoRepository.listarDiagnosticoPorCodigo(from, to, departamentos, municipios, centroSaluds,
 						diagnosticoEnums, enfermedads, LongUtil.toLong(nomprePaciente), pageable);
 			}else {

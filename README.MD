@@ -5,10 +5,10 @@ Autor:
 * Ing. Luis Carlos
 * Ing. Sergio Pilco 
 * Ing. Leonardo Bozo
-* Ing. Diana
+* Ing. Diana Mejia
 * Ing. Daniel Yugar
 * Vinx Junior Guzman Martinez
-* Ing. Ricardo Laredo 
+* Ing. Ricardo Laredo
 
 ##   DESCRICIÓN
 Repórtate, es una aplicación de alerta temprana y control de riesgo de las personas más propensas a contraer COVID-19.

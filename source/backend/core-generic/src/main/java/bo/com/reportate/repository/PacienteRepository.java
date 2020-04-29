@@ -4,6 +4,7 @@ import bo.com.reportate.model.DiagnosticosResumenDiario;
 import bo.com.reportate.model.Familia;
 import bo.com.reportate.model.Paciente;
 import bo.com.reportate.model.dto.PacienteDto;
+import bo.com.reportate.model.dto.response.PacienteResponse;
 import bo.com.reportate.model.enums.EstadoDiagnosticoEnum;
 import bo.com.reportate.model.enums.EstadoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -59,5 +60,7 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
     @Modifying
     @Query(" UPDATE Paciente p SET p.estado = bo.com.reportate.model.enums.EstadoEnum.ELIMINADO WHERE p.id =:contactoId")
     void eliminarContacto(@Param("contactoId") Long contactoId);
+
+
 
 }

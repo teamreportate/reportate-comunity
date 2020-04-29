@@ -2,14 +2,12 @@ package bo.com.reportate.model;
 
 import bo.com.reportate.model.enums.GeneroEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Created by :MC4
@@ -22,7 +20,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "PACIENTE")
-@Data
+@Setter
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -68,6 +67,6 @@ public class Paciente extends AbstractAuditableEntity{
 
     @JsonIgnore
     @OneToMany( mappedBy = "paciente", fetch = FetchType.LAZY)
-    private List<ControlDiario> controlDiarios;
+    private Set<ControlDiario> controlDiarios;
 
 }

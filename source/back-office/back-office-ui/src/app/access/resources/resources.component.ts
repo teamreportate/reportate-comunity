@@ -90,8 +90,7 @@ export class ResourcesComponent extends ClicComponent implements OnInit {
       });
 
   updateMenu() {
-    const data = JSON.parse(sessionStorage.getItem(AUTH_DATA));
-    this.service.requestUsernMenu(data.username).subscribe(response => {
+    this.service.requestUsernMenu().subscribe(response => {
       this.menuitem.menu(response.body);
     }, error => {
       this.blockUI.stop();

@@ -47,10 +47,8 @@ export class LoginComponent extends ClicComponent implements OnInit {
       sessionStorage.clear();
       sessionStorage.setItem(AUTH_DATA, JSON.stringify(response.body));
       const token = this.jwtHelper.decodeToken(response.body.token);
-       // this.router.navigate(['/access/groups']);
-      this.service.requestUsernMenu(credentials.username).subscribe(responsemenu => {
+      this.service.requestUsernMenu().subscribe(responsemenu => {
         this.menuitem.menu(responsemenu.body);
-        // sessionStorage.setItem('objT', JSON.stringify(responsemenu.body));
         if (token.tipoUsuario === 'MEDICO') {
           this.router.navigate(['/seguimiento/diagnostico']);
         } else {

@@ -4,6 +4,7 @@ import bo.com.reportate.model.MuUsuario;
 import bo.com.reportate.model.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface UsuarioService {
      * Realiza el listado del objeto
      * @return
      */
-    List<UsuarioDto> listar();
+    List<UsuarioDto> listar(Authentication authentication);
     Page<UsuarioDto> listarUsuarioPacientes(Pageable pageable);
 
     /**

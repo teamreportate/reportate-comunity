@@ -37,19 +37,15 @@ public class UsuarioController {
     @Autowired private TokenService tokenService;
     @Autowired private JwtTokenProvider jwtTokenProvider;
     @Autowired private RecursoService recursoService;
-    @Autowired private DepartamentoService departamentoService;
-    @Autowired private MunicipioService municipioService;
-    @Autowired private CentroSaludService centroSaludService;
-
     /**
      * Lista a todos los usuarios habilitados
      *
      * @return
      */
     @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public ResponseEntity<List<UsuarioDto>> listar() {
+    public ResponseEntity<List<UsuarioDto>> listar( @AuthenticationPrincipal Authentication authentication) {
         try {
-            return ok(this.usuarioService.listar());
+            return ok(this.usuarioService.listar(authentication));
         } catch (OperationException e) {
             log.error("Error al listar usuarios habilitados");
             return CustomErrorType.badRequest("Listar Usuarios", e.getMessage());
@@ -283,69 +279,18 @@ public class UsuarioController {
         }
     }
 
-    @RequestMapping(value = "/obtener-menu/{username}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public ResponseEntity listarMenu(@PathVariable("username") String username, @AuthenticationPrincipal UserDetails userDetails) {
+    @RequestMapping(value = "/obtener-menu", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    public ResponseEntity listarMenu(@AuthenticationPrincipal UserDetails userDetails) {
         try {
             return ok(recursoService.listMenu(userDetails.getUsername()));
         } catch (NotDataFoundException e) {
-            log.error("Ocurrio un problema al recuperar lista de menu para usuario: [{}]", username);
+            log.error("Ocurrio un problema al recuperar lista de menu para usuario: [{}]", userDetails.getUsername());
             return CustomErrorType.badRequest("Actualizar Menu", e.getMessage());
         } catch (Exception e) {
-            log.error("Ocurrio un error al recuperar lista de menu para usuario: [{}]", username, e);
+            log.error("Ocurrio un error al recuperar lista de menu para usuario: [{}]", userDetails.getUsername(), e);
             return CustomErrorType.serverError("Obtener menú", "Ocurrió un error interno");
         }
     }
 
-    @RequestMapping(value = "/departamentos-asignados", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public ResponseEntity<List<DepartamentoUsuarioDto>> listarDepartamentos(@AuthenticationPrincipal UserDetails userDetails) {
-        try {
-            return ok(this.departamentoService.listarDepartamentosAsignados(userDetails.getUsername()));
-        } catch (NotDataFoundException e) {
-            log.error("Ocurrio un problema al recuperar lista de departamentos para el usuario: [{}]", userDetails.getUsername());
-            return CustomErrorType.badRequest("Obtener Departamentos", e.getMessage());
-        } catch (Exception e) {
-            log.error("Ocurrio un error al recuperar lista de departamentos para usuario: [{}]", userDetails.getUsername(), e);
-            return CustomErrorType.serverError("Obtener Departamentos", "Ocurrió un error interno");
-        }
-    }
-
-    @RequestMapping(value = "{username}/departamentos-asignados", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public ResponseEntity<List<DepartamentoUsuarioDto>> listarDepartamentos(@PathVariable("username") String username) {
-        try {
-            return ok(this.departamentoService.listarDepartamentosAsignados(username));
-        } catch (NotDataFoundException e) {
-            log.error("Ocurrio un problema al recuperar lista de departamentos para el usuario: [{}]", username);
-            return CustomErrorType.badRequest("Obtener Departamentos", e.getMessage());
-        } catch (Exception e) {
-            log.error("Ocurrio un error al recuperar lista de departamentos para usuario: [{}]", username, e);
-            return CustomErrorType.serverError("Obtener Departamentos", "Ocurrió un error interno");
-        }
-    }
-
-    @RequestMapping(value = "/municipios-asignados", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public ResponseEntity<List<MunicipioUsuarioDto>> listarMunicipios(@AuthenticationPrincipal UserDetails userDetails) {
-        try {
-            return ok(this.municipioService.listarMuniciposAsignados(userDetails.getUsername()));
-        } catch (NotDataFoundException e) {
-            log.error("Ocurrio un problema al recuperar lista de municipios para el usuario: [{}]", userDetails.getUsername());
-            return CustomErrorType.badRequest("Obtener Municipios", e.getMessage());
-        } catch (Exception e) {
-            log.error("Ocurrio un error al recuperar lista de municipios para usuario: [{}]", userDetails.getUsername(), e);
-            return CustomErrorType.serverError("Obtener Municipios", "Ocurrió un error interno");
-        }
-    }
-
-    @RequestMapping(value = "/centro-salud-asignados", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public ResponseEntity<List<CentroSaludUsuarioDto>> listarCentroSalud(@AuthenticationPrincipal UserDetails userDetails) {
-        try {
-            return ok(this.centroSaludService.listarCentroSaludAsignados(userDetails.getUsername()));
-        } catch (NotDataFoundException e) {
-            log.error("Ocurrio un problema al recuperar lista de departamentos para el usuario: [{}]", userDetails.getUsername());
-            return CustomErrorType.badRequest("Obtener Departamentos", e.getMessage());
-        } catch (Exception e) {
-            log.error("Ocurrio un error al recuperar lista de departamentos para usuario: [{}]", userDetails.getUsername(), e);
-            return CustomErrorType.serverError("Obtener Departamentos", "Ocurrió un error interno");
-        }
-    }
 
 }

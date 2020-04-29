@@ -38,7 +38,7 @@ public class RecursoServiceImpl implements RecursoService {
         try {
             return recursoRepository.listHijosByUsuario(usuario);
         } catch (Exception e) {
-            throw new OperationException("Error al obtener el listado ", e);
+            throw new OperationException("Error al obtener el listado ");
         }
     }
 
@@ -49,7 +49,7 @@ public class RecursoServiceImpl implements RecursoService {
         try {
             return recursoRepository.listPadresByUsuario(usuario);
         } catch (Exception e) {
-            throw new OperationException("Error al obtener el listado ", e);
+            throw new OperationException("Error al obtener el listado ");
         }
     }
 
@@ -60,7 +60,6 @@ public class RecursoServiceImpl implements RecursoService {
         MuUsuario muUsuario = usuarioRepository.findByEstadoAndUsername(EstadoEnum.ACTIVO, username).orElseThrow(() -> new BadCredentialsException("Username " + username + "no encontrado."));
         List<MuRecurso> listaRecursosPadres = recursoRepository.listPadresByUsuario(muUsuario);
         List<MuRecurso> listaRecursosHijos = recursoRepository.listHijosByUsuario(muUsuario);
-        //Generando menu con los atributos utilizados para el response
         List<RecursoDto> listaMenu = new ArrayList<>();
         for (MuRecurso muRecursoPadre : listaRecursosPadres) {
             RecursoDto recursoPadre = new RecursoDto(muRecursoPadre);

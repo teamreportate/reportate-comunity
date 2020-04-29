@@ -30,9 +30,7 @@ import java.util.TimeZone;
 @SpringBootApplication(scanBasePackages = {"bo.com.reportate.service", "bo.com.reportate","bo.com.reportate.jwt"})
 @EnableAsync(proxyTargetClass = true)
 @EnableScheduling
-//public class WebBackofficeApplication  implements CommandLineRunner {
 public class SchedulersApplication  extends SpringBootServletInitializer implements CommandLineRunner {
-
     @Autowired
     EmailService emailService;
     public static void main(String[] args) {
@@ -40,16 +38,10 @@ public class SchedulersApplication  extends SpringBootServletInitializer impleme
         SpringApplication.run(SchedulersApplication.class, args);
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
     @Override
-    public void run(String... strings) throws Exception {
+    public void run(String... args) throws Exception {
 
     }
-
-
 }
 
 @Configuration
