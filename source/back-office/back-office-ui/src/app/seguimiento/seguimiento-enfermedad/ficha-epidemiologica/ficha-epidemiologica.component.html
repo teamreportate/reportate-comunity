@@ -127,14 +127,14 @@
   </div>
 
   <div fxLayout="row wrap" fxLayoutAlign="start start" class="p-t-10">
-    <button mat-flat-button matTooltip="Nuevo Diagnostico" color="accent" (click)="openDialogDianostico(this.listDiagnosticos[0])">Nuevo Diagnostico</button>
+    <button mat-flat-button matTooltip="Nuevo Diagnostico" color="accent" (click)="openDialogDianostico(this.listDiagnosticos[0])">Nuevo Diagnóstico</button>
   </div>
   <div *ngIf="this.listDiagnosticos[0]">
   <div  fxLayout="row wrap">
 
     <div fxFlex="100" class="h-padding-10 p-b-20">
       <div fxFlex="100" fxLayoutAlign="center center" class="h-padding-5">
-        <label><strong>DIAGNÓSTICO</strong></label>
+        <label><strong>DIAGNÓSTICO ACTUAL</strong></label>
       </div>
     </div>
     <div [fxFlex]="20" class="h-padding-5">
@@ -170,7 +170,7 @@
     <div [fxFlex]="50" class="h-padding-5">
       <mat-form-field>
           <textarea matInput placeholder="Observaciones" disabled [value]="this.listDiagnosticos[0].observacion"
-                    cols="40" rows="10"></textarea>
+                    cols="40" rows="5"></textarea>
       </mat-form-field>
     </div>
     <div [fxFlex]="50" class="h-padding-5">
@@ -209,7 +209,7 @@
   <div fxLayout="row wrap" class="p-t-10">
     <div fxFlex="100" class="h-padding-5">
       <div fxFlex="100" fxLayoutAlign="center center" class="h-padding-5">
-        <label><strong>HISTORIAL DE DIAGNÓSTICO</strong></label>
+        <label><strong>HISTORIAL DE DIAGNÓSTICOS</strong></label>
       </div>
     </div>
     <div fxFlex="100" class="p-5">

@@ -522,6 +522,7 @@ public class PacienteServiceImpl implements PacienteService {
     }
 
     @Override
+    @Transactional
     public void agregarDiagnosticoMedico(Authentication userDetails, Long pacienteId, DiagnosticoRequest diagnosticoRequest) {
         if(diagnosticoRequest.getSintomas().isEmpty())
             throw new NotDataFoundException("NO existe listado de sintomas");
@@ -551,7 +552,10 @@ public class PacienteServiceImpl implements PacienteService {
         Enfermedad enfermedad = this.enfermedadRepository.findByIdAndEstado(diagnosticoRequest.getEnfermedadId(), EstadoEnum.ACTIVO).orElseThrow(() -> new NotDataFoundException("No se encontro la enfermedad que quiere reportar"));
 
         log.info("Registrando diagnostico...");
-        Diagnostico diagnostico = Diagnostico.builder().controlDiario(controlDiario).enfermedad(enfermedad).estadoDiagnostico(diagnosticoRequest.getClasificacion()).observacion(diagnosticoRequest.getRecomendacion()).medico(medico).departamento(paciente.getFamilia().getDepartamento()).municipio(paciente.getFamilia().getMunicipio()).centroSalud(paciente.getFamilia().getCentroSalud()).build();
+        Diagnostico diagnostico = Diagnostico.builder().controlDiario(controlDiario).enfermedad(enfermedad)
+                .estadoDiagnostico(diagnosticoRequest.getClasificacion()).observacion(diagnosticoRequest.getRecomendacion())
+                .medico(medico).departamento(paciente.getFamilia().getDepartamento())
+                .municipio(paciente.getFamilia().getMunicipio()).centroSalud(paciente.getFamilia().getCentroSalud()).build();
         this.diagnosticoRepository.save(diagnostico);
         paciente.setDiagnostico(diagnostico);
         this.pacienteRepository.save(paciente);

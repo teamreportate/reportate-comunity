@@ -30,6 +30,7 @@ import {NuevoDianosticoComponent} from '../nuevo-dianostico/nuevo-dianostico.com
 export class FichaEpidemiologicaComponent extends ClicComponent implements OnInit {
   idPaciente = this.route.snapshot.paramMap.get('idPaciente');
   public form: FormGroup;
+  public data: any;
   listEnfermedadesBase = [];
   listPaisesVisitados = [];
   listDiagnosticos = [];
@@ -57,6 +58,7 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
   ngOnInit() {
     this.recuperarOcupacion();
     this.pacienteService.getFichaEpidemiologica(this.idPaciente).subscribe(response => {
+      this.data = response.body;
       this.form = this.initialForm(response.body);
       this.listPaisesVisitados = response.body.paisesVisitados;
       this.listEnfermedadesBase = response.body.enfermedadesBase;
@@ -397,6 +399,10 @@ export class FichaEpidemiologicaComponent extends ClicComponent implements OnIni
     } else {
       temporal = {};
     }
+    temporal.nombrePaciente = this.data.nombre;
+    temporal.edad = this.data.edad;
+    temporal.genero= this.data.genero;
+    temporal.pacienteId = this.idPaciente;
 
     const dialogRef = this.dialog.open(NuevoDianosticoComponent, this.dialogConfig(temporal));
     dialogRef.afterClosed()

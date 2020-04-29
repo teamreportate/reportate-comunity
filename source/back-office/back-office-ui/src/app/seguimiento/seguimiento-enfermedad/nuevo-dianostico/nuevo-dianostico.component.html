@@ -1,13 +1,13 @@
 
   <mat-card>
     <mat-card-header class="bg-primary-theme text-white">
-      <mat-card-title>{{"Nuevo Diagnostico"}}</mat-card-title>
+      <mat-card-title>{{"Nuevo Diagnóstico"}}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <mat-dialog-content>
 
       <div fxLayout="row wrap" [formGroup]="this.form">
-        <div fxFlex="100">
+        <div fxFlex="50">
           <mat-form-field>
             <label>
               <input maxlength="100" matInput placeholder="Nombre del Paciente:" value="{{this.data.nombrePaciente}}"
@@ -16,12 +16,12 @@
           </mat-form-field>
         </div>
         <br>
-        <div fxFlex="100">
+        <div fxFlex="20">
           <mat-form-field>
             <input maxlength="100" matInput placeholder="Edad:" value="{{this.data.edad}}" disabled>
           </mat-form-field>
         </div>
-        <div fxFlex="100">
+        <div fxFlex="30">
           <mat-form-field>
             <input maxlength="100" matInput placeholder="Sexo:" value="{{this.data.genero}}" disabled>
           </mat-form-field>
@@ -35,8 +35,8 @@
                          [selectionType]="'checkbox'"
                          [headerHeight]="40"
                          [footerHeight]="35"
-                         [rowHeight]="50"
-                         [limit]="10"
+                         [rowHeight]="'auto'"
+                         [limit]="5"
                          [scrollbarH]="this.scrollH"
                          [rows]="this.listSintomas"
                          [selected]="this.selected"
@@ -51,17 +51,22 @@
               [maxWidth]="100"
               [minWidth]="100">
             </ngx-datatable-column>
-            <ngx-datatable-column name="Nombre" [maxWidth]="300" [draggable]="false" [resizeable]="false">
+            <ngx-datatable-column name="Nombre" [maxWidth]="200" [draggable]="false" [resizeable]="false">
               <ng-template let-row="row" ngx-datatable-cell-template>
                 {{row.nombre}}
               </ng-template>
             </ngx-datatable-column>
 
+            <ngx-datatable-column name="Pregunta" [draggable]="false" [resizeable]="false">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.pregunta}}
+              </ng-template>
+            </ngx-datatable-column>
           </ngx-datatable>
         </div>
-        <div [fxFlex]="100" class="h-padding-5">
 
-          <div fxFlex="100">
+        <div [fxFlex]="100" class="h-padding-5">
+          <div [fxFlex]="50">
             <mat-form-field class="example-full-width">
               <mat-label>ENFERMEDADES BASE</mat-label>
               <input type="text" matInput [formControl]="this.form.controls['enfermedadId']" [matAutocomplete]="auto">
@@ -72,12 +77,9 @@
               </mat-autocomplete>
             </mat-form-field>
           </div>
-        </div>
-        <mat-form-field appearance="fill">
-            <textarea matInput placeholder="Observaciones *" [formControl]="this.form.controls['recomendacion']"
-                      cols="30" rows="10"></textarea>
-        </mat-form-field>
-        <div [fxFlex]="100" class="h-padding-5">
+
+
+        <div [fxFlex]="50">
           <mat-form-field>
             <mat-select placeholder="Clasificación" [formControl]="this.form.controls['clasificacion']">
               <mat-option *ngFor="let clasifiacion of this.clasificiacion" [value]="clasifiacion.key">
@@ -86,12 +88,18 @@
             </mat-select>
           </mat-form-field>
         </div>
+        </div>
+
+        <mat-form-field appearance="fill">
+            <textarea matInput placeholder="Observaciones *" [formControl]="this.form.controls['recomendacion']"
+                      cols="30" rows="3"></textarea>
+        </mat-form-field>
       </div>
 </mat-dialog-content>
 
       <mat-card-actions fxLayoutAlign="end center" fxLayoutGap="5px">
         <button mat-stroked-button color="warn" type="button" (click)="this.cancel()">Cancelar</button>
-        <button mat-flat-button color="accent" type="button"  [disabled]="!this.form.valid || !this.enfermedadId || !this.selected"  (click)="this.save()">
+        <button mat-flat-button color="accent" type="button"  [disabled]="!this.form.valid || !this.selected"  (click)="this.save()">
           Guardar
         </button>
       </mat-card-actions>

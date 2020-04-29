@@ -6,7 +6,6 @@ import {PacienteService} from '../../../core/services/http-services/paciente.ser
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {NotifierService} from 'angular-notifier';
 import {MediaMatcher} from '@angular/cdk/layout';
-import * as moment from 'moment';
 import {CustomOptions} from '../../../core/models/dto/custom-options';
 import {Page} from '../../../core/utils/paginator/page';
 import {ClicComponent} from '../../../core/utils/clic-component';
@@ -45,7 +44,7 @@ export class NuevoDianosticoComponent extends ClicComponent implements OnInit {
   ngOnInit() {
     console.warn(this.data);
     this.form = this.builder.group({
-      enfermedadId: new FormControl(this.data.enfermedadId, Validators.compose([Validators.required, Validators.maxLength(100)])),
+      enfermedadId: new FormControl(this.data.enfermedadId, Validators.compose([])),
       clasificacion: new FormControl(this.data.clasificacion, Validators.compose([Validators.required, Validators.maxLength(100)])),
       recomendacion: new FormControl(this.data.recomendacion, Validators.compose([Validators.required, Validators.maxLength(100)])),
     });
