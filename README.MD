@@ -1,6 +1,8 @@
 # PROYECTO - REPÓRTATE
 ----
 Autores: 
+
+Equipo Técnico
 * Ing. Ruth Vargas 
 * Ing. Luis Suaznabar
 * Ing. Sergio Pilco 
@@ -8,32 +10,47 @@ Autores:
 * Ing. Diana Mejia
 * Ing. Daniel Yugar
 * Ing. Junior Guzman
+* Ing. Alvaro Merlo
+* Ing. André Ticona
+* Ing. Victor Gutierrez
 * Ing. Ricardo Laredo
+
+Equipo Médico
+* Dra. Marcia Andrea Gonzáles 
+* Dra. Ariani Arrázola Mendivil
+* Dr. Mijail Lenin Quintanilla
+
+Equipo de Coordinación
+* Lic. Annelissie Arrázola Mendivil
+* Ing. Sinchy Díaz
+* Lic. Jessica Olivares Cerruto
+* Lic. Xiomara Zambrana
+
 
 ##   DESCRIPCIÓN
 Repórtate, es una aplicación de alerta temprana y control de riesgo de las personas más propensas a contraer COVID-19.
-Se desarrollo en un contexto en el que la pandemia **CODIV-19** está afectando a Bolivia y no se tienen herramientas 
-tecnológicas que nos permitan mejorar el manejo de las personas sospechosas.
+Se desarrollo en un contexto en el que la pandemia está afectando a Bolivia y no se tienen herramientas 
+tecnológicas que permitan mejorar el control y seguimiento de los pacientes.
 ##   OBJETIVOS
-El objetivo es desarrollar un sistema que permita a la población Boliviana reportar los síntomas que presenta y que el 
-sistema de acuerdo a una matriz de diagnóstico pueda determinar si el paciente tiene la probabilidad de estar infectado con
-COVID-19.
+El objetivo es desarrollar un sistema para control y seguimiento  de síntomas
 ###  OBJETIVOS ESPECIFICOS
-*   Desarrollar una aplicación web para seguimieinto de síntomas, administración y configuración del sistema.
-*   Desarrollar una aplicación web para que la población Boliviana pueda reportar los síntomas que presenta.
+*   Diagnosticar COVID-19 y otras enfermedades endémicas de acuerdo a una matriz de diagnóstico
+*   Permitir a los pacientes reportar síntomas y enfermedades base.
+*   Notificar los casos sospechosos a los médicos de su centro de salud.
+*   Permitir gestionar las fichas epidemiológicas de cada paciente.
 
 ##   TECNOLOGIA
 Se ha utilizado en lo posible tecnologías Open Source para no incurrir en gastos de licencia que puedan poner en riesgo 
-la puesta en producción del sistema entre los cuales tenemos:
+la puesta en producción del sistema, entre los cuales tenemos:
 * Spring Boot 2.1.1.RELEASE para desarrollo del backend.
-* Postgresql 9.6 el mismo puede ser modificado puesto que se usa usa JPA como intermedio entre la base de datos y el backend
-* Angular 8  para el desarrollo de la aplicación web de administración y seguimiento.
+* Postgresql 9.6 + el mismo puede ser modificado por otro motor de base de datos.
+* Angular 8  para el desarrollo de la aplicación back-office.
 * MapBox para visualización del mapa. pero es posible cambiar a google maps u otro.
 * React para el desarrollo de la aplicación de uso del paciente.
 
 Este proyecto se puede desplegar como proyecto Spring Boot ó compilar la aplicación para que se despliegue en servidor
-de aplicaciones como wildfly ó Jboss EAP.
-## Requerimientos de sistemas y para su ejecución
+de aplicaciones como wildfly ó JBoss EAP.
+## Requerimientos de sistemas para ambiente de desarrollo
 El presente proyecto se ejecuta en las siguientes versiones.
 
 * Node: 12.13.1
@@ -44,6 +61,12 @@ El presente proyecto se ejecuta en las siguientes versiones.
 * Java version: 1.8.0_181
 ## Comandos de instalación y ejecución
 
+### Organización del proyecto
+    reportate-covid-19
+    |__ source
+        |__back-office
+        |__backend
+        |__frontoffice
 ### Dependendencias y compilación
 Instalar dependencias ejecutando el siguiente comando al nivel del pom.xml principal: `mvn clean install`.
 
@@ -75,15 +98,14 @@ la base de datos, tomar en cuenta que es una base de datos de desarrollo.
     --Asignar privilegios al usuario de de la base de datos
     GRANT ALL PRIVILEGES ON DATABASE reportate TO reportate;
     
-Copyright (C) 2020, Reportate
+Copyright (C) 2020, Repórtate
 
 Este programa es software libre: puede redistribuirlo y / o modificarlo
 bajo los términos de la Licencia Pública General GNU publicada por
-Free Software Foundation, ya sea la versión 3 de la Licencia, o
-(a su elección) cualquier versión posterior.
+Free Software Foundation, ya sea la versión 3 de la Licencia, cualquier versión posterior.
 
-Este programa se distribuye con la esperanza de que sea útil,
-pero SIN NINGUNA GARANTÍA; sin siquiera la garantía implícita de
+Este software se distribuye con el propósito de que cualquier personas, natural o jurídicas,
+pueda hacer uso pero SIN NINGUNA GARANTÍA; sin siquiera la garantía implícita de
 COMERCIABILIDAD o APTITUD PARA UN PROPÓSITO EN PARTICULAR. Ver el
 GNU General Public License para más detalles.
 
