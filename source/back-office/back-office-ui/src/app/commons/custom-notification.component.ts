@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {CustomOptions} from '../core/models/dto/custom-options';
 
 /**
- * MC4 SRL
+ * Reportate SRL
  * Santa Cruz - Bolivia
  * project: back-office-ui
  * date:    14-09-19

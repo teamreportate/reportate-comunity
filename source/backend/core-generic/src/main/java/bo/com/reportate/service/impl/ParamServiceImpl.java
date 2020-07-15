@@ -26,13 +26,13 @@ import java.util.Optional;
 
 
 /**
- * Created by : MC4
+ * Created by : Reportate
  * Autor      : Ricardo Laredo
- * Email      : rlaredo@mc4.com.bo
+ * Email      : rllayus@gmail.com
  * Date       : 12-01-19
  * Projec    : reportate
  * Package    : bo.com.reportate.service.ParamServiceImpl
- * Copyright  : MC4
+ * Copyright  : Reportate
  */
 @Slf4j
 @Service

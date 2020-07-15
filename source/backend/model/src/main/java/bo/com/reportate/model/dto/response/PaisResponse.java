@@ -8,13 +8,13 @@ import lombok.Setter;
 import java.io.Serializable;
 
 /**
- * @Created by :MC4
+ * @Created by :Reportate
  * @Autor :Ricardo Laredo
- * @Email :rlaredo@mc4.com.bo
+ * @Email :rllayus@gmail.com
  * @Date :2020-04-02
  * @Project :reportate
  * @Package :bo.com.reportate.model.dto.request
- * @Copyright :MC4
+ * @Copyright :Reportate
  */
 @Getter @Setter @NoArgsConstructor
 public class PaisResponse implements Serializable {

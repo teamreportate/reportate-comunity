@@ -12,7 +12,7 @@ import java.util.Optional;
  * Created by    : Vinx J. Guzman Martinez.
  * Date          :18/12/2019
  * Project       :reportate
- * Package       :bo.com.mc4.reportate.repository
+ * Package       :bo.com.Reportate.reportate.repository
  **/
 public interface GrupoParametroRepository extends JpaRepository<MuGrupoParametro, Long> {
 

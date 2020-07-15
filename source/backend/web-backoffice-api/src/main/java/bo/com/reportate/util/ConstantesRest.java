@@ -1,13 +1,12 @@
 package bo.com.reportate.util;
 
 /**
- * @Created by : MC4
+ * @Created by : Reportate
  * @Autor : fmontero
- * @Email : fmontero@mc4.com.bo
  * @Date : 19-11-19
  * @Project : reportate
  * @Package : bo.com.reportate.util
- * @Copyright : MC4
+ * @Copyright : Reportate
  */
 
 public final class ConstantesRest {

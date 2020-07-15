@@ -23,13 +23,13 @@ import java.util.List;
 import static org.springframework.http.ResponseEntity.ok;
 
 /**
- * @Created by :MC4
+ * @Created by :Reportate
  * @Autor :Ricardo Laredo
- * @Email :rlaredo@mc4.com.bo
+ * @Email :rllayus@gmail.com
  * @Date :2020-04-01
  * @Project :reportate
  * @Package :bo.com.reportate.controller
- * @Copyright :MC4
+ * @Copyright :Reportate
  */
 @RestController
 @RequestMapping("/api/control-diario")

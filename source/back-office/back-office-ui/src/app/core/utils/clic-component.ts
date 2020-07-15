@@ -4,7 +4,7 @@ import {MediaMatcher} from '@angular/cdk/layout';
 import {DatatableComponent} from '@swimlane/ngx-datatable';
 
 /**
- * MC4 SRL
+ * Reportate SRL
  * Santa Cruz - Bolivia
  * project: back-office-ui
  * date:    09-07-19
@@ -14,7 +14,7 @@ import {DatatableComponent} from '@swimlane/ngx-datatable';
 /**
  *
  * ====================================================================
- * ==============================MC4-SRL===============================
+ * ==============================Reportate-SRL===============================
  * ===========LISTENER DE CAMBIO DE DIMENSION DE PANTALLA==============
  * ===========LISTENER DE CAMBIO DE DIMENSION DE PANTALLA==============
  * ==============BASADO EN MEDIDAS DE FLEX-LAYOUT==================

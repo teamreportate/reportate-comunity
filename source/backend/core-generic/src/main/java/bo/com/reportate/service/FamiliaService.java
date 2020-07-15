@@ -6,13 +6,13 @@ import bo.com.reportate.model.dto.response.FamiliaResponse;
 import org.springframework.security.core.Authentication;
 
 /**
- * @Created by :MC4
+ * @Created by :Reportate
  * @Autor :Ricardo Laredo
- * @Email :rlaredo@mc4.com.bo
+ * @Email :rllayus@gmail.com
  * @Date :2020-04-01
  * @Project :reportate
  * @Package :bo.com.reportate.service
- * @Copyright :MC4
+ * @Copyright :Reportate
  */
 public interface FamiliaService {
     void save(Familia familia);

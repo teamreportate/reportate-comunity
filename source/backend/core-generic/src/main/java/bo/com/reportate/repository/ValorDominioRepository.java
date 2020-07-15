@@ -11,13 +11,10 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Created by :MC4
- * Autor      :Jonathan Valdivia
- * Email      :jvaldivia@mc4.com.bo
  * Date       :21-01-19
  * Project    :reportate
  * Package    :bo.com.reportate.repository
- * Copyright  : MC4
+ * Copyright  : Reportate
  */
 
 public interface ValorDominioRepository extends JpaRepository<MuValorDominio, Long> {

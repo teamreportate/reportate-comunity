@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 /**
- * MC4 SRL
+ * Reportate SRL
  * Santa Cruz - Bolivia
  * project: reportate
  * package: bo.com.reportate.repository

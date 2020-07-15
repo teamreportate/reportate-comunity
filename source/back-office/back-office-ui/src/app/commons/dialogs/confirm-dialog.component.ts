@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 
 /**
- * MC4
+ * Reportate
  * Santa Cruz - Bolivia
  * project: back-office-ui
  * package:

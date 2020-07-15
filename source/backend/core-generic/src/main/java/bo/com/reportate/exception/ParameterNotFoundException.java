@@ -1,13 +1,13 @@
 package bo.com.reportate.exception;
 
 /**
- * Created by :MC4
+ * Created by :Reportate
  * Autor      :Ricardo Laredo
- * Email      :rlaredo@mc4.com.bo
+ * Email      :rllayus@gmail.com
  * Date       :15-11-18
  * Project    :unicolegio
- * Package    :bo.com.mc4.unicolegio.service.exception
- * Copyright  : MC4
+ * Package    :bo.com.Reportate.unicolegio.service.exception
+ * Copyright  : Reportate
  */
 
 public class ParameterNotFoundException extends RuntimeException {

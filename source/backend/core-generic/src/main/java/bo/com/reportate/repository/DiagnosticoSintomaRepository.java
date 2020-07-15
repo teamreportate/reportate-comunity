@@ -10,13 +10,13 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 /**
- * @Created by :MC4
+ * @Created by :Reportate
  * @Autor :Ricardo Laredo
- * @Email :rlaredo@mc4.com.bo
+ * @Email :rllayus@gmail.com
  * @Date :2020-04-09
  * @Project :reportate
  * @Package :bo.com.reportate.repository
- * @Copyright :MC4
+ * @Copyright :Reportate
  */
 public interface DiagnosticoSintomaRepository extends JpaRepository<DiagnosticoSintoma, Long> {
 

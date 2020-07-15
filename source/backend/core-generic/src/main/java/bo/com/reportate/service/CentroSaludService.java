@@ -7,13 +7,13 @@ import bo.com.reportate.model.dto.CentroSaludUsuarioDto;
 import java.util.List;
 
 /**
- * @Created by :MC4
+ * @Created by :Reportate
  * @Autor :Ricardo Laredo
- * @Email :rlaredo@mc4.com.bo
+ * @Email :rllayus@gmail.com
  * @Date :2020-03-30
  * @Project :reportate
  * @Package :bo.com.reportate.service
- * @Copyright :MC4
+ * @Copyright :Reportate
  */
 public interface CentroSaludService {
     CentroSalud findById(Long centroSaludId);

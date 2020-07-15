@@ -5,7 +5,7 @@ export const environment = {
     loginDialogWidth: 'WD'
   },
   services: {
-    baseUri : 'https://reportate.mc4.com.bo:8443/reportate-api/',
+    baseUri : 'https://reportate.Reportate.com.bo:8443/reportate-api/',
     apiKeyMaps: 'pk.eyJ1IjoicmxhcmVkbyIsImEiOiJjazh4bDV5ZG8weWQ4M2xsZHh4NWh2ZmY5In0.LVSLJJhRrkULhFV0Nq6A0Q',
     baseUriFact : 'http://localhost:8080/facturacion-core/',
   }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 /**
- * MC4 SRL
+ * Reportate SRL
  * Santa Cruz - Bolivia
  * project: reportate
  * package: bo.com.reportate.model

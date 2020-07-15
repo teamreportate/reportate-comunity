@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {FormControl, Validators} from '@angular/forms';
 
 /**
- * MC4
+ * Reportate
  * Santa Cruz - Bolivia
  * project: back-office-ui
  * package:

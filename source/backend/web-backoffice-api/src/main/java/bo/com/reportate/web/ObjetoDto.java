@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Created by :MC4
+ * @Created by :Reportate
  * @Autor :Ricardo Laredo
- * @Email :rlaredo@mc4.com.bo
+ * @Email :rllayus@gmail.com
  * @Date :2020-04-05
  * @Project :reportate
  * @Package :bo.com.reportate.web
- * @Copyright :MC4
+ * @Copyright :Reportate
  */
 @Setter @Getter @NoArgsConstructor @AllArgsConstructor
 public class ObjetoDto implements Serializable {

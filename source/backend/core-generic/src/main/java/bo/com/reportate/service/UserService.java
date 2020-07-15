@@ -6,7 +6,7 @@ import bo.com.reportate.model.MuUsuario;
  * Created by    :Ricardo Laredo.
  * Date          :23/11/2018
  * Project       :reportate
- * Package       :bo.com.mc4.core.service
+ * Package       :bo.com.Reportate.core.service
  **/
 public interface UserService {
 

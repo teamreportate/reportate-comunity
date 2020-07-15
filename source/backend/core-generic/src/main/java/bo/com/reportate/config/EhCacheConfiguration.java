@@ -10,13 +10,13 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
- * Created by :MC4
+ * Created by :Reportate
  * Autor      :Ricardo Laredo
- * Email      :rlaredo@mc4.com.bo
+ * Email      :rllayus@gmail.com
  * Date       :12-01-19
  * Project    :reportate
  * Package    :bo.com.reportate.config
- * Copyright  : MC4
+ * Copyright  : Reportate
  */
 
 @EnableJpaRepositories(basePackages = "bo.com.reportate.repository")

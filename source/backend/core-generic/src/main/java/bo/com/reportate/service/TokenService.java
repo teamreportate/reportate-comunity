@@ -7,7 +7,7 @@ import bo.com.reportate.model.dto.TokenDto;
 import java.util.List;
 
 /**
- * MC4 SRL
+ * Reportate SRL
  * Santa Cruz - Bolivia
  * project: reportate
  * package: bo.com.reportate.service

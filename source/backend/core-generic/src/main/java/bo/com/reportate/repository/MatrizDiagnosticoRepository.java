@@ -9,13 +9,13 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 /**
- * @Created by :MC4
+ * @Created by :Reportate
  * @Autor :Ricardo Laredo
- * @Email :rlaredo@mc4.com.bo
+ * @Email :rllayus@gmail.com
  * @Date :2020-04-03
  * @Project :reportate
  * @Package :bo.com.reportate.repository
- * @Copyright :MC4
+ * @Copyright :Reportate
  */
 public interface MatrizDiagnosticoRepository extends JpaRepository<MatrizDiagnostico, Long> {
     @Query("SELECT distinct (e) FROM MatrizDiagnostico m INNER JOIN m.enfermedad e " +

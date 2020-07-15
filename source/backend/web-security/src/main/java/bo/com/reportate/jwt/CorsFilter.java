@@ -12,7 +12,7 @@ import java.io.IOException;
 
 /**
  * Project    :unicolegio
- * Package    :bo.com.mc4.unicolegio.authenticate.filter
+ * Package    :bo.com.Reportate.unicolegio.authenticate.filter
  * Date       :18/12/2018
  * Created by :fmontero
  */

@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * MC4
+ * Reportate
  * Santa Cruz - Bolivia
  * project: reportate
  * package: bo.com.reportate.utils

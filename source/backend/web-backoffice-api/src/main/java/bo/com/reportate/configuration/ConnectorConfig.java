@@ -10,13 +10,13 @@
 //import org.springframework.context.annotation.Configuration;
 //
 ///**
-// * @Created by :MC4
+// * @Created by :Reportate
 // * @Autor :Ricardo Laredo
-// * @Email :rlaredo@mc4.com.bo
+// * @Email :rllayus@gmail.com
 // * @Date :31-07-19
 // * @Project :bancarizacion
 // * @Package :bo.com.embol.bancarizacion.configuration
-// * @Copyright :MC4
+// * @Copyright :Reportate
 // */
 //
 //@Configuration

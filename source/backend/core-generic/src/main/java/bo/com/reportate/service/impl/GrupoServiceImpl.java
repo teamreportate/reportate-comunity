@@ -24,12 +24,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Created by :MC4
+ * Created by :Reportate
  * Autor      :vtorrez
  * Date       :07-01-19
  * Project    :reportate
  * Package    :bo.com.reportate.service.impl
- * Copyright  : MC4
+ * Copyright  : Reportate
  */
 @Slf4j
 @Service("grupoService")

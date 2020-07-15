@@ -4,7 +4,7 @@ import bo.com.reportate.model.dto.UsuarioDto;
 import bo.com.reportate.utils.StringUtil;
 
 /**
- * MC4 SRL
+ * Reportate SRL
  * Santa Cruz - Bolivia
  * project: reportate
  * package: bo.com.reportate.util

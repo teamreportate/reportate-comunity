@@ -4,13 +4,13 @@ import lombok.*;
 import org.apache.poi.ss.usermodel.CellType;
 
 /**
- * Created by :MC4
+ * Created by :Reportate
  * Autor      :Ricardo Laredo
- * Email      :rlaredo@mc4.com.bo
+ * Email      :rllayus@gmail.com
  * Date       :02-06-19
  * Project    :reportate
  * Package    :bo.com.reportate.core.util
- * Copyright  : MC4
+ * Copyright  : Reportate
  */
 @Getter
 @Setter

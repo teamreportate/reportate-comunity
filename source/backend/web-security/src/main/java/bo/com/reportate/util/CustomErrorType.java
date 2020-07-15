@@ -8,13 +8,13 @@ import org.springframework.http.ResponseEntity;
 import java.io.Serializable;
 
 /**
- * Created by :MC4
+ * Created by :Reportate
  * Autor      :Ricardo Laredo
- * Email      :rlaredo@mc4.com.bo
+ * Email      :rllayus@gmail.com
  * Date       :14-02-19
  * Project    :reportate
  * Package    :bo.com.reportate.util
- * Copyright  : MC4
+ * Copyright  : Reportate
  */
 @AllArgsConstructor
 @Getter

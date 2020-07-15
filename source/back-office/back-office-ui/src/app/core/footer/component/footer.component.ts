@@ -14,17 +14,17 @@ import { YEAR_CURRENT } from '../../constantes/fechaActual';
     <div class="footer-container">
       <div class="container">
         <div class="row">
-<!--          <a class=" icon-footer" href="https://www.facebook.com/mc4.bo/" target="_blank">-->
+<!--          <a class=" icon-footer" href="https://www.facebook.com/Reportate.bo/" target="_blank">-->
 <!--            <i class="fa fa-facebook-square fa-lg"> </i>-->
 <!--          </a>-->
 <!--          <a class="icon-footer" href="https://twitter.com/mc4bolivia" target="_blank">-->
 <!--            <i class="fa fa-twitter-square fa-lg"> </i>-->
 <!--          </a>-->
-<!--          <a class="icon-footer" href="https://www.linkedin.com/in/mc4-srl-376a4274/" target="_blank">-->
+<!--          <a class="icon-footer" href="https://www.linkedin.com/in/Reportate-srl-376a4274/" target="_blank">-->
 <!--            <i class="fa fa-linkedin-square fa-lg "> </i>-->
 <!--          </a>-->
-<!--          <div style="margin: auto;" class="text-center text-footer"> © {{currentYear}} MC4. TODOS LOS DERECHOS RESERVADOS V.1.0.
-            <a href="http://mc4.com.bo/" target="_blank"><img src="assets/images/background/logo.png" width="50" height="25"></a>
+<!--          <div style="margin: auto;" class="text-center text-footer"> © {{currentYear}} Reportate. TODOS LOS DERECHOS RESERVADOS V.1.0.
+            <a href="http://Reportate.com.bo/" target="_blank"><img src="assets/images/background/logo.png" width="50" height="25"></a>
           </div> -->
         </div>
       </div>

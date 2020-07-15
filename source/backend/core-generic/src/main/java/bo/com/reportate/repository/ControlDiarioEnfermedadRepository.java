@@ -14,13 +14,13 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 /**
- * @Created by :MC4
+ * @Created by :Reportate
  * @Autor :Ricardo Laredo
- * @Email :rlaredo@mc4.com.bo
+ * @Email :rllayus@gmail.com
  * @Date :2020-04-01
  * @Project :reportate
  * @Package :bo.com.reportate.repository
- * @Copyright :MC4
+ * @Copyright :Reportate
  */
 public interface ControlDiarioEnfermedadRepository extends JpaRepository<ControlDiarioEnfermedad, Long> {
     @Query("SELECT new bo.com.reportate.model.dto.response.EnfermedadResponse(cde.enfermedad) " +

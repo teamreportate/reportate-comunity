@@ -8,13 +8,10 @@ import bo.com.reportate.model.dto.ValorDominioDto;
 import java.util.List;
 
 /**
- * Created by :MC4
- * Autor      :Jonathan Valdivia
- * Email      :jvaldivia@mc4.com.bo
  * Date       :20-01-19
  * Project    :reportate
  * Package    :bo.com.reportate.service
- * Copyright  :MC4
+ * Copyright  :Reportate
  *
  *
  */

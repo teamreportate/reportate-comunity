@@ -23,13 +23,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by :MC4
+ * Created by :Reportate
  * Autor      :Ricardo Laredo
- * Email      :rlaredo@mc4.com.bo
+ * Email      :rllayus@gmail.com
  * Date       :29-04-19
  * Project    :reportate
  * Package    :bo.com.reportate.service.impl
- * Copyright  : MC4
+ * Copyright  : Reportate
  */
 @Slf4j
 @Service("emailService")

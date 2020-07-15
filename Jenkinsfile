@@ -211,13 +211,13 @@ pipeline {
     }
     post {
         failure {
-            mail to: 'rlaredo@mc4.com.bo', cc: "", charset: "UTF-8",
+            mail to: 'rllayus@gmail.com', cc: "", charset: "UTF-8",
                     subject: ": ${currentBuild.fullDisplayName}",
                     body: "Se genero un error al ejecutor de tareas de jenkins. ${env.BUILD_URL}"
         }
 
         success {
-            mail to: 'rlaredo@mc4.com.bo', cc: "", charset: "UTF-8",
+            mail to: 'rllayus@gmail.com', cc: "", charset: "UTF-8",
                     subject: ": ${currentBuild.fullDisplayName}",
                     body: "La aplicación se ejecutó exitosamente" +
                             "" +

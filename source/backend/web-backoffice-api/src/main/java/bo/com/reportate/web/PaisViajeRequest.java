@@ -9,13 +9,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Created by :MC4
+ * @Created by :Reportate
  * @Autor :Ricardo Laredo
- * @Email :rlaredo@mc4.com.bo
+ * @Email :rllayus@gmail.com
  * @Date :2020-04-06
  * @Project :reportate
  * @Package :bo.com.reportate.web
- * @Copyright :MC4
+ * @Copyright :Reportate
  */
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class PaisViajeRequest implements Serializable {

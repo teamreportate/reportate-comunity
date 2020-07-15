@@ -1,7 +1,7 @@
 package bo.com.reportate.exception;
 
 /**
- * MC4 SRL
+ * Reportate SRL
  * La Paz - Bolivia
  * 09/11/2016 - 12:33 PM
  * Created by: aticona

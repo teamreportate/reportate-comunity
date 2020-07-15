@@ -21,13 +21,13 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @Created by :MC4
+ * @Created by :Reportate
  * @Autor :Ricardo Laredo
- * @Email :rlaredo@mc4.com.bo
+ * @Email :rllayus@gmail.com
  * @Date :2020-03-30
  * @Project :reportate
  * @Package :bo.com.reportate.service.impl
- * @Copyright :MC4
+ * @Copyright :Reportate
  */
 @Service
 public class MunicipioServiceImpl implements MunicipioService {

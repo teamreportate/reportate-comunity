@@ -1,7 +1,7 @@
 package bo.com.reportate.model.enums;
 
 /**
- * MC4 SRL
+ * Reportate SRL
  * Santa Cruz - Bolivia
  * project: reportate
  * package: bo.com.reportate.model.enums

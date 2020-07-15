@@ -1,10 +1,10 @@
 /**
- * Create by: MC4
+ * Create by: Reportate
  * La Paz - Bolivia
  * bcb-mld-ejb
  * @Package :bo.com.reportate.service.impl
  * 06/04/2015 - 08:30:00
- * Creado por fbotello-MC4
+ * Creado por fbotello-Reportate
  */
 package bo.com.reportate.exception;
 

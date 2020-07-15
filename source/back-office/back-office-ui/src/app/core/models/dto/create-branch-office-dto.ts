@@ -1,7 +1,7 @@
 import {ModalityType} from '../../enums/modality-type';
 
 /**
- * MC4 SRL
+ * Reportate SRL
  * Santa Cruz - Bolivia
  * project: back-office-ui
  * date:    30-05-19

@@ -15,13 +15,13 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Created by :MC4
+ * @Created by :Reportate
  * @Autor :Ricardo Laredo
- * @Email :rlaredo@mc4.com.bo
+ * @Email :rllayus@gmail.com
  * @Date :2020-04-02
  * @Project :reportate
  * @Package :bo.com.reportate.service
- * @Copyright :MC4
+ * @Copyright :Reportate
  */
 public interface DiagnosticoService {
     Integer cantidadDiagnosticoPorFiltros(Authentication authentication, Long departamentoId,Long municipioId, Long centroSaludId,GeneroEnum genero, Integer edadInicial, Integer edadFinal,EstadoDiagnosticoEnum estadoDiagnostico, Long enfermedadId);

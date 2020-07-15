@@ -13,12 +13,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Created by :MC4
+ * @Created by :Reportate
  * @Autor :Diana Mejia
  * @Date :2020-04-04
  * @Project :reportate
  * @Package :bo.com.reportate.web
- * @Copyright :MC4
+ * @Copyright :Reportate
  */
 @Getter @Setter @NoArgsConstructor
 public class FichaEpidemiologicaResponse implements Serializable {

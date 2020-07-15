@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * MC4
+ * Reportate
  * Santa Cruz - Bolivia
  * project: musers
  * package: bo.com.reportate.model.enums

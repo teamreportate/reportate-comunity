@@ -12,7 +12,7 @@ import java.io.Serializable;
  * Created by    : Vinx J. Guzman Martinez.
  * Date          :18/12/2019
  * Project       :reportate
- * Package       :bo.com.mc4.reportate.model
+ * Package       :bo.com.Reportate.reportate.model
  **/
 @Entity
 @Table(name = "MU_GRUPO_PARAMETRO")

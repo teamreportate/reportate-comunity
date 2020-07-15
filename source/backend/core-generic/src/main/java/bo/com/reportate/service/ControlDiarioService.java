@@ -6,13 +6,13 @@ import bo.com.reportate.model.dto.response.SintomaResponse;
 import java.util.List;
 
 /**
- * @Created by :MC4
+ * @Created by :Reportate
  * @Autor :Ricardo Laredo
- * @Email :rlaredo@mc4.com.bo
+ * @Email :rllayus@gmail.com
  * @Date :2020-04-02
  * @Project :reportate
  * @Package :bo.com.reportate.service
- * @Copyright :MC4
+ * @Copyright :Reportate
  */
 public interface ControlDiarioService {
     ControlDiarioFullResponse getEncuentaFull();

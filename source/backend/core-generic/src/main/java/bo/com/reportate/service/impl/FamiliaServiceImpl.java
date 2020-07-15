@@ -25,13 +25,13 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * @Created by :MC4
+ * @Created by :Reportate
  * @Autor :Ricardo Laredo
- * @Email :rlaredo@mc4.com.bo
+ * @Email :rllayus@gmail.com
  * @Date :2020-04-01
  * @Project :reportate
  * @Package :bo.com.reportate.service.impl
- * @Copyright :MC4
+ * @Copyright :Reportate
  */
 @Service
 @Slf4j

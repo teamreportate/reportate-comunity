@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by    : Vinx J. Guzman Martinez.
  * Date          :18/12/2019
  * Project       :reportate
- * Package       :bo.com.mc4.reportate.model.dto
+ * Package       :bo.com.Reportate.reportate.model.dto
  **/
 @Getter
 @Setter

@@ -9,11 +9,11 @@ import org.springframework.security.core.Authentication;
 import java.util.List;
 
 /**
- * Created by :MC4
+ * Created by :Reportate
  * Autor      :vtorrez
  * Project    :reportate
  * Package    :bo.com.reportate.service
- * Copyright  : MC4
+ * Copyright  : Reportate
  */
 
 public interface UsuarioService {

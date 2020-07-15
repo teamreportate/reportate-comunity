@@ -16,7 +16,7 @@ import java.util.List;
  * Created by    : Vinx J. Guzman Martinez.
  * Date          :15/11/2019
  * Project       :reportate
- * Package       :bo.com.mc4.reportate.model.dto
+ * Package       :bo.com.Reportate.reportate.model.dto
  **/
 
 @Data

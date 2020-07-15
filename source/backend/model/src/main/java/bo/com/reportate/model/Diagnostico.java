@@ -12,13 +12,13 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * @Created by :MC4
+ * @Created by :Reportate
  * @Autor :Ricardo Laredo
- * @Email :rlaredo@mc4.com.bo
+ * @Email :rllayus@gmail.com
  * @Date :2020-04-01
  * @Project :reportate
  * @Package :bo.com.reportate.model
- * @Copyright :MC4
+ * @Copyright :Reportate
  */
 @Entity
 @Table(name = "DIAGNOSTICO")

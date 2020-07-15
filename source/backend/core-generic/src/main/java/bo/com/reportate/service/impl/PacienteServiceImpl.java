@@ -38,13 +38,13 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Created by :MC4
+ * @Created by :Reportate
  * @Autor :Ricardo Laredo
- * @Email :rlaredo@mc4.com.bo
+ * @Email :rllayus@gmail.com
  * @Date :2020-04-02
  * @Project :reportate
  * @Package :bo.com.reportate.service.impl
- * @Copyright :MC4
+ * @Copyright :Reportate
  */
 @Service
 @Slf4j

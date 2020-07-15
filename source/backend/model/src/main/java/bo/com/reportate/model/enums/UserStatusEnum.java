@@ -3,7 +3,7 @@ package bo.com.reportate.model.enums;
 import lombok.Getter;
 
 /**
- * MC4 SRL
+ * Reportate SRL
  * Santa Cruz - Bolivia
  * project: reportate
  * package: bo.com.reportate.model.enums

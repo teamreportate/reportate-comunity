@@ -174,11 +174,11 @@ public class WebSecurityDataInitializer implements CommandLineRunner {
         this.paramService.saveParametro(parametro);
         parametro = new MuParametro(null, Constants.Parameters.MAIL_PROTOCOL, "Protocolo del servidor de correo electronico.", "smtp", null, null, null, ParamTipoDato.CADENA, false,null, mailParams);
         this.paramService.saveParametro(parametro);
-        parametro = new MuParametro(null, Constants.Parameters.MAIL_USERNAME, "Usuario de la cuenta de correo electronico.", "soporteclic32@gmail.com", null, null, null, ParamTipoDato.CADENA, false,null, mailParams);
+        parametro = new MuParametro(null, Constants.Parameters.MAIL_USERNAME, "Usuario de la cuenta de correo electronico.", "correo@gmail.com", null, null, null, ParamTipoDato.CADENA, false,null, mailParams);
         this.paramService.saveParametro(parametro);
-        parametro = new MuParametro(null, Constants.Parameters.MAIL_PASS, "Contraseña de la cuenta de correo electronico.", Crypt.getInstance().crypt("Dinamicina01"), null, null, null, ParamTipoDato.CADENA, true,null, mailParams);
+        parametro = new MuParametro(null, Constants.Parameters.MAIL_PASS, "Contraseña de la cuenta de correo electronico.", Crypt.getInstance().crypt("password"), null, null, null, ParamTipoDato.CADENA, true,null, mailParams);
         this.paramService.saveParametro(parametro);
-        parametro = new MuParametro(null, Constants.Parameters.MAIL_FROM, "Dirección de correo electronico desde la que se va a enviar los correos.", "no-reply@mc4.com.bo", null, null, null, ParamTipoDato.CADENA, false,null, mailParams);
+        parametro = new MuParametro(null, Constants.Parameters.MAIL_FROM, "Dirección de correo electronico desde la que se va a enviar los correos.", "no-reply@Reportate.com.bo", null, null, null, ParamTipoDato.CADENA, false,null, mailParams);
         this.paramService.saveParametro(parametro);
 
 

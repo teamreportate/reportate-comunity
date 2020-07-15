@@ -7,13 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 /**
- * @Created by :MC4
+ * @Created by :Reportate
  * @Autor :Ricardo Laredo
- * @Email :rlaredo@mc4.com.bo
+ * @Email :rllayus@gmail.com
  * @Date :2020-04-01
  * @Project :reportate
  * @Package :bo.com.reportate.repository
- * @Copyright :MC4
+ * @Copyright :Reportate
  */
 public interface ControlDiarioSintomaRepository extends JpaRepository<ControlDiarioSintoma, Long> {
     List<ControlDiarioSintoma> findByControlDiario(ControlDiario controlDiario);

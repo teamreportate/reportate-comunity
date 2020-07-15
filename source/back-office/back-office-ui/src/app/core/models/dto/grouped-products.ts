@@ -1,7 +1,7 @@
 import {Product} from '../product';
 
 /**
- * MC4 SRL
+ * Reportate SRL
  * Santa Cruz - Bolivia
  * project: back-office-ui
  * date:    31-07-19
